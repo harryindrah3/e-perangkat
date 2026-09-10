@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 794 1123" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bgbahasaindonesiaF" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7B1E3B"/><stop offset=".56" stop-color="#C04A69"/><stop offset="1" stop-color="#F3B562"/></linearGradient>
+    <linearGradient id="fadebahasaindonesiaF" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff" stop-opacity=".06"/><stop offset="1" stop-color="#fff" stop-opacity=".92"/></linearGradient>
+    <pattern id="dotsbahasaindonesiaF" width="34" height="34" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="2.2" fill="#fff" opacity=".22"/></pattern>
+    <filter id="shadowbahasaindonesiaF" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="15" stdDeviation="18" flood-color="#08121f" flood-opacity=".2"/></filter>
+  </defs>
+  <rect width="794" height="1123" fill="#f7fafc"/>
+  <path d="M0 0h794v520C620 565 260 425 0 590z" fill="url(#bgbahasaindonesiaF)"/>
+  <path d="M0 0h794v520C620 565 260 425 0 590z" fill="url(#dotsbahasaindonesiaF)"/>
+  <path d="M-80 495L874 290v110L-80 605z" fill="#fff" opacity=".09"/>
+  <circle cx="184" cy="188" r="220" fill="#fff" opacity=".09"/>
+  <circle cx="184" cy="188" r="154" fill="none" stroke="#fff" stroke-width="2" opacity=".25"/>
+  <g transform="translate(62 95) scale(1.52)" opacity=".9"><g fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M34 55c40-18 73-13 94 5v108c-25-18-58-20-94-5z"/><path d="M222 55c-40-18-73-13-94 5v108c25-18 58-20 94-5z"/><path d="M128 60v108"/><path d="M70 86h30M70 108h36M156 86h30M150 108h36"/><path d="M78 193l94-94 20 20-94 94-31 10z"/></g></g>
+  <path d="M0 1010c210-58 387-43 530 5 98 33 186 32 264-5v113H0z" fill="#7B1E3B" opacity=".08"/>
+  <path d="M0 1046c190-42 354-35 510 8 113 31 208 28 284-7v76H0z" fill="#C04A69" opacity=".09"/>
+  <rect x="0" y="0" width="16" height="1123" fill="#F3B562" opacity=".95"/>
+  <rect x="16" y="0" width="6" height="1123" fill="#fff" opacity=".38"/>
+  </svg>

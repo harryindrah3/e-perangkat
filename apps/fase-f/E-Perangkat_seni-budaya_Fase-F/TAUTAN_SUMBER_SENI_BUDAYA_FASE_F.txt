@@ -1,0 +1,42 @@
+BOOK	XI	BG 11 - Seni Tari.pdf	https://drive.google.com/file/d/16iikGGONwa5_8KZYDTwmrnZKCenoXliI/view?usp=drivesdk
+PROTA	XI	Program Tahunan - Seni Tari 11.docx	https://docs.google.com/document/d/1pQXhFwnCgHarC6I-NQjnYN1nQUbXGVfp/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XI	ATP - Seni Tari 11.docx	https://docs.google.com/document/d/1mdwP5PYO0VYIBkLP3tMHF-3xPU-bjCPC/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XI	Program Semester - Seni Tari 11.docx	https://docs.google.com/document/d/1bkWmhzGqXLvlUyL-VrYgLw_fHkCLsAvl/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XI	KKTP - Seni Tari 11.docx	https://docs.google.com/document/d/15FgWScEUDCajVxXrE4fn0d5NW_tP60FX/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XI	CP Fase F - Seni Tari.docx	https://docs.google.com/document/d/1Pkf7hqrn4ttodfMkjZy9ds5Rjsl8s_Xp/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	XI	BG 11 - Seni Rupa.pdf	https://drive.google.com/file/d/11biyl_S_HupupfGmg--9QWdJBJjB5MHn/view?usp=drivesdk
+CP	XI	CP Fase F - Seni Rupa.docx	https://docs.google.com/document/d/1V-3XPXIZbV4SSj_yphBnailO61niQIGz/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XI	ATP - Seni Rupa 11.docx	https://docs.google.com/document/d/1vL-RnnwbWpOuYz6H_BO8cweD_3zYtD24/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XI	Program Tahunan - Seni Rupa 11.docx	https://docs.google.com/document/d/1nw7GFqF9H4pQTeVVCW2lKi7A7QnWPMy_/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XI	KKTP - Seni Rupa 11.docx	https://docs.google.com/document/d/1ryR-KvMctk2KDGXIMpii8sgBnPxZugZ8/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	XI	BG 11 - Seni Teater.pdf	https://drive.google.com/file/d/1nv9oi-zI4xnLbvr4dF8Tip4CQuSI8W7o/view?usp=drivesdk
+PROTA	XI	Program Tahunan - Seni Teater 11.docx	https://docs.google.com/document/d/1YVTQ0HViI2MHQ2Y6eh7JbynSbgXcd2eV/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XI	Program Semester - Seni Teater 11.docx	https://docs.google.com/document/d/1aDHZQN5LhKmiBRv_VWyDVCwUX9EERPHn/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XI	CP Fase F - Seni Teater.docx	https://docs.google.com/document/d/1HHi-eBPkkitw947VFRCtpzRL0RnNEAGO/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XI	KKTP - Seni Teater 11.docx	https://docs.google.com/document/d/1pqnJ8s9nOmUzKI6X0sv3aq1aSXfwrsLk/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XI	ATP - Seni Teater 11.docx	https://docs.google.com/document/d/1xIhZekTLusG-J8CoLVsA1XnPWG8jCFcs/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	XI	BG 11 - Seni-Musik.pdf	https://drive.google.com/file/d/1OO7vkue8Vtu9pG9oK3Y6qe2YvbJObvPQ/view?usp=drivesdk
+PROMES	XI	Program Semester - Seni Musik 11.docx	https://docs.google.com/document/d/148pFvGLNy8_ucw0D6kwNUtYYEx48N6I1/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XI	ATP - Seni Musik 11.docx	https://docs.google.com/document/d/1mli2JaliB-VFp1guC527HI_fCzPP13Fy/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XI	Program Tahunan - Seni Musik 11.docx	https://docs.google.com/document/d/1E5TNDGZ4k2_H8ECvCgQxiccpO6jmnAuH/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XI	CP Fase F - Seni Musik.docx	https://docs.google.com/document/d/1tou5biIwQxoKDF0wzEtZg3hPDYYAau0P/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XI	KKTP - Seni Musik 11.docx	https://docs.google.com/document/d/1m44pbSdti14KPi3zsiVf-TdakF2Xu77E/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XII	KKTP - Seni Tari.docx	https://docs.google.com/document/d/1P7cuwAQmTP_znRuHclHyVuaGE-blj-yq/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XII	ATP Fase F - Seni Tari.docx	https://docs.google.com/document/d/1UMX8gw84qSyjv4BO8JzC5USIj1A3Es--/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XII	PROSEM - Seni Tari.docx	https://docs.google.com/document/d/1WNgV_4sJj20Yz62hwyk4s2shwAHua8cI/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XII	PROTA - Seni Tari.docx	https://docs.google.com/document/d/1ee6LU8EZTZZztEdSZirmnzt5tWQO_YOc/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XII	CP Fase F - Seni Tari.docx	https://docs.google.com/document/d/1W5sn_PdUYiOcqqQYM_gELQy1m_1w1DGg/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XII	CP Fase F - Seni Teater.docx	https://docs.google.com/document/d/1T1EUKSM2veI9N0Fp2sprCWfzUkFWXzOY/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XII	ATP Fase F - Seni Teater.docx	https://docs.google.com/document/d/1Y2vCHLvHQmUz1s4OYfVST3za05uqtGHE/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XII	PROSEM - Seni Teater.docx	https://docs.google.com/document/d/1epWQ0JkH2xYlL0QscC9p8D5ts6Rg-R9N/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XII	PROTA - Seni Teater.docx	https://docs.google.com/document/d/19Pt6b3eKFuKFDcLlyignaRsBnTSeJiHl/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XII	KKTP - Seni Teater.docx	https://docs.google.com/document/d/1rWgbQbEufzz-RmSNhjzYySFBG57KFvdT/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XII	PROTA - Seni Rupa.docx	https://docs.google.com/document/d/18Zqk3_A-dwcDnHTW0IPrj75iCYQNunLa/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XII	CP Fase F - Seni Rupa.docx	https://docs.google.com/document/d/1GP13xPdx0lRUwsLKuA-OtimyyTxaiFIy/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XII	PROSEM - Seni Rupa.docx	https://docs.google.com/document/d/1Pcqn4ZduekjBTfgbmvc_oxSYk9PJNeM7/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XII	KKTP - Seni Rupa.docx	https://docs.google.com/document/d/1dia06tolDcblmNGYLGn1mNmcWJPQO--z/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XII	ATP Fase F - Seni Rupa.docx	https://docs.google.com/document/d/1-RvdxJYuKgiojXZW6uqyb9H4KF3UOR5_/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XII	CP Fase F - Seni Musik.docx	https://docs.google.com/document/d/1xzh5SlZa4HRFnKx6HffahjdUgrC40GnU/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XII	PROSEM - Seni Musik.docx	https://docs.google.com/document/d/1wTBepSCBLpnImH5v-4ixRax4Ei5b-LrD/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XII	KKTP - Seni Musik.docx	https://docs.google.com/document/d/19S3-zOKW-WNYFk_iBmDPJ1rW-atOVwBL/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XII	PROTA - Seni Musik.docx	https://docs.google.com/document/d/1niDU3dIsuhueIz-Q8bV9LynpzHTaxhBG/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

@@ -1,0 +1,17 @@
+SUMBER DAN KOREKSI — PENDIDIKAN PANCASILA FASE C
+Kelas: V, VI
+Folder acuan: https://drive.google.com/drive/folders/19pLSOpjRxhCqm9GmYf-u-3dSDt8jyv2r
+
+Catatan normalisasi:
+1. Penamaan mata pelajaran pada sumber
+   Temuan: Sebagian folder dan nama file masih menggunakan singkatan PKN.
+   Penanganan: Ditampilkan konsisten sebagai Pendidikan Pancasila sesuai isi dokumen dan CP.
+2. ATP Kelas VI Bab 2
+   Temuan: ATP menetapkan 20 JP, sedangkan Modul Ajar sumber menampilkan empat pertemuan utama masing-masing 4 JP.
+   Penanganan: Ditambahkan pertemuan konsolidasi/asesmen 4 JP agar total sesuai ATP tanpa mengubah materi inti.
+3. Pembagian Fase C
+   Temuan: Sumber kelas V dan VI ditulis dengan format identitas yang tidak selalu seragam.
+   Penanganan: Seluruh dokumen dinormalisasi menjadi Fase C dengan kelas V dan VI.
+4. Tata letak cetak
+   Temuan: Konten CP dan modul cukup panjang.
+   Penanganan: Menggunakan tata letak padat V23.1.1; CP modul tampil lengkap tanpa elipsis, sub C–D dan E–H dijaga, serta Kerangka Pembelajaran disatukan.

@@ -1,0 +1,345 @@
+@page portrait{size:A4 portrait;margin:0}@page landscape{size:A4 landscape;margin:0}:root{--nav:#12395b;--blue:#2677a6;--teal:#1bb3b6;--line:#26333d;--head:#e9eff4;--soft:#f2f5f7;--mind:#dcebf6;--meaning:#dff2e9;--joy:#fff0cc}*{box-sizing:border-box}html,body{margin:0;padding:0;background:#d9e0e5;color:#111;font-family:"Times New Roman",Times,serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}.preview-bar{height:58px;position:sticky;top:0;z-index:100;background:#0e304b;color:#fff;display:flex;align-items:center;padding:0 22px;gap:18px;font-family:Arial,sans-serif;box-shadow:0 8px 25px rgba(0,0,0,.22)}.preview-bar a{color:#fff;text-decoration:none}.preview-bar div{display:flex;flex-direction:column}.preview-bar span{font-size:11px;color:#c8dbe8}.preview-bar button{margin-left:auto;border:0;border-radius:9px;background:#18b5b5;color:#fff;padding:10px 16px;font-weight:700;cursor:pointer}#printRoot{padding:18px 0}.page{background:#fff;margin:0 auto 18px;box-shadow:0 10px 35px rgba(0,0,0,.18);position:relative;overflow:hidden;break-after:page}.page.portrait{page:portrait;width:210mm;height:297mm}.page.landscape{page:landscape;width:297mm;height:210mm}.page-inner{padding:13mm 14mm;height:100%;position:relative}.page.landscape .page-inner{padding:10mm 12mm}.cover{background:linear-gradient(160deg,#f8fbff 0%,#eef4ff 48%,#dce8ff 100%)}.cover:before{content:"";position:absolute;left:0;right:0;top:0;height:14mm;background:linear-gradient(90deg,#071b3d,#0a3d91,#1479ff,#00a8ff)}.cover:after{content:"";position:absolute;width:88mm;height:88mm;border:16mm solid rgba(20,121,255,.13);border-radius:32mm;right:-45mm;bottom:-40mm}.cover-content{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;align-items:center;text-align:center}.cover-kicker{margin-top:24mm;color:#0a3d91;font-family:Arial,sans-serif;font-size:10pt;font-weight:700;letter-spacing:.18em}.cover-center{margin-top:60mm}.cover-center small{display:block;color:#1261c9;font-family:Arial,sans-serif;font-weight:800;letter-spacing:.14em;font-size:10pt}.cover h1{font-family:Arial,sans-serif;font-size:25pt;line-height:1.1;color:#061c43;margin:7mm 0 4mm;text-transform:uppercase}.cover h2{font-family:Arial,sans-serif;font-size:12pt;color:#315a97;margin:0;font-weight:700}.accent-line{width:42mm;height:2mm;border-radius:99px;background:linear-gradient(90deg,#0a3d91,#1479ff,#f5b700);margin:10mm auto}.identity-box{width:136mm;border:1.4px solid #7ea8e8;border-radius:5mm;padding:8mm 11mm;text-align:left;font-family:Arial,sans-serif;font-size:10pt;background:rgba(255,255,255,.78);box-shadow:0 3mm 9mm rgba(6,28,67,.08)}.identity-box table{width:100%;border-collapse:collapse}.identity-box td{padding:2.2mm 0}.identity-box td:first-child{width:43mm}.identity-box td:nth-child(2){width:6mm}.cover-foot{margin-top:auto;margin-bottom:10mm;font-family:Arial,sans-serif;color:#123f7a}.cover-foot b{display:block;font-size:10pt}.cover-foot span{font-size:9pt;color:#5f7da8}.doc-title{text-align:center;font-size:17pt;font-weight:normal;margin:0 0 3mm;border-bottom:1.2pt solid #111;padding-bottom:3mm}.doc-head{display:grid;grid-template-columns:1fr 1fr;gap:3mm 22mm;margin-bottom:5mm;font-size:9.5pt}.doc-head dl{display:grid;grid-template-columns:35mm 4mm 1fr;margin:0;row-gap:1.6mm}.doc-head dt,.doc-head dd{margin:0}.section-title{font-size:12.5pt;font-weight:normal;margin:5mm 0 2.5mm}.topline{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1pt solid #111;padding-bottom:3mm;margin-bottom:5mm;font-weight:bold}.topline span:first-child{letter-spacing:.08em}.info-band{background:#eaf1f6;border-left:2.2mm solid #2778a7;padding:3.2mm 4mm;margin:4mm 0;font-size:9pt}.info-band.green{background:#eaf6f0;border-left-color:#2d8a72}.info-band.gold{background:#fff6df;border-left-color:#d79a37}.tbl{width:100%;border-collapse:collapse;table-layout:fixed;font-size:8.3pt}.landscape .tbl{font-size:6.65pt}.tbl th,.tbl td{border:.7pt solid #1a252d;padding:2.1mm;vertical-align:top;line-height:1.18;overflow-wrap:anywhere}.tbl th{background:#e8eef4;text-align:center;font-weight:bold}.tbl.compact th,.tbl.compact td{padding:1.35mm}.tbl .center{text-align:center}.tbl .bold{font-weight:bold}.note{border:.6pt solid #a9bbc8;background:#f4f7f9;padding:3mm;margin-top:3mm;font-size:8.5pt}.signature{display:grid;grid-template-columns:1fr 1fr;gap:25mm;text-align:center;margin-top:4mm;font-size:9pt}.signature .space{height:14mm}.signature b{display:inline-block;min-width:50mm;border-bottom:.7pt solid #111;padding-bottom:1mm}.page-foot{position:absolute;left:14mm;right:14mm;bottom:7mm;display:flex;justify-content:space-between;font-size:7.5pt;color:#555}.landscape .page-foot{left:12mm;right:12mm}.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:3mm}.principle{border:.6pt solid #aabac6;border-top:2mm solid #2778a7;background:#f4f7f9;padding:4mm;font-size:9pt;line-height:1.45}.principle:nth-child(2){border-top-color:#2e8a73}.principle:nth-child(3){border-top-color:#d79a37}.principle h3{margin:0 0 2mm;color:#1b557b;font-size:11pt}.prompt{background:#e8f5f7;border-left:2mm solid #1f82aa;padding:4mm 5mm;margin:4mm 0;font-size:10pt}.prompt b{display:block;color:#2b7598;font-size:8pt;letter-spacing:.12em;margin-bottom:2mm}.objective-box{background:#eef4f8;border:1px solid #9ab1c0;border-left:2mm solid #2778a7;padding:4mm;margin-bottom:4mm}.objective-box b{display:block;font-size:11pt}.objective-box small{display:block;margin-top:2mm;font-size:8.5pt}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:4mm}.text{font-size:9.5pt;line-height:1.55;text-align:justify}.text p{margin:0 0 2.5mm}.bullets{font-size:9pt;line-height:1.45;margin:0;padding-left:5mm}.bullets li{margin-bottom:1.6mm}.answer-lines{height:33mm;background:repeating-linear-gradient(to bottom,transparent 0,transparent 7mm,#aab6bd 7.2mm)}.answer-lines.small{height:20mm}.answer-lines.large{height:50mm}.rubric{font-size:7.8pt}.pill{display:inline-block;border-radius:99px;padding:1mm 2.2mm;font-size:6.8pt;font-family:Arial,sans-serif;font-weight:700}.pill.mind{background:var(--mind);color:#2a668f}.pill.mean{background:var(--meaning);color:#2a765f}.pill.joy{background:var(--joy);color:#9a6d18}.calendar-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1mm}.month{background:#e9eff4;text-align:center;font-size:7pt;padding:1mm}.mark{background:#d7eafb;text-align:center;font-size:8pt}.muted{color:#666}.small{font-size:8pt}.page-number{position:absolute;right:10mm;bottom:5mm;font-size:7pt;color:#666}@media print{html,body{background:#fff}.preview-bar{display:none}#printRoot{padding:0}.page{margin:0;box-shadow:none;width:auto!important;height:auto!important}.page.portrait{min-height:297mm}.page.landscape{min-height:210mm}.page.portrait .page-inner{height:auto;min-height:297mm}.page.cover .page-inner{height:297mm;min-height:297mm}.page.landscape .page-inner{height:auto;min-height:210mm}}/* ===== V3 print: watermark pembayaran dan kalender pendidikan ===== */
+.payment-watermark{position:absolute;left:50%;top:50%;width:145mm;min-height:42mm;transform:translate(-50%,-50%) rotate(-31deg);z-index:30;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border:3mm double rgba(164,32,32,.13);color:rgba(164,32,32,.13);font-family:Arial,sans-serif;pointer-events:none;text-transform:uppercase;letter-spacing:.07em}.landscape .payment-watermark{width:190mm}.payment-watermark strong{font-size:42pt;line-height:1}.payment-watermark span{font-size:13pt;font-weight:800;margin-top:3mm}.payment-watermark small{font-size:9pt;font-weight:700;margin-top:2mm}.print-order-info{font-family:Arial,sans-serif;border-left:1px solid rgba(255,255,255,.28);padding-left:14px!important}.print-order-info b{font-size:11px}.print-order-info span{font-size:9px!important}.print-order-info.lunas span{color:#9ff0ca!important}.print-order-info.dp span{color:#ffe5a2!important}.print-order-info.belum_lunas span{color:#ffbaba!important}.wm-controls{margin-left:auto!important;display:flex!important;flex-direction:row!important;gap:5px!important}.wm-btn{font-family:Arial,sans-serif;color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.35);border-radius:7px;padding:7px 9px;font-size:10px}.wm-btn.active{background:#a95220}.wm-btn.locked{opacity:.45;cursor:not-allowed}.preview-bar .wm-controls+button{margin-left:0}
+.print-letterhead{text-align:center;margin-bottom:4mm}.print-letterhead b,.print-letterhead strong,.print-letterhead span{display:block}.print-letterhead b{font-family:Arial,sans-serif;font-size:9pt;line-height:1.05}.print-letterhead strong{font-family:Arial,sans-serif;font-size:14pt;color:#0d2f49}.print-letterhead span{font-size:7pt}.print-cal-title{display:grid;grid-template-columns:1fr 52mm;border:.8pt solid #18232b;background:#fff2c8;text-align:center;font-family:Arial,sans-serif}.print-cal-title b,.print-cal-title strong{padding:2.7mm;font-size:9pt}.print-cal-title strong{background:#ffc850}.print-calendar{width:100%;border-collapse:collapse;table-layout:fixed}.print-calendar th,.print-calendar td{border:.65pt solid #18232b;padding:1.1mm;vertical-align:middle}.print-calendar th{background:#e7edf3;font-family:Arial,sans-serif;font-size:6.7pt}.print-calendar th:first-child{width:70mm}.print-calendar th:nth-child(2),.print-calendar th:nth-child(3),.print-calendar th:nth-child(4),.print-calendar th:nth-child(5){width:14mm}.print-calendar td{height:23mm}.pcm>b{display:block;text-align:center;background:#e7edf3;color:#173b57;font-family:Arial,sans-serif;font-size:6.7pt;padding:.5mm}.print-mini-cal{width:100%;border-collapse:collapse;table-layout:fixed}.print-mini-cal th,.print-mini-cal td{border:.4pt solid #8898a2!important;padding:.15mm!important;height:auto!important;text-align:center;font-family:Arial,sans-serif;font-size:4.9pt;line-height:1.05}.print-mini-cal th{background:#f2f4f5}.print-mini-cal td.sun{color:#c52634;font-weight:bold}.print-mini-cal td.evt-national{background:#e94954;color:#fff}.print-mini-cal td.evt-semester{background:#ffd267}.print-mini-cal td.evt-unit{background:#4c9dcc;color:#fff}.print-mini-cal td.evt-assessment{background:#31a36c;color:#fff}.print-mini-cal td.evt-report{background:#8b5fa3;color:#fff}.pcs{text-align:center}.pcs strong,.pcs small{display:block}.pcs strong{font-family:Arial,sans-serif;font-size:11pt}.pcs small{font-family:Arial,sans-serif;font-size:4.8pt}.pce{padding:1.2mm!important}.p-event{display:grid;grid-template-columns:18mm 1fr;align-items:center;margin:.5mm 0;background:#f1f3f4;border-left:2mm solid #84919a;font-size:5.2pt;line-height:1.05}.p-event b,.p-event span{padding:.7mm 1mm}.p-event b{text-align:center;border-right:.4pt solid rgba(0,0,0,.1)}.p-event.national{background:#fde5e6;border-left-color:#d92f3c}.p-event.semester{background:#fff3c6;border-left-color:#d79a13}.p-event.unit{background:#e4f0f7;border-left-color:#2a80ae}.p-event.assessment{background:#e2f3e9;border-left-color:#188258}.p-event.report{background:#efe7f3;border-left-color:#734391}.p-event.learning{background:#f0f2f3;border-left-color:#7a8790}.print-cal-total td{height:auto!important;background:#ffd165;text-align:center;font-family:Arial,sans-serif;font-weight:800;font-size:7pt}.print-cal-legend{display:flex;gap:3mm;flex-wrap:wrap;margin-top:2mm;font-family:Arial,sans-serif;font-size:5.5pt}.print-cal-legend span:before{content:'';display:inline-block;width:2.5mm;height:2.5mm;margin-right:1mm;vertical-align:-.5mm}.print-cal-legend .national:before{background:#d92f3c}.print-cal-legend .semester:before{background:#d79a13}.print-cal-legend .unit:before{background:#2a80ae}.print-cal-legend .assessment:before{background:#188258}.print-cal-legend .report:before{background:#734391}.print-cal-legend .learning:before{background:#7a8790}.print-cal-bottom{display:grid;grid-template-columns:1fr 45mm;gap:8mm;margin-top:2mm;font-size:5.2pt;line-height:1.25}.print-cal-bottom p{margin:0}.print-cal-bottom>div{text-align:center;font-size:6pt}.print-cal-bottom>div b{display:inline-block;border-bottom:.5pt solid #111;min-width:36mm;padding-top:1mm}.calendar-print-page .page-inner{padding:8mm 8mm}
+@media print{.payment-watermark{display:flex!important}.wm-controls,.print-order-info{display:none!important}}
+.print-calendar > thead > tr > th:first-child{width:70mm}.print-calendar > thead > tr > th:nth-child(2),.print-calendar > thead > tr > th:nth-child(3),.print-calendar > thead > tr > th:nth-child(4),.print-calendar > thead > tr > th:nth-child(5){width:14mm}.print-calendar .print-mini-cal th,.print-calendar .print-mini-cal td{width:auto!important;height:auto!important}
+
+/* ===== V4: 30-row attendance and wider signature area ===== */
+.attendance-table{font-size:5.35pt!important}.attendance-table th,.attendance-table td{padding:.52mm .65mm!important;line-height:1.05!important}.attendance-table tbody tr{height:3.7mm}.signature{margin-top:6mm}.signature .space{height:14mm!important}
+
+
+/* ===== V5: kalender satu halaman utuh dan identitas penanda tangan fleksibel ===== */
+.calendar-print-page{height:210mm!important;min-height:210mm!important;max-height:210mm!important;overflow:hidden!important;break-after:page!important;page-break-after:always!important}
+.calendar-print-page .page-inner{height:210mm!important;min-height:210mm!important;max-height:210mm!important;padding:5.5mm 7mm 4.5mm!important;display:flex;flex-direction:column;overflow:hidden}
+.calendar-print-page .print-letterhead{margin-bottom:2mm}
+.calendar-print-page .print-letterhead b{font-size:7.8pt}.calendar-print-page .print-letterhead strong{font-size:12.5pt}.calendar-print-page .print-letterhead span{font-size:6.2pt}
+.calendar-print-page .print-cal-title b,.calendar-print-page .print-cal-title strong{padding:2mm;font-size:8pt}
+.calendar-print-page .print-calendar{flex:0 0 auto}
+.calendar-print-page .print-calendar td{height:19.2mm!important;padding:.75mm!important}
+.calendar-print-page .print-calendar th{padding:.75mm!important;font-size:6pt}
+.calendar-print-page .pcm>b{font-size:6pt;padding:.25mm}
+.calendar-print-page .print-mini-cal th,.calendar-print-page .print-mini-cal td{font-size:4.35pt!important;padding:.08mm!important;line-height:1!important}
+.calendar-print-page .pcs strong{font-size:9.5pt}.calendar-print-page .pcs small{font-size:4.3pt}
+.calendar-print-page .p-event{font-size:4.75pt;margin:.3mm 0}.calendar-print-page .p-event b,.calendar-print-page .p-event span{padding:.48mm .75mm}
+.calendar-print-page .print-cal-total td{height:5.2mm!important;font-size:6.4pt}
+.calendar-print-page .print-cal-legend{margin-top:1.2mm;font-size:4.8pt;gap:2.2mm}
+.calendar-print-page .print-cal-bottom{margin-top:1.2mm;grid-template-columns:1fr 48mm;gap:6mm;min-height:21mm;align-items:start;break-inside:avoid;page-break-inside:avoid}
+.calendar-print-page .print-cal-bottom p{font-size:4.65pt;line-height:1.15}
+.calendar-signature{display:flex!important;flex-direction:column!important;align-items:center;text-align:center;font-size:5.6pt!important;line-height:1.1;white-space:normal}
+.calendar-signature>span{display:block}.calendar-sign-space{height:7.5mm!important;flex:0 0 7.5mm}.calendar-signature b{min-width:36mm;border-bottom:.5pt solid #111;padding:0 1mm .6mm!important;margin:0;font-size:6pt}.calendar-id{margin-top:.7mm;font-size:5.2pt}
+@media print{.calendar-print-page,.calendar-print-page .page-inner{height:210mm!important;min-height:210mm!important;max-height:210mm!important}.calendar-print-page+.page{break-before:page!important;page-break-before:always!important}}
+
+/* ===== V6: perbaikan ukuran kalender agar tepat satu halaman A4 landscape ===== */
+/* Aturan V5 sebelumnya mengenai tinggi sel diterapkan terlalu luas sampai ke
+   tabel mini kalender. Override berikut membatasi tinggi hanya pada sel tabel
+   kalender utama dan memulihkan ukuran normal sel tanggal. */
+.calendar-print-page .print-calendar{
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  table-layout:fixed!important;
+}
+.calendar-print-page .print-calendar > thead > tr > th{
+  height:auto!important;
+  padding:.65mm .7mm!important;
+  font-size:5.8pt!important;
+  line-height:1.05!important;
+}
+.calendar-print-page .print-calendar > tbody > tr:not(.print-cal-total) > td{
+  height:18.25mm!important;
+  min-height:18.25mm!important;
+  max-height:18.25mm!important;
+  padding:.55mm .65mm!important;
+  overflow:hidden!important;
+}
+.calendar-print-page .print-calendar > tbody > tr.print-cal-total > td{
+  height:4.8mm!important;
+  min-height:4.8mm!important;
+  max-height:4.8mm!important;
+  padding:.4mm .6mm!important;
+}
+.calendar-print-page .pcm{
+  overflow:hidden!important;
+}
+.calendar-print-page .pcm > b{
+  font-size:5.7pt!important;
+  line-height:1!important;
+  padding:.2mm!important;
+}
+.calendar-print-page .print-mini-cal{
+  width:100%!important;
+  height:auto!important;
+  max-height:15.7mm!important;
+  table-layout:fixed!important;
+  border-collapse:collapse!important;
+}
+.calendar-print-page .print-calendar .print-mini-cal thead tr,
+.calendar-print-page .print-calendar .print-mini-cal tbody tr{
+  height:2.2mm!important;
+  min-height:2.2mm!important;
+  max-height:2.2mm!important;
+}
+.calendar-print-page .print-calendar .print-mini-cal th,
+.calendar-print-page .print-calendar .print-mini-cal td{
+  width:auto!important;
+  height:2.2mm!important;
+  min-height:2.2mm!important;
+  max-height:2.2mm!important;
+  padding:0!important;
+  font-size:4.05pt!important;
+  line-height:1!important;
+  vertical-align:middle!important;
+  overflow:hidden!important;
+}
+.calendar-print-page .pcs{
+  overflow:hidden!important;
+}
+.calendar-print-page .pcs strong{font-size:8.8pt!important;line-height:1!important}
+.calendar-print-page .pcs small{font-size:4pt!important;line-height:1!important}
+.calendar-print-page .pce{overflow:hidden!important;padding:.5mm!important}
+.calendar-print-page .p-event{
+  grid-template-columns:15mm minmax(0,1fr)!important;
+  margin:.18mm 0!important;
+  font-size:4.35pt!important;
+  line-height:1!important;
+  min-width:0!important;
+}
+.calendar-print-page .p-event b,
+.calendar-print-page .p-event span{
+  padding:.35mm .55mm!important;
+  min-width:0!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+.calendar-print-page .print-cal-legend{margin-top:.8mm!important}
+.calendar-print-page .print-cal-bottom{margin-top:.8mm!important;min-height:19mm!important}
+.calendar-print-page .calendar-sign-space{height:6.5mm!important;flex-basis:6.5mm!important}
+
+@media print{
+  .calendar-print-page .print-calendar > tbody > tr:not(.print-cal-total) > td{
+    height:18.25mm!important;
+    min-height:18.25mm!important;
+    max-height:18.25mm!important;
+  }
+  .calendar-print-page .print-calendar .print-mini-cal th,
+  .calendar-print-page .print-calendar .print-mini-cal td{
+    height:2.2mm!important;
+    min-height:2.2mm!important;
+    max-height:2.2mm!important;
+  }
+}
+
+/* ===== V7: halaman cetak Analisis Nilai ===== */
+.analysis-cover h1{font-size:21pt;max-width:175mm}
+.analysis-print-page,.analysis-recap-page{height:210mm!important;min-height:210mm!important;max-height:210mm!important;overflow:hidden!important}
+.analysis-print-page .page-inner,.analysis-recap-page .page-inner{height:210mm!important;min-height:210mm!important;max-height:210mm!important;padding:8mm 9mm!important;overflow:hidden!important}
+.analysis-print-info{display:flex;gap:5mm;justify-content:flex-end;align-items:center;margin:-1mm 0 2mm;font-size:6.2pt;color:#526675}
+.analysis-print-info b{margin-right:auto;color:#173b57}
+.analysis-score-print{font-size:5.6pt!important;table-layout:fixed!important}
+.analysis-score-print th,.analysis-score-print td{padding:.85mm .65mm!important;line-height:1.08!important;vertical-align:middle!important;overflow-wrap:anywhere}
+.analysis-score-print th{height:8mm!important}
+.analysis-score-print th span,.analysis-score-print th small{display:block}.analysis-score-print th small{font-size:4.5pt;color:#5d7080;margin-top:.3mm}
+.analysis-score-print tbody tr{height:7.45mm!important;min-height:7.45mm!important;max-height:7.45mm!important}
+.analysis-score-print tbody td{height:7.45mm!important;min-height:7.45mm!important;max-height:7.45mm!important;overflow:hidden!important}
+.analysis-score-print th:not(:first-child):not(:nth-child(2)){width:18mm}
+.analysis-score-print th:nth-last-child(1){width:22mm!important}
+.analysis-average-row td{background:#e9edf3!important;font-weight:bold;height:6.4mm!important;min-height:6.4mm!important;max-height:6.4mm!important}
+.analysis-print-page .note{font-size:6.3pt;padding:2mm;margin-top:2mm}
+.analysis-recap-print{font-size:6.2pt!important;table-layout:fixed!important}
+.analysis-recap-print th,.analysis-recap-print td{padding:1.3mm!important;line-height:1.14!important;vertical-align:top!important}
+.analysis-recap-print tbody tr{height:15.8mm!important;min-height:15.8mm!important;max-height:15.8mm!important}
+.analysis-recap-print tbody td{height:15.8mm!important;min-height:15.8mm!important;max-height:15.8mm!important;overflow:hidden!important}
+.analysis-recap-summary{display:flex;gap:12mm;border:.6pt solid #a9bbc8;background:#f2f5f7;padding:2.5mm 3mm;margin-top:2.5mm;font-size:7.2pt}
+.analysis-recap-summary span:last-child{margin-left:auto}
+.analysis-signature{margin-top:3mm}.analysis-signature .space{height:11mm}
+@media print{
+  .analysis-print-page,.analysis-recap-page,.analysis-print-page .page-inner,.analysis-recap-page .page-inner{height:210mm!important;min-height:210mm!important;max-height:210mm!important}
+}
+
+/* V8 - kop kalender dua logo dan alamat sekolah */
+.print-letterhead.print-letterhead-logos{
+  display:grid;grid-template-columns:18mm minmax(0,1fr) 18mm;align-items:center;gap:3mm;
+  text-align:center;margin-bottom:2mm;min-height:18mm;
+}
+.print-letterhead .print-kop-logo{width:16mm;height:16mm;object-fit:contain;justify-self:center}
+.print-letterhead .print-letterhead-text{min-width:0}
+.print-letterhead .print-letterhead-text b,
+.print-letterhead .print-letterhead-text strong,
+.print-letterhead .print-letterhead-text span{display:block}
+.calendar-print-page .print-letterhead.print-letterhead-logos{margin-bottom:1.5mm}
+.calendar-print-page .print-letterhead .print-kop-logo{width:14mm;height:14mm}
+.calendar-print-page .print-letterhead.print-letterhead-logos{grid-template-columns:16mm minmax(0,1fr) 16mm;min-height:14mm}
+.calendar-print-page .print-letterhead .print-letterhead-text b{font-size:7.2pt;line-height:1}
+.calendar-print-page .print-letterhead .print-letterhead-text strong{font-size:11.5pt;line-height:1.05}
+.calendar-print-page .print-letterhead .print-letterhead-text span{font-size:5.8pt;line-height:1.1}
+
+/* V9 — Daftar isi paket cetak */
+.toc-page{background:#fff}
+.toc-inner{padding:19mm 20mm 16mm;display:flex;flex-direction:column}
+.toc-kicker{font-family:Arial,sans-serif;font-size:8.5pt;font-weight:800;letter-spacing:.15em;color:#26729c;text-align:center;margin-top:4mm}
+.toc-page h1{font-family:Arial,sans-serif;font-size:25pt;letter-spacing:.05em;text-align:center;color:#102f4e;margin:10mm 0 6mm}
+.toc-meta{display:grid;grid-template-columns:1fr 1fr;gap:3mm 10mm;border:1px solid #c4d2dc;background:#f6f9fb;border-radius:3mm;padding:5mm 7mm;font-family:Arial,sans-serif;font-size:8.5pt}
+.toc-meta div{display:grid;grid-template-columns:35mm 1fr;gap:3mm}.toc-meta span{color:#627888}.toc-meta b{color:#173c59}
+.toc-rule{height:1.4mm;width:36mm;background:linear-gradient(90deg,#2378a7,#18b5b5);border-radius:99px;margin:7mm auto}
+.toc-list{list-style:none;margin:0;padding:0 3mm;font-family:Arial,sans-serif}
+.toc-list li{display:flex;align-items:baseline;min-height:9.2mm;border-bottom:.35pt solid #dce5eb;padding:2.1mm 0;font-size:10.2pt;color:#17354d}
+.toc-no{width:11mm;font-size:7.6pt;font-weight:800;color:#2b7da9;letter-spacing:.08em}.toc-label{font-weight:650;white-space:nowrap}.toc-dots{flex:1;border-bottom:1px dotted #9cb0bd;margin:0 3mm 1.2mm}.toc-page-number{min-width:18mm;text-align:right;font-weight:800;color:#102f4e}
+.toc-note{margin-top:7mm;background:#edf5f8;border-left:2mm solid #2683aa;padding:4mm 5mm;font-size:8.7pt;line-height:1.45;color:#354d5e}
+
+/* ===== V12: Program Semester rinci per TP ===== */
+.promes-detail-print{font-size:6.55pt}.promes-detail-print td{line-height:1.2}.promes-detail-print td:nth-child(4){font-size:6.75pt}.promes-detail-print tr{height:17mm}
+
+
+/* ===== V18: posisi penandatangan dan tanda tangan otomatis ===== */
+.print-cal-bottom{grid-template-columns:1fr 48mm!important}
+.calendar-signature{grid-column:2!important;justify-self:center!important;width:48mm}
+.signature-image-wrap{display:flex!important;align-items:center;justify-content:center;height:16mm!important}
+.signature-image{display:block;max-width:50mm;max-height:16mm;object-fit:contain}
+.calendar-sign-space.has-image{display:flex!important;align-items:center;justify-content:center;height:9mm!important;flex:0 0 9mm!important}
+.calendar-sign-space img{display:block;max-width:34mm;max-height:9mm;object-fit:contain}
+
+/* ===== V19: halaman terpisah Prota, rincian JP, dan kalender ===== */
+.prota-jp-page .doc-head,.prota-calendar-page .doc-head{margin-bottom:3mm}
+.prota-jp-page .section-title,.prota-calendar-page .section-title{margin-top:3mm}
+.prota-jp-page .tbl,.prota-calendar-page .tbl{break-inside:avoid;page-break-inside:avoid}
+.prota-jp-page .jp-breakdown-table{width:190mm;margin:7mm auto 0}
+.prota-jp-page .jp-breakdown-table td{height:10mm}
+.prota-calendar-page .note,.prota-jp-page .note{margin-top:4mm}
+
+/* ===== V20: cetak Jadwal Mengajar ===== */
+.schedule-print-page .page-inner{padding:17mm 20mm 14mm}
+.schedule-print-title{text-align:center;font-family:"Times New Roman",serif;font-size:18pt;margin:0 0 6mm}
+.schedule-meta{border-collapse:collapse;margin:0 auto 8mm;font-family:"Times New Roman",serif;font-size:11pt;min-width:105mm}
+.schedule-meta td{padding:1mm 2mm;vertical-align:top}
+.schedule-meta td:first-child{width:38mm}
+.schedule-print-table{width:165mm;margin:0 auto;font-family:"Times New Roman",serif;font-size:11pt}
+.schedule-print-table th{font-size:12pt;padding:5mm 2mm}
+.schedule-print-table td{text-align:center;font-weight:700;height:14mm;padding:2mm}
+.schedule-print-table th:nth-child(1){width:24mm}
+.schedule-print-table th:nth-child(2){width:39mm}
+.schedule-print-table th:nth-child(3){width:62mm}
+.schedule-print-table th:nth-child(4){width:40mm}
+.schedule-print-table .schedule-total td{height:13mm;font-weight:700}
+.schedule-print-page .schedule-signature{margin-top:24mm}
+.schedule-print-page .schedule-signature .space{height:17mm}
+.schedule-print-page .signature-image{max-height:17mm}
+
+/* ===== V23: gambar TTD konsisten pada seluruh bagian pengesahan ===== */
+.signature{position:relative;z-index:4}
+.signature>div{position:relative;z-index:4}
+.signature-image-wrap{position:relative;z-index:5;background:transparent}
+.signature-image{position:relative;z-index:6;display:block;max-width:50mm;max-height:17mm;object-fit:contain;margin:0 auto}
+.calendar-signature{position:relative;z-index:4}
+.calendar-sign-space.has-image{position:relative;z-index:5}
+.calendar-sign-space img{position:relative;z-index:6;display:block;object-fit:contain}
+.payment-watermark{z-index:1}
+
+
+/* ===== V23.1: perapian tata letak CP dan Modul Ajar B. Inggris TL ===== */
+.cp-overview-page .page-inner,
+.cp-process-page .page-inner{padding:10.5mm 13mm 12mm}
+.cp-overview-page .doc-title,
+.cp-process-page .doc-title{font-size:15.5pt;margin-bottom:2mm;padding-bottom:2mm}
+.cp-overview-page .doc-head,
+.cp-process-page .doc-head{margin-bottom:2.5mm;font-size:8.7pt;gap:2mm 17mm}
+.cp-overview-page .doc-head dl,
+.cp-process-page .doc-head dl{grid-template-columns:32mm 3.5mm 1fr;row-gap:1mm}
+.cp-overview-page .section-title,
+.cp-process-page .section-title{font-size:11.2pt;margin:2.7mm 0 1.5mm}
+.cp-overview-page .text{font-size:8.65pt;line-height:1.36}
+.cp-overview-page .bullets{font-size:8.25pt;line-height:1.28;padding-left:4.5mm}
+.cp-overview-page .bullets li{margin-bottom:.8mm}
+.cp-overview-page .info-band{font-size:7.7pt;padding:2.2mm 3mm;margin:2.4mm 0}
+.cp-overview-page .cp-element-table{font-size:7.25pt}
+.cp-overview-page .cp-element-table th,
+.cp-overview-page .cp-element-table td{padding:1.35mm;line-height:1.12}
+.cp-process-page .cp-characteristics{gap:2.5mm}
+.cp-process-page .cp-characteristics .note{font-size:7.55pt;line-height:1.25;padding:2mm;margin:0}
+.cp-process-page .info-band{font-size:7.45pt;padding:2mm 3mm;margin:2.2mm 0}
+.cp-process-page .cp-process-table{font-size:6.9pt}
+.cp-process-page .cp-process-table th,
+.cp-process-page .cp-process-table td{padding:1.15mm;line-height:1.1}
+.cp-process-page .cp-profile-cards{gap:2mm}
+.cp-process-page .cp-profile-cards .principle{font-size:7.1pt;line-height:1.2;padding:2.3mm;border-top-width:1.2mm}
+.cp-process-page .cp-profile-cards .principle h3{font-size:9pt;margin-bottom:1mm}
+.cp-process-page .signature{margin-top:2.5mm;font-size:8.2pt}
+.cp-process-page .signature .space{height:10mm}
+
+.module-cd-page .page-inner,
+.module-eh-page .page-inner,
+.module-framework-page .page-inner{padding:10.5mm 13mm 12mm}
+.module-cd-page .topline,
+.module-eh-page .topline,
+.module-framework-page .topline{padding-bottom:2mm;margin-bottom:2.8mm;font-size:9pt}
+.module-cd-page .section-title,
+.module-eh-page .section-title,
+.module-framework-page .section-title{font-size:10.6pt;margin:2.3mm 0 1.4mm}
+.module-cd-page .tbl,
+.module-eh-page .tbl,
+.module-framework-page .tbl{font-size:6.85pt}
+.module-cd-page .tbl th,
+.module-cd-page .tbl td,
+.module-eh-page .tbl th,
+.module-eh-page .tbl td,
+.module-framework-page .tbl th,
+.module-framework-page .tbl td{padding:1.05mm 1.25mm;line-height:1.08}
+.module-cd-page .module-characteristics-table td:first-child{width:43mm!important}
+.module-cd-page .module-profile-table td:first-child{width:45mm!important}
+.module-values-row{display:grid;grid-template-columns:1fr 1fr;gap:2.5mm;margin:1.8mm 0 2mm}
+.module-values-row .note{font-size:6.75pt;line-height:1.17;padding:1.7mm;margin:0}
+.module-eh-page .module-cp-band{font-size:7.05pt;line-height:1.18;padding:2.2mm 3mm;margin:1.5mm 0}
+.module-eh-page .module-cross-table td:first-child{width:38mm!important}
+.module-eh-page .module-objectives-table{font-size:6.65pt}
+.module-eh-page .module-objectives-table th,
+.module-eh-page .module-objectives-table td{padding:.95mm 1.15mm;line-height:1.07}
+.module-eh-page .module-contexts{font-size:7.25pt;line-height:1.25}
+.module-framework-page .module-framework-table{font-size:7.1pt}
+.module-framework-page .module-framework-table td{padding:1.25mm 1.35mm;line-height:1.1}
+.module-framework-page .module-framework-table td:first-child{width:43mm!important}
+.module-framework-page .module-framework-note{font-size:7.25pt;line-height:1.25;padding:2.2mm;margin-top:2.5mm}
+
+@media print{
+  .cp-overview-page .page-inner,.cp-process-page .page-inner,
+  .module-cd-page .page-inner,.module-eh-page .page-inner,.module-framework-page .page-inner{
+    height:297mm!important;min-height:297mm!important;max-height:297mm!important;overflow:hidden!important
+  }
+}
+
+/* ===== V23.1b: keseimbangan ruang halaman ===== */
+.cp-overview-page .text{font-size:9.2pt;line-height:1.44}
+.cp-overview-page .bullets{font-size:8.8pt;line-height:1.36}
+.cp-overview-page .bullets li{margin-bottom:1.15mm}
+.cp-overview-page .info-band{font-size:8.25pt;padding:2.8mm 3.3mm;margin:3mm 0}
+.cp-overview-page .cp-element-table{font-size:7.9pt}
+.cp-overview-page .cp-element-table th,.cp-overview-page .cp-element-table td{padding:1.75mm;line-height:1.18}
+.cp-process-page .cp-characteristics .note{font-size:8.25pt;line-height:1.32;padding:2.6mm}
+.cp-process-page .info-band{font-size:8.1pt;padding:2.5mm 3.2mm;margin:2.8mm 0}
+.cp-process-page .cp-process-table{font-size:7.55pt}
+.cp-process-page .cp-process-table th,.cp-process-page .cp-process-table td{padding:1.5mm;line-height:1.16}
+.cp-process-page .cp-profile-cards .principle{font-size:7.8pt;line-height:1.28;padding:3mm}
+.cp-process-page .cp-profile-cards .principle h3{font-size:9.5pt}
+.cp-process-page .signature{margin-top:4mm;font-size:8.7pt}
+.cp-process-page .signature .space{height:13mm}
+
+.module-cd-page .tbl{font-size:7.75pt}
+.module-cd-page .tbl th,.module-cd-page .tbl td{padding:1.5mm 1.55mm;line-height:1.16}
+.module-values-row{gap:3mm;margin:2.5mm 0 3mm}
+.module-values-row .note{font-size:7.45pt;line-height:1.25;padding:2.3mm}
+.module-eh-page .module-cp-band{font-size:7.85pt;line-height:1.27;padding:3mm 3.4mm;margin:2mm 0}
+.module-eh-page .module-cross-table{font-size:7.8pt}
+.module-eh-page .module-cross-table td{padding:1.45mm 1.55mm;line-height:1.16}
+.module-eh-page .module-objectives-table{font-size:7.55pt}
+.module-eh-page .module-objectives-table th,.module-eh-page .module-objectives-table td{padding:1.4mm 1.5mm;line-height:1.15}
+.module-eh-page .module-contexts{font-size:8pt;line-height:1.38}
+.module-framework-page .module-framework-table{font-size:8.2pt}
+.module-framework-page .module-framework-table td{padding:1.8mm 1.7mm;line-height:1.2}
+.module-framework-page .module-framework-note{font-size:8pt;line-height:1.35;padding:3mm;margin-top:3.5mm}
+
+/* V24.1 - ruang penyeimbang ketika hanya satu logo dipakai */
+.print-letterhead .print-kop-logo-spacer{width:16mm;height:16mm;display:block;justify-self:center}
+.calendar-print-page .print-letterhead .print-kop-logo-spacer{width:14mm;height:14mm}
+
+/* ===== B. Inggris TL V25 CP 2026 print theme ===== */
+.cover{background:linear-gradient(160deg,#fbfaf4 0%,#edf5ef 48%,#fff7dc 100%)!important}.cover:before{background:linear-gradient(90deg,#123b2f,#1e5b45,#b78b2d)!important}.cover h1{color:#123b2f!important}.cover h2,.cover-kicker,.cover-center small{color:#80651d!important}.accent-line{background:linear-gradient(90deg,#123b2f,#1e5b45,#b78b2d)!important}.identity-box{border-color:#a9c4b6!important}.cover-foot{color:#123b2f!important}.cover-foot span{color:#80651d!important}
+

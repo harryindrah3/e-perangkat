@@ -1,0 +1,20 @@
+SUMBER DAN KOREKSI — MATEMATIKA FASE A
+Kelas: I, II
+Folder acuan: https://drive.google.com/drive/folders/1CshbNA74njagHVLH0EJrKJv1_qronEmP
+
+Catatan normalisasi:
+1. Alokasi JP pada ATP, Prota, Promes, dan sebagian Modul Ajar
+   Temuan: Kolom atau identitas alokasi JP pada sumber kelas I dan II masih kosong.
+   Penanganan: Aplikasi menggunakan distribusi kerja 180 JP per tahun untuk setiap kelas: 90 JP Semester I dan 90 JP Semester II, dibagi berdasarkan kompleksitas tujuan dan materi. Distribusi dicatat pada CSV dan dapat direvisi pada pengembangan berikutnya.
+2. Penamaan satuan pendidikan pada sumber
+   Temuan: Sebagian dokumen menggunakan istilah Nama Madrasah.
+   Penanganan: Aplikasi menggunakan istilah umum Satuan Pendidikan agar sesuai untuk SD, MI, dan Program Paket A.
+3. Penamaan judul bab
+   Temuan: Kapitalisasi dan penulisan judul pada ATP, Modul Ajar, dan daftar file tidak selalu sama.
+   Penanganan: Judul ditampilkan konsisten mengikuti lingkup materi ATP tanpa mengubah substansi.
+4. LKPD
+   Temuan: Tidak tersedia folder LKPD terpisah; aktivitas LKPD terdapat di dalam lampiran Modul Ajar.
+   Penanganan: LKPD aplikasi disusun dan ditautkan pada Modul Ajar sumber setiap bab.
+5. Buku kelas II
+   Temuan: Folder Matematika kelas II yang terhubung tidak menampilkan berkas Buku Siswa/Panduan Guru terpisah.
+   Penanganan: Konten kelas II menggunakan CP, TP, ATP, Prota, Promes, KKTP, Jurnal, serta delapan Modul Ajar sumber yang tersedia.

@@ -1,0 +1,9 @@
+{
+  "name": "E-Perangkat Matematika Fase E",
+  "short_name": "Matematika FE",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#F4F8FF",
+  "theme_color": "#173A8F",
+  "description": "E-Perangkat Matematika Fase E Kelas X CP 2026."
+}

@@ -1,0 +1,8 @@
+{
+  "name": "E-Perangkat Pendidikan Jasmani, Olahraga, dan Kesehatan Fase A",
+  "short_name": "PJOK FA",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#166534"
+}

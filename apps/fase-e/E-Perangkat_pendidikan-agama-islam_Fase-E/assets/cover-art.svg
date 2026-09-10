@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 794 1123" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bgpendidikanagamaislamE" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#154D3C"/><stop offset=".56" stop-color="#218B68"/><stop offset="1" stop-color="#D6B85A"/></linearGradient>
+    <linearGradient id="fadependidikanagamaislamE" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff" stop-opacity=".06"/><stop offset="1" stop-color="#fff" stop-opacity=".92"/></linearGradient>
+    <pattern id="dotspendidikanagamaislamE" width="34" height="34" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="2.2" fill="#fff" opacity=".22"/></pattern>
+    <filter id="shadowpendidikanagamaislamE" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="15" stdDeviation="18" flood-color="#08121f" flood-opacity=".2"/></filter>
+  </defs>
+  <rect width="794" height="1123" fill="#f7fafc"/>
+  <path d="M0 0h794v500C620 515 260 570 0 515z" fill="url(#bgpendidikanagamaislamE)"/>
+  <path d="M0 0h794v500C620 515 260 570 0 515z" fill="url(#dotspendidikanagamaislamE)"/>
+  <path d="M-80 430L874 410v110L-80 540z" fill="#fff" opacity=".09"/>
+  <circle cx="628" cy="172" r="220" fill="#fff" opacity=".09"/>
+  <circle cx="628" cy="172" r="154" fill="none" stroke="#fff" stroke-width="2" opacity=".25"/>
+  <g transform="translate(405 76) scale(1.25)" opacity=".9"><g fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M43 224V112c0-42 38-60 85-92 47 32 85 50 85 92v112M23 224h210"/><path d="M79 224v-65c0-29 20-49 49-65 29 16 49 36 49 65v65"/><path d="M128 20v-11M113 36h30"/><path d="M182 43a37 37 0 10 31 59 45 45 0 11-31-59z" fill="#fff" opacity=".25"/><path d="M128 119l8 19 21 2-16 14 5 21-18-11-18 11 5-21-16-14 21-2z"/></g></g>
+  <path d="M0 1010c210-58 387-43 530 5 98 33 186 32 264-5v113H0z" fill="#154D3C" opacity=".08"/>
+  <path d="M0 1046c190-42 354-35 510 8 113 31 208 28 284-7v76H0z" fill="#218B68" opacity=".09"/>
+  <rect x="0" y="0" width="16" height="1123" fill="#D6B85A" opacity=".95"/>
+  <rect x="16" y="0" width="6" height="1123" fill="#fff" opacity=".38"/>
+  </svg>

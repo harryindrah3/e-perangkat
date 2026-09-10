@@ -1,0 +1,9 @@
+{
+  "name": "E-Perangkat Sejarah Fase F",
+  "short_name": "Sejarah FF",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#FBF6F1",
+  "theme_color": "#5F1F0B",
+  "description": "E-Perangkat Sejarah Fase F Kelas X CP 2026."
+}

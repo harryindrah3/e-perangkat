@@ -1,0 +1,14 @@
+BOOK	XI	BG PPKn 11 (Revisi).pdf	https://drive.google.com/file/d/1st7kYMLyp-fjouRYxCDmPMDt3vOzhdWm/view?usp=drivesdk
+BOOK	XI	BS PPKn 11 (Revisi).pdf	https://drive.google.com/file/d/1VSOFL76SjTLnEeDYKQHPf87s7VhuTUzJ/view?usp=drivesdk
+PROMES	XI	Program Semester - Pendidikan Pancasila 11.docx	https://docs.google.com/document/d/1k9fj_OzupGJY4IuyJazVAP7s7D6STayw/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XI	ATP - Pendidikan Pancasila 11.docx	https://docs.google.com/document/d/1cb9ZCl51PKfUm-MJul79EbmnThpG-6HL/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XI	Program Tahunan - Pendidikan Pancasila 11.docx	https://docs.google.com/document/d/1OJEGSfeuWzVcbGdK5i3pjNnh2JucjkUu/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XI	KKTP - Pendidikan Pancasila 11.docx	https://docs.google.com/document/d/19CLD1OUXsYsBDPAzJRnKNvuIqo4mXhpr/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XI	CP Fase F - Pendidikan Pancasila.docx	https://docs.google.com/document/d/1fNrt0-m8uBBxFwS3Q55vUI0DpaFGoUgl/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	XII	BG 12 - Pendidikan Pancasila.pdf	https://drive.google.com/file/d/1O4Bm9SAsfGarbJy5Y6uvyPH2MGp953Jq/view?usp=drivesdk
+BOOK	XII	BS 12 - Pendidikan Pancasila.pdf	https://drive.google.com/file/d/1C4leKr2-wleBFgsSsbImVOtJvJ_YmxLk/view?usp=drivesdk
+CP	XII	CP Fase F - Pendidikan Pancasila.docx	https://docs.google.com/document/d/1UnVehFJ058IxyY4JR1YaHzh1lozpGcyr/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XII	PROTA - Pendidikan Pancasila.docx	https://docs.google.com/document/d/15_mcwfDhzPWMbvMb5wv2b6BrniZ3ZVA9/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XII	KKTP - Pendidikan Pancasila.docx	https://docs.google.com/document/d/12fSTbUdjnPQ4evb_mQAmsJb7knVhGjA0/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XII	ATP Fase F - Pendidikan Pancasila.docx	https://docs.google.com/document/d/1HtCVbotUhWWKPaOVfpw4HSOfZGjWxe5h/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XII	PROSEM - Pendidikan Pancasila.docx	https://docs.google.com/document/d/140OtwhokqJgIr1QWW5h2r7R7m9kGo5hm/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

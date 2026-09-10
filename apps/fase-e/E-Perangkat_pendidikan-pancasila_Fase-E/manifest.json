@@ -1,0 +1,9 @@
+{
+  "name": "E-Perangkat Pendidikan Pancasila Fase E",
+  "short_name": "Pancasila FE",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#FFF8F6",
+  "theme_color": "#8B1E2D",
+  "description": "E-Perangkat Pendidikan Pancasila Fase E Kelas X CP 2026."
+}

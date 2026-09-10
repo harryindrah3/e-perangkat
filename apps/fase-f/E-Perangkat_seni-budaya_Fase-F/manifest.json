@@ -1,0 +1,9 @@
+{
+  "name": "E-Perangkat Seni Budaya Fase F",
+  "short_name": "Seni Budaya FF",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#FCF4F8",
+  "theme_color": "#831843",
+  "description": "E-Perangkat Seni Budaya Fase F Kelas X CP 2026."
+}

@@ -1,0 +1,8 @@
+{
+  "name": "E-Perangkat Matematika Fase D",
+  "short_name": "Matematika FD",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#164E63"
+}

@@ -1,0 +1,20 @@
+SUMBER DAN KOREKSI — BAHASA INGGRIS FASE C
+Kelas: V, VI
+Folder acuan: https://drive.google.com/drive/folders/1EJrK1fwDPdrz-l2n6F-ROCnkFN_jWTl4
+
+Catatan normalisasi:
+1. CP Bahasa Inggris 2025
+   Temuan: Pada judul Fase C di lampiran terdapat salah ketik ‘Kelas III dan IV’. Diktum keputusan menetapkan Fase C untuk kelas V dan VI.
+   Penanganan: Label pada E-Perangkat dinormalisasi menjadi Fase C Kelas V–VI tanpa mengubah rumusan capaian tiap elemen.
+2. Kelas V
+   Temuan: Buku resmi membagi muatan menjadi 6 chapter dan panduan memberi kisaran 8–10 JP per chapter.
+   Penanganan: E-Perangkat menggunakan 10 JP per chapter atau 60 JP inti; alokasi tetap dapat diedit sesuai struktur sekolah.
+3. Kelas VI
+   Temuan: Buku My Next Words Grade 6 dan beberapa perangkat lama memakai nomenklatur/format yang belum sepenuhnya konsisten dengan CP 2025.
+   Penanganan: Sebelas unit dipertahankan sebagai sumber materi, lalu tujuan, elemen, KKTP, dan pendekatan dinormalisasi ke Bahasa Inggris Fase C CP 2025.
+4. Alokasi Kelas VI
+   Temuan: Sumber buku tidak menetapkan satu distribusi JP nasional yang seragam.
+   Penanganan: Disediakan rekomendasi editable 72 JP: 40 JP semester ganjil dan 32 JP semester genap, dengan penekanan tambahan pada unit pembuka, proyek recount, dan proyek akhir My Dream.
+5. Fitur aplikasi
+   Temuan: Perubahan mata pelajaran berisiko bercampur dengan data aplikasi Bahasa Indonesia.
+   Penanganan: Penyimpanan dipisahkan menggunakan namespace bahasainggris.v1; fitur profil, pesanan, tanda tangan, jadwal, peserta didik, nilai, analisis, dan paket cetak tetap tersedia.

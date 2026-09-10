@@ -1,0 +1,23 @@
+SUMBER DAN KOREKSI — ILMU PENGETAHUAN ALAM FASE D
+Kelas: VII, VIII, IX
+Folder acuan: https://drive.google.com/drive/folders/1CL05KWzf2wWOjZJ0WgJpJXIZocIGOFtZ
+
+Catatan normalisasi:
+1. Struktur Materi Kelas VII
+   Temuan: Versi acuan lama memakai judul dan lingkup bab yang tidak sepenuhnya sama dengan buku revisi 2023.
+   Penanganan: Diselaraskan menjadi 7 bab: Hakikat Ilmu Sains; Zat; Suhu-Kalor-Pemuaian; Gerak-Gaya; Klasifikasi; Ekologi; Bumi dan Tata Surya.
+2. Struktur Materi Kelas VIII
+   Temuan: Versi lama memuat Sel, Unsur-Senyawa, dan Struktur Bumi yang tidak lagi menjadi urutan buku revisi kelas VIII 2024.
+   Penanganan: Diganti menjadi 7 bab buku revisi: dua bab sistem tubuh, usaha-energi, tekanan, gelombang-cahaya, pemisahan campuran, dan tanah berkelanjutan.
+3. Struktur Materi Kelas IX
+   Temuan: Versi lama memuat Pertumbuhan, Tekanan, dan Reaksi Kimia sebagai bab tersendiri.
+   Penanganan: Diselaraskan menjadi 6 bab buku revisi 2025: koordinasi-homeostasis, zat aditif/adiktif, reproduksi, pewarisan-bioteknologi, listrik-magnet-energi, dan isu lingkungan.
+4. Capaian Pembelajaran
+   Temuan: Rumusan fase perlu mengikuti acuan terkini.
+   Penanganan: Menggunakan substansi CP IPA Fase D pada Panduan Guru Kelas IX revisi 2025 yang merujuk Kepka BSKAP Nomor 046/H/KR/2025.
+5. Alokasi Waktu
+   Temuan: Jumlah saran per bab pada panduan dapat berbeda dari total contoh ATP tahunan.
+   Penanganan: Program disusun 144 JP kelas VII, 144 JP kelas VIII, dan 128 JP kelas IX. Rekomendasi panduan guru tetap ditampilkan pada detail modul.
+6. Istilah Profil
+   Temuan: Buku kelas IX revisi menggunakan delapan dimensi Profil Lulusan.
+   Penanganan: Modul menampilkan Keimanan, Kewargaan, Penalaran Kritis, Kreativitas, Kolaborasi, Kemandirian, Kesehatan, dan Komunikasi.

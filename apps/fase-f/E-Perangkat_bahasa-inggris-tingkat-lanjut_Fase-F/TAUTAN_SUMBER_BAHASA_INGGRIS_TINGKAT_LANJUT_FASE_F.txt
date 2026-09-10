@@ -1,0 +1,13 @@
+BOOK	XI	BG 11 - Bahasa Inggris Tingkat Lanjut.pdf	https://drive.google.com/file/d/1KN1hSWB8a9VeoX_YOI5twf2k2ktn4GbW/view?usp=drivesdk
+BOOK	XI	BS 11 - Bahasa Inggris Tingkat Lanjut.pdf	https://drive.google.com/file/d/1EM3IibPdK46RyX1Nl-5rfIjGEGM9rexn/view?usp=drivesdk
+KKTP	XI	KKTP - Bahasa Inggris TL 11.docx	https://docs.google.com/document/d/1MpJUpRI9wIYlKXNm5mpRxQ3EWlPoK23H/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XI	ATP - Bahasa Inggris TL 11.docx	https://docs.google.com/document/d/12yhnl182r06_lgVFSrWSkfdndGHfmFdb/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XI	Program Semester - Bahasa Inggris TL 11.docx	https://docs.google.com/document/d/1gkm3SwvBp92JiMSIzD-WPX-CWixdNmt6/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XI	Program Tahunan - Bahasa Inggris TL 11.docx	https://docs.google.com/document/d/1VUT0tdiUX4OrMqxUvVirw2bSjsuw_-_V/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XI	CP Fase F - Bahasa Inggris TL.docx	https://docs.google.com/document/d/15yifJU3MiyB-Z4s1uuy9aMV5MvC1jLYn/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	XII	BS 12 - Bahasa Inggris TL.pdf	https://drive.google.com/file/d/19MHDFeIs_-C4XDV6NdmIR5NZrUO4JH6e/view?usp=drivesdk
+BOOK	XII	BG 12 - Bahasa Inggris TL.pdf	https://drive.google.com/file/d/1OeXmoHRmOywT2DcEXhOWrR6Hw4DCEFdf/view?usp=drivesdk
+PROTA	XII	PROTA - Bahasa Inggris TL.docx	https://docs.google.com/document/d/1YC97LwXknV2URLKRbTDRU6M9vbP5cbt1/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XII	KKTP - Bahasa Inggris TL.docx	https://docs.google.com/document/d/1pna0fUo9gny-A6Bh_B60OtAZCnqo-neZ/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XII	PROSEM - Bahasa Inggris TL.docx	https://docs.google.com/document/d/1naumpmlho5UbMPNMx6UtwYRNcaBL62EH/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XII	CP Fase F - Bahasa Inggris (TL).docx	https://docs.google.com/document/d/1eNMGb1GGIPx7ZP-UAi1X66jOOEpXz7B8/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

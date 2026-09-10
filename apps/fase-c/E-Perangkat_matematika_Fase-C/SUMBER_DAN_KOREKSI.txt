@@ -1,0 +1,17 @@
+SUMBER DAN KOREKSI — MATEMATIKA FASE C
+Kelas: V, VI
+Folder acuan: https://drive.google.com/drive/folders/179PlG2h7jHQvDhVZ9JL93nnTz2VgOeV4
+
+Catatan normalisasi:
+1. ATP dan Prota Matematika Kelas V
+   Temuan: ATP dan Prota menulis materi terakhir sebagai Bab 9, sedangkan urutan tahunan hanya memiliki delapan materi utama.
+   Penanganan: Materi Bilangan Cacah sampai 1.000.000 dinormalkan sebagai Bab 8 agar urutan modul dan menu konsisten; kode sumber ATP/Prota tetap dicatat.
+2. Modul Ajar Matematika Kelas V Bab 8
+   Temuan: File Modul Ajar Bab 8 di Drive berjudul Pengolahan Data, sehingga menduplikasi Bab 5 dan tidak sesuai materi terakhir ATP/Prota.
+   Penanganan: Bab 8 disusun dari ATP, Prota, dan LKPD Bab 9 yang secara jelas memuat Bilangan Cacah sampai 1.000.000. File duplikat tetap dicantumkan pada Sumber & Koreksi.
+3. CP Matematika Kelas V dan VI
+   Temuan: Kedua dokumen memuat CP Fase C dengan variasi penekanan dan redaksi.
+   Penanganan: Rumusan disatukan berdasarkan lima elemen Matematika, sedangkan tujuan dan kompleksitas setiap bab mengikuti ATP masing-masing kelas.
+4. Modul Ajar dan LKPD Matematika Kelas V–VI
+   Temuan: Sebagian file memiliki salah tulis kelas, penomoran, simbol pecahan hasil konversi, dan format administrasi yang tidak seragam.
+   Penanganan: Substansi konsep, konteks, aktivitas, dan tujuan dipertahankan; struktur, istilah, identitas, dan tampilan dinormalkan dalam aplikasi.

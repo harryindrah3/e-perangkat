@@ -1,0 +1,33 @@
+ATP	XI	ATP - Kerajinan 11.docx	https://docs.google.com/document/d/16GRLXD5kkc6VWkvWf8siC_1FpZvH4Rcm/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XI	KKTP - Kerajinan 11.docx	https://docs.google.com/document/d/1V6uJ_avAefMJJpa6jR-9JBLvVdVvnUxb/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XI	Program Tahunan - Kerajinan 11.docx	https://docs.google.com/document/d/1I1Moag7ZOIC6LY9nRbGi2RUO8y-WDHX2/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XI	CP Fase F - Kerajinan.docx	https://docs.google.com/document/d/17coXPNE8GqCemfXRD-4sobgP2VEgf2uF/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XI	Program Semester - Kerajinan 11.docx	https://docs.google.com/document/d/1PNIkapeA8Lxgvl1YiH5Ly1179noO2NsN/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XI	KKTP - Pengolahan 11.docx	https://docs.google.com/document/d/1Ju3pxdoQJ3FazL3QrGer1RzolUhOH-4j/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XI	Program Tahunan - Pengolahan 11.docx	https://docs.google.com/document/d/1YQg13qmi2j8CmVBSz2mPwWstOsOo4sE_/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XI	ATP - Pengolahan 11.docx	https://docs.google.com/document/d/1HHJwHAr1SEiOFLezGSLw3I11N0uQWz6-/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XI	CP Fase F - Pengolahan.docx	https://docs.google.com/document/d/1Iftrse0Ija-bwkPU_fVtbOhRtvBn3Sk8/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XI	Program Semester - Pengolahan 11.docx	https://docs.google.com/document/d/1vw8U1402kNuTIWryN2MkO9aOKpf8IFs3/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	XII	BG 12 - Prakarya_Kerajinan.pdf	https://drive.google.com/file/d/11aSXtwwvY-c08Ko3V4S6Kl3zySOrFTIH/view?usp=drivesdk
+CP	XII	CP Fase F - PKWU Kerajinan.docx	https://docs.google.com/document/d/1LaTxsSge_aCMlDjLnNpXsfEwwZJd5r2c/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XII	PROTA - Prakarya (Kerajinan).docx	https://docs.google.com/document/d/1bCDN81Urlcv0OwSc-LIFw0EQHGmyjej_/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XII	ATP Fase F - Prakarya (Kerajinan).docx	https://docs.google.com/document/d/155rd0sW3TgGcG4VWLZjKv-PeRTQYLdgy/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XII	PROSEM - Prakarya (Kerajinan).docx	https://docs.google.com/document/d/1Xtqv8gFWHGn7zFbRbmH6RRn-1eOmcn3R/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XII	KKTP - Prakarya (Kerajinan).docx	https://docs.google.com/document/d/18cS8Z2DC4UVtPB6dXxz_koJ8lQn_IHGZ/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	XII	BG 12 - Prakarya_Rekayasa.pdf	https://drive.google.com/file/d/1ycbrE3Ty4i0WEu7q7bm0atYAXzevcys8/view?usp=drivesdk
+PROTA	XII	PROTA - Prakarya (Rekayasa).docx	https://docs.google.com/document/d/1BE6g1iu8m3owk6H7iDqJTXXTG7MljO1w/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XII	KKTP - Prakarya (Rekayasa).docx	https://docs.google.com/document/d/1ACsrpSUI5pDg35_7fDH7JhWHEOj5VMpv/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XII	PROSEM - Prakarya (Rekayasa).docx	https://docs.google.com/document/d/1QN8PdWS3H0xJxM8fEvpAIsfpY_3gY9V3/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XII	CP Fase F - PKWU Rekayasa.docx	https://docs.google.com/document/d/1sv9yP2M5tg6CaEbYOMAuLDgw6ToGUhnJ/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XII	ATP Fase F - Prakarya (Rekayasa).docx	https://docs.google.com/document/d/13JuUPaCXuG5EBvyPDV97tUUA6DK6hF99/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	XII	BG 12 - Prakarya_Pengolahan.pdf	https://drive.google.com/file/d/1PjFtYQnZlA1QD1pceusUIGk381s9-gKN/view?usp=drivesdk
+PROMES	XII	PROSEM - Prakarya (Pengolahan).docx	https://docs.google.com/document/d/17ZPKPXviPDHrpAOLl09tLwQFNCprlTDX/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XII	ATP Fase F - Prakarya (Pengolahan).docx	https://docs.google.com/document/d/1rLHFqG6EwT8DRCkqFREli6H-1eAu9076/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XII	KKTP - Prakarya (Pengolahan).docx	https://docs.google.com/document/d/1qJCWWczxgzVHSiN16yFW5-uaZWbwOpqv/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XII	CP Fase F - PKWU Pengolahan.docx	https://docs.google.com/document/d/1_oSgfsKS9V7LDLBw-l-J6XWv9lNSsuVZ/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XII	PROTA - Prakarya (Pengolahan).docx	https://docs.google.com/document/d/15trqY8BIfoSOVuoTXp9Vebdt1BlAseld/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XII	PROTA - Prakarya (Budidaya).docx	https://docs.google.com/document/d/1HPEnY3NunNC8kCTIFRVH-S2zF78hXlFf/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XII	CP Fase F - PKWU Budi Daya.docx	https://docs.google.com/document/d/1EjM7K1Esx_D9ckWVr4MiiW2h1DYhj5bl/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XII	PROSEM - Prakarya (Budidaya).docx	https://docs.google.com/document/d/1UaoLs7-N9aSNDZgBaDkuKiOh7sDviQhU/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XII	KKTP - Prakarya (Budidaya).docx	https://docs.google.com/document/d/1ON4G6u4m1jL5VCObajtF5Af05U7cTKvR/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XII	ATP Fase F - Prakarya (Budidaya).docx	https://docs.google.com/document/d/1EM-3PLp0w5fb87Ii24Ogs7EFznjAZo0o/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

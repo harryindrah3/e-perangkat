@@ -1,0 +1,20 @@
+SUMBER DAN KOREKSI — PENDIDIKAN AGAMA ISLAM DAN BUDI PEKERTI FASE B
+Kelas: III, IV
+Folder acuan: https://drive.google.com/drive/folders/14RcH5O_XzOtTxSJ51H7Of5sZnnrlyEns
+
+Catatan normalisasi:
+1. CP PAI dan Budi Pekerti Fase B terbaru (11 Juni 2026)
+   Temuan: Sebagian modul sumber memakai rumusan CP sebelumnya atau materi yang tidak lagi tercantum sebagai kompetensi inti Fase B, misalnya puasa pada kelas III.
+   Penanganan: Rumusan CP aplikasi menggunakan CP 2026. Materi lama yang relevan hanya dijadikan pengayaan; tujuan inti dialihkan kepada azan, ikamah, salat Jumat, salat sunah, balig, dan taklif sesuai CP.
+2. Modul Ajar PAIBP Kelas III–IV di Google Drive
+   Temuan: Istilah “Deep Learning” pada beberapa sumber dipahami sebagai aplikasi TensorFlow/PyTorch dan terdapat pengulangan tujuan, ejaan, serta langkah kegiatan.
+   Penanganan: Pembelajaran Mendalam dimaknai sebagai berkesadaran, bermakna, dan menggembirakan. Langkah pembelajaran, bahasa, asesmen, dan format administrasi dinormalisasi.
+3. Materi keberagaman kelas IV
+   Temuan: Sumber menempatkan keberagaman sebagai bab akhlak yang luas, sedangkan CP Akhlak Fase B 2026 berfokus pada Allah, orang tua, keluarga, dan guru.
+   Penanganan: Materi keberagaman dipertahankan sebagai konteks penerapan hadis menjaga hubungan baik dengan sesama, bukan sebagai perluasan rumusan CP Akhlak.
+4. Cakupan sejarah
+   Temuan: Sumber kelas III–IV terutama memuat masa kanak-kanak dan remaja Nabi Muhammad saw.
+   Penanganan: Perangkat dilengkapi secara bertahap hingga peristiwa menjadi rasul dan dakwah periode Makkah, tetap sesuai batas CP Fase B.
+5. Alokasi waktu
+   Temuan: Dokumen sumber berbentuk modul per topik dan tidak seluruhnya memuat alokasi tahunan yang konsisten.
+   Penanganan: Disusun 108 JP per kelas per tahun (54 JP per semester) sebagai rancangan operasional yang dapat disesuaikan dengan struktur dan kalender satuan pendidikan.

@@ -1,0 +1,14 @@
+BOOK	XI	BG 11 - Ekonomi.pdf	https://drive.google.com/file/d/1BhZRlWd4I--g_gK2z1UgNNEMiRHpRB6I/view?usp=drivesdk
+BOOK	XI	BS 11 - Ekonomi.pdf	https://drive.google.com/file/d/1cjI2Cp6Du-p4XtTO2KvHs5F16xc0h0zI/view?usp=drivesdk
+CP	XI	CP Fase F - Ekonomi.docx	https://docs.google.com/document/d/15xbETFPG85w6kq5YG5Oyr3DzVkwZQ4e9/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XI	Program Tahunan - Ekonomi 11.docx	https://docs.google.com/document/d/1iMP8twV9fAIB-pR6nG1aUu7lPyJm7ajZ/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XI	Program Semester - Ekonomi 11.docx	https://docs.google.com/document/d/1BDHjHBOvnyQRfA3A1R0lWJLItbdE6vUm/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XI	KKTP - Ekonomi 11.docx	https://docs.google.com/document/d/1168odXPCCsKF_CVALOaI4_TrXHsST1gl/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XI	ATP - Ekonomi 11.docx	https://docs.google.com/document/d/1KzIeBRhhmPn-wyGWdj-qxOllUe3YUtk1/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	XII	BG 12 - Ekonomi.pdf	https://drive.google.com/file/d/1Iy3BM-wcw763oc6YMr4LRjjhGx-GJubQ/view?usp=drivesdk
+BOOK	XII	BS 12 - Ekonomi.pdf	https://drive.google.com/file/d/1b8zQTm9MnxUXipW3Nmzvur3bxy1TMKdY/view?usp=drivesdk
+ATP	XII	ATP Fase F - Ekonomi.docx	https://docs.google.com/document/d/1C9MhYxE2As1ERJt0OdhQauuUOgBWieB7/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XII	KKTP - Ekonomi.docx	https://docs.google.com/document/d/1fxIxqTrY5ISKbXFcNbj2TXTMWTB7BXjz/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XII	PROSEM - Ekonomi.docx	https://docs.google.com/document/d/1baB6sj1cNmmXYMbTKL5xRxEnOWZaOl-m/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XII	CP Fase F - Ekonomi.docx	https://docs.google.com/document/d/1cextSSp_KfX4IKMEid0cyfkHnW_IA52K/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XII	PROTA - Ekonomi.docx	https://docs.google.com/document/d/185ixJnPB3sGViGuGMOIkZXqwwc0cAlai/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

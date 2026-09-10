@@ -1,0 +1,26 @@
+SUMBER DAN KOREKSI — BAHASA INGGRIS FASE A
+Kelas: I, II
+Folder acuan: https://drive.google.com/drive/folders/1QEhcgYXQLCl5YauOmjZ9AcJoypFgmDLf
+
+Catatan normalisasi:
+1. Kedudukan Bahasa Inggris Kelas II
+   Temuan: CP Bahasa Inggris 2025 menetapkan pembelajaran Bahasa Inggris wajib mulai Fase B, sedangkan sumber Kelas II terhubung memakai label Fase A.
+   Penanganan: Paket diberi status program pilihan/muatan lokal Kelas II. CP Fase A dari dokumen lama dipakai sebagai acuan operasional pembelajaran, bukan diklaim sebagai CP resmi 2025.
+2. Unit 3
+   Temuan: Dokumen sumber menulis ‘Where Is My Pean’.
+   Penanganan: Dinormalisasi menjadi ‘Where Is My Pen?’ karena konteks dan kosakata unit membahas pen/pencil serta benda kelas.
+3. Unit 4
+   Temuan: Dokumen sumber menulis ‘Booksshelf’.
+   Penanganan: Dinormalisasi menjadi ‘Bookshelf’ dan kapitalisasi judul dirapikan tanpa mengubah substansi.
+4. Alokasi Waktu
+   Temuan: Modul sumber menuliskan 6 minggu, sedangkan Prota/Promes menetapkan 6 JP per unit.
+   Penanganan: Perangkat memakai 6 JP per unit yang dibagi menjadi 3 pertemuan @2 JP; total 60 JP setahun.
+5. Menulis Kelas II
+   Temuan: Beberapa aktivitas sumber dapat terbaca sebagai tuntutan menulis mandiri yang tinggi.
+   Penanganan: Menulis diposisikan sebagai penguatan terbimbing: menyalin, melengkapi, memberi label, dan membuat kartu/poster sederhana; fokus utama tetap menyimak dan berbicara.
+6. Penyimpanan Aplikasi
+   Temuan: Data berisiko bercampur dengan E-Perangkat Seni Rupa atau mata pelajaran lain.
+   Penanganan: Namespace dipisahkan menjadi binggris.fasea.kelas2.v1 untuk profil, peserta didik, nilai, jadwal, tanda tangan, pesanan, dan riwayat.
+7. Modul Bahasa Inggris Kelas I
+   Temuan: Sumber paket langsung untuk kelas I tidak tersedia pada folder acuan; sumber terdekat yang tersedia adalah kelas II dalam fase yang sama.
+   Penanganan: Struktur modul kelas II diadaptasi sebagai perangkat awal kelas I; guru perlu menyesuaikan kedalaman materi dengan kesiapan peserta didik.

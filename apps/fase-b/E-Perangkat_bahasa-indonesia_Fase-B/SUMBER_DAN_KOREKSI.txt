@@ -1,0 +1,20 @@
+SUMBER DAN KOREKSI — BAHASA INDONESIA FASE B
+Kelas: III, IV
+Folder acuan: https://drive.google.com/drive/folders/1YoM-tbC7zVmi0Fo8pENfASGkRnqSiMKu
+
+Catatan normalisasi:
+1. Capaian Pembelajaran
+   Temuan: Dokumen perubahan CP tahun 2026 berfokus pada Pendidikan Agama dan Budi Pekerti.
+   Penanganan: Bahasa Indonesia Fase B tetap menggunakan CP pada Keputusan Kepala BSKAP Nomor 032/H/KR/2024 yang selaras dengan buku revisi.
+2. Struktur Kelas III
+   Temuan: Bahan lama umumnya menggunakan delapan bab dari edisi sebelum revisi.
+   Penanganan: Disusun ulang menjadi empat bab sesuai Buku Siswa dan Panduan Guru Edisi Revisi 2025, masing-masing 54 JP, total 216 JP.
+3. Struktur Kelas IV
+   Temuan: Judul, tujuan, dan muatan tiap bab perlu diselaraskan dengan Buku Lihat Sekitar Edisi Revisi 2023.
+   Penanganan: Disusun menjadi delapan bab dengan alokasi 26/28 JP per bab, total 216 JP; judul Bab V mengikuti Buku Siswa: Bertukar dan Membayar.
+4. Muatan pembelajaran
+   Temuan: ATP, Prota, Prosem, modul, bahan ajar, LKPD, dan asesmen versi lama belum mengikuti tujuan serta aktivitas buku revisi.
+   Penanganan: Seluruh muatan dibangun ulang dari tujuan pembelajaran, pokok materi, aktivitas, asesmen, dan produk autentik pada buku revisi.
+5. Fitur aplikasi
+   Temuan: Perubahan fase dan kelas berisiko bercampur dengan data E-Perangkat Fase C.
+   Penanganan: Namespace penyimpanan dipisahkan menjadi bahasaindonesia.faseb.v25 agar profil, peserta didik, nilai, jadwal, dan riwayat tetap aman.

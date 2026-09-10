@@ -1,0 +1,9 @@
+{
+  "name": "E-Perangkat Informatika Fase F",
+  "short_name": "Informatika FF",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#F4F7FA",
+  "theme_color": "#111827",
+  "description": "E-Perangkat Informatika Fase F Kelas X CP 2026."
+}

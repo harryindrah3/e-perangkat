@@ -1,0 +1,18 @@
+BOOK	X	Prakarya-Kerajinan-BG-KLS-X.pdf	https://drive.google.com/file/d/13F5uqbD_ScGEXTxG7n9AGv0h42rEdRbb/view?usp=drivesdk
+ATP	X	ATP Fase E - Prakarya (Kerajinan).docx	https://docs.google.com/document/d/1m20NqgecH0Znfp4IreqtH2Wgm060AnCI/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	X	KKTP Fase E - Prakarya (Kerajinan).docx	https://docs.google.com/document/d/1UWq4DjWyXfPr6X-KhRFiZ9_rwT0difbd/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	X	PROTA Fase E - Prakarya (Kerajinan).docx	https://docs.google.com/document/d/1uvIhCBsRb3Qit484i-M5bHfdiF5IcyeZ/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	X	PROSEM Fase E - Prakarya (Kerajinan).docx	https://docs.google.com/document/d/1iCB8XkVFaBrkkRGrgumyOJBswSnCKzMn/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	X	CP Fase E - Prakarya Kerajinan.docx	https://docs.google.com/document/d/1uEedyiXsU2uI4IAFRprnnHOXfngseu1z/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	X	Prakarya-Pengolahan-BG-KLS-X.pdf	https://drive.google.com/file/d/1CGvWIxnto5hDECeWc1qjKQKUZmTE4Lm9/view?usp=drivesdk
+KKTP	X	KKTP Fase E - Prakarya (Pengolahan).docx	https://docs.google.com/document/d/1rbjSiAUZtW8Rw4OoDK5g5Bvp3LLNGmeG/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	X	ATP Fase E - Prakarya (Pengolahan).docx	https://docs.google.com/document/d/173EGdoFPy_vXyjIrn9Kg38Yp8KIQ1cCm/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	X	PROSEM Fase E - Prakarya (Pengolahan).docx	https://docs.google.com/document/d/12bwpanA9Ndb4I-2PJCWcc7PW8DopK0pQ/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	X	CP Fase E - Prakarya Pengolahan.docx	https://docs.google.com/document/d/1bm43IMgiD0pSPqHQxNio4kQwcEMeit-g/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	X	PROTA Fase E - Prakarya (Pengolahan).docx	https://docs.google.com/document/d/1zMjohURGUjABRA3pA34qBKn7glpDg7BH/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	X	Prakarya-Rekayasa-BG-KLS-X.pdf	https://drive.google.com/file/d/1fDNz5kwcZBCtbtY2kRMKCz_1VR7sHSl_/view?usp=drivesdk
+ATP	X	ATP Fase E - Prakarya (Rekayasa).docx	https://docs.google.com/document/d/1w3HcFRR-As6sX0U87xS96peAU8LW3hzi/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	X	CP Fase E - Prakarya Rekayasa.docx	https://docs.google.com/document/d/14Fz4AWmRE2rWcb4igp5s1aiNF6p4JzPW/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	X	KKTP Fase E - Prakarya (Rekayasa).docx	https://docs.google.com/document/d/1SSPSVTKg5wtMhFgfbYH_0feMV7VQgCrf/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	X	PROSEM Fase E - Prakarya (Rekayasa).docx	https://docs.google.com/document/d/1Hc_pJyoAYxgx_LluhDLFP1uwRXqjWS5h/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	X	PROTA Fase E - Prakarya (Rekayasa).docx	https://docs.google.com/document/d/1ZeZDOxA98_lsOyyAROYD1hqB3xoNQk1n/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

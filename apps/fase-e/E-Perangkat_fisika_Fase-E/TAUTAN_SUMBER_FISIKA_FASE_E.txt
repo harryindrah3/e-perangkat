@@ -1,0 +1,7 @@
+BOOK	X	BG IPA 10 (Revisi).pdf	https://drive.google.com/file/d/12PZgjbsZXNA5E45N1jOeBnicq2mPThJk/view?usp=drivesdk
+BOOK	X	BS IPA 10 (Revisi).pdf	https://drive.google.com/file/d/1Qxuyl5hwBvI-Am1C80Z_ZhwdCaHxP95E/view?usp=drivesdk
+PROMES	X	PROSEM Fase E - IPA (Fisika).docx	https://docs.google.com/document/d/1-pV0stMOG3uS0JvwxjAXLZ_rZzBBr3Ng/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	X	CP FASE E - IPA (Fisika).docx	https://docs.google.com/document/d/1YlpmbuEGrNZVPL9bUqfEplZx1j64e62m/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	X	KKTP Fase E - IPA (Fisika).docx	https://docs.google.com/document/d/1jfgRTfNo0n1si-0uL0_t9KcUN1ahZ-uc/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	X	ATP Fase E - IPA (Fisika).docx	https://docs.google.com/document/d/1DvDKv4sazHqsbwQIONjIzwsv7zOL5vLL/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	X	PROTA Fase E - IPA (Fisika).docx	https://docs.google.com/document/d/1_OLfnXjiKNt7d5yRvnP8Dii1tZeN8YwP/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

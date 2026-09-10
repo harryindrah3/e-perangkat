@@ -1,0 +1,17 @@
+SUMBER DAN KOREKSI — MATEMATIKA FASE D
+Kelas: VII, VIII, IX
+Folder acuan: https://drive.google.com/drive/folders/19iE5wmK7AUTO1AilJSPGq5mfL1P7-FpK
+
+Catatan normalisasi:
+1. Dokumen kelas VII
+   Temuan: Beberapa header sumber tertulis Fase E.
+   Penanganan: Ditampilkan sebagai Fase D karena isi, CP, dan jenjang dokumen merujuk Fase D.
+2. Promes kelas IX
+   Temuan: Bagian awal sumber tertulis Informatika.
+   Penanganan: Ditampilkan sebagai Matematika; tabel utama sumber juga menyatakan Matematika.
+3. Modul 6 dan 7 kelas VII
+   Temuan: Identitas sumber tertulis semester Ganjil.
+   Penanganan: Ditempatkan pada semester Genap sesuai urutan program kelas VII.
+4. Alokasi Matematika kelas IX Semester Ganjil
+   Temuan: Permintaan penyesuaian jumlah JP menjadi 97 JP.
+   Penanganan: Bab 1 tetap 32 JP, Bab 2 Bangun Ruang menjadi 35 JP, dan Bab 3 tetap 30 JP. Total Semester Ganjil menjadi 97 JP.

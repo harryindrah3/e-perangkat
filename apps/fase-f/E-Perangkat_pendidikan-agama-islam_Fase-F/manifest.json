@@ -1,0 +1,9 @@
+{
+  "name": "E-Perangkat Pendidikan Agama Islam Fase F",
+  "short_name": "PAI-BP FF",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#F2F9F5",
+  "theme_color": "#065F46",
+  "description": "E-Perangkat Pendidikan Agama Islam Fase F Kelas X CP 2026."
+}

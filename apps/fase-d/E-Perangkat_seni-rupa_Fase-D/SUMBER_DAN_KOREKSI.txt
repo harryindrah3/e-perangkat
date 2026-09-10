@@ -1,0 +1,23 @@
+SUMBER DAN KOREKSI — SENI RUPA FASE D
+Kelas: VII, VIII, IX
+Folder acuan: https://drive.google.com/drive/folders/1qY4ATJ7bL05gC8ABDfe0D_tgQAAi1vcW
+
+Catatan normalisasi:
+1. Modul Ajar Kelas VIII pada folder Google Drive
+   Temuan: Nama file modul Kelas VIII masih tertulis “K-VII”.
+   Penanganan: Nama lokal dinormalisasi menjadi K-VIII; isi aplikatif kelas VIII dipetakan ulang berdasarkan Panduan Guru Revisi.
+2. Panduan Guru Seni Rupa Kelas VIII Revisi
+   Temuan: Struktur buku revisi terdiri atas lima bab, berbeda dari Prota/ATP lama yang memuat empat bab.
+   Penanganan: Peta materi, ATP, Prota, Promes, KKTP, modul, bahan ajar, dan LKPD kelas VIII menggunakan lima bab buku revisi.
+3. Panduan Guru Seni Rupa Kelas VIII Revisi · Bab IV
+   Temuan: Keterangan total menyebut 24 JP, sedangkan rincian aktivitas 8 JP + 14 JP berjumlah 22 JP.
+   Penanganan: Aplikasi menggunakan 22 JP sesuai rincian aktivitas; total kelas VIII menjadi 72 JP bersama bab lain.
+4. Panduan Guru Seni Rupa Kelas IX
+   Temuan: Daftar isi menuliskan Unit 4 “Mengapresiasi”, sedangkan substansinya adalah perencanaan dan pelaksanaan pameran.
+   Penanganan: Judul dinormalisasi menjadi “Unjuk Kerja dan Pameran” sesuai isi pembelajaran.
+5. Ejaan pada buku hasil ekstraksi
+   Temuan: Terdapat bentuk hasil OCR/pengetikan seperti tipograi, releksi, mengidentiikasi, dan postif.
+   Penanganan: Ejaan ditampilkan sebagai tipografi, refleksi, mengidentifikasi, dan positif tanpa mengubah substansi.
+6. Dasar isi paket
+   Temuan: Perangkat lama dan buku revisi tidak selalu identik.
+   Penanganan: Dokumen Deep Learning digunakan untuk kerangka dan administrasi; buku revisi diprioritaskan untuk materi, urutan bab, aktivitas, serta asesmen.

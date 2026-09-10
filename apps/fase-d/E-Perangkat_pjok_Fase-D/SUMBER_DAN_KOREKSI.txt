@@ -1,0 +1,20 @@
+SUMBER DAN KOREKSI — PENDIDIKAN JASMANI, OLAHRAGA, DAN KESEHATAN FASE D
+Kelas: VII, VIII, IX
+Folder acuan: https://drive.google.com/drive/folders/1njXe3opx0HvCv63B72yHSeAm19QGi_RB
+
+Catatan normalisasi:
+1. ATP/Prota PJOK Kelas VII dan VIII
+   Temuan: Sebagian identitas sumber tertulis “Fase E” meskipun kelas VII/VIII dan isi CP mengacu pada Fase D.
+   Penanganan: Identitas pada aplikasi dinormalisasi menjadi Fase D; substansi tujuan dan materi dipertahankan.
+2. Penamaan Unit Permainan
+   Temuan: Beberapa sumber menggunakan istilah “permainan invasi” untuk bola voli, sedangkan klasifikasi umum bola voli adalah permainan net.
+   Penanganan: Judul sumber dipertahankan pada kelas VIII untuk keterlacakan; materi dan keterampilan tetap merujuk pada bola voli.
+3. Alokasi Tahunan
+   Temuan: Dokumen Prota/ATP tidak selalu menampilkan angka JP pada hasil ekstraksi, sedangkan identitas setiap Modul Ajar mencantumkan alokasi dan jumlah pertemuan.
+   Penanganan: Aplikasi menggunakan alokasi yang tertulis pada identitas Modul Ajar: setiap pertemuan 3 JP. Satuan pendidikan dapat menambah penguatan, asesmen, atau proyek sesuai struktur kurikulum dan minggu efektif.
+4. Modul PJOK Kelas VIII Unit 5
+   Temuan: Terdapat ketidakkonsistenan identitas semester pada bagian paragraf dan tabel dalam sumber.
+   Penanganan: Penempatan semester mengikuti Promes: Bab 1–4 ganjil dan Bab 5–8 genap.
+5. Dokumen #Capaian Pembelajaran 2026
+   Temuan: PDF kebijakan disertakan sebagai referensi tambahan.
+   Penanganan: Redaksi operasional CP PJOK mengikuti dokumen CP/ATP PJOK yang dapat dibaca dan konsisten pada seluruh kelas.

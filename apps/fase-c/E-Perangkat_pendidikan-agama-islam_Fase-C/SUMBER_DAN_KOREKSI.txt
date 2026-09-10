@@ -1,0 +1,20 @@
+SUMBER DAN KOREKSI — PENDIDIKAN AGAMA ISLAM DAN BUDI PEKERTI FASE C
+Kelas: V, VI
+Folder acuan: https://drive.google.com/drive/folders/1NApjwOCQwGX2p-eLCzCcoxxH2qMwXDS8
+
+Catatan normalisasi:
+1. CP PAI dan Budi Pekerti Fase C terbaru (11 Juni 2026)
+   Temuan: Beberapa perangkat dan modul pada Drive masih menggunakan perluasan rumusan CP sebelumnya, misalnya menghafal sebagai kata kerja CP dan tema manusia sebagai khalifah pada elemen Akhlak.
+   Penanganan: Rumusan CP di seluruh tampilan dan dokumen cetak diganti persis sesuai CP 2026. Materi sumber yang masih bermanfaat dipertahankan sebagai pengayaan, bukan sebagai rumusan kompetensi inti.
+2. CP PAI dan Budi Pekerti Fase C 2026
+   Temuan: Dokumen sumber bersifat lintas kelas dalam satu fase.
+   Penanganan: Capaian Fase C dijadikan landasan bersama, kemudian tujuan dan konteks dibedakan untuk kelas V dan VI.
+3. Modul Ajar PAIBP Kelas V
+   Temuan: Beberapa dokumen menggunakan istilah, ejaan, dan format administrasi yang tidak seragam.
+   Penanganan: Substansi dipertahankan; ejaan, struktur tujuan, langkah kegiatan, asesmen, dan identitas dinormalkan agar konsisten.
+4. ATP PAIBP Kelas VI
+   Temuan: Terdapat pengulangan tujuan dan istilah “Deep Learning” yang digunakan sebagai teknik teknologi.
+   Penanganan: Tujuan yang berulang diringkas; Pembelajaran Mendalam dimaknai sebagai mindful, meaningful, dan joyful learning, bukan kecerdasan buatan.
+5. Alokasi JP
+   Temuan: Dokumen sumber kelas V berupa modul per topik, sedangkan kelas VI memuat alokasi semester yang lebih eksplisit.
+   Penanganan: Kelas V dihitung dari cakupan modul sumber; kelas VI mengikuti alokasi ATP sumber. Seluruh angka tetap dapat disesuaikan melalui pengembangan berikutnya.

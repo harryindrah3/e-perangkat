@@ -1,0 +1,14 @@
+BOOK	XI	BG 11 - Bahasa Indonesia.pdf	https://drive.google.com/file/d/1PQS9qWG1EPDT02TcTAfIqteKg_CTTm3v/view?usp=drivesdk
+BOOK	XI	BS 11 - Bahasa-Indonesia.pdf	https://drive.google.com/file/d/1zQqd8OBnFZXHccpulo3fCviGYqL782UC/view?usp=drivesdk
+ATP	XI	ATP - Bahasa Indonesia 11.docx	https://docs.google.com/document/d/1IabYyTUszFYpbh3VC2YkZMJk8UfV6NL9/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XI	Program Tahunan - Bahasa Indonesia 11.docx	https://docs.google.com/document/d/1Jr2LnlqRnqyznEmSX04ND2nurlTcLOaz/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XI	KKTP - Bahasa Indonesia 11.docx	https://docs.google.com/document/d/1bvZZzhMU7SgLEHi8-5ERioTEWl_hoDPc/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XI	Program Semester - Bahasa Indonesia 11.docx	https://docs.google.com/document/d/1qUlRUHMWE3g1vlneGvA1y5j7jybrNpgr/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XI	CP Fase F - Bahasa Indonesia.docx	https://docs.google.com/document/d/1mbNfwhC6Aem_1rrBngMUcewFKfvmktXj/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	XII	BS 12 - Bahasa Indonesia.pdf	https://drive.google.com/file/d/1Jk6cYt6FvqZ_UnHLwEKxBGE0bdOYR0GJ/view?usp=drivesdk
+BOOK	XII	BG 12 - Bahasa Indonesia.pdf	https://drive.google.com/file/d/15sPqXV_J_7BA3B8uJMm6uM6f9F_DE4yy/view?usp=drivesdk
+CP	XII	CP Bahasa Indonesia Fase F.docx	https://docs.google.com/document/d/1Xh_-DjZd0iRdOpP9qpRikwzj0ioY6pfX/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XII	CP Fase F - Bahasa Indonesia.docx	https://docs.google.com/document/d/1VLl3g4o-4T8oPCrv9jmrY6u0ylm2FxIX/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XII	KKTP - Bahasa Indonesia.docx	https://docs.google.com/document/d/1U5_cPORQY_hcuZCN7AgLESfTiwXwhC86/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XII	PROSEM - Bahasa Indonesia.docx	https://docs.google.com/document/d/11i3fD2LGZhpN0idZSQB45q8uMRJKnoJD/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XII	PROTA - Bahasa Indonesia.docx	https://docs.google.com/document/d/1bQFxUe1Jg5-u29-DpC9ikWgcepgU14JS/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

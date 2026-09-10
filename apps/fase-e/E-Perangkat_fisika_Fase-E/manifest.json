@@ -1,0 +1,9 @@
+{
+  "name": "E-Perangkat Fisika Fase E",
+  "short_name": "Fisika FE",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#F3F9FC",
+  "theme_color": "#0C4A6E",
+  "description": "E-Perangkat Fisika Fase E Kelas X CP 2026."
+}

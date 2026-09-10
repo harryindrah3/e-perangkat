@@ -1,0 +1,8 @@
+{
+  "name": "E-Perangkat Matematika Fase B",
+  "short_name": "Matematika FB",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#164E63"
+}

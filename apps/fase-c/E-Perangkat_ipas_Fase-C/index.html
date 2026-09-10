@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#7A1F3D"><title>E-Perangkat Ilmu Pengetahuan Alam dan Sosial Fase C — CP 2026</title>
+<link rel="stylesheet" href="assets/site.css"><link rel="manifest" href="manifest.json"></head>
+<body>
+<div class="site-shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><div class="brand-icon">IPAS</div><div><b>E-PERANGKAT</b><span>IPAS · Fase C</span></div></div>
+    <div class="grade-tabs"><button data-grade="V">V</button><button data-grade="VI">VI</button></div><nav id="mainNav">
+      <button data-view="home"><span>⌂</span>Beranda</button>
+      <button data-view="calendar"><span>▦</span>Kalender Pendidikan</button>
+      <button data-view="schedule"><span>◷</span>Jadwal Mengajar</button>
+      <button data-view="cp"><span>◎</span>Capaian Pembelajaran</button>
+      <button data-view="atp"><span>⇢</span>Alur Tujuan Pembelajaran</button>
+      <button data-view="prota"><span>▦</span>Program Tahunan</button>
+      <button data-view="promes"><span>▤</span>Program Semester</button>
+      <button data-view="journal"><span>✎</span>Jurnal Mengajar</button>
+      <button data-view="attendance"><span>◫</span>Daftar Hadir</button>
+      <button data-view="kktp"><span>✓</span>KKTP</button>
+      <button data-view="modules"><span>▣</span>Modul Ajar</button>
+      <button data-view="materials"><span>≡</span>Bahan Ajar</button>
+      <button data-view="lkpd"><span>□</span>LKPD</button>
+      <button data-view="assessment"><span>?</span>Asesmen</button>
+      <button data-view="analysis"><span>◒</span>Analisis Nilai</button>
+      <button data-view="orders"><span>◈</span>Pesanan & Riwayat</button>
+      <button data-view="print"><span>⎙</span>Paket Cetak</button>
+      <button data-view="sources"><span>↗</span>Sumber & Koreksi</button>
+    </nav>
+    <div class="sidebar-foot"><b>PEMBELAJARAN MENDALAM</b><div><span>Mindful</span><span>Meaningful</span><span>Joyful</span></div></div>
+  </aside>
+  <main>
+    <header class="topbar"><button class="menu" id="menuBtn">☰</button><div class="school"><b id="schoolName">UPT SPNF SKB BUOL</b><small id="schoolMeta">SD/MI/Paket A</small></div>
+      <div class="top-actions"><button class="btn secondary" id="profileBtn">Pesanan &amp; Profil</button><button class="btn primary" id="quickPrint">Cetak Paket</button></div></header>
+    <div id="app" class="content"></div>
+  </main>
+</div>
+<dialog id="profileDialog"><form method="dialog" id="profileForm" class="modal"><div class="modal-head"><div><small>IDENTITAS DOKUMEN</small><h2>Profil Satuan Pendidikan</h2></div><button value="cancel" class="x">×</button></div>
+<div class="form-grid">
+<label>Pemerintah/Instansi<input name="government"></label><label>Dinas/Unit Pembina<input name="department"></label>
+<label>Nama Satuan Pendidikan<input name="school"></label><label>Program/Jenjang<input name="program"></label><label>Rombel<select name="rombel"><option value="">Kosong saja / tanpa rombel</option><option value="A">Rombel A</option><option value="B">Rombel B</option></select></label>
+<label class="span-2">Alamat Sekolah<input name="address" placeholder="Jalan, desa/kelurahan, kecamatan, kabupaten/kota, provinsi"></label>
+<label>Peran Pengajar<select name="teacherRole"><option value="Guru">Guru</option><option value="Pamong Belajar">Pamong Belajar</option><option value="Tutor">Tutor</option></select></label><label>Nama Pengajar<input name="teacher"></label><label>Jenis Nomor Pengajar<select name="teacherIdType"><option value="NIP">NIP</option><option value="NUPTK">NUPTK</option><option value="NONE">Tanpa Nomor</option></select></label><label>Nomor Identitas Pengajar<input name="teacherId"></label>
+<label>Nama Kepala Sekolah<input name="principal"></label><label>Jenis Nomor Kepala Sekolah<select name="principalIdType"><option value="NIP">NIP</option><option value="NUPTK">NUPTK</option><option value="NONE">Tanpa Nomor</option></select></label><label>Nomor Identitas Kepala Sekolah<input name="principalId"></label>
+<label>Tahun Pelajaran<input name="year"></label><label>Tempat<input name="place"></label><label>Tanggal Penetapan Semester 1<input name="date" placeholder="Contoh: 20 Juli 2026"></label><label>Tanggal Penetapan Semester 2<input name="dateSemester2" placeholder="Contoh: 21 Juni 2027"></label><label>Wilayah<input name="region"></label>
+
+<div class="signature-upload-grid span-2 quick-signature-grid">
+  <div class="signature-upload-card">
+    <div><b>Tanda Tangan Pengajar</b><small>Otomatis tampil pada dokumen cetak.</small></div>
+    <div class="signature-preview" id="quickTeacherSignaturePreview">Belum ada tanda tangan</div>
+    <input type="hidden" name="teacherSignature">
+    <div class="signature-upload-actions">
+      <label class="btn secondary small import-label">Unggah TTD<input type="file" id="quickTeacherSignatureFile" accept="image/png,image/jpeg,image/webp"></label>
+      <button type="button" class="btn secondary small" id="quickRemoveTeacherSignature">Hapus</button>
+    </div>
+  </div>
+  <div class="signature-upload-card">
+    <div><b>Tanda Tangan Kepala Sekolah</b><small>Otomatis tampil pada Kalender Pendidikan dan dokumen lain.</small></div>
+    <div class="signature-preview" id="quickPrincipalSignaturePreview">Belum ada tanda tangan</div>
+    <input type="hidden" name="principalSignature">
+    <div class="signature-upload-actions">
+      <label class="btn secondary small import-label">Unggah TTD<input type="file" id="quickPrincipalSignatureFile" accept="image/png,image/jpeg,image/webp"></label>
+      <button type="button" class="btn secondary small" id="quickRemovePrincipalSignature">Hapus</button>
+    </div>
+  </div>
+</div>
+</div><div class="modal-actions"><button value="cancel" class="btn secondary">Batal</button><button id="saveProfile" class="btn primary">Simpan</button></div></form></dialog>
+<script src="data.js"></script><script src="assets/v3-bootstrap.js"></script><script src="assets/special-pai-v25.js"></script><script src="assets/site.js"></script><script src="assets/v3.js"></script><script src="assets/analysis-v7.js"></script><script src="assets/signature-v22.js"></script><script src="assets/schedule-v22.js"></script></body></html>

@@ -1,0 +1,17 @@
+SUMBER DAN KOREKSI — BAHASA INDONESIA FASE C
+Kelas: V, VI
+Folder acuan: https://drive.google.com/drive/folders/1Irjy1HhJFS4H58Jc-0RosQI8qKMrMe1J
+
+Catatan normalisasi:
+1. Struktur Kelas V
+   Temuan: Versi lama memuat delapan bab dan 192 JP.
+   Penanganan: Disesuaikan menjadi enam bab sesuai Buku Siswa/Panduan Guru Edisi Revisi 2024 dengan total rekomendasi 118 JP.
+2. Struktur Kelas VI
+   Temuan: Versi lama memuat delapan bab dan 192 JP.
+   Penanganan: Disesuaikan menjadi empat bab sesuai Buku Siswa/Panduan Guru Edisi Revisi 2025 dengan total rekomendasi 108 JP.
+3. Muatan pembelajaran
+   Temuan: Tujuan, teks, materi kebahasaan, aktivitas, dan asesmen versi lama tidak lagi sama dengan buku revisi.
+   Penanganan: ATP, Prota, Prosem, KKTP, 10 modul, bahan ajar, LKPD, asesmen, dan pertanyaan kontekstual dibangun ulang berdasarkan buku revisi.
+4. Fitur aplikasi
+   Temuan: Perubahan konten berisiko mengganggu identitas dan riwayat.
+   Penanganan: Namespace bahasaindonesia.v24, Pesanan & Riwayat, tanda tangan, data peserta didik, nilai, jadwal, dan paket cetak dipertahankan.

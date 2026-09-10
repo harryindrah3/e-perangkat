@@ -1,0 +1,20 @@
+SUMBER DAN KOREKSI — PENDIDIKAN AGAMA ISLAM DAN BUDI PEKERTI FASE A
+Kelas: I, II
+Folder acuan: https://drive.google.com/drive/folders/1GsR6vu39RIEQMPKFbuIitWXLteu0dpQv
+
+Catatan normalisasi:
+1. CP PAI dan Budi Pekerti Fase A terbaru (11 Juni 2026)
+   Temuan: Sebagian sumber memakai rumusan CP lama atau mencampurkan kompetensi fase lain.
+   Penanganan: Semua CP, ATP, tujuan, Prota, Promes, dan modul menggunakan rumusan CP Fase A 2026 secara tepat.
+2. Modul Ajar kelas I–II di Google Drive
+   Temuan: Istilah “Deep Learning” pada beberapa sumber diartikan sebagai penggunaan TensorFlow/PyTorch dan terdapat langkah yang tidak sesuai usia kelas awal.
+   Penanganan: Pembelajaran Mendalam dinormalisasi menjadi berkesadaran, bermakna, dan menggembirakan; aktivitas dibuat konkret, aman, singkat, dan ramah anak.
+3. Sumber azan dan ikamah kelas II
+   Temuan: Azan dan ikamah berada pada CP Fase A 2026, bukan kompetensi inti Fikih Fase A.
+   Penanganan: Sumber tersebut hanya dicatat sebagai pengayaan. Tujuan inti Fase A berfokus pada rukun Islam, syahadatain, bersuci, salat fardu, zikir, dan doa setelah salat.
+4. Sumber akhlak kelas II
+   Temuan: Sebagian sumber berfokus pada hubungan dengan sesama, sedangkan CP Fase A menekankan akhlak kepada Allah dan diri sendiri.
+   Penanganan: Empati dan kasih sayang dipertahankan sebagai konteks pengayaan; tujuan inti diarahkan pada memuji Allah, kebersihan, tutur kata, pengelolaan emosi, kejujuran, disiplin, dan keselamatan diri.
+5. Alokasi waktu
+   Temuan: Sumber berupa modul topik dan tidak memberikan rancangan tahunan konsisten.
+   Penanganan: Disusun rancangan operasional 108 JP per kelas per tahun, masing-masing 54 JP per semester, dan dapat disesuaikan dengan kalender satuan pendidikan.

@@ -1,0 +1,8 @@
+{
+  "name": "E-Perangkat Informatika Fase D",
+  "short_name": "Informatika FD",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#3730A3"
+}

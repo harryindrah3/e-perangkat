@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "api/pdf.js": {
+      "maxDuration": 300
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/apps/:path*",
+      "destination": "/index.html"
+    }
+  ]
+}

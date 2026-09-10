@@ -1,0 +1,9 @@
+{
+  "name": "E-Perangkat Kimia Fase E",
+  "short_name": "Kimia FE",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#F8F5FF",
+  "theme_color": "#5B21B6",
+  "description": "E-Perangkat Kimia Fase E Kelas X CP 2026."
+}

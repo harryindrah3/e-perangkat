@@ -1,0 +1,9 @@
+{
+  "name": "E-Perangkat Kimia Fase F",
+  "short_name": "Kimia FF",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#F7F4FC",
+  "theme_color": "#4C1D95",
+  "description": "E-Perangkat Kimia Fase F Kelas X CP 2026."
+}

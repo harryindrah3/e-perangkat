@@ -1,0 +1,20 @@
+SUMBER DAN KOREKSI — PENDIDIKAN PANCASILA FASE D
+Kelas: VII, VIII, IX
+Folder acuan: https://drive.google.com/drive/folders/1aDVixkesNgg7412P1d8a_DN0Jtd4Tsf0
+
+Catatan normalisasi:
+1. CP Pendidikan Pancasila Kelas VII
+   Temuan: Bagian identitas sumber tertulis “Fase E” meskipun kelas VII dan seluruh isi dokumen mengacu pada Fase D.
+   Penanganan: Identitas pada aplikasi dinormalisasi menjadi Fase D; substansi capaian pada tabel sumber dipertahankan.
+2. Modul Ajar Pendidikan Pancasila Kelas VII
+   Temuan: Sebagian kepala dokumen sumber mencantumkan “Mata Pelajaran: Bahasa Inggris”, sedangkan identitas dan seluruh isi modul adalah Pendidikan Pancasila.
+   Penanganan: Nama mata pelajaran dinormalisasi menjadi Pendidikan Pancasila.
+3. Alokasi Modul Kelas VII
+   Temuan: Pada beberapa dokumen, total JP pada identitas tidak konsisten dengan jumlah pertemuan rinci yang ditulis.
+   Penanganan: Aplikasi menggunakan total JP tingkat bab pada dokumen sumber/Prota dan membentuk sesi operasional yang jumlahnya tepat sama dengan total tersebut.
+4. Penamaan Folder Sumber
+   Temuan: Folder Google Drive menggunakan singkatan “PKN”.
+   Penanganan: Nama resmi yang digunakan pada seluruh aplikasi dan dokumen cetak adalah “Pendidikan Pancasila”.
+5. Dokumen #Capaian Pembelajaran 2026
+   Temuan: Dokumen kebijakan tersedia sebagai PDF pindai dan disertakan sebagai referensi kebijakan tambahan.
+   Penanganan: Pemetaan materi tetap mengikuti CP Nomor 46 Tahun 2025 dan dokumen sumber Pendidikan Pancasila yang dapat dibaca; PDF 2026 disertakan tanpa mengubah redaksi substansi secara spekulatif.

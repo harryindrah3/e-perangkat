@@ -1,0 +1,7 @@
+PROMES	X	PROSEM Fase E - IPS (Sejarah).docx	https://docs.google.com/document/d/1TnIQ1o1miflmXAiCOGheD8hFMM0ddQ0J/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	X	BG IPS 10 (Revisi).pdf	https://drive.google.com/file/d/1tDRLKF28aVA44s_dzOFogOW734TLIUMy/view?usp=drivesdk
+BOOK	X	BS IPS 10 (Revisi).pdf	https://drive.google.com/file/d/1UUFG5cfujrN5l_GVaGnzV3-2J3KyxXG4/view?usp=drivesdk
+KKTP	X	KKTP Fase E - IPS (Sejarah).docx	https://docs.google.com/document/d/1fxRmKVg6UZvai6NefOfSjQiwrvFxtbJA/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	X	ATP Fase E - IPS (Sejarah).docx	https://docs.google.com/document/d/18HUP8N7-5RrMtBe_h742FfhXt4EulBdU/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	X	PROTA Fase E - IPS (Sejarah).docx	https://docs.google.com/document/d/1dE5FDb98jsr84SkOYI-EalFfCn86FhAW/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	X	CP Fase E - IPS.docx	https://docs.google.com/document/d/15yHKXqEjw5Z3XGcRaaqlx7rZNWrWxA2j/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

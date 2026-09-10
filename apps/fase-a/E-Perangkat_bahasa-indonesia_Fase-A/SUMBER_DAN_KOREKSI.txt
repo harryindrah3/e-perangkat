@@ -1,0 +1,23 @@
+SUMBER DAN KOREKSI — BAHASA INDONESIA FASE A
+Kelas: I, II
+Folder acuan: https://drive.google.com/drive/folders/1csyzHmyIryEOnmw0bf0oZ37pBXv_K9kv
+
+Catatan normalisasi:
+1. Capaian Pembelajaran
+   Temuan: Dokumen perubahan CP tahun 2026 berfokus pada Pendidikan Agama dan Budi Pekerti.
+   Penanganan: CP Bahasa Indonesia Fase A tetap menggunakan rumusan Keputusan Kepala BSKAP Nomor 032/H/KR/2024 yang selaras dengan buku revisi Kelas I dan II.
+2. Struktur Kelas I
+   Temuan: Panduan Guru merekomendasikan 25 JP untuk masing-masing delapan bab, berjumlah 200 JP, sedangkan struktur tahunan Bahasa Indonesia Kelas I adalah 216 JP.
+   Penanganan: Alokasi per bab dipertahankan sesuai buku (200 JP) dan ditambahkan 16 JP program penguatan literasi, asesmen, remedial, serta pengayaan pada Prota/Prosem sehingga total 216 JP.
+3. Struktur Kelas II
+   Temuan: Muatan perlu mengikuti delapan bab Buku Keluargaku Unik Edisi Revisi 2024 beserta rekomendasi alokasi 30/32 JP.
+   Penanganan: Disusun menjadi delapan bab dengan alokasi 32, 30, 32, 32, 32, 30, 32, dan 32 JP; total 252 JP.
+4. Pembelajaran literasi awal
+   Temuan: Perangkat umum sering terlalu berorientasi pada teks panjang dan tugas menulis mandiri.
+   Penanganan: Modul Kelas I–II menggunakan membaca nyaring/interaktif, fonik, kesadaran fonemik, kartu huruf/suku kata/kata, multisensori, menulis terbimbing, permainan, dan diferensiasi sesuai perkembangan.
+5. Judul peta materi Bab VIII Kelas II
+   Temuan: Pada salah satu bagian Panduan Guru, label diagram Bab VIII masih tertulis Sayang Lingkungan.
+   Penanganan: Dinormalkan menjadi Hobi yang Jadi Prestasi sesuai judul bab pada Buku Siswa dan daftar isi.
+6. Fitur aplikasi
+   Temuan: Data Fase A berisiko bercampur dengan E-Perangkat Bahasa Indonesia Fase B/C.
+   Penanganan: Namespace penyimpanan dipisahkan menjadi bahasaindonesia.fasea.v25 agar profil, peserta didik, nilai, jadwal, tanda tangan, dan riwayat tetap aman.

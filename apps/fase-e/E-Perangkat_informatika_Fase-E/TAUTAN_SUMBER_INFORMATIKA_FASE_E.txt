@@ -1,0 +1,7 @@
+CP	X	CP Fase E - Informatika.docx	https://docs.google.com/document/d/1gGsh9sPUpxe2MU9a1dK_Vd4Ffgy9rVKI/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	X	INFORMATIKA-BG-KLS X.pdf	https://drive.google.com/file/d/15USjoqPd3ad5YB8H_XRXrQew0bDLGjnd/view?usp=drivesdk
+BOOK	X	INFORMATIKA-BS-KLS X.pdf	https://drive.google.com/file/d/1DiZMIK4PjSOD50vrOSu_ClGP_mOLPNhZ/view?usp=drivesdk
+KKTP	X	KKTP Fase E - Informatika.docx	https://docs.google.com/document/d/1jR3Gq0R2TCCVhyyOLTAzJR0hkP9TOIz_/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	X	ATP Fase E - Informatika.docx	https://docs.google.com/document/d/1gL0MLpbyqnZc-oibDHM4G1jgMwefvxbB/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	X	PROTA Fase E - Informatika.docx	https://docs.google.com/document/d/1ettu4Gv7w8yXy5Bjwy-iqSg87q3gg88J/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	X	PROSEM Fase E - Informatika.docx	https://docs.google.com/document/d/1RSo-WolvgtW74O1bFNgnh5xDFxbA3UpK/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

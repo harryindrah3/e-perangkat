@@ -1,0 +1,8 @@
+{
+  "name": "E-Perangkat Bahasa Inggris Fase C",
+  "short_name": "B. Inggris FC",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#1E3A8A"
+}

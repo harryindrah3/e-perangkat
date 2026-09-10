@@ -1,0 +1,26 @@
+SUMBER DAN KOREKSI — SENI RUPA FASE A
+Kelas: I, II
+Folder acuan: https://drive.google.com/drive/folders/1trrOs35zWsU4rzdO9C_jwzVm_wzxVmzS
+
+Catatan normalisasi:
+1. Capaian Pembelajaran
+   Temuan: Panduan Guru revisi Kelas I–II terbit sebelum rumusan CP terbaru Keputusan Kepala BSKAP Nomor 046/H/KR/2025.
+   Penanganan: Urutan dan aktivitas buku revisi dipertahankan, sedangkan CP, ATP, KKTP, dan bahasa kompetensi diselaraskan dengan rumusan CP 046/H/KR/2025.
+2. Perubahan CP 2026
+   Temuan: Keputusan Kepala BKPDM Nomor 020 Tahun 2026 menimbulkan anggapan semua mata pelajaran berubah.
+   Penanganan: Perubahan 2026 hanya untuk Pendidikan Agama dan Budi Pekerti; Seni Rupa tetap mengacu pada Keputusan 046/H/KR/2025.
+3. Struktur Kelas I
+   Temuan: Panduan Guru Kelas I memuat empat bab dengan rekomendasi 36, 18, 18, dan 36 JP.
+   Penanganan: Alokasi dipertahankan penuh sehingga total 108 JP dan terbagi seimbang 54 JP per semester.
+4. Struktur Kelas II
+   Temuan: Rekomendasi inti delapan bab berjumlah sekitar 96 JP jika memilih alokasi yang berada dalam rentang buku.
+   Penanganan: Ditambahkan 12 JP program fondasi, asesmen awal, keselamatan studio, portofolio, remedial, pengayaan, dan galeri perkembangan agar total tahunan 108 JP.
+5. Sumber Buku Revisi
+   Temuan: Folder buku revisi Seni Rupa Fase A berisi Panduan Guru, bukan Buku Siswa terpisah.
+   Penanganan: Materi, prosedur, LKPD, asesmen, dan alokasi dikembangkan dari Panduan Guru Kelas I 2023 serta Kelas II 2024 yang memuat kegiatan pembelajaran lengkap.
+6. Keselamatan dan Keunikan Karya
+   Temuan: Perangkat umum sering menilai keseragaman hasil dan kurang menekankan keamanan alat/bahan.
+   Penanganan: Rubrik menilai proses, pilihan artistik, keselamatan, komunikasi, refleksi, dan keterwujudan karya; hasil murid tidak harus seragam dengan contoh.
+7. Penyimpanan Aplikasi
+   Temuan: Data berisiko bercampur dengan E-Perangkat Bahasa Indonesia atau Seni Rupa fase lain.
+   Penanganan: Namespace dipisahkan menjadi senirupa.fasea.v25 untuk profil, peserta didik, nilai, jadwal, tanda tangan, logo, pesanan, dan riwayat.

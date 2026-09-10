@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 794 1123" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bggeografiE" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#176C78"/><stop offset=".56" stop-color="#2CA6A4"/><stop offset="1" stop-color="#E7B75A"/></linearGradient>
+    <linearGradient id="fadegeografiE" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff" stop-opacity=".06"/><stop offset="1" stop-color="#fff" stop-opacity=".92"/></linearGradient>
+    <pattern id="dotsgeografiE" width="34" height="34" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="2.2" fill="#fff" opacity=".22"/></pattern>
+    <filter id="shadowgeografiE" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="15" stdDeviation="18" flood-color="#08121f" flood-opacity=".2"/></filter>
+  </defs>
+  <rect width="794" height="1123" fill="#f7fafc"/>
+  <path d="M0 0h794v500C620 515 260 570 0 515z" fill="url(#bggeografiE)"/>
+  <path d="M0 0h794v500C620 515 260 570 0 515z" fill="url(#dotsgeografiE)"/>
+  <path d="M-80 430L874 410v110L-80 540z" fill="#fff" opacity=".09"/>
+  <circle cx="628" cy="172" r="220" fill="#fff" opacity=".09"/>
+  <circle cx="628" cy="172" r="154" fill="none" stroke="#fff" stroke-width="2" opacity=".25"/>
+  <g transform="translate(405 76) scale(1.25)" opacity=".9"><g fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><circle cx="116" cy="132" r="86"/><path d="M30 132h172M116 46c29 27 44 56 44 86s-15 59-44 86c-29-27-44-56-44-86s15-59 44-86zM48 85h136M48 179h136"/><path d="M204 72c0 28-38 70-38 70s-38-42-38-70a38 38 0 1176 0z" fill="#fff" opacity=".2"/><circle cx="166" cy="72" r="12" fill="#fff"/></g></g>
+  <path d="M0 1010c210-58 387-43 530 5 98 33 186 32 264-5v113H0z" fill="#176C78" opacity=".08"/>
+  <path d="M0 1046c190-42 354-35 510 8 113 31 208 28 284-7v76H0z" fill="#2CA6A4" opacity=".09"/>
+  <rect x="0" y="0" width="16" height="1123" fill="#E7B75A" opacity=".95"/>
+  <rect x="16" y="0" width="6" height="1123" fill="#fff" opacity=".38"/>
+  </svg>

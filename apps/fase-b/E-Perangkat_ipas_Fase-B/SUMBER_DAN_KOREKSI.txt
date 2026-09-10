@@ -1,0 +1,20 @@
+SUMBER DAN KOREKSI — ILMU PENGETAHUAN ALAM DAN SOSIAL FASE B
+Kelas: III, IV
+Folder acuan: https://drive.google.com/drive/folders/1n6DQhXYW4r5m8qetTPnGVN8Wye_PZa2v
+
+Catatan normalisasi:
+1. Struktur materi Kelas III
+   Temuan: Dokumen lama belum mengikuti susunan Buku IPAS Kelas III Edisi Revisi 2025.
+   Penanganan: Disusun menjadi delapan bab revisi: pancaindra, sejarah keluarga, siklus hidup manusia dan peran keluarga, siklus hidup hewan-tumbuhan, uang, energi, denah, serta wujud zat.
+2. Struktur materi Kelas IV
+   Temuan: Dokumen lama belum sepenuhnya mengikuti Buku IPAS Kelas IV Edisi Revisi 2023.
+   Penanganan: Disusun menjadi delapan bab revisi: perubahan energi, gaya, peta dan bentang alam, iklim, potensi daerah, peran sosial, keragaman budaya, serta proyek lingkungan-budaya.
+3. Alokasi waktu
+   Temuan: Distribusi JP lama tidak mengikuti rekomendasi panduan guru revisi.
+   Penanganan: Mengikuti rekomendasi buku guru: Kelas III 180 JP dan Kelas IV 180 JP; asesmen terintegrasi dalam alokasi bab.
+4. Modul, bahan ajar, LKPD, dan asesmen
+   Temuan: Substansi lama tidak selaras dengan tujuan, aktivitas, dan asesmen buku revisi.
+   Penanganan: Seluruh 16 modul dibangun ulang berdasarkan tujuan, subbab, materi esensial, aktivitas, asesmen, tindak lanjut, dan refleksi buku revisi.
+5. Penyimpanan aplikasi
+   Temuan: Menggunakan namespace yang sama dengan IPAS Fase C dapat mencampurkan identitas, nilai, dan pesanan.
+   Penanganan: IPAS Fase B menggunakan namespace khusus ipasb.v24 sehingga terpisah dari Fase C dan mata pelajaran lain.

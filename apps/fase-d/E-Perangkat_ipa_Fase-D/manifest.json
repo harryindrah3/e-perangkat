@@ -1,0 +1,8 @@
+{
+  "name": "E-Perangkat Ilmu Pengetahuan Alam Fase D",
+  "short_name": "IPA FD",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#115E59"
+}

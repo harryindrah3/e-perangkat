@@ -1,0 +1,12 @@
+PERBAIKAN E-PERANGKAT BAHASA INGGRIS FASE C
+
+Kelas: V, VI
+Versi perbaikan: 9 Agustus 2026
+
+1. Paket Cetak tahunan dimulai dari Sampul Paket, diikuti Daftar Isi, Kalender Pendidikan, Jadwal Mengajar, CP, ATP, Prota, Promes, Jurnal, Daftar Hadir, KKTP, Modul Ajar, Bahan Ajar, LKPD, Asesmen, dan Analisis Nilai.
+2. Seluruh identitas cetak menggunakan Bahasa Inggris, Fase C, dan kelas V/VI.
+3. Jadwal mengajar bawaan dan template impor jadwal dikosongkan.
+4. Data CP modul, tujuan, pertemuan, dan komponen pendukung dinormalisasi agar dapat dicetak konsisten.
+5. Mesin cetak memiliki pemeriksaan kelengkapan agar hasil parsial tidak dianggap sebagai paket lengkap.
+
+Singkatan tampilan: B. Inggris

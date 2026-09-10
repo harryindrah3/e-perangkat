@@ -1,0 +1,7 @@
+BOOK	X	BG IPA 10 (Revisi).pdf	https://drive.google.com/file/d/1wuN3PuuHrBiUUf7lns0RdBJBsUzD-kjr/view?usp=drivesdk
+BOOK	X	BS IPA 10 (Revisi).pdf	https://drive.google.com/file/d/1Twx4d40_oBxXwS9_PUtJqjqy0sLbZz6O/view?usp=drivesdk
+ATP	X	ATP Fase E - IPA (Kimia).docx	https://docs.google.com/document/d/11RUTWuj-jw6xqCHTf6ZRBJ_3Z0jV4pMp/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	X	CP FASE E - IPA (Kimia).docx	https://docs.google.com/document/d/1RT1zso2-5qDimli0EeEJpPPhDCO5FyPN/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	X	PROTA Fase E - IPA (Kimia).docx	https://docs.google.com/document/d/1oQSBihb3VcPayZvdIczlmxtTE6Zvr-OX/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	X	PROSEM Fase E - IPA (Kimia).docx	https://docs.google.com/document/d/1WvIaQowDwXByDh9Yfln_3QB6BxO3fk5Q/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	X	KKTP Fase E - IPA (Kimia).docx	https://docs.google.com/document/d/103kNizmo9EC2vGSsThWXHk8fuEx1vUTz/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

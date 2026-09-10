@@ -1,0 +1,20 @@
+SUMBER DAN KOREKSI — PENDIDIKAN PANCASILA FASE B
+Kelas: III, IV
+Folder acuan: https://drive.google.com/drive/folders/19CaB9hPae-xrp3r8vbLJxL_HPFvK65T1
+
+Catatan normalisasi:
+1. Penamaan mata pelajaran pada sumber
+   Temuan: Sebagian folder dan nama file menggunakan PKn, PKN, atau PPKN.
+   Penanganan: Ditampilkan konsisten sebagai Pendidikan Pancasila tanpa mengubah isi pokok sumber.
+2. CP Kelas III
+   Temuan: Judul sumber menulis “Fase B Kelas III dan VI”, sedangkan Fase B mencakup kelas III dan IV.
+   Penanganan: Dinormalisasi menjadi Fase B kelas III–IV berdasarkan isi CP kelas III dan CP kelas IV.
+3. ATP Kelas III Bab 4
+   Temuan: Kolom elemen tertulis NKRI, tetapi tujuan dan materi membahas makna sila serta tokoh perumus Pancasila.
+   Penanganan: Elemen Bab 4 ditampilkan sebagai Pancasila agar selaras dengan tujuan pembelajaran dan Modul Ajar sumber.
+4. LKPD Kelas III
+   Temuan: Folder sumber tidak menyediakan dokumen LKPD terpisah seperti kelas IV.
+   Penanganan: LKPD aplikasi disusun dari aktivitas pada Modul Ajar, Buku Siswa, dan Panduan Guru kelas III yang tersedia di Drive.
+5. Alokasi JP Kelas IV
+   Temuan: ATP membagi JP per kelompok tujuan dalam satu bab.
+   Penanganan: Jumlah per bab dihitung dari ATP: Bab 1 36 JP, Bab 2 32 JP, Bab 3 36 JP, dan Bab 4 40 JP.

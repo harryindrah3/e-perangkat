@@ -1,0 +1,8 @@
+{
+  "name": "E-Perangkat Seni Rupa Fase B",
+  "short_name": "Seni Rupa FB",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#86198F"
+}

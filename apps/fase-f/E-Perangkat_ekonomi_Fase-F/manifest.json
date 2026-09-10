@@ -1,0 +1,9 @@
+{
+  "name": "E-Perangkat Ekonomi Fase F",
+  "short_name": "Ekonomi FF",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#F3F9F6",
+  "theme_color": "#064E3B",
+  "description": "E-Perangkat Ekonomi Fase F Kelas X CP 2026."
+}

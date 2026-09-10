@@ -1,0 +1,13 @@
+BOOK	XI	BG 11 - Geografi.pdf	https://drive.google.com/file/d/1Vl4A9vCfTgoMkx_9HoAAmXy6SGKTgaUH/view?usp=drivesdk
+KKTP	XI	KKTP - Geografi 11.docx	https://docs.google.com/document/d/1fhcnzDgMbd0x1pFr-KDhmdA_FciQ4fpG/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XI	Program Semester - Geografi 11.docx	https://docs.google.com/document/d/162YVMBGHaQJ7RRMooGGQqDGDgF5lQGnG/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XI	Program Tahunan - Geografi 11.docx	https://docs.google.com/document/d/1mmXN6fm7ysepJ3HnrF-MO5josnNyR94Q/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XI	ATP - Geografi 11.docx	https://docs.google.com/document/d/11QVHVCFNbZrkTTVeulNjcp7CWUN5NJum/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XI	CP Fase F - Geografi.docx	https://docs.google.com/document/d/1J_YRhKLyQI-uc3xyj2w-w1Z0jygK28Ts/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	XII	BG 12 - Geografi.pdf	https://drive.google.com/file/d/1V5pTrMeJpVc1-AwobqJsbzOhJD10Uxe7/view?usp=drivesdk
+BOOK	XII	BS 12 - Geografi.pdf	https://drive.google.com/file/d/1-rLQ-n7qXpH_pnrbKlrsIOhF0PTvK3zv/view?usp=drivesdk
+CP	XII	CP Fase F - Geografi.docx	https://docs.google.com/document/d/1ggVMZGrD3JDlD_-faqKnnqccCsBsYGrK/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XII	ATP Fase F - Geografi.docx	https://docs.google.com/document/d/1cqmXeV8JFCRpI49oz5cOPaA3MkuC5HHa/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XII	KKTP - Geografi.docx	https://docs.google.com/document/d/12xzJmdvJNVAS5ckKeJRrhR9QtKV58U4e/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XII	PROTA - Geografi.docx	https://docs.google.com/document/d/1PAkjRCIiHUKRkX_wem9EB90CrwV_6H1w/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XII	PROSEM - Geografi.docx	https://docs.google.com/document/d/1wtyCUp2RziOieWh0appDDHpoKTEQCQH_/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

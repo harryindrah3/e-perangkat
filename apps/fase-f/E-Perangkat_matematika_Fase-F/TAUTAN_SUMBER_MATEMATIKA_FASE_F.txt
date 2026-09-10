@@ -1,0 +1,14 @@
+BOOK	XI	BG 11 - Matematika.pdf	https://drive.google.com/file/d/1QwnYjr60VcKVfy2HgkDsRI_pvK36TOcy/view?usp=drivesdk
+BOOK	XI	BS 11 - Matematika.pdf	https://drive.google.com/file/d/1qE1-QdCgI5F-aXo8pZQQVdDUtLHDOylQ/view?usp=drivesdk
+ATP	XI	ATP - Matematika 11.docx	https://docs.google.com/document/d/1lpecmaYWy27LWESKeIZ5wS2Zdob8srws/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XI	Program Tahunan - Matematika 11.docx	https://docs.google.com/document/d/1RKzWFT2O_mKxAIEwvs95_zRfa8qeDfYN/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XI	Program Semester - Matematika 11.docx	https://docs.google.com/document/d/1v82ZKczIHtfZW9aqkiMiHQpFRlfnmvKT/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XI	CP Fase F - Matematika.docx	https://docs.google.com/document/d/1DMb_lYJNrGpXweFmarWZ1hWILkNflZY7/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XI	KKTP - Matematika 11.docx	https://docs.google.com/document/d/1ibzmsU0y45Zk-nBRwhxDr587CAhW4PGG/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	XII	BG 12 - Matematika.pdf	https://drive.google.com/file/d/19KJqPYcgKErEQKf6jI8jYf-9hS7MGudA/view?usp=drivesdk
+BOOK	XII	BS 12 - Matematika.pdf	https://drive.google.com/file/d/1osybQtV4R5S5v-E5rjkxLKZ1ZQzx88EF/view?usp=drivesdk
+ATP	XII	ATP Fase F - Matematika.docx	https://docs.google.com/document/d/1jvLYF6froqmFhy2kKKMH4uGT-bmwPYs2/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XII	KKTP - Matematika.docx	https://docs.google.com/document/d/1t2nuNKjP79FZlwyBQPXtVjmXoj1yk0B8/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XII	PROTA - Matematika.docx	https://docs.google.com/document/d/1bBoUFv6HFvLpJo4Q81xOMxuo27HgoOvA/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XII	PROSEM - Matematika.docx	https://docs.google.com/document/d/16a1XiTqVP4LgYvI7-ZrpsP51lynjEsc3/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XII	CP Fase F - Matematika.docx	https://docs.google.com/document/d/1Ry-mCOQDy68pNdUd_sanMb6RQLRyeD2t/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

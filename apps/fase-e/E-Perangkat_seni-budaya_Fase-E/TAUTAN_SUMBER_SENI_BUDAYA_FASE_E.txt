@@ -1,0 +1,24 @@
+BOOK	X	SENI RUPA-BG-KLS X.pdf	https://drive.google.com/file/d/1uHFt9-iK_bRCl6IKxPwcEn6bN3j7M9XS/view?usp=drivesdk
+ATP	X	ATP Fase E - Seni Rupa.docx	https://docs.google.com/document/d/1oi0r3DEtOh8Npinh4u5uvQ4pp-jZmTML/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	X	CP Fase E - Seni Rupa.docx	https://docs.google.com/document/d/1MWAsw9G8YGUCVypZwDgdIAyl-nQQp111/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	X	KKTP Fase E - Seni Rupa.docx	https://docs.google.com/document/d/1FayqHncnFHvW-sELfOfW7obQBFKT2DRQ/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	X	PROTA Fase E - Seni Rupa.docx	https://docs.google.com/document/d/1UGsH5RBL-me9VC0f0Qax0YcxEZIjiCod/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	X	PROSEM Fase E - Seni Rupa.docx	https://docs.google.com/document/d/1u4Jkv_pXFq-pEe1yPuz8emCnnIV34R6X/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	X	SENI MUSIK-BG-KLS X.pdf	https://drive.google.com/file/d/1WGwBuHuo-isFcFpwNIqbprrJ4PjLX0me/view?usp=drivesdk
+CP	X	CP Fase E - Seni Musik.docx	https://docs.google.com/document/d/1MSgUP5vSU42mwqOnMAHYcH-S0aZczp52/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	X	PROSEM Fase E - Seni Musik.docx	https://docs.google.com/document/d/1ORyr3evVUb_jBsgL2rW_ZGy4gcQMR3od/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	X	KKTP Fase E - Seni Musik.docx	https://docs.google.com/document/d/1mGwHWh2duAUMCEu8CfjifdnYMOiXJ5Fz/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	X	ATP Fase E - Seni Musik.docx	https://docs.google.com/document/d/1Wr_SYot2yHYtiIztHJ6aInjzcTvSbcyS/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	X	PROTA Fase E - Seni Musik.docx	https://docs.google.com/document/d/1RR86LYb1SpIGAZOKxrqE9Zqz4Xld0IJ0/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	X	SENI TEATER-BG-KLS X .pdf	https://drive.google.com/file/d/1kfpYA98JRiYIqtoRM0CINn9FauIKjm8b/view?usp=drivesdk
+PROTA	X	PROTA Fase E - Seni Teater.docx	https://docs.google.com/document/d/1TMju-ViSsppXeMB-RZ1Ncq5iz_pK3rrw/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	X	KKTP Fase E - Seni Teater.docx	https://docs.google.com/document/d/1dsUIyN3aLObprhXnHg55E2PJiniCSys3/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	X	PROSEM Fase E - Seni Teater.docx	https://docs.google.com/document/d/1TDYpR9YYKYT1qg8-hilS2qWS8eFko1y1/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	X	CP Fase E - Seni Teater.docx	https://docs.google.com/document/d/12XXF1oxKjoaUEwngJLDhw50jXHIkPNxd/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	X	ATP Fase E - Seni Teater.docx	https://docs.google.com/document/d/11YBfyM-6Xq_lr-kBNvxlclAPm7iYKzJH/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	X	SENI TARI-BG-KLS X.pdf	https://drive.google.com/file/d/1HVq-QDbv_-tWWbaBS7a1kLSO1qE9MqdM/view?usp=drivesdk
+PROTA	X	PROTA Fase E - Seni Tari.docx	https://docs.google.com/document/d/1-X-BBxz12pVPfCFupuu9ijm5Lkc9Zp1O/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	X	PROSEM Fase E - Seni Tari.docx	https://docs.google.com/document/d/1oV9Yng-tluW73Iy-Wu6DTddmd6rea3L9/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	X	CP Fase E - Seni Tari.docx	https://docs.google.com/document/d/11MoYPAfIHIdyZSdPFAbhBpfQz5nDQpBk/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	X	ATP Fase E - Seni Tari.docx	https://docs.google.com/document/d/1euMvUYnJket9D1pGII44kW8iHgiitHWa/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	X	KKTP Fase E - Seni Tari.docx	https://docs.google.com/document/d/1yS8YhPHdu--AgzR6RSSEU0CHDX_Bbb0P/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

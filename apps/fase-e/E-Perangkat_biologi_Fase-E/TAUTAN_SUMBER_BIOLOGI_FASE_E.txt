@@ -1,0 +1,7 @@
+BOOK	X	BG IPA 10 (Revisi).pdf	https://drive.google.com/file/d/1X63LKod-GR-NPO_9SaTZTiuQ5SGGMOeb/view?usp=drivesdk
+BOOK	X	BS IPA 10 (Revisi).pdf	https://drive.google.com/file/d/1PqpXnz-7uUdshj2eixfg5AFACLHy4wFc/view?usp=drivesdk
+PROTA	X	PROTA Fase E - IPA (Biologi).docx	https://docs.google.com/document/d/1k569g7poAzfeuKoPRHCYpuK1JWFjaazh/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	X	PROSEM Fase E - IPA (Biologi).docx	https://docs.google.com/document/d/1U0r2mxSk3dRM_v7QTMx5-plhoUzwMRly/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	X	KKTP Fase E - IPA (Biologi).docx	https://docs.google.com/document/d/10HvCQMuIIMXH2JVg0oNPiO1gsmEPsPNm/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	X	ATP Fase E - IPA (Biologi).docx	https://docs.google.com/document/d/1NUvcNCpBO5j5Qx8CRIzhuBMHj03cNd5H/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	X	CP FASE E - IPA (Biologi).docx	https://docs.google.com/document/d/1R5fZV12IuwhtO_vRuahs2KMHtBXBHmDT/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

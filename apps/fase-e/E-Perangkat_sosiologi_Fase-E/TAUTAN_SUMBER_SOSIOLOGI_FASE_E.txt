@@ -1,0 +1,7 @@
+PROMES	X	PROSEM Fase E - IPS (Sosiologi).docx	https://docs.google.com/document/d/1uU6z61fLRoZ9xwUwV3nsQb6aDrlYHf1B/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	X	BG IPS 10 (Revisi).pdf	https://drive.google.com/file/d/1u3zDo-OEyvYlwG5vrZDR2ay6_QPQfpQk/view?usp=drivesdk
+BOOK	X	BS IPS 10 (Revisi).pdf	https://drive.google.com/file/d/1SO89_j3YVlmDdyfGc_ylHlKE9dDTcnAE/view?usp=drivesdk
+KKTP	X	KKTP Fase E - IPS (Sosiologi).docx	https://docs.google.com/document/d/1jyn__OBnS1FLkvLaAyd5Uk1wU6Sp9RAd/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	X	PROTA Fase E - IPS (Sosiologi).docx	https://docs.google.com/document/d/1e5Hhg7SyrF462VPMJfeuhewOgt0FrTJp/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	X	ATP Fase E - IPS (Sosiologi).docx	https://docs.google.com/document/d/1MoawjLLgF251AWGMODbK0oBOSXK2lQvA/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	X	CP Fase E - IPS.docx	https://docs.google.com/document/d/10gzHpZX6wYa9zT5WJjNkdRjuKXNP0fek/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

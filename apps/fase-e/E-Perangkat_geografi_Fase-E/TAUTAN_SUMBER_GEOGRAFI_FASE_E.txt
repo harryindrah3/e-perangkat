@@ -1,0 +1,7 @@
+BOOK	X	BG IPS 10 (Revisi).pdf	https://drive.google.com/file/d/1ZFqMBCykhbobarroqOYGlOvdvkR4yAyM/view?usp=drivesdk
+BOOK	X	BS IPS 10 (Revisi).pdf	https://drive.google.com/file/d/16YtTfpY-t0hdNcW2mPTNto6Ip2JpG7f-/view?usp=drivesdk
+PROTA	X	PROTA Fase E - IPS (Geografi).docx	https://docs.google.com/document/d/1GlIIBd_nKYt7uDJF89hzRgAyLdbUac7R/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	X	PROSEM Fase E - IPS (Geografi).docx	https://docs.google.com/document/d/19qaJXYKJpNMsbYgyyhDEsKfJEnTmp49u/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	X	KKTP Fase E - IPS (Geografi).docx	https://docs.google.com/document/d/1cDMSGRJxyZojx3KBBg4JuXY-8y7tg96G/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	X	ATP Fase E - IPS (Geografi).docx	https://docs.google.com/document/d/1UdLRdgmpvWyP7XxDFfTJxVhM-EgxfP6u/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	X	CP Fase E - IPS.docx	https://docs.google.com/document/d/1019MFzxM_N91AT0qGFEmZevWmQLrSZqh/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

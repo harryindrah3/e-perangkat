@@ -1,0 +1,12 @@
+BOOK	XI	BG 11 - Matematika Tingkat Lanjut.pdf	https://drive.google.com/file/d/1XcNMEoP1fgDR5cFStlXbUwZfAcEEZVSr/view?usp=drivesdk
+BOOK	XI	BS 11 - Matematika Tingkat Lanjut.pdf	https://drive.google.com/file/d/1aJ08oc7YnTLmw-Z2I2CdH1T0xrvV9sS9/view?usp=drivesdk
+PROMES	XI	Program Semester - Matematika TL 11.docx	https://docs.google.com/document/d/1oApro41SEUiADwSR1f1gcOm_n0kvn-VJ/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XI	KKTP - Matematika TL 11.docx	https://docs.google.com/document/d/1W2zttFeAl8haGCTUq1vKOYX5vl-rfGID/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XI	Program Tahunan - Matematika TL 11.docx	https://docs.google.com/document/d/1nd-lYFATtgVx5b3hskylZqPIjqDntisY/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XI	ATP - Matematika TL 11.docx	https://docs.google.com/document/d/1HR04Ej8NGQSjUV7XsdFc4s30RFlWRv4_/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XI	CP Fase F - Matematika (TL).docx	https://docs.google.com/document/d/1paYapQ9DgtNGnsr8vdw6hz07SvmlvPU1/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XII	PROSEM - Matematika TL.docx	https://docs.google.com/document/d/18Y7bXxJpLbEZn9YQWqMLxMt9_ieits5S/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XII	PROTA - Matematika TL.docx	https://docs.google.com/document/d/15hjjDbKwJsGXhzbgglyXMK9UjjWVRJqP/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XII	ATP Fase F - Matematika TL.docx	https://docs.google.com/document/d/1ETXdWbQdUkW14D2KFsof8992ncP6Oarw/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XII	CP Fase F - Matematika (TL).docx	https://docs.google.com/document/d/1CItj-CmOpCX2McqdSQ4xyEaDCsSd0aXA/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XII	KKTP - Matematika TL.docx	https://docs.google.com/document/d/1aUTHnrxtoGsCtBlP_7-WSSZcxmfmj9Wx/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

@@ -1,0 +1,23 @@
+SUMBER DAN KOREKSI — PRAKARYA FASE D
+Kelas: VII, VIII, IX
+Folder acuan: https://drive.google.com/drive/folders/1yJi13wHwUZ8MJUCI8ZYve0TojzjFSs2C
+
+Catatan normalisasi:
+1. Kerangka Aplikasi
+   Temuan: Kerangka tidak boleh diubah menjadi model baru.
+   Penanganan: Seluruh navigasi, profil, penyimpanan, dua rombel, kalender, jadwal, CP, ATP, Prota, Promes, jurnal, daftar hadir, KKTP, modul, bahan ajar, LKPD, asesmen, analisis nilai, paket cetak, tanda tangan, logo, dan cadangan data mengikuti kerangka E-Perangkat rujukan.
+2. Muatan Kelas VII
+   Temuan: Setiap kelas harus memuat empat kelompok Prakarya.
+   Penanganan: Kelas VII memuat Kerajinan, Rekayasa, Budi Daya, dan Pengolahan sesuai unit pada buku panduan guru.
+3. Muatan Kelas VIII
+   Temuan: Setiap kelas harus memuat empat kelompok Prakarya.
+   Penanganan: Kelas VIII memuat Kerajinan, Rekayasa, Budi Daya, dan Pengolahan sesuai unit pada buku panduan guru.
+4. Muatan Kelas IX
+   Temuan: Setiap kelas harus memuat empat kelompok Prakarya.
+   Penanganan: Kelas IX memuat Kerajinan, Rekayasa, Budi Daya, dan Pengolahan sesuai unit pada buku panduan guru.
+5. Alokasi Waktu
+   Temuan: Sekolah dapat memilih kelompok Prakarya sesuai struktur dan kondisi satuan pendidikan.
+   Penanganan: Paket menampilkan seluruh kelompok sebagai bank perangkat lengkap. Alokasi 8 JP per unit merupakan pemetaan operasional dan dapat disesuaikan oleh pengguna.
+6. Hasil Cetak
+   Temuan: Hasil cetak harus sama rapi dan konsisten dengan E-Perangkat rujukan.
+   Penanganan: Mesin cetak, orientasi A4, sampul, kop, tabel, tanda tangan, daftar isi, dan paket per bagian dipertahankan dari kerangka asli.

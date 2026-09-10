@@ -1,0 +1,8 @@
+.env
+.env.*
+.git
+.openai
+BUKA_PORTAL.bat
+server.ps1
+setup
+**/BUKA_E-PERANGKAT.bat

@@ -1,0 +1,14 @@
+BOOK	XI	Buku Guru Kelas 11 Fisika.pdf	https://drive.google.com/file/d/1ZFyNelUGne2CjrDdMHkzAyD9UuyfmPdD/view?usp=drivesdk
+BOOK	XI	Buku Siswa Kelas 11 Fisika.pdf	https://drive.google.com/file/d/1-q6Uc0FJZhKgPiwySfgmjh2Cy8yBgH3c/view?usp=drivesdk
+PROMES	XI	Program Semester - Fisika 11.docx	https://docs.google.com/document/d/1aPbt5Ml1LIllRG-h-lO5__-yIVM8P3hW/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XI	ATP - Fisika 11.docx	https://docs.google.com/document/d/1TmNZu7GgBUuiSCG0aNHppI-FQSWmZAis/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XI	CP Fase F - Fisika.docx	https://docs.google.com/document/d/16BqiT4JHC_ltu45PdLNnSQv6BFGX6bDi/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XI	Program Tahunan - Fisika 11.docx	https://docs.google.com/document/d/1yM6PK2rcM08-s8tkNZAAQKTxkRklEWlv/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XI	KKTP - Fisika 11.docx	https://docs.google.com/document/d/17fYeOHIpz5zHj5U96KePiKrEnAid0Qo_/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	XII	BG 12 - Fisika.pdf	https://drive.google.com/file/d/16OCdNmwFBw791uYAkix3eFpCNc_cyfeh/view?usp=drivesdk
+BOOK	XII	BS 12 - Fisika.pdf	https://drive.google.com/file/d/1geTCBFQkB1yYZs6ybuzQDmFxsUIUXJRw/view?usp=drivesdk
+CP	XII	CP Fase F - Fisika.docx	https://docs.google.com/document/d/1H7wPrGIet_A8R6J8jtZi9nP6HojhXbhv/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XII	ATP Fase F - Fisika.docx	https://docs.google.com/document/d/1RSISXeYL91ZZ-pSciohIqi-P9wCcKADe/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XII	PROTA - Fisika.docx	https://docs.google.com/document/d/1mdsL_oUAeqqGVzRVSZawxCbVd-uAJJNH/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XII	KKTP - Fisika.docx	https://docs.google.com/document/d/14jJTZKMosgtK2r5NgTUscXjehPNSBO8k/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XII	PROSEM - Fisika.docx	https://docs.google.com/document/d/1T6zCKqg6jW1c1QoP880pbFsJ-jmaY9CU/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

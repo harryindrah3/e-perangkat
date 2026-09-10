@@ -1,0 +1,9 @@
+{
+  "name": "E-Perangkat Geografi Fase E",
+  "short_name": "Geografi FE",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#F3FAF9",
+  "theme_color": "#0F766E",
+  "description": "E-Perangkat Geografi Fase E Kelas X CP 2026."
+}

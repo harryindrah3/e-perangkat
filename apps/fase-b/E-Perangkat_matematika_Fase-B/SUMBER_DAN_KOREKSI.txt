@@ -1,0 +1,20 @@
+SUMBER DAN KOREKSI — MATEMATIKA FASE B
+Kelas: III, IV
+Folder acuan: https://drive.google.com/drive/folders/1O6DZFmk3rvWUddWx-BA9-ooeWa7KtIJO
+
+Catatan normalisasi:
+1. ATP Matematika Kelas IV
+   Temuan: Rincian alokasi tujuan pembelajaran berjumlah 175 JP, sedangkan baris total dokumen menyatakan 180 JP.
+   Penanganan: Aplikasi mempertahankan total 180 JP dengan menambahkan 5 JP penguatan, asesmen, remedial, dan pengayaan pada Bab 2 Pecahan, Desimal, dan Persen.
+2. Pembagian semester kelas IV
+   Temuan: ATP sumber menyajikan urutan tahunan tanpa pembagian semester yang seimbang.
+   Penanganan: Semester I memuat Bab 1–2 sebanyak 90 JP; Semester II memuat Bab 3–6 sebanyak 90 JP.
+3. Modul Ajar kelas III
+   Temuan: Bab 1 terdiri atas beberapa dokumen submateri dan satu dokumen induk.
+   Penanganan: Aplikasi menyatukannya sebagai Bab 1 Bilangan Cacah sampai 1.000 dengan 80 JP sesuai ATP.
+4. Jadwal Mengajar
+   Temuan: Aplikasi baru tidak memerlukan jadwal contoh.
+   Penanganan: Jadwal Semester I dan II dikosongkan; empat baris kosong tersedia dan total 0 tidak ditampilkan pada cetak.
+5. KKTP Analisis Nilai
+   Temuan: Nilai ambang tidak boleh menjadi satu nilai global untuk semua kelas.
+   Penanganan: KKTP dapat diubah dan disimpan terpisah untuk kelas III dan kelas IV serta otomatis digunakan pada analisis dan cetak.

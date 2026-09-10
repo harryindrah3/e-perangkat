@@ -1,0 +1,14 @@
+BOOK	XI	BG 11 - Informatika.pdf	https://drive.google.com/file/d/17HLfylo66EE924fOM-fwnlE0Ttp4AlUC/view?usp=drivesdk
+BOOK	XI	BS 11 - Informatika.pdf	https://drive.google.com/file/d/1S0QbKWbkPR_sAlk5xzRQ6GaILSKoFU3D/view?usp=drivesdk
+CP	XI	CP Fase F - Informatika.docx	https://docs.google.com/document/d/1FQ3I8VGO67FKTQLSujXua6cGRf6uiOZv/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XI	Program Tahunan - Informatika 11.docx	https://docs.google.com/document/d/1wOrcMlLjMLV-G7Ozdd6AECveHVIXkr2z/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XI	Program Semester - Informatika 11.docx	https://docs.google.com/document/d/1RwDQx9ppR4bShJdXJNzYE8CH_FLVPB82/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XI	KKTP - Informatika 11.docx	https://docs.google.com/document/d/1E7aJ3DoiaCzb8c5QkaPFCYK1P9spjU9d/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XI	ATP - Informatika 11.docx	https://docs.google.com/document/d/1Cmzjuq-OzUVR3Lx08JxYvx764F7eoDS2/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	XII	BG 12 - Informatika.pdf	https://drive.google.com/file/d/1Gc6NJPQjhQ-mvlaGW7yFcFeCebePQ86u/view?usp=drivesdk
+BOOK	XII	BS 12 - Informatika.pdf	https://drive.google.com/file/d/16zcocebVN0bTOahhqaz7FJux8HYCE5Pm/view?usp=drivesdk
+KKTP	XII	KKTP - Informatika.docx	https://docs.google.com/document/d/1SL5t2cm7Ptt88WxOIMhWolGqmb9d1vCy/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XII	PROTA - Informatika.docx	https://docs.google.com/document/d/1KpLPV9qKcQdymlUtVTyFxjH8dZkJ3NaI/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XII	PROSEM - Informatika.docx	https://docs.google.com/document/d/1XIb52f35WR-f5dM-r6n8uZteAyR6raym/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XII	CP Fase F - Informatika.docx	https://docs.google.com/document/d/1_gKsIaaSmvvltDgWRhNIZL2tF2enoVQ5/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XII	ATP Fase F - Informatika.docx	https://docs.google.com/document/d/1ddKCITMmDJRwkw1v3Xmrppl_1UQU1Uwa/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

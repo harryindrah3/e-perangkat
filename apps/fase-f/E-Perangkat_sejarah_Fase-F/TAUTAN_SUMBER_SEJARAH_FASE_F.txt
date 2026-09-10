@@ -1,0 +1,14 @@
+BOOK	XI	BG 11 - Sejarah.pdf	https://drive.google.com/file/d/1ArkMz2G8taXevtacoPmtCdCHZqQ85Boa/view?usp=drivesdk
+BOOK	XI	BS 11 - Sejarah.pdf	https://drive.google.com/file/d/1t5e5xxZm9PaeODL_JZEIB9nvQOS_sxWM/view?usp=drivesdk
+ATP	XI	ATP - Sejarah 11.docx	https://docs.google.com/document/d/1jmf-UL2uEc0dsakcOChRK9E4RH3uSEGU/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XI	KKTP - Sejarah 11.docx	https://docs.google.com/document/d/1LcrKbQqDbwaVU9oEhl1RROhhNGvhdJWA/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XI	Program Tahunan - Sejarah 11.docx	https://docs.google.com/document/d/10uypmeN1j5LsJLY9J4R9tZMgwxmdq7RX/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XI	Program Semester - Sejarah 11.docx	https://docs.google.com/document/d/1wOiSnBZ4VZAt5cysDSRGLWmmfj10pQqc/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XI	CP Fase F - Sejarah.docx	https://docs.google.com/document/d/1yYZpqjwFC9whfhSAkxdnsesuKGrtiOgV/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	XII	BG 12 - Sejarah.pdf	https://drive.google.com/file/d/1wIsJXgxgq2I_8JJ66D3wzXh7NlmisewU/view?usp=drivesdk
+BOOK	XII	BS 12 - Sejarah.pdf	https://drive.google.com/file/d/1yfNkP54aD-SJt_k8RmS5BbYBYQCegukz/view?usp=drivesdk
+PROMES	XII	PROSEM - Sejarah.docx	https://docs.google.com/document/d/1cMOyB2YMi-vFwffwGG0j0uVfzKalr66l/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XII	PROTA - Sejarah.docx	https://docs.google.com/document/d/1i9ZJx-6gnztyWJZm-ZAFH6HkLrE9dRi-/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XII	CP Fase F - Sejarah.docx	https://docs.google.com/document/d/1ng9B_glGFJs9738liufyk0wUa_MVqsIC/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XII	KKTP - Sejarah.docx	https://docs.google.com/document/d/1WrFb0Z2cNERAIUrXLWZXZxCiKJk0x9zu/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XII	ATP Fase F - Sejarah.docx	https://docs.google.com/document/d/1MHLXjImVWE33YuGCQ-YK3XptHbi7BatG/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

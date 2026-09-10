@@ -1,0 +1,4 @@
+Portal E-Perangkat Offline A-F
+Versi: 1.0.0
+Cakupan: 69 aplikasi E-Perangkat, Fase A sampai F, Kelas I sampai XII
+Model: Aplikasi dan cetak offline; Pesanan & Riwayat hybrid Google Sheets

@@ -1,0 +1,7 @@
+BOOK	X	BG Pendidikan Pancasila 10 (Revisi).pdf	https://drive.google.com/file/d/1FKdXaB1rjCGNHzJTfgTKSMKvPn-9cbKQ/view?usp=drivesdk
+BOOK	X	BS Pendidikan Pancasila 10 (Revisi).pdf	https://drive.google.com/file/d/1RcCg8k-QFupetjl_H-bs-T5vOMyUKQLD/view?usp=drivesdk
+PROTA	X	PROTA Fase E - Pendidikan Pancasila.docx	https://docs.google.com/document/d/1aweQj67uzRzWixIMYQeXBBYI3pceckx2/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	X	ATP Fase E - Pendidikan Pancasila.docx	https://docs.google.com/document/d/1DmyTKlbg09TgB7W9ZgcaYUnX4ADAnKSW/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	X	PROSEM Fase E - Pendidikan Pancasila.docx	https://docs.google.com/document/d/1GWnPesr-opALYEXHxbg75z0m-JrJwlc_/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	X	CP Fase E - Pendidikan Pancasila.docx	https://docs.google.com/document/d/1bV8z03wF_dHFlGNJsePxY3Wy_A2hqnru/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	X	KKTP Fase E - Pendidikan Pancasila.docx	https://docs.google.com/document/d/1UsEvvOR8I6wCV8kDP6jdQn92Aoi0AnaI/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

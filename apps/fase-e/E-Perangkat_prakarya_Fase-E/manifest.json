@@ -1,0 +1,9 @@
+{
+  "name": "E-Perangkat Prakarya Fase E",
+  "short_name": "Prakarya FE",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#FCF7F3",
+  "theme_color": "#9A3412",
+  "description": "E-Perangkat Prakarya Fase E Kelas X CP 2026."
+}

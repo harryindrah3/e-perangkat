@@ -1,0 +1,20 @@
+SUMBER DAN KOREKSI — INFORMATIKA FASE D
+Kelas: VII, VIII, IX
+Folder acuan: https://drive.google.com/drive/folders/1-R2LsjzpKv3oV9kddng3byBKGGP7_SQK
+
+Catatan normalisasi:
+1. Capaian Pembelajaran Informatika Fase D
+   Temuan: Dokumen perubahan CP tahun 2026 yang tersedia hanya menyesuaikan Pendidikan Agama dan Budi Pekerti.
+   Penanganan: CP Informatika tetap mengacu Keputusan Kepala BSKAP Nomor 046/H/KR/2025 sebagaimana dirujuk dalam Panduan Guru Informatika revisi.
+2. Buku Revisi Informatika Kelas VII
+   Temuan: Buku 2023 memuat lima bab dan menggabungkan elemen Berpikir Komputasional serta Literasi Digital melalui aktivitas plugged dan unplugged.
+   Penanganan: ATP, modul, bahan ajar, LKPD, dan asesmen mengikuti urutan lima bab serta aktivitas inti pada Buku Siswa dan Panduan Guru revisi 2023.
+3. Buku Revisi Informatika Kelas VIII
+   Temuan: Buku 2024 memuat lima bab: Analisis Data, Berpikir Komputasional, Algoritma Pemrograman, Jejak Bermedia Digital, dan Pemanfaatan Perangkat Digital.
+   Penanganan: Seluruh muatan kelas VIII diselaraskan dengan judul, submateri, strategi, dan saran waktu pada buku revisi 2024.
+4. Buku Revisi Informatika Kelas IX
+   Temuan: Buku 2025 menerapkan pembelajaran mendalam dan memuat empat bab dengan penekanan data, pemrograman modular, produktivitas, AI, serta keamanan digital.
+   Penanganan: Muatan kelas IX mengikuti empat bab dan saran waktu 16, 16, 14, dan 18 JP dari Panduan Guru revisi 2025.
+5. Alokasi Waktu
+   Temuan: Saran alokasi pada buku berbeda antar kelas dan dapat melampaui/kurang dari minggu efektif satuan pendidikan.
+   Penanganan: Paket memakai saran buku: VII 84 JP, VIII 62 JP, IX 64 JP; guru dapat menyesuaikan pada Prota, Promes, Kalender, dan Jadwal Mengajar sesuai struktur kurikulum dan kondisi sekolah.

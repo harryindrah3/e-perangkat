@@ -1,0 +1,20 @@
+SUMBER DAN KOREKSI — SENI RUPA FASE C
+Kelas: V, VI
+Folder acuan: https://drive.google.com/drive/folders/14bKMP4AJOCoaqQGaQrmVd9BdcrnvBjYj
+
+Catatan normalisasi:
+1. Struktur Bab Seni Rupa Kelas V
+   Temuan: Versi sebelumnya membagi materi menjadi 12 bab berdasarkan modul administrasi lama. Buku Panduan Guru Edisi Revisi 2024 memuat 6 bab utama.
+   Penanganan: Seluruh CP turunan, ATP, Prota, Prosem, KKTP, modul, bahan ajar, LKPD, asesmen, dan paket cetak kelas V disusun ulang menjadi 6 bab sesuai urutan buku.
+2. Struktur Bab Seni Rupa Kelas VI
+   Temuan: Versi sebelumnya menggunakan 12 bab yang mengulang struktur kelas V. Buku Panduan Guru Edisi Revisi 2025 memuat 5 bab baru dengan fokus literasi visual, karya 2D/3D personal, refleksi, dan pameran.
+   Penanganan: Seluruh perangkat kelas VI diganti menjadi 5 bab sesuai buku revisi 2025.
+3. Alokasi Kelas V
+   Temuan: Buku memberi rentang saran pertemuan, bukan satu angka JP tahunan yang baku.
+   Penanganan: Aplikasi menggunakan alokasi operasional di dalam rentang buku: 8 JP untuk Bab 1–2 dan 10 JP untuk Bab 3–6; dapat disesuaikan oleh satuan pendidikan.
+4. Alokasi Kelas VI
+   Temuan: Buku revisi menetapkan 9 JP atau 3 pertemuan untuk setiap bab.
+   Penanganan: Aplikasi mengikuti 9 JP per bab sebagaimana tertulis dalam buku revisi 2025.
+5. Dokumen Administrasi Lama
+   Temuan: CP/ATP/Prota/Prosem/KKTP lama di folder sumber belum mengikuti struktur buku revisi.
+   Penanganan: Dokumen lama diperlakukan sebagai arsip; sumber utama aplikasi sekarang adalah dua buku revisi yang dicantumkan dan disalin ke folder sumber_dokumen.

@@ -1,0 +1,14 @@
+BOOK	XI	Buku Guru Kelas 11 Kimia.pdf	https://drive.google.com/file/d/1UiACTIyJsLdaHED7gZ4vcJuIkCUoyW1s/view?usp=drivesdk
+BOOK	XI	Buku Siswa Kelas 11 Kimia.pdf	https://drive.google.com/file/d/1rOMojr2pBFKp2YEHL5lf7SvEjrb-dfMq/view?usp=drivesdk
+ATP	XI	ATP - Kimia 11.docx	https://docs.google.com/document/d/1DvQNrYGFoMTgIiwZgOfVWcVoMqNa2vR9/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XI	Program Tahunan - Kimia 11.docx	https://docs.google.com/document/d/1TsWVTCiOqomVLKA2B4kkmAMEuhD940LS/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XI	KKTP - Kimia 11.docx	https://docs.google.com/document/d/1-3uQwb3dj4pm9K4yQg672KztpSVEyLIN/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XI	CP Fase F - Kimia.docx	https://docs.google.com/document/d/15d3YKeNw-GeylkuPlhf06ZSXNrUe-JNZ/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XI	Program Semester - Kimia 11.docx	https://docs.google.com/document/d/1sEEKG5IGIoDjA4nkStXNmTyY4JxZJvHk/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	XII	BS 12 - Kimia.pdf	https://drive.google.com/file/d/1VitGchS9Y9pz8kBrMMIcbJ_ih-6xXxil/view?usp=drivesdk
+BOOK	XII	BG 12 - Kimia.pdf	https://drive.google.com/file/d/1RrNisRd4FUyLG9Vk5v_Kxj1zxJIr_Xsv/view?usp=drivesdk
+CP	XII	CP Fase F - Kimia.docx	https://docs.google.com/document/d/1hAKslHB-4wyV3W6zOMbgEXznJiW8SKI_/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XII	PROTA - Kimia.docx	https://docs.google.com/document/d/1gFvQo2mgZurP7fyU5EnYoKPsCp1PKxZa/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XII	KKTP - Kimia.docx	https://docs.google.com/document/d/1I5sUqF0hMSmSK-eobW1yV-3R_PhNFlCj/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XII	PROSEM - Kimia.docx	https://docs.google.com/document/d/1tD-5rJldgw8idtc8zepygCLmKEvJy8Hk/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XII	ATP Fase F - Kimia.docx	https://docs.google.com/document/d/12SuCFXvrlxOZtrJJTfw-TIONoa4BI-Kl/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

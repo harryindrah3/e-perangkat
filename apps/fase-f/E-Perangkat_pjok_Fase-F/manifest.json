@@ -1,0 +1,9 @@
+{
+  "name": "E-Perangkat PJOK Fase F",
+  "short_name": "PJOK FF",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#F4FAF5",
+  "theme_color": "#14532D",
+  "description": "E-Perangkat PJOK Fase F Kelas X CP 2026."
+}

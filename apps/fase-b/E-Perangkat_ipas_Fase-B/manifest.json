@@ -1,0 +1,8 @@
+{
+  "name": "E-Perangkat Ilmu Pengetahuan Alam dan Sosial Fase B",
+  "short_name": "IPAS FB",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#0F766E"
+}

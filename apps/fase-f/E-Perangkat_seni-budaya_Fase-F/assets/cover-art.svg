@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 794 1123" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bgsenibudayaF" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7E276C"/><stop offset=".56" stop-color="#CF4E91"/><stop offset="1" stop-color="#F4A443"/></linearGradient>
+    <linearGradient id="fadesenibudayaF" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff" stop-opacity=".06"/><stop offset="1" stop-color="#fff" stop-opacity=".92"/></linearGradient>
+    <pattern id="dotssenibudayaF" width="34" height="34" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="2.2" fill="#fff" opacity=".22"/></pattern>
+    <filter id="shadowsenibudayaF" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="15" stdDeviation="18" flood-color="#08121f" flood-opacity=".2"/></filter>
+  </defs>
+  <rect width="794" height="1123" fill="#f7fafc"/>
+  <path d="M0 0h794v520C620 565 260 425 0 590z" fill="url(#bgsenibudayaF)"/>
+  <path d="M0 0h794v520C620 565 260 425 0 590z" fill="url(#dotssenibudayaF)"/>
+  <path d="M-80 495L874 290v110L-80 605z" fill="#fff" opacity=".09"/>
+  <circle cx="184" cy="188" r="220" fill="#fff" opacity=".09"/>
+  <circle cx="184" cy="188" r="154" fill="none" stroke="#fff" stroke-width="2" opacity=".25"/>
+  <g transform="translate(62 95) scale(1.52)" opacity=".9"><g fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M128 28c-61 0-105 43-105 99s46 99 101 99c18 0 27-10 21-23-8-17 4-31 24-31h25c28 0 42-22 37-48-10-55-45-96-103-96z"/><circle cx="70" cy="92" r="12" fill="#fff"/><circle cx="113" cy="65" r="12" fill="#fff"/><circle cx="161" cy="74" r="12" fill="#fff"/><circle cx="191" cy="111" r="12" fill="#fff"/><path d="M89 177c-13 0-23-10-23-23s10-23 23-23 23 10 23 23-10 23-23 23z"/><path d="M182 153v78M182 154l46-15v75M182 184l46-15"/></g></g>
+  <path d="M0 1010c210-58 387-43 530 5 98 33 186 32 264-5v113H0z" fill="#7E276C" opacity=".08"/>
+  <path d="M0 1046c190-42 354-35 510 8 113 31 208 28 284-7v76H0z" fill="#CF4E91" opacity=".09"/>
+  <rect x="0" y="0" width="16" height="1123" fill="#F4A443" opacity=".95"/>
+  <rect x="16" y="0" width="6" height="1123" fill="#fff" opacity=".38"/>
+  </svg>

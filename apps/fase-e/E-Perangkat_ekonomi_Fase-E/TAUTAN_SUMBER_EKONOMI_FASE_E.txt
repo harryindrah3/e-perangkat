@@ -1,0 +1,7 @@
+PROTA	X	PROTA Fase E - IPS (Ekonomi).docx	https://docs.google.com/document/d/1taQH0fKvHd4W8LlD9ydOKwbImrs1GFka/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	X	BG IPS 10 (Revisi).pdf	https://drive.google.com/file/d/17hKcWGNTYor9LOSEPPGA2XUMinjj22Oj/view?usp=drivesdk
+BOOK	X	BS IPS 10 (Revisi).pdf	https://drive.google.com/file/d/1Ea7kSzqSgNl9munRbNFNkIu3WoJJaJvf/view?usp=drivesdk
+PROMES	X	PROSEM Fase E - IPS (Ekonomi).docx	https://docs.google.com/document/d/1Phchj8z6Gkai9XXFa0N6YyNtBXcXOYf6/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	X	ATP Fase E - IPS (Ekonomi).docx	https://docs.google.com/document/d/1lEqxf88Ej7QVvQ_srx9egl6kqQQOW8zh/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	X	KKTP Fase E - IPS (Ekonomi).docx	https://docs.google.com/document/d/1oOrrVCh0gIVrDLrCt33T9FBx3b4xiL7P/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	X	CP Fase E - IPS.docx	https://docs.google.com/document/d/1BbU-VmKKLe1qyLS9R0c3uJ-FaoOyrx-_/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

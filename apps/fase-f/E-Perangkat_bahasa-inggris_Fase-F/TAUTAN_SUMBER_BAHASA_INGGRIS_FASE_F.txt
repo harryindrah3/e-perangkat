@@ -1,0 +1,14 @@
+BOOK	XI	New BG 11 - Bahasa Inggris.pdf	https://drive.google.com/file/d/1olWMeutIGn67YJ5WpBZwSdathFZZasGC/view?usp=drivesdk
+BOOK	XI	New BS 11 - Bahasa Inggris.pdf	https://drive.google.com/file/d/1LMXLQID5jl7hsh3qe9VodzD_xfrWxdxo/view?usp=drivesdk
+PROMES	XI	Program Semester - Bahasa Inggris 11.docx	https://docs.google.com/document/d/1EPIL7LX_xmAKOhZPfQAoGXCdKNXZE5ml/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XI	KKTP - Bahasa Inggris 11.docx	https://docs.google.com/document/d/1PAaO5stHuWM8_Kkdkbbre-1I1CI14FeW/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XI	ATP - Bahasa Inggris 11.docx	https://docs.google.com/document/d/1eXrExQth4PLzC5cgaB694XTJBQgGudkq/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XI	CP Fase F - Bahasa Inggris.docx	https://docs.google.com/document/d/18VNHPKmj-aa2GUIOZBkKIdVEEKfzHBbY/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XI	Program Tahunan - Bahasa Inggris 11.docx	https://docs.google.com/document/d/1Df17YC2jqQfYRO-TKQv-YjTKwhy7Vl1A/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	XII	BG 12 - Bahasa Inggris.pdf	https://drive.google.com/file/d/1mFpVte6_C4bNvAKB8sCW403euunYBWzk/view?usp=drivesdk
+BOOK	XII	BS 12 - Bahasa Inggris.pdf	https://drive.google.com/file/d/1Mu13JV7m5PvElSi0hxAhi9dwAxo6Ct0L/view?usp=drivesdk
+ATP	XII	ATP Fase F - Bahasa Inggris.docx	https://docs.google.com/document/d/1gaoH9TzswFg2i_kabent0YuYPy6GPs32/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XII	KKTP - Bahasa Inggris.docx	https://docs.google.com/document/d/1H_oWngtUhevc9cg02abLJOvtL5wOFKtK/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XII	CP Fase F - Bahasa Inggris.docx	https://docs.google.com/document/d/1YF-ExveVmVODpznJb9J2RnKM_dS6xX0C/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XII	PROTA - Bahasa Inggris.docx	https://docs.google.com/document/d/1nkkpJc7YMZ9MRcQlhc5ciFlLus4d1Qe7/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XII	PROSEM - Bahasa Inggris.docx	https://docs.google.com/document/d/1Ji6O7j9D-uSyytS8ZnIDuZ1wVqy6-MC-/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

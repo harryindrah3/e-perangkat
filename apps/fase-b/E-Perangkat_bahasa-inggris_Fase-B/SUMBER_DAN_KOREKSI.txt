@@ -1,0 +1,20 @@
+SUMBER DAN KOREKSI — BAHASA INGGRIS FASE B
+Kelas: III, IV
+Folder acuan: https://drive.google.com/drive/folders/1DFTTIg5L4hJ3tB72hujhwTmrKhv-VxGW
+
+Catatan normalisasi:
+1. CP Bahasa Inggris 2025
+   Temuan: Bahasa Inggris diwajibkan mulai Fase B, dengan fokus pada kemampuan lisan dan pengenalan bahasa tulisan; Fase B umumnya untuk kelas III dan IV.
+   Penanganan: Seluruh CP, ATP, modul, KKTP, dan asesmen menggunakan rumusan Fase B pada Keputusan Kepala BSKAP Nomor 046/H/KR/2025.
+2. Modul Ajar Bahasa Inggris Kelas III
+   Temuan: Sumber menggabungkan tiga lingkup besar—Daily Routines, Numbers 50–100, dan Prepositions—masing-masing 12 JP dan berlabel semester 1.
+   Penanganan: Muatan dipertahankan, lalu setiap lingkup dibagi menjadi dua unit bertahap agar tersedia alur tahunan 6 unit; distribusi semester dapat diedit oleh satuan pendidikan.
+3. My Next Words dan perangkat Kelas IV
+   Temuan: Buku 2021 serta beberapa perangkat pendamping menggunakan rumusan CP dan nomenklatur yang lebih lama.
+   Penanganan: Dua belas judul unit, kosakata, dan fokus bahasa dipertahankan; tujuan, elemen, pendekatan, dan asesmen dinormalisasi ke CP Bahasa Inggris 2025.
+4. Alokasi Kelas IV
+   Temuan: Prota sumber memuat 50 JP materi inti dan total 62 JP setelah PTS, PAS/PAT, review, serta proyek akhir.
+   Penanganan: E-Perangkat menampilkan 12 modul materi inti (50 JP) dan menyediakan 12 JP asesmen/review/cadangan dalam Prota dan Prosem.
+5. Penyimpanan aplikasi
+   Temuan: Data E-Perangkat Fase B perlu terpisah dari E-Perangkat Bahasa Inggris Fase C.
+   Penanganan: Penyimpanan dipisahkan menggunakan namespace bahasainggrisfaseb.v1; profil, pesanan, jadwal, peserta didik, nilai, analisis, dan tanda tangan tetap tersedia.

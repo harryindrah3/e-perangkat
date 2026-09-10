@@ -1,0 +1,20 @@
+SUMBER DAN KOREKSI — PENDIDIKAN AGAMA ISLAM DAN BUDI PEKERTI FASE D
+Kelas: VII, VIII, IX
+Folder acuan: https://drive.google.com/drive/folders/1s890dcfgPvJfKwcTR1-W5jBjisR3lc7B
+
+Catatan normalisasi:
+1. Capaian Pembelajaran PAI-BP Fase D
+   Temuan: Dokumen perangkat sumber masih menggunakan rumusan CP 046/H/KR/2025.
+   Penanganan: Seluruh CP, tujuan, modul, bahan ajar, LKPD, dan asesmen diselaraskan dengan Keputusan Nomor 020 Tahun 2026.
+2. Elemen Sejarah Peradaban Islam
+   Temuan: Perangkat sumber lebih banyak membahas dinasti, sedangkan CP 2026 secara eksplisit menuntut sejarah masuknya Islam di Indonesia.
+   Penanganan: Ditambahkan Bab 11 Kelas IX “Sejarah Masuknya Islam di Indonesia” agar cakupan fase terpenuhi.
+3. Elemen Al-Qur’an Hadis
+   Temuan: Rumusan lama menekankan pemahaman, sedangkan rumusan 2026 memperjelas membaca, menghafal, menulis, dan menjelaskan.
+   Penanganan: Tujuan, aktivitas, dan bukti asesmen empat keterampilan tersebut ditegaskan pada bab-bab Al-Qur’an Hadis.
+4. Elemen Akidah, Akhlak, dan Fikih
+   Temuan: CP 2026 menegaskan tindakan meyakini, merefleksikan, dan menerapkan, termasuk wakaf dan lima dimensi cinta.
+   Penanganan: Modul dilengkapi muhasabah, studi kasus, praktik, proyek pengamalan, dan penguatan nilai cinta.
+5. Bahasa dokumen
+   Temuan: Sumber menggunakan istilah peserta didik dan variasi nama mata pelajaran.
+   Penanganan: Antarmuka dan dokumen menggunakan istilah murid serta nama resmi Pendidikan Agama Islam dan Budi Pekerti secara konsisten.

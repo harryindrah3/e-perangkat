@@ -1,0 +1,14 @@
+BOOK	XI	Buku Guru Kelas 11 Biologi.pdf	https://drive.google.com/file/d/1UooKShaY3TWV7vGigM0AOephaa6VAqc6/view?usp=drivesdk
+BOOK	XI	Buku Siswa Kelas 11 Biologi.pdf	https://drive.google.com/file/d/1gp80XGWmHY9qArMi1F1BWzRrjhXMutHN/view?usp=drivesdk
+PROMES	XI	Program Semester - Biologi 11.docx	https://docs.google.com/document/d/1UMYvH0QH4ZIp2D9X12iN1WXAHigUt_XU/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XI	KKTP - Biologi 11.docx	https://docs.google.com/document/d/1g5w5yVLLT6wzi4-wR9bfWTq4aP3sSGIv/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XI	ATP - Biologi 11.docx	https://docs.google.com/document/d/1KycsZYLF8jykfxAZQDqDdgFe1jcftTTk/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XI	Program Tahunan - Biologi 11.docx	https://docs.google.com/document/d/1WI8HjHB7kWZNDUUiBUYIAmvrpdMawLyc/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XI	CP Fase F - Biologi.docx	https://docs.google.com/document/d/1FVjo3gmiCQsBpoaRznzR0h3q_WdQ6tQf/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	XII	BS 12 - Biologi.pdf	https://drive.google.com/file/d/1Vqr-mZ-lP80mH_B78qqj_blswb2d0Mh0/view?usp=drivesdk
+BOOK	XII	BG 12 - Biologi.pdf	https://drive.google.com/file/d/11x_KkBZADSR4ENSk8adbxRVAXBQPxMLf/view?usp=drivesdk
+PROTA	XII	PROTA - Biologi.docx	https://docs.google.com/document/d/1ul4lGgL6LYmGT2aKxc-2BDf9kV6Skv3t/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XII	PROSEM - Biologi.docx	https://docs.google.com/document/d/1R5i-bseX6WBadoWQe5ni8ffnurTDMRjw/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XII	CP Fase F - Biologi.docx	https://docs.google.com/document/d/1XAYzZhbVnBB-woZxWgfJOyGh5EBcabJd/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XII	KKTP - Biologi.docx	https://docs.google.com/document/d/1qj63F95KbRr-OWSspTskF3OItqUT-1Px/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XII	ATP Fase F - Biologi.docx	https://docs.google.com/document/d/1du1CJ28w5uTf123P_PPLVgKHI8cX8jSU/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

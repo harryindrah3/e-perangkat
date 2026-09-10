@@ -1,0 +1,17 @@
+SUMBER DAN KOREKSI — PENDIDIKAN PANCASILA FASE A
+Kelas: I, II
+Folder acuan: https://drive.google.com/drive/folders/1nmkigRAxZJo3c2w__bAmPtR5oNouCuGh
+
+Catatan normalisasi:
+1. Penamaan mata pelajaran pada sumber
+   Temuan: Sebagian folder dan nama file masih menggunakan singkatan PKN/PKn.
+   Penanganan: Ditampilkan konsisten sebagai Pendidikan Pancasila.
+2. Alokasi waktu sumber
+   Temuan: Dokumen ATP, Prota, Promes, dan Modul Ajar kelas I–II masih menampilkan titik-titik pada kolom JP.
+   Penanganan: Dibuat distribusi operasional 144 JP per tahun: 72 JP semester ganjil dan 72 JP semester genap; setiap bab 36 JP atau 18 pertemuan @ 2 JP.
+3. Pembagian Fase A
+   Temuan: Identitas sumber kelas I dan II tidak selalu seragam.
+   Penanganan: Seluruh perangkat dinormalisasi menjadi Fase A dengan pilihan kelas I dan II.
+4. Kemampuan awal membaca-menulis
+   Temuan: Peserta didik Fase A memiliki kemampuan literasi yang beragam.
+   Penanganan: Asesmen dan LKPD menyediakan pilihan respons lisan, gambar, mencocokkan, praktik, serta tulisan sederhana.

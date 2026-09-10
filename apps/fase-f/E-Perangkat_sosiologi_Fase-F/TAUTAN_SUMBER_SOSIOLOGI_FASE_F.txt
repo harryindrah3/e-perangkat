@@ -1,0 +1,14 @@
+BOOK	XI	BG 11 - Sosiologi.pdf	https://drive.google.com/file/d/13QPjKAlVDvq8KRqJFQpVxMNf7lqyGKtZ/view?usp=drivesdk
+BOOK	XI	BS 11 - Sosiologi.pdf	https://drive.google.com/file/d/1aNiPdCVtNx5ZPZPI_DW5belwJCoMCFsd/view?usp=drivesdk
+PROTA	XI	Program Tahunan - Sosiologi 11.docx	https://docs.google.com/document/d/1LfIXKP1BT2NIMfo8PMDZ1TrzkS7x8Ige/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XI	KKTP - Sosiologi 11.docx	https://docs.google.com/document/d/1pNWoV3sYDJvVg8XZrYYfHI03tZlRS0Fn/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XI	ATP - Sosiologi 11.docx	https://docs.google.com/document/d/1VXKRQdPZP-UDgE7AgL7KBe7B51OiYvNu/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XI	CP Fase F - Sosiologi.docx	https://docs.google.com/document/d/1jUOInDUpQ_pzfRjV2CG-5V5qKzlXc7aD/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROMES	XI	Program Semester - Sosiologi 11.docx	https://docs.google.com/document/d/1Lickq6yElNO_mchfR_J_SJGhPKCJQgWF/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+BOOK	XII	BG 12 - Sosiologi.pdf	https://drive.google.com/file/d/1b9i2kGUH-m8onnvhTGexIqM3tO_o5a0x/view?usp=drivesdk
+BOOK	XII	BS 12 - Sosiologi.pdf	https://drive.google.com/file/d/13vSn0LiGzfU1xhI9in6qaDX03uDpA9Jl/view?usp=drivesdk
+PROMES	XII	PROSEM - Sosiologi.docx	https://docs.google.com/document/d/1cm-ZQI3VFUe7eXD1XDjtY8DvLqArbm3H/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+CP	XII	CP Fase F - Sosiologi.docx	https://docs.google.com/document/d/1JoJHw6nS5H_CoCzS4Y9ZK0QUpp3mMH-6/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+KKTP	XII	KKTP - Sosiologi.docx	https://docs.google.com/document/d/1SBSCS4aLNmPDiSXmdzweWSlV8UfM6c5T/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+ATP	XII	ATP Fase F - Sosiologi.docx	https://docs.google.com/document/d/16_EWg7b0zaB9KDeet-3rQJ2rVrxA2X6G/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true
+PROTA	XII	PROTA - Sosiologi.docx	https://docs.google.com/document/d/1wN1JZzZ_2z-o8cND5lbKVcLwQL9P2jGR/edit?usp=drivesdk&ouid=106327648390670158488&rtpof=true&sd=true

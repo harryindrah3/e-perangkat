@@ -1,0 +1,22 @@
+PORTAL E-PERANGKAT OFFLINE A-F
+================================
+
+CARA MEMBUKA
+1. Ekstrak seluruh ZIP ke satu folder pada harddisk.
+2. Jangan memindahkan atau mengganti nama folder "apps".
+3. Klik dua kali BUKA_PORTAL.bat.
+4. Browser akan terbuka otomatis di alamat http://127.0.0.1:8765/
+5. Biarkan jendela hitam tetap terbuka selama Portal digunakan.
+6. Setelah selesai, tutup jendela hitam atau tekan Ctrl+C.
+
+PENTING
+- Selalu buka melalui BUKA_PORTAL.bat agar semua E-Perangkat berbagi data dengan Portal.
+- Seluruh materi dan Paket Cetak tetap bekerja dari harddisk.
+- Koneksi internet hanya dipakai saat menu Pesanan & Riwayat disinkronkan.
+- Jika Windows menampilkan peringatan PowerShell, pilih jalankan karena berkas ini hanya membuat server lokal pada komputer sendiri.
+
+DATABASE GOOGLE SHEETS
+Panduan lengkap berada pada folder setup/PETUNJUK_DATABASE.html.
+
+BACKUP
+Gunakan tombol Ekspor Backup pada menu Pesanan & Riwayat secara berkala.

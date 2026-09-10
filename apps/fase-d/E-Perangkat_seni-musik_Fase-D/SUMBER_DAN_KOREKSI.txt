@@ -1,0 +1,8 @@
+SUMBER DAN KOREKSI — SENI MUSIK FASE D
+Kelas: VII, VIII, IX
+Folder acuan: https://drive.google.com/drive/folders/1njXe3opx0HvCv63B72yHSeAm19QGi_RB
+
+Catatan normalisasi:
+1. CP Seni Musik Kelas IX
+   Temuan: Judul internal sumber tertulis Mata Pelajaran Bahasa Indonesia, sedangkan rasional, tujuan, elemen, dan seluruh isi adalah Seni Musik.
+   Penanganan: Judul dinormalisasi menjadi Seni Musik; substansi Seni Musik dipertahankan.

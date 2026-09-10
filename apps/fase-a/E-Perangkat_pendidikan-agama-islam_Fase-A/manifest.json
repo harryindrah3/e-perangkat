@@ -1,0 +1,8 @@
+{
+  "name": "E-Perangkat Pendidikan Agama Islam dan Budi Pekerti Fase A",
+  "short_name": "PAIBP FA",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#065F46"
+}

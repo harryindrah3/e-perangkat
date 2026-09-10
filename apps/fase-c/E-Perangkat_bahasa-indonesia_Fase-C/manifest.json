@@ -1,0 +1,8 @@
+{
+  "name": "E-Perangkat Bahasa Indonesia Fase C",
+  "short_name": "B. Indonesia FC",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#7A1F3D"
+}

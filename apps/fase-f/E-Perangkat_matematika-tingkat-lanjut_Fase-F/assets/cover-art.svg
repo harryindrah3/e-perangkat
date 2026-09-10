@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 794 1123" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bgmatematikatingkatlanjutF" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3C2378"/><stop offset=".56" stop-color="#7450C7"/><stop offset="1" stop-color="#30C6C9"/></linearGradient>
+    <linearGradient id="fadematematikatingkatlanjutF" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff" stop-opacity=".06"/><stop offset="1" stop-color="#fff" stop-opacity=".92"/></linearGradient>
+    <pattern id="dotsmatematikatingkatlanjutF" width="34" height="34" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="2.2" fill="#fff" opacity=".22"/></pattern>
+    <filter id="shadowmatematikatingkatlanjutF" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="15" stdDeviation="18" flood-color="#08121f" flood-opacity=".2"/></filter>
+  </defs>
+  <rect width="794" height="1123" fill="#f7fafc"/>
+  <path d="M0 0h794v520C620 565 260 425 0 590z" fill="url(#bgmatematikatingkatlanjutF)"/>
+  <path d="M0 0h794v520C620 565 260 425 0 590z" fill="url(#dotsmatematikatingkatlanjutF)"/>
+  <path d="M-80 495L874 290v110L-80 605z" fill="#fff" opacity=".09"/>
+  <circle cx="184" cy="188" r="220" fill="#fff" opacity=".09"/>
+  <circle cx="184" cy="188" r="154" fill="none" stroke="#fff" stroke-width="2" opacity=".25"/>
+  <g transform="translate(62 95) scale(1.52)" opacity=".9"><g fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><rect x="25" y="25" width="206" height="206" rx="28"/><path d="M60 184L104 126l31 26 58-83"/><circle cx="104" cy="126" r="8" fill="#fff"/><circle cx="135" cy="152" r="8" fill="#fff"/><path d="M70 72h44M92 50v44M160 62h38M160 88h38M179 54v42"/></g><g fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M45 238c30-44 59-44 89 0 30-44 59-44 89 0"/></g></g>
+  <path d="M0 1010c210-58 387-43 530 5 98 33 186 32 264-5v113H0z" fill="#3C2378" opacity=".08"/>
+  <path d="M0 1046c190-42 354-35 510 8 113 31 208 28 284-7v76H0z" fill="#7450C7" opacity=".09"/>
+  <rect x="0" y="0" width="16" height="1123" fill="#30C6C9" opacity=".95"/>
+  <rect x="16" y="0" width="6" height="1123" fill="#fff" opacity=".38"/>
+  </svg>
