@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "routes": [
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "https://e-perangkat-online-a-fucdkqkuq-harryindrah3-6239s-projects.vercel.app/api/$1"
+    },
+    {
+      "src": "/apps/(.*)/(index|print)\\.html",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "https://e-perangkat-online-a-fucdkqkuq-harryindrah3-6239s-projects.vercel.app/$1"
+    }
+  ]
+}

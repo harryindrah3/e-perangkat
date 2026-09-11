@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>E-Perangkat Online A–F</title>
+</head>
+<body>
+  <div id="x">Memuat…</div>
+  <script>
+  (async () => {
+    'use strict';
+    const CURRENT = 'https://e-perangkat-online-a-fucdkqkuq-harryindrah3-6239s-projects.vercel.app';
+    const DELETE_RUNTIME = location.origin + '/delete-order.js?v=20260910-5';
+    const PRINT_FILENAME_RUNTIME = location.origin + '/print-filename.js?v=20260911-2';
+    const IS_APP_PRINT = /\/apps\/.+\/print\.html$/i.test(location.pathname);
+    const IS_APP_INDEX = /\/apps\/.+\/index\.html$/i.test(location.pathname);
+    const CALENDAR_CLEANUP =
+      '<style id="ep-calendar-print-cleanup"' + (IS_APP_INDEX ? ' media="print"' : '') + '>' +
+      '.ep-calendar-source-box{display:none!important}' +
+      '</style>';
+
+
+    function showError(error) {
+      const target = document.getElementById('x');
+      if (!target) return;
+      target.innerHTML = '<p style="font-family:Arial,sans-serif;padding:24px;color:#991b1b"><b>E-Perangkat gagal dimuat.</b><br>' +
+        String(error && error.message || error) + '</p>';
+    }
+
+
+    try {
+      const response = await fetch(CURRENT + location.pathname + location.search, { cache: 'no-store' });
+      if (!response.ok) throw new Error('Sumber production gagal dimuat (' + response.status + ')');
+      let html = await response.text();
+
+
+      // Sumber yang disalin masih memiliki <base> milik deployment lama. Jika
+      // dibiarkan, history.replaceState() pada menu Pesanan melempar SecurityError
+      // karena mencoba memakai origin yang berbeda.
+      const documentBase = location.origin + location.pathname.replace(/[^/]*$/, '');
+      html = html.replace(/<base\b[^>]*>/i, '<base href="' + documentBase + '">');
+
+
+      if (IS_APP_PRINT || IS_APP_INDEX) {
+        const printFilenameTag = IS_APP_PRINT
+          ? '<scr' + 'ipt src="' + PRINT_FILENAME_RUNTIME + '" id="ep-print-filename-loader"></scr' + 'ipt>'
+          : '';
+        const appEnhancements = CALENDAR_CLEANUP + printFilenameTag;
+        html = html.replace(/<\/head>/i, appEnhancements + '</head>');
+
+
+        // Beberapa E-Perangkat memuat dokumen akhir lewat document.write bertingkat.
+        // Sisipkan kembali CSS pada setiap lapisan agar tidak hilang di halaman cetak.
+        const calendarProto = Document.prototype;
+        if (!calendarProto.__epCalendarCleanupWriteGuard) {
+          calendarProto.__epCalendarCleanupWriteGuard = true;
+          const calendarNativeWrite = calendarProto.write;
+          calendarProto.write = function (...parts) {
+            let output = parts.join('');
+            output = output.replace(/<base\b[^>]*>/i, '<base href="' + documentBase + '">');
+            if (!output.includes('id="ep-calendar-print-cleanup"') ||
+                (printFilenameTag && !output.includes('id="ep-print-filename-loader"'))) {
+              output = output.replace(/<\/head>/i, appEnhancements + '</head>');
+            }
+            return calendarNativeWrite.call(this, output);
+          };
+        }
+      }
+
+
+      if (location.pathname === '/' || location.pathname === '/index.html') {
+        let deleteCode = '';
+        try {
+          const runtimeResponse = await fetch(DELETE_RUNTIME, { cache: 'no-store' });
+          if (runtimeResponse.ok) deleteCode = await runtimeResponse.text();
+        } catch (_) {}
+
+
+        // Setiap pembungkus menulis ulang dokumen. Tangkap penulisan terakhir yang
+        // berisi tabel pesanan dan sisipkan runtime tanpa bergantung pada hook tertentu.
+        const proto = Document.prototype;
+        if (deleteCode && !proto.__epDeleteOrderWriteGuard) {
+          proto.__epDeleteOrderWriteGuard = true;
+          const nativeWrite = proto.write;
+          const safeCode = deleteCode.replace(/<\/script/gi, '<\\/script');
+          const loaderTag = '<scr' + 'ipt id="ep-delete-order-loader">' + safeCode + '</scr' + 'ipt>';
+          const existingPatch = '<scr' + 'ipt id="ep-preview-patch">';
+          proto.write = function (...parts) {
+            let output = parts.join('');
+            output = output.replace(
+              /<base\b[^>]*>/i,
+              '<base href="' + location.origin + '/">'
+            );
+            if (output.includes('id="orderBody"') &&
+                !output.includes('id="ep-delete-order-loader"')) {
+              if (output.includes(existingPatch)) {
+                // Gabungkan dengan skrip portal yang memang sudah dieksekusi parser.
+                output = output.replace(existingPatch, existingPatch + safeCode + '\n');
+              } else {
+                output = output.replace(/<\/body>/i, loaderTag + '</body>');
+              }
+            }
+            return nativeWrite.call(this, output);
+          };
+        }
+      }
+
+
+      document.open();
+      document.write(html);
+      document.close();
+    } catch (error) {
+      showError(error);
+    }
+  })();
+  </script>
+</body>
+</html>
