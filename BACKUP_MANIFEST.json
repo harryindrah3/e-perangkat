@@ -1,0 +1,35 @@
+{
+  "backup_date": "2026-09-11",
+  "source_commit": "9b4157c339b228e3ab0c7eb5f17ff294938e38f5",
+  "source_file_count": 2192,
+  "application_count": 69,
+  "uncompressed_worktree_size": "164 MiB",
+  "git_bundle_sha256": "3fbc5936318cf413e720ca1e720d94ff581cfd79e96e1f3057b8e43e06e61a32",
+  "parts": [
+    {
+      "file": "e-perangkat-source-2026-09-11.bundle.part-00",
+      "size": 786432,
+      "sha256": "efa37924f35646074618db0cf55ffebfe339441ee5e7b686c1dab9d1840ba969"
+    },
+    {
+      "file": "e-perangkat-source-2026-09-11.bundle.part-01",
+      "size": 786432,
+      "sha256": "53f5ec050c9fba1471fd063336c35a8e04ba8848629faac5b9a569b8147f3d40"
+    },
+    {
+      "file": "e-perangkat-source-2026-09-11.bundle.part-02",
+      "size": 786432,
+      "sha256": "1de6c98a5c9f1b4e30b003283eeb5e512aa298ea410b096cd0d90a97e6a1d456"
+    },
+    {
+      "file": "e-perangkat-source-2026-09-11.bundle.part-03",
+      "size": 786432,
+      "sha256": "29797bcac1c71f2f0e1fbd849911e9ec8ec9ad2e3822f70a37394f399a914845"
+    },
+    {
+      "file": "e-perangkat-source-2026-09-11.bundle.part-04",
+      "size": 611322,
+      "sha256": "49bd45aa18f757141777bf79826adfffce6ec1d840e254600fdeaf49750e2cf8"
+    }
+  ]
+}
