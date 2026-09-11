@@ -124,6 +124,13 @@
   function paginate() {
     installStyles();
     document.querySelectorAll('.ep-supervision-meeting').forEach(splitOverflowingPage);
+    const status = document.getElementById('pageStatus');
+    if (status) {
+      status.textContent = String(status.textContent || '').replace(
+        /\d+\s+halaman/i,
+        document.querySelectorAll('.page').length + ' halaman'
+      );
+    }
   }
 
   function schedulePagination() {
@@ -136,6 +143,7 @@
     schedulePagination();
   }
   window.addEventListener('load', schedulePagination, { once: true });
+  window.addEventListener('beforeprint', paginate);
 
   const observer = new MutationObserver(() => {
     if (document.querySelector('.ep-supervision-meeting:not([data-ep-print-safe-paginated="1"])')) {
