@@ -1,0 +1,33 @@
+GENARATOR E-PERANGKAT — EKSTENSI CHROME 1.0.0
+
+1. Ekstrak seluruh isi ZIP ke satu folder permanen.
+2. Buka chrome://extensions di Chrome desktop.
+3. Aktifkan Developer mode / Mode pengembang.
+4. Klik Load unpacked / Muat yang belum dikemas.
+5. Pilih folder ini (folder yang berisi manifest.json).
+6. Buka https://genarator-e-perangkat.vercel.app dan muat ulang.
+7. Buka E-Perangkat di browser/profil Chrome yang biasa digunakan.
+8. Di generator, klik Ambil data pesanan. Pilih pesanan dan semester.
+9. Klik Unduh PDF dan tunggu sampai status selesai.
+
+Chrome menampilkan pemberitahuan debugging saat mesin cetak digunakan.
+Jangan klik Batalkan pada pemberitahuan tersebut selama PDF sedang dibuat.
+Gunakan tombol Batalkan proses di generator jika ingin berhenti.
+
+File disimpan ke folder Unduhan sesuai pengaturan Chrome. Jika Chrome
+diatur untuk selalu menanyakan tempat penyimpanan, dialog itu tetap muncul.
+Ekstensi tidak mengubah pilihan tersebut secara otomatis.
+
+Data dan gambar dibaca dari browser yang sama. Ekstensi tidak mengubah
+data pesanan, status pembayaran, atau database. Generator tidak memiliki
+server penyimpanan pesanan. Izin debugger dipakai untuk Page.printToPDF.
+
+Jika pesanan belum muncul, buka mapel di E-Perangkat dan tunggu sinkronisasi.
+Logo/tanda tangan yang hanya ada di komputer lain tidak dapat dibaca.
+
+Untuk pembaruan: ekstrak versi baru, lalu klik Muat ulang di halaman
+ekstensi. Jangan hapus folder ekstensi setelah dipasang.
+
+Kesesuaian visual penuh harus diperiksa pada komputer yang digunakan.
+Jumlah halaman PDF diverifikasi terhadap pratinjau tanpa pageRanges.
+Jika berbeda, generator membatalkan unduhan dan menampilkan keterangan.
