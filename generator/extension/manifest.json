@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Genarator E-Perangkat",
   "description": "Unduh PDF melalui mesin cetak Chrome dengan data, font, dan halaman E-Perangkat asli.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "permissions": ["debugger", "scripting", "downloads"],
   "host_permissions": ["https://e-perangkat-online-a-f.vercel.app/*"],
   "background": {"service_worker": "background.js"},

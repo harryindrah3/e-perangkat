@@ -1,4 +1,4 @@
-GENARATOR E-PERANGKAT — EKSTENSI CHROME 1.0.0
+GENARATOR E-PERANGKAT — EKSTENSI CHROME 1.0.1
 
 1. Ekstrak seluruh isi ZIP ke satu folder permanen.
 2. Buka chrome://extensions di Chrome desktop.
@@ -11,6 +11,8 @@ GENARATOR E-PERANGKAT — EKSTENSI CHROME 1.0.0
 9. Klik Unduh PDF dan tunggu sampai status selesai.
 
 Chrome menampilkan pemberitahuan debugging saat mesin cetak digunakan.
+Tab cetak sementara tampil selama proses. Biarkan tab itu terbuka;
+generator akan kembali otomatis setelah selesai.
 Jangan klik Batalkan pada pemberitahuan tersebut selama PDF sedang dibuat.
 Gunakan tombol Batalkan proses di generator jika ingin berhenti.
 

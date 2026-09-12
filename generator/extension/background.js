@@ -120,7 +120,9 @@ async function generate(payload,job) {
     await progress(job,'Membaca data lengkap pesanan…');
     const {storage,order}=snapshotForOrder(await readStorage(),app,payload.orderId);
     if(order.grade!==payload.grade)throw Error('Kelas pesanan berubah. Ambil ulang data sebelum membuat PDF.');
-    const tab=await chrome.tabs.create({url:'about:blank',active:false});
+    // Pagination uses requestAnimationFrame. Keep the temporary print tab
+    // visible so Chrome does not suspend layout work in a background tab.
+    const tab=await chrome.tabs.create({url:'about:blank',active:true});
     job.renderTabId=tab.id;
     await chrome.debugger.attach({tabId:tab.id},'1.3');attached=true;
     await command(job,'Page.enable');
@@ -162,6 +164,7 @@ async function generate(payload,job) {
   } finally {
     if(attached) {try{await chrome.debugger.detach({tabId:job.renderTabId})}catch{}}
     if(job.renderTabId) {try{await chrome.tabs.remove(job.renderTabId)}catch{}}
+    try{await chrome.tabs.update(job.owner,{active:true})}catch{}
   }
 }
 chrome.runtime.onMessage.addListener((message,sender,respond)=>{
