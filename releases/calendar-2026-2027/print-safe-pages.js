@@ -2,6 +2,7 @@
   'use strict';
 
   const PROCESSED = 'epPrintSafePaginated';
+  const SAFE_SOURCE_CLASS = 'ep-print-safe-meeting';
   const CONTINUATION_CLASS = 'ep-supervision-continuation';
 
   function installStyles() {
@@ -21,11 +22,13 @@
       }
       @media print {
         .ep-supervision-meeting,
+        .${SAFE_SOURCE_CLASS},
         .${CONTINUATION_CLASS} {
           break-after: page !important;
           page-break-after: always !important;
         }
         .ep-supervision-meeting .page-inner,
+        .${SAFE_SOURCE_CLASS} .page-inner,
         .${CONTINUATION_CLASS} .page-inner {
           height: 297mm !important;
           min-height: 297mm !important;
@@ -89,7 +92,9 @@
 
     const sourceTable = [...page.querySelectorAll('.page-inner > table')].find(isLearningStepsTable);
     const sourceBody = sourceTable && sourceTable.querySelector('tbody');
-    if (!sourceTable || !sourceBody || !needsMoreRoom(page)) return;
+    if (!sourceTable || !sourceBody) return;
+    page.classList.add(SAFE_SOURCE_CLASS);
+    if (!needsMoreRoom(page)) return;
 
     const movedRows = [];
     while (sourceBody.rows.length > 1 && needsMoreRoom(page)) {
@@ -123,7 +128,7 @@
 
   function paginate() {
     installStyles();
-    document.querySelectorAll('.ep-supervision-meeting').forEach(splitOverflowingPage);
+    document.querySelectorAll('.page').forEach(splitOverflowingPage);
     const status = document.getElementById('pageStatus');
     if (status) {
       status.textContent = String(status.textContent || '').replace(
@@ -146,7 +151,7 @@
   window.addEventListener('beforeprint', paginate);
 
   const observer = new MutationObserver(() => {
-    if (document.querySelector('.ep-supervision-meeting:not([data-ep-print-safe-paginated="1"])')) {
+    if (document.querySelector('.page:not([data-ep-print-safe-paginated="1"])')) {
       schedulePagination();
     }
   });
