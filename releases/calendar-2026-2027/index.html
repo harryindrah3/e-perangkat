@@ -14,7 +14,8 @@
     const DELETE_RUNTIME = location.origin + '/delete-order.js?v=20260910-5';
     const PRINT_FILENAME_RUNTIME = location.origin + '/print-filename.js?v=20260911-2';
     const CALENDAR_RUNTIME = location.origin + '/calendar-level-runtime.js?v=20260911-1';
-    const PRINT_SAFE_PAGES_RUNTIME = location.origin + '/print-safe-pages.js?v=20260912-3';
+    const DIFFERENTIATION_RUNTIME = location.origin + '/differentiation-runtime.js?v=20260912-3';
+    const PRINT_SAFE_PAGES_RUNTIME = location.origin + '/print-safe-pages.js?v=20260912-5';
     const IS_APP_PRINT = /\/apps\/.+\/print\.html$/i.test(location.pathname);
     const IS_APP_INDEX = /\/apps\/.+\/index\.html$/i.test(location.pathname);
     const CALENDAR_CLEANUP =
@@ -51,8 +52,11 @@
         const printSafePagesTag = IS_APP_PRINT
           ? '<scr' + 'ipt src="' + PRINT_SAFE_PAGES_RUNTIME + '" id="ep-print-safe-pages-loader"></scr' + 'ipt>'
           : '';
+        const differentiationRuntimeTag = IS_APP_PRINT
+          ? '<scr' + 'ipt src="' + DIFFERENTIATION_RUNTIME + '" id="ep-differentiation-loader"></scr' + 'ipt>'
+          : '';
         const calendarRuntimeTag = '<scr' + 'ipt src="' + CALENDAR_RUNTIME + '" id="ep-calendar-level-loader"></scr' + 'ipt>';
-        const appEnhancements = CALENDAR_CLEANUP + calendarRuntimeTag + printFilenameTag + printSafePagesTag;
+        const appEnhancements = CALENDAR_CLEANUP + calendarRuntimeTag + printFilenameTag + differentiationRuntimeTag + printSafePagesTag;
         html = html.replace(/<\/head>/i, appEnhancements + '</head>');
 
 
@@ -68,6 +72,7 @@
             if (!output.includes('id="ep-calendar-print-cleanup"') ||
                 !output.includes('id="ep-calendar-level-loader"') ||
                 (printFilenameTag && !output.includes('id="ep-print-filename-loader"')) ||
+                (differentiationRuntimeTag && !output.includes('id="ep-differentiation-loader"')) ||
                 (printSafePagesTag && !output.includes('id="ep-print-safe-pages-loader"'))) {
               output = output.replace(/<\/head>/i, appEnhancements + '</head>');
             }

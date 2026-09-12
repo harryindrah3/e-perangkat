@@ -142,13 +142,49 @@
     requestAnimationFrame(() => requestAnimationFrame(paginate));
   }
 
+  function restorePages() {
+    document.querySelectorAll(`.${SAFE_SOURCE_CLASS}:not(.${CONTINUATION_CLASS}), .ep-supervision-meeting:not(.${CONTINUATION_CLASS})`).forEach(page => {
+      const sourceTable = [...page.querySelectorAll('.page-inner > table')].find(isLearningStepsTable);
+      const sourceBody = sourceTable && sourceTable.querySelector('tbody');
+      if (!sourceBody) return;
+
+      let next = page.nextElementSibling;
+      while (next && next.classList.contains(CONTINUATION_CLASS)) {
+        const body = [...next.querySelectorAll('.page-inner > table')]
+          .find(isLearningStepsTable)?.querySelector('tbody');
+        if (body) [...body.rows].forEach(row => sourceBody.appendChild(row));
+        const obsolete = next;
+        next = next.nextElementSibling;
+        obsolete.remove();
+      }
+      delete page.dataset[PROCESSED];
+    });
+  }
+
+  function restoreThenPaginate() {
+    restorePages();
+    schedulePagination();
+  }
+
+  function restoreAndPaginateNow() {
+    restorePages();
+    paginate();
+  }
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', schedulePagination, { once: true });
   } else {
     schedulePagination();
   }
-  window.addEventListener('load', schedulePagination, { once: true });
-  window.addEventListener('beforeprint', paginate);
+  window.addEventListener('load', () => {
+    schedulePagination();
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(restoreThenPaginate);
+    }
+    setTimeout(restoreThenPaginate, 1800);
+  }, { once: true });
+  window.addEventListener('beforeprint', restoreAndPaginateNow);
+  document.addEventListener('ep-differentiation-ready', restoreThenPaginate);
 
   const observer = new MutationObserver(() => {
     if (document.querySelector('.page:not([data-ep-print-safe-paginated="1"])')) {
