@@ -88,3 +88,15 @@ tab before detachment. Actual PDF count differences are reported as warnings and
 never discard an otherwise valid full native PDF. Empty/invalid PDFs still fail.
 Native output is not page-restricted or cropped. This does not certify manual
 layout parity. The user's actual extension download still needs confirmation.
+
+## Batch dashboard
+The user confirmed native downloads of both semesters work with extension 1.0.3.
+Batch is a dashboard-only addition using the same extension request unchanged.
+Single-order mode remains the default. Batch supports subject, phase, school,
+and grade (including I–VI) filters, explicit per-order checkboxes, selected-order
+review, and a frozen per-order/semester queue. Each item retains its own order ID,
+grade and identity. No orders are created or copied. Missing subject/class orders
+must exist in E-Perangkat before downloading. Selection survives filter changes;
+hidden selections are explicitly counted and listed. The runner is sequential;
+failed items do not discard successful output, and resume skips completed jobs.
+Queue state lasts for the current page session; closing/reloading loses the queue.
