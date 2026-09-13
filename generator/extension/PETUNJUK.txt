@@ -33,3 +33,8 @@ ekstensi. Jangan hapus folder ekstensi setelah dipasang.
 Kesesuaian visual penuh harus diperiksa pada komputer yang digunakan.
 Jumlah halaman PDF diverifikasi terhadap pratinjau tanpa pageRanges.
 Jika berbeda, generator membatalkan unduhan dan menampilkan keterangan.
+
+PEMBARUAN 1.0.2
+Ekstrak ZIP lalu timpa isi folder ekstensi lama dengan file terbaru.
+Buka chrome://extensions lalu klik ikon muat ulang pada Genarator E-Perangkat.
+Muat ulang situs generator dan pastikan status menunjukkan v1.0.2.

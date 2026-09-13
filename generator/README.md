@@ -61,3 +61,15 @@ No external scripts, font services, database credentials or paid rendering API.
 Original source reference: b940c79937754127744cc8118cd1352ba2cd5c3a.
 Original production observed: dpl_9o2EhbmxUQ9JMG5xPjLDFwv2z6FL.
 No original branch, deployment, alias, database or application code is modified.
+
+
+## 1.0.2 incident fix (13 September 2026)
+User reported a loaded print tab without any download. Removed explicit print-media
+emulation and synthetic beforeprint; native Chrome now owns the print transition.
+Native print disables expensive PDF tagging and returns an IO stream instead of
+one large protocol message. A one-page capability probe runs before the real
+document. Commands and cleanup have deadlines, and failures retain their stage.
+Progress is also shown on the temporary tab, hidden from print output.
+The dashboard requires 1.0.2; unpacked extensions need a manual source replacement
+and Reload in chrome://extensions. These changes do not prove the user's reported
+hang is resolved until an actual download succeeds in their desktop Chrome.

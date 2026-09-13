@@ -17,18 +17,19 @@ window.addEventListener('message',event=>{
   if(m.direction==='progress'&&pending.has(m.id)){$('progress').textContent=m.message;return}
   if(m.direction!=='response')return;
   const p=pending.get(m.id);if(!p)return;clearTimeout(p.timer);pending.delete(m.id);
-  if(m.error)p.reject(Error(m.error));else p.resolve(m.result);
+  if(m.error)p.reject(Error(m.error));else if(m.result===undefined)p.reject(Error('Ekstensi berhenti tanpa hasil. Muat ulang ekstensi dan generator.'));else p.resolve(m.result);
 });
 function notice(text,success=false){$('notice').textContent=text;$('notice').classList.toggle('success',success);$('notice').hidden=!text}
 function refreshButtons(){$('generate').disabled=!connected||busy||!selected();$('refresh').disabled=!connected||busy;for(const id of ['phase','subject','order','search'])$(id).disabled=busy}
 async function connect() {
   $('connection').textContent='Memeriksa koneksi…';$('connect').disabled=true;
   try {
-    const result=await request('hello',{},1800);connected=true;
-    $('connection').textContent='Terhubung · v'+result.version;$('connectionHint').textContent='Siap membaca pesanan dari Chrome ini.';
-    $('connection').parentElement.classList.add('connected');$('setup').hidden=true;notice('');
+    const result=await request('hello',{},1800);connected=result.version.split('.').map(Number).reduce((v,n)=>v*1000+n,0)>=1000002;
+    $('update').hidden=connected;
+    $('connection').textContent='Terhubung · v'+result.version;$('connectionHint').textContent=connected?'Siap membaca pesanan dari Chrome ini.':'Pembaruan 1.0.2 diperlukan; ikuti petunjuk di bawah.';
+    $('connection').parentElement.classList.toggle('connected',connected);$('setup').hidden=true;notice('');
   } catch {
-    connected=false;$('connection').textContent='Belum terpasang';$('connectionHint').textContent='Pasang ekstensi pendamping untuk mengunduh PDF.';
+    connected=false;$('update').hidden=true;$('connection').textContent='Belum terpasang';$('connectionHint').textContent='Pasang ekstensi pendamping untuk mengunduh PDF.';
     $('connection').parentElement.classList.remove('connected');$('setup').hidden=false;
   } finally {$('connect').disabled=false;refreshButtons()}
 }

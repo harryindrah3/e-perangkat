@@ -1,5 +1,6 @@
 'use strict';
-importScripts('core.js', 'pdf-lib.min.js');
+importScripts('core.js', 'job-utils.js', 'pdf-lib.min.js');
+const {bounded, readPdfStream} = GeneratorJobs;
 const {ORIGIN,safeFilename,choose,snapshotForOrder,printUrl} = GeneratorCore;
 const CHANNEL = 'genarator-e-perangkat-v1';
 const SITE = 'https://genarator-e-perangkat.vercel.app';
@@ -48,12 +49,24 @@ async function listOrders() {
   return {records,version:chrome.runtime.getManifest().version};
 }
 async function progress(job,message,extra={}) {
+  job.stage=message;
+  if(job.renderTabId && job.loaded) {
+    try { await bounded(chrome.scripting.executeScript({target:{tabId:job.renderTabId},func:(message)=>{
+      let box=document.getElementById('ep-generator-progress');
+      if(!box){box=document.createElement('aside');box.id='ep-generator-progress';box.setAttribute('role','status');
+        box.style.cssText='position:fixed;z-index:2147483647;top:12px;right:12px;max-width:380px;padding:16px 20px;background:#123c35;color:white;border-radius:12px;font:15px/1.5 Arial;box-shadow:0 4px 20px #0005';
+        const style=document.createElement('style');style.textContent='@media print {#ep-generator-progress{display:none!important}}';box.append(style);
+        const label=document.createElement('span');box.append(label);document.body.append(box);}
+      box.querySelector('span').textContent='Generator PDF: '+message;
+    },args:[message]}),2000,'Status tab'); } catch {}
+  }
   try {await chrome.tabs.sendMessage(job.owner,{channel:CHANNEL,direction:'progress',id:job.id,message,...extra})} catch {}
 }
-function ensureActive(job) {if(job.cancelled) throw Error('Proses dibatalkan.');}
-async function command(job,method,params={}) {
+function ensureActive(job) {if(job.cancelled) throw Error('Proses dibatalkan.');if(job.detached)throw Error('Koneksi mesin cetak terputus: '+job.detached);if(Date.now()>job.deadline)throw Error('Batas waktu pembuatan PDF terlampaui.');}
+async function command(job,method,params={},limit) {
   ensureActive(job);
-  return chrome.debugger.sendCommand({tabId:job.renderTabId},method,params);
+  const timeout=Math.min(limit??(method==='Page.printToPDF'?90000:15000),job.deadline-Date.now());
+  return bounded(chrome.debugger.sendCommand({tabId:job.renderTabId},method,params),timeout,method);
 }
 async function evaluate(job,expression) {
   const r=await command(job,'Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true});
@@ -65,10 +78,10 @@ const auditExpression = `(() => {
  const images=[...document.images].filter(i=>i.closest('#printRoot'));
  const pending=images.filter(i=>!i.complete).length;
  const broken=images.filter(i=>i.complete&&!i.naturalWidth&&i.getAttribute('src')).map(i=>i.alt||'Gambar');
- const text=pages.map(p=>p.innerText).join('');let hash=2166136261;
+ const text=pages.map(p=>p.textContent).join('');let hash=2166136261;
  for(let i=0;i<text.length;i++) hash=Math.imul(hash^text.charCodeAt(i),16777619)>>>0;
  const sizes=pages.map(p=>{const r=p.getBoundingClientRect();return Math.round(r.width)+','+Math.round(r.height)+','+p.scrollHeight}).join(';');
- return {pages:pages.length,hash,sizes,pending,broken,ready:document.readyState==='complete'&&document.fonts.status==='loaded',title:document.title,
+ return {pages:pages.length,hash,sizes,pending,broken,ready:document.readyState==='complete'&&document.fonts.status==='loaded',title:document.title,printedPages:Number(document.documentElement.dataset.generatorPrintedPages)||0,
  firstText:pages.slice(0,5).map(p=>p.innerText).join(''), fonts:[...new Set(pages.slice(0,4).flatMap(p=>[...p.querySelectorAll('*')].map(e=>getComputedStyle(e).fontFamily)))]};
 })()`;
 async function stable(job,timeout=100000) {
@@ -77,10 +90,13 @@ async function stable(job,timeout=100000) {
     ensureActive(job);
     let s;
     try {s=await evaluate(job,auditExpression)} catch(error) {
-      if(job.cancelled) throw error;
+      ensureActive(job);
+      if(!/context|navigat/i.test(error.message))throw error;
       await delay(500);continue;
     }
+    if(!s){await delay(500);continue;}
     lastState=s;
+    if(job.loaded && Date.now()-(job.lastReport||0)>5000){job.lastReport=Date.now();await progress(job,'Menyiapkan '+s.pages+' halaman'+(s.pending?' · '+s.pending+' gambar menunggu':'')+'…',{pages:s.pages});}
     const sig=JSON.stringify([s.pages,s.hash,s.sizes,s.pending,s.broken,s.ready]);
     if(s.ready&&s.pages>0&&!s.pending&&sig===last) matches++;else matches=0;
     last=sig;
@@ -118,14 +134,17 @@ async function generate(payload,job) {
   try {
     const app=choose(await catalogPromise,payload);
     await progress(job,'Membaca data lengkap pesanan…');
-    const {storage,order}=snapshotForOrder(await readStorage(),app,payload.orderId);
+    const {storage,order}=snapshotForOrder(await bounded(readStorage(),45000,'Membaca pesanan'),app,payload.orderId);
     if(order.grade!==payload.grade)throw Error('Kelas pesanan berubah. Ambil ulang data sebelum membuat PDF.');
     // Pagination uses requestAnimationFrame. Keep the temporary print tab
     // visible so Chrome does not suspend layout work in a background tab.
     const tab=await chrome.tabs.create({url:'about:blank',active:true});
     job.renderTabId=tab.id;
-    await chrome.debugger.attach({tabId:tab.id},'1.3');attached=true;
+    await bounded(chrome.debugger.attach({tabId:tab.id},'1.3'),10000,'Menghubungkan mesin cetak');attached=true;
     await command(job,'Page.enable');
+    await progress(job,'Memeriksa mesin PDF Chrome…');
+    const probe=await command(job,'Page.printToPDF',{transferMode:'ReturnAsBase64',generateTaggedPDF:false},15000);
+    if(!probe.data||!atob(probe.data).startsWith('%PDF-'))throw Error('Chrome tidak menghasilkan PDF pada pemeriksaan awal.');
     await command(job,'Network.enable');
     // The print tab is an isolated read-only view: no cloud synchronization.
     await command(job,'Network.setBlockedURLs',{urls:['*://*/api/database*','*://script.google.com/*','*://script.googleusercontent.com/*']});
@@ -133,38 +152,37 @@ async function generate(payload,job) {
     await progress(job,'Memuat halaman cetak asli…');
     await command(job,'Page.navigate',{url:printUrl(app,payload)});
     await stable(job);
-    await progress(job,'Menyiapkan margin, font, dan pembagian halaman…');
-    await command(job,'Emulation.setEmulatedMedia',{media:'print'});
-    await evaluate(job,`document.fonts.ready.then(()=>{window.dispatchEvent(new Event('beforeprint'));return true})`);
-    let before=await stable(job);
+    job.loaded=true;
+    await progress(job,'Memeriksa identitas dan kesiapan halaman…');
+    const before=await stable(job);
     const teacher=String(order.profile?.teacher||'').replace(/\s+/g,' ').trim();
     if(teacher&&!before.firstText.replace(/\s+/g,' ').includes(teacher))throw Error('Identitas pada halaman cetak tidak cocok dengan pesanan. PDF dibatalkan.');
-    await progress(job,'Membuat PDF dari '+before.pages+' halaman…',{pages:before.pages});
-    // Never restrict pageRanges or re-typeset the document. Native Chrome
-    // print uses the original CSS, locally installed fonts and named pages.
-    let output=await command(job,'Page.printToPDF',{printBackground:true,preferCSSPageSize:true,displayHeaderFooter:false,scale:1,marginTop:0,marginBottom:0,marginLeft:0,marginRight:0,transferMode:'ReturnAsBase64'});
-    let after=await stable(job,30000);
-    // Some source handlers repaginate on beforeprint. Render again only if
-    // the first native print changed content or page count.
-    if(before.pages!==after.pages||before.hash!==after.hash) {
-      before=after;
-      output=await command(job,'Page.printToPDF',{printBackground:true,preferCSSPageSize:true,displayHeaderFooter:false,scale:1,marginTop:0,marginBottom:0,marginLeft:0,marginRight:0,transferMode:'ReturnAsBase64'});
-      after=await stable(job,30000);
-      if(before.pages!==after.pages||before.hash!==after.hash)throw Error('Isi masih berubah ketika dicetak. Tunggu lalu ulangi proses.');
-    }
-    const bytes=Uint8Array.from(atob(output.data),c=>c.charCodeAt(0));
+    // Use Chrome's own print transition. Do not emulate print media beforehand
+    // or manually dispatch beforeprint: those run the source paginator twice
+    // and measure print CSS at the browser viewport rather than paper width.
+    await evaluate(job,`(() => {window.addEventListener('beforeprint',()=>{
+      document.documentElement.dataset.generatorPrintedPages=String(document.querySelectorAll('#printRoot .page').length);
+    });return true})()`);
+    await progress(job,'Chrome sedang membuat PDF dari '+before.pages+' halaman (maks. 90 detik)…',{pages:before.pages});
+    const output=await command(job,'Page.printToPDF',{printBackground:true,preferCSSPageSize:true,displayHeaderFooter:false,generateTaggedPDF:false,scale:1,marginTop:0,marginBottom:0,marginLeft:0,marginRight:0,transferMode:'ReturnAsStream'});
+    await progress(job,'Membaca file PDF dari Chrome…');
+    const bytes=await readPdfStream(output,(method,params)=>command(job,method,params));
     const pdf=await PDFLib.PDFDocument.load(bytes,{updateMetadata:false});
     const pages=pdf.getPageCount();
-    if(pages!==after.pages)throw Error('Jumlah halaman PDF ('+pages+') berbeda dari pratinjau ('+after.pages+'). Tidak ada halaman yang dipotong; unduhan dibatalkan untuk pemeriksaan.');
+    const after=await evaluate(job,auditExpression);
+    const expected=after.printedPages||after.pages;
+    if(pages!==expected)throw Error('Jumlah halaman PDF ('+pages+') berbeda dari halaman saat dicetak ('+expected+'). Unduhan dibatalkan untuk pemeriksaan.');
     const filename=safeFilename(after.title)+'.pdf';
     await progress(job,'Menyimpan '+pages+' halaman ke Unduhan…',{pages});
-    const downloadId=await chrome.downloads.download({url:'data:application/pdf;base64,'+output.data,filename,saveAs:false});
+    const downloadId=await chrome.downloads.download({url:'data:application/pdf;base64,'+GeneratorJobs.toBase64(bytes),filename,saveAs:false});
     await waitDownload(downloadId);
     return {filename,pages,bytes:bytes.length,fonts:after.fonts,semester:String(payload.semester)};
+  } catch(error) {
+    throw Error('Tahap: '+(job.stage||'Persiapan')+' — '+(error?.message||String(error)));
   } finally {
-    if(attached) {try{await chrome.debugger.detach({tabId:job.renderTabId})}catch{}}
-    if(job.renderTabId) {try{await chrome.tabs.remove(job.renderTabId)}catch{}}
-    try{await chrome.tabs.update(job.owner,{active:true})}catch{}
+    if(attached) {try{await bounded(chrome.debugger.detach({tabId:job.renderTabId}),3000,'Melepas mesin cetak')}catch{}}
+    if(job.renderTabId) {try{await bounded(chrome.tabs.remove(job.renderTabId),3000,'Menutup tab sementara')}catch{}}
+    try{await bounded(chrome.tabs.update(job.owner,{active:true}),3000,'Kembali ke generator')}catch{}
   }
 }
 chrome.runtime.onMessage.addListener((message,sender,respond)=>{
@@ -178,10 +196,12 @@ chrome.runtime.onMessage.addListener((message,sender,respond)=>{
     }
     if(message.action==='generate') {
       if(running)throw Error('Masih ada PDF yang diproses. Tunggu sampai selesai.');
-      const job={owner:sender.tab.id,id:message.id,renderTabId:null,cancelled:false};running=job;
+      const job={owner:sender.tab.id,id:message.id,renderTabId:null,cancelled:false,deadline:Date.now()+240000};running=job;
       try{return await generate(message.payload,job)}finally{if(running===job)running=null}
     }
     throw Error('Perintah tidak dikenal.');
   })().then(result=>respond({result}),error=>respond({error:error?.message||String(error)}));
   return true;
 });
+
+chrome.debugger.onDetach.addListener((source,reason)=>{if(running?.renderTabId===source.tabId)running.detached=reason;});

@@ -10,7 +10,7 @@
       const result = await chrome.runtime.sendMessage({channel, id: m.id, action: m.action, payload: m.payload});
       window.postMessage({channel, direction: 'response', id: m.id, ...result}, location.origin);
     } catch (error) {
-      window.postMessage({channel, direction: 'response', id: m.id, error: 'Ekstensi perlu dimuat ulang. Buka chrome://extensions, klik Muat ulang, lalu muat ulang generator.'}, location.origin);
+      window.postMessage({channel, direction: 'response', id: m.id, error: 'Koneksi ekstensi terputus: '+(error?.message||String(error))+'. Muat ulang ekstensi melalui chrome://extensions, lalu muat ulang generator.'}, location.origin);
     }
   });
   chrome.runtime.onMessage.addListener(message => {
