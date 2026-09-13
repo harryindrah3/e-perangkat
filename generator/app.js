@@ -24,9 +24,9 @@ function refreshButtons(){$('generate').disabled=!connected||busy||!selected();$
 async function connect() {
   $('connection').textContent='Memeriksa koneksi…';$('connect').disabled=true;
   try {
-    const result=await request('hello',{},1800);connected=result.version.split('.').map(Number).reduce((v,n)=>v*1000+n,0)>=1000002;
+    const result=await request('hello',{},1800);connected=result.version.split('.').map(Number).reduce((v,n)=>v*1000+n,0)>=1000003;
     $('update').hidden=connected;
-    $('connection').textContent='Terhubung · v'+result.version;$('connectionHint').textContent=connected?'Siap membaca pesanan dari Chrome ini.':'Pembaruan 1.0.2 diperlukan; ikuti petunjuk di bawah.';
+    $('connection').textContent='Terhubung · v'+result.version;$('connectionHint').textContent=connected?'Siap membaca pesanan dari Chrome ini.':'Pembaruan 1.0.3 diperlukan; ikuti petunjuk di bawah.';
     $('connection').parentElement.classList.toggle('connected',connected);$('setup').hidden=true;notice('');
   } catch {
     connected=false;$('update').hidden=true;$('connection').textContent='Belum terpasang';$('connectionHint').textContent='Pasang ekstensi pendamping untuk mengunduh PDF.';
@@ -71,16 +71,16 @@ async function generate(){
   busy=true;cancelled=false;refreshButtons();notice('');$('progressBox').hidden=false;$('cancel').hidden=false;$('progress').textContent='Menyiapkan unduhan…';
   const semester=document.querySelector('[name=semester]:checked').value;
   const semesters=semester==='both'?['1','2']:[semester];
-  let completed=0;
+  let completed=0;const warnings=[];
   try{
     for(const sem of semesters){
       if(cancelled)break;
-      const result=await request('generate',{appId:order.appId,orderId:order.orderId,grade:order.grade,semester:sem},300000);
-      const li=document.createElement('li'),name=document.createElement('b'),meta=document.createElement('span');name.textContent=result.filename;meta.textContent=`${result.pages} halaman · ${(result.bytes/1048576).toFixed(1)} MB · Selesai`;li.append(name,meta);$('resultList').prepend(li);$('results').hidden=false;completed++;
+      const result=await request('generate',{appId:order.appId,orderId:order.orderId,grade:order.grade,semester:sem},960000);
+      const li=document.createElement('li'),name=document.createElement('b'),meta=document.createElement('span');name.textContent=result.filename;meta.textContent=`${result.pages} halaman · ${(result.bytes/1048576).toFixed(1)} MB · Selesai${result.warning?' — '+result.warning:''}`;li.append(name,meta);$('resultList').prepend(li);$('results').hidden=false;completed++;if(result.warning)warnings.push(result.warning);
     }
-    notice(cancelled?`Proses dibatalkan. ${completed} PDF selesai diunduh.`:`${completed} PDF selesai disimpan ke folder Unduhan.`,!cancelled);
+    notice(cancelled?`Proses dibatalkan. ${completed} PDF selesai diunduh.`:`${completed} PDF selesai disimpan ke folder Unduhan.`+(warnings.length?' '+warnings.join(' '):''),!cancelled&&!warnings.length);
   }catch(error){notice((completed?`${completed} PDF sudah selesai. `:'')+error.message)}
-  finally{busy=false;$('progressBox').hidden=true;$('cancel').hidden=true;refreshButtons()}
+  finally{if(!$('notice').hidden)$('notice').scrollIntoView({behavior:'smooth',block:'center'});busy=false;$('progressBox').hidden=true;$('cancel').hidden=true;refreshButtons()}
 }
 $('connect').onclick=connect;$('refresh').onclick=loadOrders;$('generate').onclick=generate;
 $('cancel').onclick=async()=>{cancelled=true;$('cancel').disabled=true;try{await request('cancel')}catch(error){notice(error.message)}finally{$('cancel').disabled=false}};

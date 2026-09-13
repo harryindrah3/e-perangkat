@@ -24,6 +24,10 @@
     if(new TextDecoder().decode(result.subarray(0,5))!=='%PDF-')throw Error('File dari Chrome bukan PDF yang valid.');
     return result;
   }
-  const api={bounded,readPdfStream,toBase64};
+  function pageCountWarning(actual,preview){
+    if(!Number.isInteger(actual)||actual<1)throw Error('Chrome mengembalikan PDF tanpa halaman.');
+    return actual===preview?'':'PDF berisi '+actual+' halaman; pratinjau '+preview+' halaman. Seluruh hasil Chrome diunduh tanpa pemotongan. Periksa tata letak sebelum dikirim ke pelanggan.';
+  }
+  const api={bounded,readPdfStream,toBase64,pageCountWarning};
   if(typeof module!=='undefined')module.exports=api;else root.GeneratorJobs=api;
 })(typeof self!=='undefined'?self:globalThis);

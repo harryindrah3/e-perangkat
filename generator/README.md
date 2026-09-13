@@ -73,3 +73,18 @@ Progress is also shown on the temporary tab, hidden from print output.
 The dashboard requires 1.0.2; unpacked extensions need a manual source replacement
 and Reload in chrome://extensions. These changes do not prove the user's reported
 hang is resolved until an actual download succeeds in their desktop Chrome.
+
+
+## 1.0.3 incident follow-up
+The user reached the real native print stage with Informatika VII semester I,
+140 preview pages, then the tab closed without a download. A screenshot of the
+printing stage alone cannot distinguish a timeout from a later count mismatch.
+Print deadline is now 10 minutes (whole job 15, dashboard response 16), replacing
+the 90-second print deadline. Source beforeprint preparation runs once, settles,
+then Emulation.setScriptExecutionDisabled pauses script execution during native
+printing to avoid live mutation/print handler interference. Media is not manually
+emulated; fonts/CSS/DOM remain from the original page. Cleanup closes the isolated
+tab before detachment. Actual PDF count differences are reported as warnings and
+never discard an otherwise valid full native PDF. Empty/invalid PDFs still fail.
+Native output is not page-restricted or cropped. This does not certify manual
+layout parity. The user's actual extension download still needs confirmation.

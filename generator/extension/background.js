@@ -65,7 +65,7 @@ async function progress(job,message,extra={}) {
 function ensureActive(job) {if(job.cancelled) throw Error('Proses dibatalkan.');if(job.detached)throw Error('Koneksi mesin cetak terputus: '+job.detached);if(Date.now()>job.deadline)throw Error('Batas waktu pembuatan PDF terlampaui.');}
 async function command(job,method,params={},limit) {
   ensureActive(job);
-  const timeout=Math.min(limit??(method==='Page.printToPDF'?90000:15000),job.deadline-Date.now());
+  const timeout=Math.min(limit??(method==='Page.printToPDF'?600000:30000),job.deadline-Date.now());
   return bounded(chrome.debugger.sendCommand({tabId:job.renderTabId},method,params),timeout,method);
 }
 async function evaluate(job,expression) {
@@ -154,34 +154,42 @@ async function generate(payload,job) {
     await stable(job);
     job.loaded=true;
     await progress(job,'Memeriksa identitas dan kesiapan halaman…');
-    const before=await stable(job);
+    let before=await stable(job);
     const teacher=String(order.profile?.teacher||'').replace(/\s+/g,' ').trim();
     if(teacher&&!before.firstText.replace(/\s+/g,' ').includes(teacher))throw Error('Identitas pada halaman cetak tidak cocok dengan pesanan. PDF dibatalkan.');
-    // Use Chrome's own print transition. Do not emulate print media beforehand
-    // or manually dispatch beforeprint: those run the source paginator twice
-    // and measure print CSS at the browser viewport rather than paper width.
-    await evaluate(job,`(() => {window.addEventListener('beforeprint',()=>{
-      document.documentElement.dataset.generatorPrintedPages=String(document.querySelectorAll('#printRoot .page').length);
-    });return true})()`);
-    await progress(job,'Chrome sedang membuat PDF dari '+before.pages+' halaman (maks. 90 detik)…',{pages:before.pages});
-    const output=await command(job,'Page.printToPDF',{printBackground:true,preferCSSPageSize:true,displayHeaderFooter:false,generateTaggedPDF:false,scale:1,marginTop:0,marginBottom:0,marginLeft:0,marginRight:0,transferMode:'ReturnAsStream'});
+    // Complete the source's synchronous print preparation once, then wait for
+    // its deferred pagination to settle. Pause source JS only in this isolated
+    // tab so beforeprint/observers cannot rebuild it during the native PDF job.
+    await progress(job,'Menyiapkan hasil cetak akhir…');
+    await evaluate(job,`(() => {window.dispatchEvent(new Event('beforeprint'));return true})()`);
+    before=await stable(job);
+    await progress(job,'Membuat PDF '+before.pages+' halaman. Dokumen besar bisa memerlukan beberapa menit; biarkan tab ini terbuka.',{pages:before.pages});
+    await command(job,'Emulation.setScriptExecutionDisabled',{value:true});
+    let output;
+    try {
+      output=await command(job,'Page.printToPDF',{printBackground:true,preferCSSPageSize:true,displayHeaderFooter:false,generateTaggedPDF:false,scale:1,marginTop:0,marginBottom:0,marginLeft:0,marginRight:0,transferMode:'ReturnAsStream'});
+    } finally {
+      // Use the transport directly so cancellation/deadline does not prevent
+      // resetting the override. The tab is closed before debugger detachment.
+      try{await bounded(chrome.debugger.sendCommand({tabId:job.renderTabId},'Emulation.setScriptExecutionDisabled',{value:false}),3000,'Memulihkan tab cetak');}catch{}
+    }
     await progress(job,'Membaca file PDF dari Chrome…');
     const bytes=await readPdfStream(output,(method,params)=>command(job,method,params));
     const pdf=await PDFLib.PDFDocument.load(bytes,{updateMetadata:false});
     const pages=pdf.getPageCount();
-    const after=await evaluate(job,auditExpression);
-    const expected=after.printedPages||after.pages;
-    if(pages!==expected)throw Error('Jumlah halaman PDF ('+pages+') berbeda dari halaman saat dicetak ('+expected+'). Unduhan dibatalkan untuk pemeriksaan.');
-    const filename=safeFilename(after.title)+'.pdf';
+    const warning=GeneratorJobs.pageCountWarning(pages,before.pages);
+    const filename=safeFilename(before.title)+'.pdf';
     await progress(job,'Menyimpan '+pages+' halaman ke Unduhan…',{pages});
-    const downloadId=await chrome.downloads.download({url:'data:application/pdf;base64,'+GeneratorJobs.toBase64(bytes),filename,saveAs:false});
+    const downloadId=await bounded(chrome.downloads.download({url:'data:application/pdf;base64,'+GeneratorJobs.toBase64(bytes),filename,saveAs:false}),45000,'Mengirim PDF ke folder Unduhan');
     await waitDownload(downloadId);
-    return {filename,pages,bytes:bytes.length,fonts:after.fonts,semester:String(payload.semester)};
+    return {filename,pages,bytes:bytes.length,fonts:before.fonts,semester:String(payload.semester),warning};
   } catch(error) {
     throw Error('Tahap: '+(job.stage||'Persiapan')+' — '+(error?.message||String(error)));
   } finally {
-    if(attached) {try{await bounded(chrome.debugger.detach({tabId:job.renderTabId}),3000,'Melepas mesin cetak')}catch{}}
+    // Close the isolated document while network blocking is still attached,
+    // so queued synchronization cannot resume on a restored source script.
     if(job.renderTabId) {try{await bounded(chrome.tabs.remove(job.renderTabId),3000,'Menutup tab sementara')}catch{}}
+    if(attached) {try{await bounded(chrome.debugger.detach({tabId:job.renderTabId}),3000,'Melepas mesin cetak')}catch{}}
     try{await bounded(chrome.tabs.update(job.owner,{active:true}),3000,'Kembali ke generator')}catch{}
   }
 }
@@ -196,7 +204,7 @@ chrome.runtime.onMessage.addListener((message,sender,respond)=>{
     }
     if(message.action==='generate') {
       if(running)throw Error('Masih ada PDF yang diproses. Tunggu sampai selesai.');
-      const job={owner:sender.tab.id,id:message.id,renderTabId:null,cancelled:false,deadline:Date.now()+240000};running=job;
+      const job={owner:sender.tab.id,id:message.id,renderTabId:null,cancelled:false,deadline:Date.now()+900000};running=job;
       try{return await generate(message.payload,job)}finally{if(running===job)running=null}
     }
     throw Error('Perintah tidak dikenal.');
