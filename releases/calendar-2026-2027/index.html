@@ -13,7 +13,9 @@
     const CURRENT = 'https://e-perangkat-online-a-fucdkqkuq-harryindrah3-6239s-projects.vercel.app';
     const DELETE_RUNTIME = location.origin + '/delete-order.js?v=20260910-5';
     const PRINT_FILENAME_RUNTIME = location.origin + '/print-filename.js?v=20260911-2';
-    const CALENDAR_RUNTIME = location.origin + '/calendar-level-runtime.js?v=20260911-1';
+    const CALENDAR_RUNTIME = location.origin + '/calendar-level-runtime.js?v=20260914-1';
+    const CALENDAR_YEAR_RUNTIME = location.origin + '/calendar-year.js?v=20260914-1';
+    const CALENDAR_SOURCE_RUNTIME = location.origin + '/calendar-source-runtime.js?v=20260914-1';
     const DIFFERENTIATION_RUNTIME = location.origin + '/differentiation-runtime.js?v=20260912-3';
     const PRINT_SAFE_PAGES_RUNTIME = location.origin + '/print-safe-pages.js?v=20260912-5';
     const IS_APP_PRINT = /\/apps\/.+\/print\.html$/i.test(location.pathname);
@@ -55,8 +57,9 @@
         const differentiationRuntimeTag = IS_APP_PRINT
           ? '<scr' + 'ipt src="' + DIFFERENTIATION_RUNTIME + '" id="ep-differentiation-loader"></scr' + 'ipt>'
           : '';
+        const calendarYearTag = '<scr' + 'ipt src="' + CALENDAR_YEAR_RUNTIME + '" id="ep-calendar-year-loader"></scr' + 'ipt>';
         const calendarRuntimeTag = '<scr' + 'ipt src="' + CALENDAR_RUNTIME + '" id="ep-calendar-level-loader"></scr' + 'ipt>';
-        const appEnhancements = CALENDAR_CLEANUP + calendarRuntimeTag + printFilenameTag + differentiationRuntimeTag + printSafePagesTag;
+        const appEnhancements = CALENDAR_CLEANUP + calendarYearTag + calendarRuntimeTag + printFilenameTag + differentiationRuntimeTag + printSafePagesTag;
         html = html.replace(/<\/head>/i, appEnhancements + '</head>');
 
 
@@ -68,9 +71,11 @@
           const calendarNativeWrite = calendarProto.write;
           calendarProto.write = function (...parts) {
             let output = parts.join('');
+            output = output.replace(/https:\/\/e-perangkat-online-a-hecmadzal-harryindrah3-6239s-projects\.vercel\.app\/patches\/kaldik\.js(?:\?[^"']*)?/g, CALENDAR_SOURCE_RUNTIME);
             output = output.replace(/<base\b[^>]*>/i, '<base href="' + documentBase + '">');
             if (!output.includes('id="ep-calendar-print-cleanup"') ||
                 !output.includes('id="ep-calendar-level-loader"') ||
+                !output.includes('id="ep-calendar-year-loader"') ||
                 (printFilenameTag && !output.includes('id="ep-print-filename-loader"')) ||
                 (differentiationRuntimeTag && !output.includes('id="ep-differentiation-loader"')) ||
                 (printSafePagesTag && !output.includes('id="ep-print-safe-pages-loader"'))) {
@@ -101,6 +106,7 @@
           const existingPatch = '<scr' + 'ipt id="ep-preview-patch">';
           proto.write = function (...parts) {
             let output = parts.join('');
+            output = output.replace(/https:\/\/e-perangkat-online-a-hecmadzal-harryindrah3-6239s-projects\.vercel\.app\/patches\/kaldik\.js(?:\?[^"']*)?/g, CALENDAR_SOURCE_RUNTIME);
             output = output.replace(
               /<base\b[^>]*>/i,
               '<base href="' + location.origin + '/">'

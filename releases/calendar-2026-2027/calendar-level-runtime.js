@@ -47,7 +47,7 @@
 
   function migrateCalendar(calendar) {
     const current = calendar && typeof calendar === 'object' ? calendar : {};
-    if (current.epLevelCalendarVersion === VERSION) return current;
+    if (current.year === '2025/2026' || current.epCalendarYear || current.epLevelCalendarVersion === VERSION) return current;
     const titles = Array.isArray(current.events) ? current.events.map(e => String(e && e.title || '')).join(' | ') : '';
     const isOldDefault = !current.events || /SMA\/SMK|Penyesuaian Ramadan|Awal masuk Semester Genap/i.test(titles);
     if (!isOldDefault) return current;
@@ -111,6 +111,7 @@
   }
 
   function patchVisibleCalendar() {
+    if (window.EPCalendarYear?.current()?.calendar?.epCalendarYear) return;
     document.querySelectorAll('.calendar-main tbody tr').forEach(row => {
       const monthCell = row.querySelector('.month-cell');
       const cells = row.querySelectorAll('.cal-stat');
@@ -119,11 +120,11 @@
       if (!match) return;
       const names=['JANUARI','FEBRUARI','MARET','APRIL','MEI','JUNI','JULI','AGUSTUS','SEPTEMBER','OKTOBER','NOVEMBER','DESEMBER'];
       const stats=monthStats(+match[2],names.indexOf(match[1].toUpperCase()));
-      cells.forEach((cell,index)=>{const b=cell.querySelector('b');if(b)b.textContent=String(stats[index]);});
+      cells.forEach((cell,index)=>{const b=cell.querySelector('b');if(b && b.textContent!==String(stats[index]))b.textContent=String(stats[index]);});
     });
     document.querySelectorAll('.calendar-total').forEach(row => {
       const table=row.closest('table'), rows=[...table.querySelectorAll('tbody tr')].filter(r=>r.querySelector('.month-cell'));
-      for(let i=1;i<=4;i++){const cell=row.cells[i];if(cell)cell.textContent=String(rows.reduce((sum,r)=>sum+(parseInt(r.querySelectorAll('.cal-stat')[i-1]?.textContent,10)||0),0));}
+      for(let i=1;i<=4;i++){const cell=row.cells[i];if(cell && !table.dataset.epYear)cell.textContent=String(rows.reduce((sum,r)=>sum+(parseInt(r.querySelectorAll('.cal-stat')[i-1]?.textContent,10)||0),0));}
     });
   }
 
@@ -136,7 +137,7 @@
       if (next!==raw) Storage.prototype.setItem.call(localStorage,key,next);
     }
     const prefixMatch=location.pathname.match(/\/E-Perangkat_(.+?)_Fase-([A-F])/i);
-    if (prefixMatch) {
+    if (prefixMatch && !window.EPCalendarYear?.current()?.calendar?.epCalendarYear) {
       const prefix='eperangkat.'+decodeURIComponent(prefixMatch[1]).toLowerCase()+'.fase'+prefixMatch[2].toLowerCase()+'.v1';
       const configKeys=[];
       for(let i=0;i<localStorage.length;i++){
