@@ -2,15 +2,30 @@
   'use strict';
 
   let printing = false;
+  let observer = null;
+  let repaginateTimer = null;
+  let fullRun = false;
+
   const PROCESSED = 'epPrintSafePaginated';
   const SAFE_SOURCE_CLASS = 'ep-print-safe-meeting';
   const CONTINUATION_CLASS = 'ep-supervision-continuation';
+  const SAFETY_PX = 28;
 
   function installStyles() {
     if (document.getElementById('ep-print-safe-page-style')) return;
     const style = document.createElement('style');
     style.id = 'ep-print-safe-page-style';
     style.textContent = `
+      /* The supervision patch used a real top border. Because every sheet has a
+         fixed physical height, that border steals content height and can clip
+         the last line. Draw the accent without changing the box geometry. */
+      .ep-supervision-meeting {
+        border-top: 0 !important;
+        background-image: linear-gradient(#0f766e,#0f766e) !important;
+        background-size: 100% 3px !important;
+        background-repeat: no-repeat !important;
+        background-position: left top !important;
+      }
       .${CONTINUATION_CLASS} .page-inner {
         padding: 13mm 14mm 13mm !important;
       }
@@ -22,8 +37,6 @@
         margin-top: 0 !important;
       }
 
-      /* Unnamed A4 rule is a fallback for browsers/printer dialogs that do not
-         honor named pages. Named rules below keep mixed portrait/landscape pages. */
       @page { size: A4 portrait; margin: 0; }
       @page epPortrait { size: A4 portrait; margin: 0; }
       @page epLandscape { size: A4 landscape; margin: 0; }
@@ -44,9 +57,7 @@
           transform: none !important;
           zoom: 1 !important;
         }
-        .preview-bar {
-          display: none !important;
-        }
+        .preview-bar { display: none !important; }
         #printRoot {
           display: block !important;
           width: auto !important;
@@ -57,9 +68,6 @@
           transform: none !important;
           zoom: 1 !important;
         }
-
-        /* The screen preview is already paginated into physical A4 sheets.
-           Never let legacy print.css change those sheets back to width/height:auto. */
         #printRoot > .page {
           box-sizing: border-box !important;
           position: relative !important;
@@ -116,24 +124,15 @@
           break-after: auto !important;
           page-break-after: auto !important;
         }
-
         .ep-supervision-meeting,
         .${SAFE_SOURCE_CLASS},
         .${CONTINUATION_CLASS} {
           break-after: page !important;
           page-break-after: always !important;
         }
-        .ep-supervision-meeting .page-inner,
-        .${SAFE_SOURCE_CLASS} .page-inner,
-        .${CONTINUATION_CLASS} .page-inner {
-          height: 297mm !important;
-          min-height: 297mm !important;
-          max-height: 297mm !important;
-          overflow: hidden !important;
-        }
       }
     `;
-    document.head.appendChild(style);
+    (document.head || document.documentElement).appendChild(style);
   }
 
   function isLearningStepsTable(table) {
@@ -141,15 +140,22 @@
     return Boolean(heading && /Fase\s*\/\s*Kegiatan/i.test(heading.textContent || ''));
   }
 
+  function learningTable(page) {
+    return [...page.querySelectorAll('.page-inner table')].find(isLearningStepsTable) || null;
+  }
+
   function needsMoreRoom(page) {
     const inner = page.querySelector('.page-inner');
-    if (!inner) return false;
-    const table = [...inner.querySelectorAll('table')].find(isLearningStepsTable);
-    const footer = inner.querySelector('.page-foot');
-    if (!table || !footer) return false;
+    const table = inner && learningTable(page);
+    if (!inner || !table) return false;
+
+    const innerRect = inner.getBoundingClientRect();
     const tableBottom = table.getBoundingClientRect().bottom;
-    const footerTop = footer.getBoundingClientRect().top;
-    return tableBottom > footerTop - 14 || inner.scrollHeight > inner.clientHeight + 1;
+    const footer = inner.querySelector('.page-foot');
+    const footerTop = footer ? footer.getBoundingClientRect().top : innerRect.bottom;
+    const safeBottom = Math.min(footerTop - SAFETY_PX, innerRect.bottom - SAFETY_PX);
+
+    return tableBottom > safeBottom || inner.scrollHeight > inner.clientHeight + 1;
   }
 
   function continuationPage(sourcePage, sourceTable, rows, sequence) {
@@ -186,7 +192,7 @@
     if (page.dataset[PROCESSED] === '1') return;
     page.dataset[PROCESSED] = '1';
 
-    const sourceTable = [...page.querySelectorAll('.page-inner > table')].find(isLearningStepsTable);
+    const sourceTable = learningTable(page);
     const sourceBody = sourceTable && sourceTable.querySelector('tbody');
     if (!sourceTable || !sourceBody) return;
     page.classList.add(SAFE_SOURCE_CLASS);
@@ -248,7 +254,7 @@
   function paginate() {
     if (printing) return;
     installStyles();
-    document.querySelectorAll('.page').forEach(splitOverflowingPage);
+    document.querySelectorAll('#printRoot > .page').forEach(splitOverflowingPage);
     lockPhysicalSheets();
 
     const status = document.getElementById('pageStatus');
@@ -257,24 +263,19 @@
         /\d+\s+halaman/i,
         document.querySelectorAll('#printRoot > .page').length + ' halaman'
       );
-      status.dataset.epPaper = 'A4-locked';
+      status.dataset.epPaper = 'A4-final-layout';
     }
-  }
-
-  function schedulePagination() {
-    requestAnimationFrame(() => requestAnimationFrame(paginate));
   }
 
   function restorePages() {
     document.querySelectorAll(`.${SAFE_SOURCE_CLASS}:not(.${CONTINUATION_CLASS}), .ep-supervision-meeting:not(.${CONTINUATION_CLASS})`).forEach(page => {
-      const sourceTable = [...page.querySelectorAll('.page-inner > table')].find(isLearningStepsTable);
+      const sourceTable = learningTable(page);
       const sourceBody = sourceTable && sourceTable.querySelector('tbody');
       if (!sourceBody) return;
 
       let next = page.nextElementSibling;
       while (next && next.classList.contains(CONTINUATION_CLASS)) {
-        const body = [...next.querySelectorAll('.page-inner > table')]
-          .find(isLearningStepsTable)?.querySelector('tbody');
+        const body = learningTable(next)?.querySelector('tbody');
         if (body) [...body.rows].forEach(row => sourceBody.appendChild(row));
         const obsolete = next;
         next = next.nextElementSibling;
@@ -284,47 +285,86 @@
     });
   }
 
-  function restoreThenPaginate() {
-    if (printing) return;
+  function observeRoot() {
+    if (printing || fullRun || !observer) return;
+    const root = document.getElementById('printRoot');
+    if (!root) return;
+    observer.disconnect();
+    observer.observe(root, { childList: true, subtree: true, characterData: true });
+  }
+
+  function runFullPagination() {
+    repaginateTimer = null;
+    if (printing || fullRun) return;
+    fullRun = true;
+    if (observer) observer.disconnect();
+
     restorePages();
-    schedulePagination();
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      paginate();
+      fullRun = false;
+      if (observer) observer.takeRecords();
+      observeRoot();
+    }));
+  }
+
+  function queueFullPagination(delay = 100) {
+    if (printing) return;
+    if (repaginateTimer) clearTimeout(repaginateTimer);
+    repaginateTimer = setTimeout(runFullPagination, delay);
   }
 
   function beginPrint() {
-    /* Do not recalculate page breaks under print media. The visible preview is
-       the source of truth; only the already-locked A4 sheets are sent to print. */
+    /* Page breaks must already be final before print media is activated. Do not
+       merge or recalculate rows here; that was a previous source of divergence. */
     printing = true;
+    if (repaginateTimer) {
+      clearTimeout(repaginateTimer);
+      repaginateTimer = null;
+    }
+    if (observer) observer.disconnect();
     installStyles();
   }
 
   function endPrint() {
     printing = false;
-    schedulePagination();
+    observeRoot();
+    queueFullPagination(120);
   }
 
+  installStyles();
+
+  observer = new MutationObserver(mutations => {
+    if (printing || fullRun) return;
+    const meaningful = mutations.some(mutation => {
+      if (mutation.type === 'characterData') return true;
+      if (mutation.type !== 'childList') return false;
+      return mutation.addedNodes.length > 0 || mutation.removedNodes.length > 0;
+    });
+    if (meaningful) queueFullPagination(140);
+  });
+  observeRoot();
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', schedulePagination, { once: true });
+    document.addEventListener('DOMContentLoaded', () => queueFullPagination(0), { once: true });
   } else {
-    schedulePagination();
+    queueFullPagination(0);
   }
 
   window.addEventListener('load', () => {
-    schedulePagination();
+    queueFullPagination(0);
     if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(restoreThenPaginate);
+      document.fonts.ready.then(() => queueFullPagination(0));
     }
-    setTimeout(restoreThenPaginate, 1800);
+    /* Nested document.write/runtime patches settle at different times across
+       subjects. These checkpoints make the final preview pagination deterministic. */
+    setTimeout(() => queueFullPagination(0), 500);
+    setTimeout(() => queueFullPagination(0), 1500);
+    setTimeout(() => queueFullPagination(0), 3000);
   }, { once: true });
 
   window.addEventListener('beforeprint', beginPrint);
   window.addEventListener('afterprint', endPrint);
-  document.addEventListener('ep-differentiation-ready', restoreThenPaginate);
-
-  const observer = new MutationObserver(() => {
-    if (printing) return;
-    if (document.querySelector('.page:not([data-ep-print-safe-paginated="1"])')) {
-      schedulePagination();
-    }
-  });
-  observer.observe(document.documentElement, { childList: true, subtree: true });
+  document.addEventListener('ep-differentiation-ready', () => queueFullPagination(0));
+  document.addEventListener('ep-supervision-ready', () => queueFullPagination(0));
 })();
