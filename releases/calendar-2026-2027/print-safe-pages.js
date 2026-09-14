@@ -21,45 +21,102 @@
       .${CONTINUATION_CLASS} .tbl {
         margin-top: 0 !important;
       }
-      @page portrait { size: A4 portrait; margin: 0; }
-      @page landscape { size: A4 landscape; margin: 0; }
+
+      /* Unnamed A4 rule is a fallback for browsers/printer dialogs that do not
+         honor named pages. Named rules below keep mixed portrait/landscape pages. */
+      @page { size: A4 portrait; margin: 0; }
+      @page epPortrait { size: A4 portrait; margin: 0; }
+      @page epLandscape { size: A4 landscape; margin: 0; }
+
       @media print {
-        /* Keep the physical sheets already laid out in the screen preview.
-           The legacy print.css sets width/height:auto and fragments them again. */
-        #printRoot { margin: 0 !important; padding: 0 !important; }
+        html,
+        body {
+          margin: 0 !important;
+          padding: 0 !important;
+          background: #fff !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        body {
+          width: auto !important;
+          min-width: 0 !important;
+          max-width: none !important;
+          transform: none !important;
+          zoom: 1 !important;
+        }
+        .preview-bar {
+          display: none !important;
+        }
+        #printRoot {
+          display: block !important;
+          width: auto !important;
+          min-width: 0 !important;
+          max-width: none !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          transform: none !important;
+          zoom: 1 !important;
+        }
+
+        /* The screen preview is already paginated into physical A4 sheets.
+           Never let legacy print.css change those sheets back to width/height:auto. */
         #printRoot > .page {
           box-sizing: border-box !important;
+          position: relative !important;
+          display: block !important;
           margin: 0 !important;
           padding: 0 !important;
           flex: none !important;
           box-shadow: none !important;
+          overflow: hidden !important;
+          transform: none !important;
+          zoom: 1 !important;
           break-inside: avoid-page !important;
           page-break-inside: avoid !important;
           break-after: page !important;
           page-break-after: always !important;
         }
         #printRoot > .page.portrait {
-          page: portrait !important;
-          width: 210mm !important; min-width: 210mm !important; max-width: 210mm !important;
-          height: 297mm !important; min-height: 297mm !important; max-height: 297mm !important;
+          page: epPortrait !important;
+          width: 210mm !important;
+          min-width: 210mm !important;
+          max-width: 210mm !important;
+          height: 297mm !important;
+          min-height: 297mm !important;
+          max-height: 297mm !important;
         }
         #printRoot > .page.landscape {
-          page: landscape !important;
-          width: 297mm !important; min-width: 297mm !important; max-width: 297mm !important;
-          height: 210mm !important; min-height: 210mm !important; max-height: 210mm !important;
+          page: epLandscape !important;
+          width: 297mm !important;
+          min-width: 297mm !important;
+          max-width: 297mm !important;
+          height: 210mm !important;
+          min-height: 210mm !important;
+          max-height: 210mm !important;
+        }
+        #printRoot > .page > .page-inner {
+          box-sizing: border-box !important;
+          width: 100% !important;
+          min-width: 100% !important;
+          max-width: 100% !important;
+          margin: 0 !important;
+          overflow: hidden !important;
         }
         #printRoot > .page.portrait > .page-inner {
-          box-sizing: border-box !important;
-          height: 297mm !important; min-height: 297mm !important; max-height: 297mm !important;
+          height: 297mm !important;
+          min-height: 297mm !important;
+          max-height: 297mm !important;
         }
         #printRoot > .page.landscape > .page-inner {
-          box-sizing: border-box !important;
-          height: 210mm !important; min-height: 210mm !important; max-height: 210mm !important;
+          height: 210mm !important;
+          min-height: 210mm !important;
+          max-height: 210mm !important;
         }
         #printRoot > .page:last-child {
           break-after: auto !important;
           page-break-after: auto !important;
         }
+
         .ep-supervision-meeting,
         .${SAFE_SOURCE_CLASS},
         .${CONTINUATION_CLASS} {
@@ -165,16 +222,42 @@
     }
   }
 
+  function lockPhysicalSheets() {
+    document.querySelectorAll('#printRoot > .page').forEach(page => {
+      const landscape = page.classList.contains('landscape');
+      const width = landscape ? '297mm' : '210mm';
+      const height = landscape ? '210mm' : '297mm';
+      const pageName = landscape ? 'epLandscape' : 'epPortrait';
+
+      page.style.setProperty('page', pageName, 'important');
+      page.style.setProperty('width', width, 'important');
+      page.style.setProperty('min-width', width, 'important');
+      page.style.setProperty('max-width', width, 'important');
+      page.style.setProperty('height', height, 'important');
+      page.style.setProperty('min-height', height, 'important');
+      page.style.setProperty('max-height', height, 'important');
+
+      const inner = page.querySelector('.page-inner');
+      if (!inner) return;
+      inner.style.setProperty('height', height, 'important');
+      inner.style.setProperty('min-height', height, 'important');
+      inner.style.setProperty('max-height', height, 'important');
+    });
+  }
+
   function paginate() {
     if (printing) return;
     installStyles();
     document.querySelectorAll('.page').forEach(splitOverflowingPage);
+    lockPhysicalSheets();
+
     const status = document.getElementById('pageStatus');
     if (status) {
       status.textContent = String(status.textContent || '').replace(
         /\d+\s+halaman/i,
-        document.querySelectorAll('.page').length + ' halaman'
+        document.querySelectorAll('#printRoot > .page').length + ' halaman'
       );
+      status.dataset.epPaper = 'A4-locked';
     }
   }
 
@@ -208,8 +291,8 @@
   }
 
   function beginPrint() {
-    // Never merge continuation rows or measure them under print media.
-    // The visible, already-paginated preview is the source of page boundaries.
+    /* Do not recalculate page breaks under print media. The visible preview is
+       the source of truth; only the already-locked A4 sheets are sent to print. */
     printing = true;
     installStyles();
   }
@@ -224,6 +307,7 @@
   } else {
     schedulePagination();
   }
+
   window.addEventListener('load', () => {
     schedulePagination();
     if (document.fonts && document.fonts.ready) {
@@ -231,6 +315,7 @@
     }
     setTimeout(restoreThenPaginate, 1800);
   }, { once: true });
+
   window.addEventListener('beforeprint', beginPrint);
   window.addEventListener('afterprint', endPrint);
   document.addEventListener('ep-differentiation-ready', restoreThenPaginate);
