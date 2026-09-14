@@ -131,22 +131,26 @@ function grid(cal,y,m,print){
 function tableBody(cal,semester,print){
   const totals=[0,0,0,0],rows=months(cal.year,semester).map(([y,m])=>{
     const key=y+'-'+String(m+1).padStart(2,'0'),end=key+'-'+new Date(Date.UTC(y,m+1,0)).getUTCDate(),ev=(cal.events||[]).filter(e=>e.end>=key+'-01'&&e.start<=end),s=stats(cal,y,m);s.forEach((v,i)=>totals[i]+=v);
-    return '<tr><td class="'+(print?'pcm':'month-cell')+'"><b>'+names[m]+' '+y+'</b>'+grid(cal,y,m,print)+'</td>'+s.map((v,i)=>'<td class="'+(print?'pcs':'cal-stat')+'"><b>'+v+'</b><small>'+['MES','MEB','HES','HEB'][i]+'</small></td>').join('')+'<td class="'+(print?'pce':'event-cell')+'">'+ev.map(e=>'<div class="'+(print?'p-event':'event-row')+' '+esc(e.type)+'"><b>'+esc(e.start.slice(8)+(e.end!==e.start?'–'+e.end.slice(8):''))+'</b><span>'+esc(e.title)+'</span></div>').join('')+'</td></tr>';
+    return '<tr><td class="'+(print?'pcm':'month-cell')+'"><b>'+names[m]+' '+y+'</b>'+grid(cal,y,m,print)+'</td>'+s.map((v,i)=>'<td class="'+(print?'pcs':'cal-stat')+'"><'+(print?'strong':'b')+'>'+v+'</'+(print?'strong':'b')+'><small>'+['MES','MEB','HES','HEB'][i]+'</small></td>').join('')+'<td class="'+(print?'pce':'event-cell')+'">'+ev.map(e=>'<div class="'+(print?'p-event':'event-row')+' '+esc(e.type)+'"><b>'+esc(e.start.slice(8)+(e.end!==e.start?'–'+e.end.slice(8):''))+'</b><span>'+esc(e.title)+'</span></div>').join('')+'</td></tr>';
   });
   return rows.join('')+'<tr class="'+(print?'print-cal-total':'calendar-total')+'"><td>JUMLAH SEMESTER '+(semester===1?'I':'II')+'</td>'+totals.map(n=>'<td>'+n+'</td>').join('')+'<td></td></tr>';
 }
 const api={preset,switchYear,months,stats,tableBody};
 if(typeof module==='object'&&module.exports){module.exports=api;return;}
-if(root.EPCalendarYear)return;
+root.EPCalendarYear?.dispose?.();
 const match=location.pathname.match(/\/E-Perangkat_(.+?)_Fase-([A-F])/i);if(!match)return;
 const phase=match[2].toLowerCase(),prefix='eperangkat.'+decodeURIComponent(match[1]).toLowerCase()+'.fase'+phase+'.v1',key=prefix+'.orders';
 const read=()=>{try{return JSON.parse(localStorage.getItem(key)||'{}')}catch(_){return {}}};
 function current(edit=false){const s=read(),id=edit?document.querySelector('[data-select-order].active')?.dataset.selectOrder:new URLSearchParams(location.search).get('order');return (s.orders||[]).find(o=>o.id===(id||s.activeId))||(s.orders||[])[0];}
 api.current=current;root.EPCalendarYear=api;
 let pending=null;
-const proto=Storage.prototype,nativeSet=proto.setItem;
-proto.setItem=function(k,v){
-  if(this===localStorage&&String(k)===key){
+const proto=Storage.prototype;
+if(!proto.__epCalendarYearBridge){
+ const nativeSet=proto.setItem;proto.__epCalendarYearBridge={transform:(_storage,_key,value)=>value};
+ proto.setItem=function(k,v){return nativeSet.call(this,k,proto.__epCalendarYearBridge.transform(this,k,v));};
+}
+proto.__epCalendarYearBridge.transform=function(storage,k,v){
+  if(storage===localStorage&&String(k)===key){
     try{
       const data=JSON.parse(v);let changed=false;
       for(const o of data.orders||[]){
@@ -157,28 +161,32 @@ proto.setItem=function(k,v){
       if(changed)v=JSON.stringify(data);
     }catch(e){if(e.name==='QuotaExceededError')throw e;}
   }
-  const result=nativeSet.call(this,k,v);
-  if(String(k)===key&&pending){const saved=JSON.parse(String(v));if(saved.orders?.some(o=>o.id===pending.id&&o.calendar?.epCalendarYear===pending.year))pending=null;}
-  return result;
+  return v;
 };
 function picker(){
   const field=document.getElementById('profileYear');if(!field)return;
-  if(document.getElementById('epCalendarYear'))return;
   const o=current(true);if(!o)return;
   const year=o.calendar?.epCalendarYear||o.calendar?.year||o.profile?.year||'2026/2027';
+  const existing=document.getElementById('epCalendarYear');
+  if(existing){if(existing.dataset.savedYear!==year){existing.value=year;existing.dataset.savedYear=year;field.value=year;}return;}
   const label=document.createElement('label');label.innerHTML='Kalender Pendidikan<select id="epCalendarYear">'+YEARS.map(y=>'<option value="'+y+'">'+y+'</option>').join('')+'</select><small>Tahun pelajaran mengikuti kalender. Klik Simpan Pesanan &amp; Profil.</small>';
   field.closest('label').before(label);const select=label.querySelector('select');select.value=YEARS.includes(year)?year:'2026/2027';
+  select.dataset.savedYear=year;select.setAttribute('aria-label','Kalender Pendidikan');
   field.value=select.value;field.readOnly=true;field.setAttribute('aria-readonly','true');
+  const hint=document.createElement('small');hint.textContent='Kalender 2025/2026 memakai acuan SD/SMP Buol. Untuk fase E/F atau daerah lain, sesuaikan jadwal sekolah di menu Kalender Pendidikan.';label.appendChild(hint);
   select.addEventListener('change',()=>{field.value=select.value;field.dispatchEvent(new Event('input',{bubbles:true}));});
 }
-document.addEventListener('click',e=>{
-  if(e.target.closest?.('#saveOrderBtn')){const select=document.getElementById('epCalendarYear'),o=current(true);if(select&&o){pending={id:o.id,year:select.value};document.getElementById('profileYear').value=select.value;}}
-},true);
+function captureSave(e){
+  if(e.target.closest?.('#saveOrderBtn')){const select=document.getElementById('epCalendarYear'),o=current(true);if(select&&o){pending={id:o.id,year:select.value};document.getElementById('profileYear').value=select.value;setTimeout(()=>{pending=null;},0);}}
+}
+document.addEventListener('click',captureSave,true);
 function editorRow(e){return '<div class="calendar-event-edit" data-event-id="'+esc(e.id)+'"><input type="date" data-field="start" value="'+esc(e.start)+'"><input type="date" data-field="end" value="'+esc(e.end)+'"><select data-field="type">'+['national','semester','unit','assessment','report','learning'].map((t,i)=>'<option value="'+t+'" '+(t===e.type?'selected':'')+'>'+['Libur nasional','Libur semester','Kegiatan satuan','Asesmen','Rapor','Pembelajaran'][i]+'</option>').join('')+'</select><input data-field="title" value="'+esc(e.title)+'"><button class="btn danger small" data-delete-event="'+esc(e.id)+'">Hapus</button></div>';}
 function semesterOf(sheet){return /II|GENAP/i.test(sheet.querySelector('.calendar-title-row strong,.print-cal-title strong')?.textContent||'')?2:1;}
 function render(){
-  picker();const o=current();if(!o?.calendar?.epCalendarYear)return;
+  picker();const o=current();if(o?.calendar?.year!=='2025/2026')return;
   const cal=o.calendar;
+  const note=document.querySelector('.calendar-sheet-web')&&document.querySelector('#app .page-head p');
+  if(note){const text='Kalender '+cal.year+'. Jumlah hari efektif dihitung dari kegiatan pesanan ini. Jadwal sekolah dapat disesuaikan melalui editor kalender.';if(note.textContent!==text)note.textContent=text;}
   document.querySelectorAll('.calendar-sheet-web,.calendar-print-page').forEach(sheet=>{
     const print=sheet.classList.contains('calendar-print-page'),sem=semesterOf(sheet),table=sheet.querySelector(print?'.print-calendar':'.calendar-main');if(!table)return;
     const signature=JSON.stringify([cal,sem]);
@@ -196,7 +204,7 @@ function saveCalendarAction(action,change){
   const now=new Date().toISOString();o.updatedAt=now;o.history=Array.isArray(o.history)?o.history:[];o.history.unshift({id:'h-year-'+Date.now(),time:now,action,detail:'Kalender '+o.calendar.year,snapshot:before});
   localStorage.setItem(key,JSON.stringify(s));render();
 }
-document.addEventListener('click',e=>{
+function captureCalendar(e){
   const o=current();if(o?.calendar?.year!=='2025/2026')return;
   const b=e.target.closest?.('#saveCalendarBtn,#addCalendarEvent,#resetCalendarBtn,[data-delete-event]');if(!b)return;
   e.preventDefault();e.stopImmediatePropagation();
@@ -208,8 +216,10 @@ document.addEventListener('click',e=>{
     if(edits.some(x=>!x.start||!x.end||x.start>x.end)){alert('Tanggal kegiatan tidak valid. Tanggal akhir harus sama atau setelah tanggal mulai.');return;}
     saveCalendarAction('Kalender pendidikan diperbarui',o=>{const map=new Map(edits.map(x=>[x.id,x]));o.calendar.events=o.calendar.events.map(x=>map.has(x.id)?{...x,...map.get(x.id)}:x);});
   }
-},true);
-let timer=0;new MutationObserver(()=>{if(!timer)timer=setTimeout(()=>{timer=0;render();},50);}).observe(document.documentElement,{childList:true,subtree:true});
+}
+document.addEventListener('click',captureCalendar,true);
+let timer=0;const observer=new MutationObserver(()=>{if(!timer)timer=setTimeout(()=>{timer=0;render();},50);});observer.observe(document.documentElement,{childList:true,subtree:true});
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',render);else render();
 root.addEventListener('beforeprint',render);
+api.dispose=()=>{observer.disconnect();clearTimeout(timer);document.removeEventListener('click',captureSave,true);document.removeEventListener('click',captureCalendar,true);document.removeEventListener('DOMContentLoaded',render);root.removeEventListener('beforeprint',render);};
 })(typeof window==='object'?window:globalThis);

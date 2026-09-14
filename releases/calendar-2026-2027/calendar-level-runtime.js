@@ -111,7 +111,7 @@
   }
 
   function patchVisibleCalendar() {
-    if (window.EPCalendarYear?.current()?.calendar?.epCalendarYear) return;
+    if (window.EPCalendarYear?.current()?.calendar?.year==='2025/2026') return;
     document.querySelectorAll('.calendar-main tbody tr').forEach(row => {
       const monthCell = row.querySelector('.month-cell');
       const cells = row.querySelectorAll('.cal-stat');
