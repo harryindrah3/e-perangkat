@@ -15,7 +15,7 @@
     const PRINT_FILENAME_RUNTIME = location.origin + '/print-filename.js?v=20260911-2';
     const CALENDAR_RUNTIME = location.origin + '/calendar-level-runtime.js?v=20260914-1';
     const CALENDAR_YEAR_RUNTIME = location.origin + '/calendar-year.js?v=20260914-1';
-    const CALENDAR_SOURCE_RUNTIME = location.origin + '/calendar-source-runtime.js?v=20260914-1';
+    const CALENDAR_SOURCE_RUNTIME = location.origin + '/calendar-source-runtime.js?v=20260914-2';
     const DIFFERENTIATION_RUNTIME = location.origin + '/differentiation-runtime.js?v=20260915-2';
     const PRINT_SAFE_PAGES_RUNTIME = location.origin + '/print-safe-pages.js?v=20260915-5';
     const KKTP_ORDER_RUNTIME = location.origin + '/kktp-order-runtime.js?v=20260915-1';
@@ -54,7 +54,8 @@
         const kktpOrderTag = '<scr' + 'ipt src="' + KKTP_ORDER_RUNTIME + '" id="ep-kktp-order-loader"></scr' + 'ipt>';
         const calendarYearTag = '<scr' + 'ipt src="' + CALENDAR_YEAR_RUNTIME + '" id="ep-calendar-year-loader"></scr' + 'ipt>';
         const calendarRuntimeTag = '<scr' + 'ipt src="' + CALENDAR_RUNTIME + '" id="ep-calendar-level-loader"></scr' + 'ipt>';
-        const appEnhancements = CALENDAR_CLEANUP + kktpOrderTag + calendarYearTag + calendarRuntimeTag + printFilenameTag + differentiationRuntimeTag + printSafePagesTag;
+        const calendarSourceTag = '<scr' + 'ipt src="' + CALENDAR_SOURCE_RUNTIME + '" id="ep-calendar-source-loader"></scr' + 'ipt>';
+        const appEnhancements = CALENDAR_CLEANUP + kktpOrderTag + calendarYearTag + calendarRuntimeTag + calendarSourceTag + printFilenameTag + differentiationRuntimeTag + printSafePagesTag;
         html = html.replace(/<\/head>/i, appEnhancements + '</head>');
 
         const calendarProto = Document.prototype;
@@ -69,6 +70,7 @@
                 !output.includes('id="ep-kktp-order-loader"') ||
                 !output.includes('id="ep-calendar-level-loader"') ||
                 !output.includes('id="ep-calendar-year-loader"') ||
+                !output.includes('id="ep-calendar-source-loader"') ||
                 (printFilenameTag && !output.includes('id="ep-print-filename-loader"')) ||
                 (differentiationRuntimeTag && !output.includes('id="ep-differentiation-loader"')) ||
                 (printSafePagesTag && !output.includes('id="ep-print-safe-pages-loader"'))) {
