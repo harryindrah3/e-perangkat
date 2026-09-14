@@ -14,7 +14,7 @@
     const DELETE_RUNTIME = location.origin + '/delete-order.js?v=20260910-5';
     const PRINT_FILENAME_RUNTIME = location.origin + '/print-filename.js?v=20260911-2';
     const CALENDAR_RUNTIME = location.origin + '/calendar-level-runtime.js?v=20260914-1';
-    const CALENDAR_YEAR_RUNTIME = location.origin + '/calendar-year.js?v=20260914-1';
+    const CALENDAR_YEAR_RUNTIME = location.origin + '/calendar-year-kktp.js?v=20260915-3';
     const CALENDAR_SOURCE_RUNTIME = location.origin + '/calendar-source-runtime.js?v=20260914-1';
     const DIFFERENTIATION_RUNTIME = location.origin + '/differentiation-runtime.js?v=20260915-2';
     const PRINT_SAFE_PAGES_RUNTIME = location.origin + '/print-safe-pages.js?v=20260915-5';
@@ -32,13 +32,20 @@
         String(error && error.message || error) + '</p>';
     }
 
+    function rewriteNestedRuntime(output, documentBase) {
+      output = output.replace(/https:\/\/[^"']+\/calendar-year\.js(?:\?[^"']*)?/g, CALENDAR_YEAR_RUNTIME);
+      output = output.replace(/https:\/\/e-perangkat-online-a-hecmadzal-harryindrah3-6239s-projects\.vercel\.app\/patches\/kaldik\.js(?:\?[^"']*)?/g, CALENDAR_SOURCE_RUNTIME);
+      output = output.replace(/<base\b[^>]*>/i, '<base href="' + documentBase + '">');
+      return output;
+    }
+
     try {
       const response = await fetch(CURRENT + location.pathname + location.search, { cache: 'no-store' });
       if (!response.ok) throw new Error('Sumber production gagal dimuat (' + response.status + ')');
       let html = await response.text();
 
       const documentBase = location.origin + location.pathname.replace(/[^/]*$/, '');
-      html = html.replace(/<base\b[^>]*>/i, '<base href="' + documentBase + '">');
+      html = rewriteNestedRuntime(html, documentBase);
 
       if (IS_APP_PRINT || IS_APP_INDEX) {
         const printFilenameTag = IS_APP_PRINT
@@ -60,9 +67,7 @@
           calendarProto.__epCalendarCleanupWriteGuard = true;
           const calendarNativeWrite = calendarProto.write;
           calendarProto.write = function (...parts) {
-            let output = parts.join('');
-            output = output.replace(/https:\/\/e-perangkat-online-a-hecmadzal-harryindrah3-6239s-projects\.vercel\.app\/patches\/kaldik\.js(?:\?[^"']*)?/g, CALENDAR_SOURCE_RUNTIME);
-            output = output.replace(/<base\b[^>]*>/i, '<base href="' + documentBase + '">');
+            let output = rewriteNestedRuntime(parts.join(''), documentBase);
             if (!output.includes('id="ep-calendar-print-cleanup"') ||
                 !output.includes('id="ep-calendar-level-loader"') ||
                 !output.includes('id="ep-calendar-year-loader"') ||
@@ -91,9 +96,7 @@
           const loaderTag = '<scr' + 'ipt id="ep-delete-order-loader">' + safeCode + '</scr' + 'ipt>';
           const existingPatch = '<scr' + 'ipt id="ep-preview-patch">';
           proto.write = function (...parts) {
-            let output = parts.join('');
-            output = output.replace(/https:\/\/e-perangkat-online-a-hecmadzal-harryindrah3-6239s-projects\.vercel\.app\/patches\/kaldik\.js(?:\?[^"']*)?/g, CALENDAR_SOURCE_RUNTIME);
-            output = output.replace(/<base\b[^>]*>/i, '<base href="' + location.origin + '/">');
+            let output = rewriteNestedRuntime(parts.join(''), location.origin + '/');
             if (output.includes('id="orderBody"') && !output.includes('id="ep-delete-order-loader"')) {
               if (output.includes(existingPatch)) {
                 output = output.replace(existingPatch, existingPatch + safeCode + '\n');
