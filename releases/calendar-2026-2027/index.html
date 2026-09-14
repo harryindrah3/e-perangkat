@@ -1,121 +1,22 @@
 <!doctype html>
-<html lang="id">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>E-Perangkat Online A–F</title>
-</head>
-<body>
-  <div id="x">Memuat…</div>
-  <script>
-  (async () => {
-    'use strict';
-    const CURRENT = 'https://e-perangkat-online-a-fucdkqkuq-harryindrah3-6239s-projects.vercel.app';
-    const DELETE_RUNTIME = location.origin + '/delete-order.js?v=20260910-5';
-    const PRINT_FILENAME_RUNTIME = location.origin + '/print-filename.js?v=20260911-2';
-    const CALENDAR_RUNTIME = location.origin + '/calendar-level-runtime.js?v=20260914-1';
-    const CALENDAR_YEAR_RUNTIME = location.origin + '/calendar-year-kktp.js?v=20260915-3';
-    const CALENDAR_SOURCE_RUNTIME = location.origin + '/calendar-source-runtime.js?v=20260914-1';
-    const DIFFERENTIATION_RUNTIME = location.origin + '/differentiation-runtime.js?v=20260915-2';
-    const PRINT_SAFE_PAGES_RUNTIME = location.origin + '/print-safe-pages.js?v=20260915-5';
-    const IS_APP_PRINT = /\/apps\/.+\/print\.html$/i.test(location.pathname);
-    const IS_APP_INDEX = /\/apps\/.+\/index\.html$/i.test(location.pathname);
-    const CALENDAR_CLEANUP =
-      '<style id="ep-calendar-print-cleanup"' + (IS_APP_INDEX ? ' media="print"' : '') + '>' +
-      '.ep-calendar-source-box{display:none!important}' +
-      '</style>';
-
-    function showError(error) {
-      const target = document.getElementById('x');
-      if (!target) return;
-      target.innerHTML = '<p style="font-family:Arial,sans-serif;padding:24px;color:#991b1b"><b>E-Perangkat gagal dimuat.</b><br>' +
-        String(error && error.message || error) + '</p>';
-    }
-
-    function rewriteNestedRuntime(output, documentBase) {
-      output = output.replace(/https:\/\/[^"']+\/calendar-year\.js(?:\?[^"']*)?/g, CALENDAR_YEAR_RUNTIME);
-      output = output.replace(/https:\/\/e-perangkat-online-a-hecmadzal-harryindrah3-6239s-projects\.vercel\.app\/patches\/kaldik\.js(?:\?[^"']*)?/g, CALENDAR_SOURCE_RUNTIME);
-      output = output.replace(/<base\b[^>]*>/i, '<base href="' + documentBase + '">');
-      return output;
-    }
-
-    try {
-      const response = await fetch(CURRENT + location.pathname + location.search, { cache: 'no-store' });
-      if (!response.ok) throw new Error('Sumber production gagal dimuat (' + response.status + ')');
-      let html = await response.text();
-
-      const documentBase = location.origin + location.pathname.replace(/[^/]*$/, '');
-      html = rewriteNestedRuntime(html, documentBase);
-
-      if (IS_APP_PRINT || IS_APP_INDEX) {
-        const printFilenameTag = IS_APP_PRINT
-          ? '<scr' + 'ipt src="' + PRINT_FILENAME_RUNTIME + '" id="ep-print-filename-loader"></scr' + 'ipt>'
-          : '';
-        const printSafePagesTag = IS_APP_PRINT
-          ? '<scr' + 'ipt src="' + PRINT_SAFE_PAGES_RUNTIME + '" id="ep-print-safe-pages-loader"></scr' + 'ipt>'
-          : '';
-        const differentiationRuntimeTag = IS_APP_PRINT
-          ? '<scr' + 'ipt src="' + DIFFERENTIATION_RUNTIME + '" id="ep-differentiation-loader"></scr' + 'ipt>'
-          : '';
-        const calendarYearTag = '<scr' + 'ipt src="' + CALENDAR_YEAR_RUNTIME + '" id="ep-calendar-year-loader"></scr' + 'ipt>';
-        const calendarRuntimeTag = '<scr' + 'ipt src="' + CALENDAR_RUNTIME + '" id="ep-calendar-level-loader"></scr' + 'ipt>';
-        const appEnhancements = CALENDAR_CLEANUP + calendarYearTag + calendarRuntimeTag + printFilenameTag + differentiationRuntimeTag + printSafePagesTag;
-        html = html.replace(/<\/head>/i, appEnhancements + '</head>');
-
-        const calendarProto = Document.prototype;
-        if (!calendarProto.__epCalendarCleanupWriteGuard) {
-          calendarProto.__epCalendarCleanupWriteGuard = true;
-          const calendarNativeWrite = calendarProto.write;
-          calendarProto.write = function (...parts) {
-            let output = rewriteNestedRuntime(parts.join(''), documentBase);
-            if (!output.includes('id="ep-calendar-print-cleanup"') ||
-                !output.includes('id="ep-calendar-level-loader"') ||
-                !output.includes('id="ep-calendar-year-loader"') ||
-                (printFilenameTag && !output.includes('id="ep-print-filename-loader"')) ||
-                (differentiationRuntimeTag && !output.includes('id="ep-differentiation-loader"')) ||
-                (printSafePagesTag && !output.includes('id="ep-print-safe-pages-loader"'))) {
-              output = output.replace(/<\/head>/i, appEnhancements + '</head>');
-            }
-            return calendarNativeWrite.call(this, output);
-          };
-        }
-      }
-
-      if (location.pathname === '/' || location.pathname === '/index.html') {
-        let deleteCode = '';
-        try {
-          const runtimeResponse = await fetch(DELETE_RUNTIME, { cache: 'no-store' });
-          if (runtimeResponse.ok) deleteCode = await runtimeResponse.text();
-        } catch (_) {}
-
-        const proto = Document.prototype;
-        if (deleteCode && !proto.__epDeleteOrderWriteGuard) {
-          proto.__epDeleteOrderWriteGuard = true;
-          const nativeWrite = proto.write;
-          const safeCode = deleteCode.replace(/<\/script/gi, '<\\/script');
-          const loaderTag = '<scr' + 'ipt id="ep-delete-order-loader">' + safeCode + '</scr' + 'ipt>';
-          const existingPatch = '<scr' + 'ipt id="ep-preview-patch">';
-          proto.write = function (...parts) {
-            let output = rewriteNestedRuntime(parts.join(''), location.origin + '/');
-            if (output.includes('id="orderBody"') && !output.includes('id="ep-delete-order-loader"')) {
-              if (output.includes(existingPatch)) {
-                output = output.replace(existingPatch, existingPatch + safeCode + '\n');
-              } else {
-                output = output.replace(/<\/body>/i, loaderTag + '</body>');
-              }
-            }
-            return nativeWrite.call(this, output);
-          };
-        }
-      }
-
-      document.open();
-      document.write(html);
-      document.close();
-    } catch (error) {
-      showError(error);
-    }
-  })();
-  </script>
-</body>
-</html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>E-Perangkat Online A–F</title></head>
+<body><div id="x">Memuat…</div><script>
+(async()=>{'use strict';
+const CURRENT='https://e-perangkat-online-a-fucdkqkuq-harryindrah3-6239s-projects.vercel.app';
+const STABLE='https://e-perangkat-online-a-1mllwh56j-harryindrah3-6239s-projects.vercel.app';
+const PRINT_PARITY='https://e-perangkat-online-a-afanit1w0-harryindrah3-6239s-projects.vercel.app';
+const DELETE_RUNTIME=STABLE+'/delete-order.js?v=20260910-5';
+const PRINT_FILENAME_RUNTIME=STABLE+'/print-filename.js?v=20260911-2';
+const CALENDAR_RUNTIME=STABLE+'/calendar-level-runtime.js?v=20260914-1';
+const CALENDAR_YEAR_RUNTIME=location.origin+'/calendar-year-kktp.js?v=20260915-4';
+const CALENDAR_SOURCE_RUNTIME=STABLE+'/calendar-source-runtime.js?v=20260914-2';
+const DIFFERENTIATION_RUNTIME=STABLE+'/differentiation-runtime.js?v=20260915-2';
+const PRINT_SAFE_PAGES_RUNTIME=PRINT_PARITY+'/print-safe-pages.js?v=20260915-5';
+const IS_APP_PRINT=/\/apps\/.+\/print\.html$/i.test(location.pathname),IS_APP_INDEX=/\/apps\/.+\/index\.html$/i.test(location.pathname);
+const CLEAN='<style id="ep-calendar-print-cleanup"'+(IS_APP_INDEX?' media="print"':'')+'>.ep-calendar-source-box{display:none!important}</style>';
+function fail(e){const x=document.getElementById('x');if(x)x.innerHTML='<p style="font-family:Arial,sans-serif;padding:24px;color:#991b1b"><b>E-Perangkat gagal dimuat.</b><br>'+String(e&&e.message||e)+'</p>'}
+function rewrite(out,base){out=out.replace(/https:\/\/[^"']+\/calendar-year\.js(?:\?[^"']*)?/g,CALENDAR_YEAR_RUNTIME);out=out.replace(/https:\/\/e-perangkat-online-a-hecmadzal-harryindrah3-6239s-projects\.vercel\.app\/patches\/kaldik\.js(?:\?[^"']*)?/g,CALENDAR_SOURCE_RUNTIME);return out.replace(/<base\b[^>]*>/i,'<base href="'+base+'">')}
+try{const r=await fetch(CURRENT+location.pathname+location.search,{cache:'no-store'});if(!r.ok)throw new Error('Sumber production gagal dimuat ('+r.status+')');let html=await r.text();const base=location.origin+location.pathname.replace(/[^/]*$/,'');html=rewrite(html,base);
+if(IS_APP_PRINT||IS_APP_INDEX){const pf=IS_APP_PRINT?'<scr'+'ipt src="'+PRINT_FILENAME_RUNTIME+'" id="ep-print-filename-loader"></scr'+'ipt>':'',ps=IS_APP_PRINT?'<scr'+'ipt src="'+PRINT_SAFE_PAGES_RUNTIME+'" id="ep-print-safe-pages-loader"></scr'+'ipt>':'',df=IS_APP_PRINT?'<scr'+'ipt src="'+DIFFERENTIATION_RUNTIME+'" id="ep-differentiation-loader"></scr'+'ipt>':'',cy='<scr'+'ipt src="'+CALENDAR_YEAR_RUNTIME+'" id="ep-calendar-year-loader"></scr'+'ipt>',cl='<scr'+'ipt src="'+CALENDAR_RUNTIME+'" id="ep-calendar-level-loader"></scr'+'ipt>',cs='<scr'+'ipt src="'+CALENDAR_SOURCE_RUNTIME+'" id="ep-calendar-source-loader"></scr'+'ipt>',tags=CLEAN+cy+cl+cs+pf+df+ps;html=html.replace(/<\/head>/i,tags+'</head>');const P=Document.prototype;if(!P.__epCombinedGuard){P.__epCombinedGuard=true;const W=P.write;P.write=function(...parts){let out=rewrite(parts.join(''),base);if(!out.includes('id="ep-calendar-year-loader"')||!out.includes('id="ep-calendar-level-loader"')||!out.includes('id="ep-calendar-source-loader"')||(ps&&!out.includes('id="ep-print-safe-pages-loader"')))out=out.replace(/<\/head>/i,tags+'</head>');return W.call(this,out)}}}
+document.open();document.write(html);document.close();}catch(e){fail(e)}})();
+</script></body></html>
