@@ -1,6 +1,7 @@
 (() => {
   'use strict';
 
+  let printing = false;
   const PROCESSED = 'epPrintSafePaginated';
   const SAFE_SOURCE_CLASS = 'ep-print-safe-meeting';
   const CONTINUATION_CLASS = 'ep-supervision-continuation';
@@ -20,7 +21,45 @@
       .${CONTINUATION_CLASS} .tbl {
         margin-top: 0 !important;
       }
+      @page portrait { size: A4 portrait; margin: 0; }
+      @page landscape { size: A4 landscape; margin: 0; }
       @media print {
+        /* Keep the physical sheets already laid out in the screen preview.
+           The legacy print.css sets width/height:auto and fragments them again. */
+        #printRoot { margin: 0 !important; padding: 0 !important; }
+        #printRoot > .page {
+          box-sizing: border-box !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          flex: none !important;
+          box-shadow: none !important;
+          break-inside: avoid-page !important;
+          page-break-inside: avoid !important;
+          break-after: page !important;
+          page-break-after: always !important;
+        }
+        #printRoot > .page.portrait {
+          page: portrait !important;
+          width: 210mm !important; min-width: 210mm !important; max-width: 210mm !important;
+          height: 297mm !important; min-height: 297mm !important; max-height: 297mm !important;
+        }
+        #printRoot > .page.landscape {
+          page: landscape !important;
+          width: 297mm !important; min-width: 297mm !important; max-width: 297mm !important;
+          height: 210mm !important; min-height: 210mm !important; max-height: 210mm !important;
+        }
+        #printRoot > .page.portrait > .page-inner {
+          box-sizing: border-box !important;
+          height: 297mm !important; min-height: 297mm !important; max-height: 297mm !important;
+        }
+        #printRoot > .page.landscape > .page-inner {
+          box-sizing: border-box !important;
+          height: 210mm !important; min-height: 210mm !important; max-height: 210mm !important;
+        }
+        #printRoot > .page:last-child {
+          break-after: auto !important;
+          page-break-after: auto !important;
+        }
         .ep-supervision-meeting,
         .${SAFE_SOURCE_CLASS},
         .${CONTINUATION_CLASS} {
@@ -127,6 +166,7 @@
   }
 
   function paginate() {
+    if (printing) return;
     installStyles();
     document.querySelectorAll('.page').forEach(splitOverflowingPage);
     const status = document.getElementById('pageStatus');
@@ -162,13 +202,21 @@
   }
 
   function restoreThenPaginate() {
+    if (printing) return;
     restorePages();
     schedulePagination();
   }
 
-  function restoreAndPaginateNow() {
-    restorePages();
-    paginate();
+  function beginPrint() {
+    // Never merge continuation rows or measure them under print media.
+    // The visible, already-paginated preview is the source of page boundaries.
+    printing = true;
+    installStyles();
+  }
+
+  function endPrint() {
+    printing = false;
+    schedulePagination();
   }
 
   if (document.readyState === 'loading') {
@@ -183,10 +231,12 @@
     }
     setTimeout(restoreThenPaginate, 1800);
   }, { once: true });
-  window.addEventListener('beforeprint', restoreAndPaginateNow);
+  window.addEventListener('beforeprint', beginPrint);
+  window.addEventListener('afterprint', endPrint);
   document.addEventListener('ep-differentiation-ready', restoreThenPaginate);
 
   const observer = new MutationObserver(() => {
+    if (printing) return;
     if (document.querySelector('.page:not([data-ep-print-safe-paginated="1"])')) {
       schedulePagination();
     }
