@@ -10,7 +10,12 @@ events.beforeprint();observerCall();docEvents.DOMContentLoaded();while(frames.le
 assert.equal(reads,0,'beforeprint and queued work must not repartition the preview');
 events.afterprint();while(frames.length)frames.shift()();
 assert.ok(reads>0,'screen pagination resumes after the print dialog');
+assert.ok(source.includes('@page { size: A4 portrait; margin: 0; }'),'unnamed A4 fallback must exist');
+assert.ok(source.includes('@page epPortrait { size: A4 portrait; margin: 0; }'));
+assert.ok(source.includes('@page epLandscape { size: A4 landscape; margin: 0; }'));
+assert.ok(source.includes('page: epPortrait !important'));
+assert.ok(source.includes('page: epLandscape !important'));
 assert.ok(source.includes('#printRoot > .page.landscape'));
 assert.ok(source.includes('#printRoot > .page.portrait'));
 assert.ok(!source.includes('restoreAndPaginateNow'));
-console.log('PASS: print lifecycle preserves preview page structure; portrait/landscape rules exist');
+console.log('PASS: print lifecycle preserves preview pagination and locks physical A4 portrait/landscape sheets');
