@@ -456,10 +456,7 @@
     style.textContent = `
       .ep-specific-differentiation td:last-child { line-height: 1.34; }
       .ep-specific-differentiation strong { color: #0f4f4b; }
-      @media print {
-        .ep-specific-differentiation { font-size: 8.6pt; }
-        .ep-specific-differentiation td { padding-top: 2.1mm !important; padding-bottom: 2.1mm !important; }
-      }
+      /* Print uses the same table metrics as the paginated preview. */
     `;
     document.head.appendChild(style);
   }
