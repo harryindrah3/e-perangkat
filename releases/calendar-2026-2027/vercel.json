@@ -5,6 +5,10 @@
       "handle": "filesystem"
     },
     {
+      "src": "/__current/(.*)",
+      "dest": "https://e-perangkat-online-a-fucdkqkuq-harryindrah3-6239s-projects.vercel.app/$1"
+    },
+    {
       "src": "/api/(.*)",
       "dest": "https://e-perangkat-online-a-fucdkqkuq-harryindrah3-6239s-projects.vercel.app/api/$1"
     },
