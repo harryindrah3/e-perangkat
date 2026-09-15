@@ -11,6 +11,9 @@
   (async () => {
     'use strict';
     const CURRENT = location.origin + '/__current';
+    const OLD_PROXY = location.origin + '/__old';
+    const PORTAL_PROXY = location.origin + '/__portal';
+    const STABLE_PROXY = location.origin + '/__stable';
     const STABLE_RUNTIME = 'https://e-perangkat-online-a-6xpm8q2nz-harryindrah3-6239s-projects.vercel.app';
     const PRINT_PARITY = 'https://e-perangkat-online-a-afanit1w0-harryindrah3-6239s-projects.vercel.app';
     const DELETE_RUNTIME = STABLE_RUNTIME + '/delete-order.js?v=20260910-5';
@@ -18,7 +21,7 @@
     const CALENDAR_RUNTIME = STABLE_RUNTIME + '/calendar-level-runtime.js?v=20260914-1';
     const CALENDAR_YEAR_RUNTIME = STABLE_RUNTIME + '/calendar-year.js?v=20260914-1';
     const CALENDAR_SOURCE_RUNTIME = STABLE_RUNTIME + '/calendar-source-runtime.js?v=20260914-2';
-    const KKTP_ORDER_RUNTIME = location.origin + '/kktp-order-runtime.js?v=20260915-7';
+    const KKTP_ORDER_RUNTIME = location.origin + '/kktp-order-runtime.js?v=20260915-8';
     const DIFFERENTIATION_RUNTIME = PRINT_PARITY + '/differentiation-runtime.js?v=20260915-2';
     const PRINT_SAFE_PAGES_RUNTIME = PRINT_PARITY + '/print-safe-pages.js?v=20260915-5';
     const IS_APP_PRINT = /\/apps\/.+\/print\.html$/i.test(location.pathname);
@@ -32,6 +35,10 @@
     }
 
     function rewriteNested(output, documentBase) {
+      output = output
+        .split('https://e-perangkat-online-a-irysp0h7o-harryindrah3-6239s-projects.vercel.app').join(OLD_PROXY)
+        .split('https://e-perangkat-online-a-efzg7qnbn-harryindrah3-6239s-projects.vercel.app').join(PORTAL_PROXY)
+        .split('https://e-perangkat-online-a-gwl9cq3hd-harryindrah3-6239s-projects.vercel.app').join(STABLE_PROXY);
       output = output.replace(/https:\/\/e-perangkat-online-a-hecmadzal-harryindrah3-6239s-projects\.vercel\.app\/patches\/kaldik\.js(?:\?[^"']*)?/g, CALENDAR_SOURCE_RUNTIME);
       output = output.replace(/<base\b[^>]*>/i, '<base href="' + documentBase + '">');
       return output;
@@ -73,31 +80,6 @@
                 (differentiationRuntimeTag && !output.includes('id="ep-differentiation-loader"')) ||
                 (printSafePagesTag && !output.includes('id="ep-print-safe-pages-loader"'))) {
               output = output.replace(/<\/head>/i, appEnhancements + '</head>');
-            }
-            return nativeWrite.call(this, output);
-          };
-        }
-      }
-
-      if (location.pathname === '/' || location.pathname === '/index.html') {
-        let deleteCode = '';
-        try {
-          const runtimeResponse = await fetch(DELETE_RUNTIME, { cache: 'no-store' });
-          if (runtimeResponse.ok) deleteCode = await runtimeResponse.text();
-        } catch (_) {}
-
-        const proto = Document.prototype;
-        if (deleteCode && !proto.__epDeleteOrderWriteGuard) {
-          proto.__epDeleteOrderWriteGuard = true;
-          const nativeWrite = proto.write;
-          const safeCode = deleteCode.replace(/<\/script/gi, '<\\/script');
-          const loaderTag = '<scr' + 'ipt id="ep-delete-order-loader">' + safeCode + '</scr' + 'ipt>';
-          const existingPatch = '<scr' + 'ipt id="ep-preview-patch">';
-          proto.write = function (...parts) {
-            let output = rewriteNested(parts.join(''), location.origin + '/');
-            if (output.includes('id="orderBody"') && !output.includes('id="ep-delete-order-loader"')) {
-              if (output.includes(existingPatch)) output = output.replace(existingPatch, existingPatch + safeCode + '\n');
-              else output = output.replace(/<\/body>/i, loaderTag + '</body>');
             }
             return nativeWrite.call(this, output);
           };
