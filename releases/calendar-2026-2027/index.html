@@ -10,15 +10,17 @@
   <script>
   (async () => {
     'use strict';
-    const CURRENT = 'https://e-perangkat-online-a-fucdkqkuq-harryindrah3-6239s-projects.vercel.app';
-    const DELETE_RUNTIME = location.origin + '/delete-order.js?v=20260910-5';
-    const PRINT_FILENAME_RUNTIME = location.origin + '/print-filename.js?v=20260911-2';
-    const CALENDAR_RUNTIME = location.origin + '/calendar-level-runtime.js?v=20260914-1';
-    const CALENDAR_YEAR_RUNTIME = location.origin + '/calendar-year.js?v=20260914-1';
-    const CALENDAR_SOURCE_RUNTIME = location.origin + '/calendar-source-runtime.js?v=20260914-2';
-    const KKTP_ORDER_RUNTIME = location.origin + '/kktp-order-runtime.js?v=20260915-6';
-    const DIFFERENTIATION_RUNTIME = location.origin + '/differentiation-runtime.js?v=20260915-2';
-    const PRINT_SAFE_PAGES_RUNTIME = location.origin + '/print-safe-pages.js?v=20260915-5';
+    const CURRENT = location.origin + '/__current';
+    const STABLE_RUNTIME = 'https://e-perangkat-online-a-6xpm8q2nz-harryindrah3-6239s-projects.vercel.app';
+    const PRINT_PARITY = 'https://e-perangkat-online-a-afanit1w0-harryindrah3-6239s-projects.vercel.app';
+    const DELETE_RUNTIME = STABLE_RUNTIME + '/delete-order.js?v=20260910-5';
+    const PRINT_FILENAME_RUNTIME = STABLE_RUNTIME + '/print-filename.js?v=20260911-2';
+    const CALENDAR_RUNTIME = STABLE_RUNTIME + '/calendar-level-runtime.js?v=20260914-1';
+    const CALENDAR_YEAR_RUNTIME = STABLE_RUNTIME + '/calendar-year.js?v=20260914-1';
+    const CALENDAR_SOURCE_RUNTIME = STABLE_RUNTIME + '/calendar-source-runtime.js?v=20260914-2';
+    const KKTP_ORDER_RUNTIME = location.origin + '/kktp-order-runtime.js?v=20260915-7';
+    const DIFFERENTIATION_RUNTIME = PRINT_PARITY + '/differentiation-runtime.js?v=20260915-2';
+    const PRINT_SAFE_PAGES_RUNTIME = PRINT_PARITY + '/print-safe-pages.js?v=20260915-5';
     const IS_APP_PRINT = /\/apps\/.+\/print\.html$/i.test(location.pathname);
     const IS_APP_INDEX = /\/apps\/.+\/index\.html$/i.test(location.pathname);
     const CALENDAR_CLEANUP = '<style id="ep-calendar-print-cleanup"' + (IS_APP_INDEX ? ' media="print"' : '') + '>.ep-calendar-source-box{display:none!important}</style>';
@@ -36,7 +38,10 @@
     }
 
     try {
-      const response = await fetch(CURRENT + location.pathname + location.search, { cache: 'no-store' });
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 12000);
+      const response = await fetch(CURRENT + location.pathname + location.search, { cache: 'no-store', signal: controller.signal });
+      clearTimeout(timeout);
       if (!response.ok) throw new Error('Sumber production gagal dimuat (' + response.status + ')');
       let html = await response.text();
 
@@ -103,7 +108,7 @@
       document.write(html);
       document.close();
     } catch (error) {
-      showError(error);
+      showError(error?.name === 'AbortError' ? new Error('Sumber aplikasi terlalu lama merespons. Preview dihentikan agar tidak berhenti di Memuat…') : error);
     }
   })();
   </script>
