@@ -7,7 +7,7 @@
     { "src": "/differentiation-runtime\\.js", "dest": "https://e-perangkat-online-a-afanit1w0-harryindrah3-6239s-projects.vercel.app/differentiation-runtime.js" },
     { "src": "/print-filename\\.js", "dest": "https://e-perangkat-online-a-afanit1w0-harryindrah3-6239s-projects.vercel.app/print-filename.js" },
 
-    { "src": "/calendar-year\\.js", "dest": "/calendar-year-print-fix.js" },
+    { "src": "/calendar-year\\.js", "dest": "/calendar-year-dispatch.js" },
     { "src": "/calendar-level-runtime\\.js", "dest": "https://e-perangkat-online-a-6xpm8q2nz-harryindrah3-6239s-projects.vercel.app/calendar-level-runtime.js" },
     { "src": "/calendar-source-runtime\\.js", "dest": "https://e-perangkat-online-a-6xpm8q2nz-harryindrah3-6239s-projects.vercel.app/calendar-source-runtime.js" },
 
