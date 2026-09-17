@@ -9,14 +9,10 @@
     { "src": "/differentiation-runtime\\.js", "dest": "https://e-perangkat-online-a-afanit1w0-harryindrah3-6239s-projects.vercel.app/differentiation-runtime.js" },
     { "src": "/print-filename\\.js", "dest": "https://e-perangkat-online-a-6xpm8q2nz-harryindrah3-6239s-projects.vercel.app/print-filename.js" },
 
-    { "src": "/calendar-year\\.js", "dest": "https://e-perangkat-online-a-6xpm8q2nz-harryindrah3-6239s-projects.vercel.app/calendar-year.js" },
-    { "src": "/calendar-level-runtime\\.js", "dest": "https://e-perangkat-online-a-6xpm8q2nz-harryindrah3-6239s-projects.vercel.app/calendar-level-runtime.js" },
-    { "src": "/calendar-source-runtime\\.js", "dest": "https://e-perangkat-online-a-6xpm8q2nz-harryindrah3-6239s-projects.vercel.app/calendar-source-runtime.js" },
-
     { "src": "/api/(.*)", "dest": "https://e-perangkat-online-a-fucdkqkuq-harryindrah3-6239s-projects.vercel.app/api/$1" },
 
     { "src": "/apps/(.*)/print\\.html", "dest": "https://e-perangkat-online-a-afanit1w0-harryindrah3-6239s-projects.vercel.app/apps/$1/print.html" },
-    { "src": "/apps/(.*)/index\\.html", "dest": "https://e-perangkat-online-a-3m3oesycr-harryindrah3-6239s-projects.vercel.app/apps/$1/index.html" },
+    { "src": "/apps/(.*)/index\\.html", "dest": "/index.html" },
 
     { "src": "/(.*)", "dest": "https://e-perangkat-online-a-3m3oesycr-harryindrah3-6239s-projects.vercel.app/$1" }
   ]
