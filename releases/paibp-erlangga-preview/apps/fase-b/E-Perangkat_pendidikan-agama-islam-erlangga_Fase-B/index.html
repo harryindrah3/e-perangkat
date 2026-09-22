@@ -1,0 +1,22 @@
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Memuat PAI BP Versi Erlangga Fase B…</title></head><body><div id="loader" style="font-family:Arial,sans-serif;padding:32px">Memuat PAI BP Versi Erlangga Fase B…</div><script>
+(async()=>{"use strict";
+const SOURCE_DIR="https://e-perangkat-online-a-efzg7qnbn-harryindrah3-6239s-projects.vercel.app/apps/fase-b/E-Perangkat_pendidikan-agama-islam_Fase-B";
+const PAGE="index.html";
+function abs(doc){
+ for(const n of doc.querySelectorAll("script[src]")){const v=n.getAttribute("src")||"";if(v&&!/^(?:https?:|data:|blob:)/i.test(v))n.src=new URL(v,SOURCE_DIR+"/").href}
+ for(const n of doc.querySelectorAll("link[href]")){const v=n.getAttribute("href")||"";if(v&&!/^(?:https?:|data:|blob:|#)/i.test(v))n.href=new URL(v,SOURCE_DIR+"/").href}
+ for(const n of doc.querySelectorAll("img[src],source[src]")){const v=n.getAttribute("src")||"";if(v&&!/^(?:https?:|data:|blob:)/i.test(v))n.src=new URL(v,SOURCE_DIR+"/").href}
+}
+try{
+ const r=await fetch(SOURCE_DIR+"/"+PAGE,{cache:"no-store"}); if(!r.ok) throw new Error("HTTP "+r.status);
+ const doc=new DOMParser().parseFromString(await r.text(),"text/html");
+ abs(doc);
+ const data=[...doc.querySelectorAll("script[src]")].find(s=>/\/data\.js(?:\?|$)/i.test(s.src));
+ if(data) data.src=new URL("data.js",location.href).href;
+ else {const s=doc.createElement("script");s.src=new URL("data.js",location.href).href;doc.body.insertBefore(s,doc.body.firstChild)}
+ doc.title="E-Perangkat PAI BP Versi Erlangga Fase B — CP 2026";
+ const brand=doc.querySelector(".brand span"); if(brand) brand.textContent="PAIBP Erlangga · Fase B";
+ document.open();document.write("<!doctype html>"+doc.documentElement.outerHTML);document.close();
+}catch(e){document.getElementById("loader").innerHTML="<b>Gagal memuat preview.</b><br><br>"+String(e.message||e)}
+})();
+</script></body></html>
