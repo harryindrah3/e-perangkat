@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "routes": [
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/apps/(.*)",
+      "dest": "https://e-perangkat-online-a-efzg7qnbn-harryindrah3-6239s-projects.vercel.app/apps/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
