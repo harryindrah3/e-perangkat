@@ -1,1 +1,1 @@
-DATA_VALIDATED
+AUTHORIZE https://vercel.com/oauth/device?user_code=TWXQ-NRGN
