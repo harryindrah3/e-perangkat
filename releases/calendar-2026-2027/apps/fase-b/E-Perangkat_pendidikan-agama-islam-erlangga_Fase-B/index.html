@@ -85,8 +85,8 @@ function installPrintFixes(doc){
   addScript(doc,PRINT_SAFE_PAGES_RUNTIME,"ep-print-safe-pages-loader");
 }
 function installProductionIdentity(doc){
-  doc.title=${JSON.stringify(isPrint?`Paket Cetak PAI BP Versi Erlangga Fase ${phase}`:`E-Perangkat PAI BP Versi Erlangga Fase ${phase} — CP 2026`)};
-  const brand=doc.querySelector(".brand span"); if(brand)brand.textContent="PAIBP Erlangga · Fase ${phase}";
+  doc.title="E-Perangkat PAI BP Versi Erlangga Fase B — CP 2026";
+  const brand=doc.querySelector(".brand span"); if(brand)brand.textContent="PAIBP Erlangga · Fase B";
 }
 try{
   const r=await fetch(SOURCE_DIR+"/"+PAGE,{cache:"no-store"}); if(!r.ok)throw new Error("HTTP "+r.status);
