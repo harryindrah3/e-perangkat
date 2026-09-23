@@ -1,0 +1,3 @@
+Final PAIBP Erlangga parity preview deployment
+Features synced from PAIBP umum: calendar, schedule, promes, KKTP, detailed meetings, differentiation, print runtimes, signatures/logos, isolated storage.
+Production must remain untouched.
