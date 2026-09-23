@@ -1,1 +1,1 @@
-PARITY_VALIDATED
+AUTHORIZE https://vercel.com/oauth/device?user_code=DGDK-LBKX
