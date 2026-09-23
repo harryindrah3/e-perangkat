@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Paket Cetak PAI BP Versi Erlangga Fase B</title>
+</head>
+<body>
+<div id="loader" style="font-family:Arial,sans-serif;padding:32px">Memuat PAI BP Versi Erlangga Fase B…</div>
+<script>
+(async()=>{"use strict";
+const SOURCE_DIR="https://cdn.jsdelivr.net/gh/harryindrah3/e-perangkat@a37f7c9455df07b95146acec5bdecbc22c3799e7/apps/fase-b/E-Perangkat_pendidikan-agama-islam_Fase-B";
+const PAGE="print.html";
+const STABLE_RUNTIME="https://e-perangkat-online-a-6xpm8q2nz-harryindrah3-6239s-projects.vercel.app";
+const PRINT_PARITY="https://e-perangkat-online-a-afanit1w0-harryindrah3-6239s-projects.vercel.app";
+const OLD_RUNTIME="https://e-perangkat-online-a-irysp0h7o-harryindrah3-6239s-projects.vercel.app";
+const CALENDAR_RUNTIME=location.origin+"/calendar-level-runtime.js?v=20260917-2024-1";
+const CALENDAR_YEAR_RUNTIME=location.origin+"/calendar-year.js?v=20260917-2024-1";
+const CALENDAR_SOURCE_RUNTIME=location.origin+"/calendar-source-runtime.js?v=20260917-2024-1";
+const KKTP_ORDER_RUNTIME=location.origin+"/kktp-order-runtime.js?v=20260915-9";
+const PRINT_FILENAME_RUNTIME=STABLE_RUNTIME+"/print-filename.js?v=20260911-2";
+const DIFFERENTIATION_RUNTIME=PRINT_PARITY+"/differentiation-runtime.js?v=20260915-2";
+const PRINT_SAFE_PAGES_RUNTIME=PRINT_PARITY+"/print-safe-pages.js?v=20260915-5";
+const PROMES_FIX=OLD_RUNTIME+"/promes-print-route-fix.js?v=20260909-calendar-slot-fix-4";
+const LOGO_FIX=OLD_RUNTIME+"/logo-fix.js?v=20260909-logo-assets-2";
+const GRADE_ONE_COVER=OLD_RUNTIME+"/grade-one-cover.js?v=20260909-cute-cover-1";
+const COPY_ORDER=OLD_RUNTIME+"/copy-order.js?v=20260908-restore-1";
+const SUPERVISION=OLD_RUNTIME+"/phase-c-supervision.js?v=20260908-all-af-2";
+const IS_APP_PRINT=PAGE==="print.html";
+const IS_APP_INDEX=PAGE==="index.html";
+
+function abs(doc){
+  for(const n of doc.querySelectorAll("script[src]")){
+    const v=n.getAttribute("src")||"";
+    if(v&&!/^(?:https?:|data:|blob:)/i.test(v))n.src=new URL(v,SOURCE_DIR+"/").href;
+  }
+  for(const n of doc.querySelectorAll("link[href]")){
+    const v=n.getAttribute("href")||"";
+    if(v&&!/^(?:https?:|data:|blob:|#)/i.test(v))n.href=new URL(v,SOURCE_DIR+"/").href;
+  }
+  for(const n of doc.querySelectorAll("img[src],source[src]")){
+    const v=n.getAttribute("src")||"";
+    if(v&&!/^(?:https?:|data:|blob:)/i.test(v))n.src=new URL(v,SOURCE_DIR+"/").href;
+  }
+}
+function addScript(doc,src,id){
+  if(id&&doc.getElementById(id))return;
+  const s=doc.createElement("script"); if(id)s.id=id; s.src=src; s.async=false; doc.body.appendChild(s);
+}
+function addInline(doc,code,id,first=false){
+  if(id&&doc.getElementById(id))return;
+  const s=doc.createElement("script"); if(id)s.id=id; s.textContent=code;
+  if(first)doc.body.insertBefore(s,doc.body.firstChild); else doc.body.appendChild(s);
+}
+function installStorageIsolation(doc){
+  const code="(()=>{'use strict';\nconst FROM='eperangkat.pendidikan-agama-islam.faseb.v1';\nconst TO='eperangkat.pendidikan-agama-islam-erlangga.faseb.v1';\nconst map=k=>typeof k==='string'&&k.startsWith(FROM)?TO+k.slice(FROM.length):k;\nconst proto=Storage.prototype;\nconst mark='__epErlanggaStorageB';\nif(proto[mark])return;\nObject.defineProperty(proto,mark,{value:true,configurable:true});\nconst get=proto.getItem,set=proto.setItem,remove=proto.removeItem;\nproto.getItem=function(k){return get.call(this,map(k))};\nproto.setItem=function(k,v){return set.call(this,map(k),v)};\nproto.removeItem=function(k){return remove.call(this,map(k))};\nwindow.__EP_ERLANGGA_STORAGE__={from:FROM,to:TO};\n})();";
+  addInline(doc,code,"ep-erlangga-storage-isolation",true);
+}
+function installLegacyEnhancements(doc){
+  addScript(doc,LOGO_FIX,"ep-logo-fix-loader");
+  addScript(doc,GRADE_ONE_COVER,"ep-grade-one-cover-loader");
+  addScript(doc,PROMES_FIX,"ep-promes-fix-loader");
+  addInline(doc,`(()=>{if(window.__epOrderToolsTimer)return;let checks=0;window.__epOrderToolsTimer=setInterval(()=>{const newOrder=document.getElementById('newOrder');if(newOrder&&!document.getElementById('teacherClassOrder')){const a=document.createElement('a');a.id='teacherClassOrder';a.className='button primary';a.href='/pesanan-guru-kelas';a.textContent='+ Guru Kelas';a.title='Isi identitas sekali untuk banyak mapel';newOrder.parentNode?.insertBefore(a,newOrder)}if(window.EPERANGKAT_CATALOG?.apps?.length&&window.PortalSync&&document.body&&!document.getElementById('epCopyOrderDialog')&&!document.getElementById('ep-copy-order-loader')){const s=document.createElement('script');s.id='ep-copy-order-loader';s.src=${JSON.stringify(COPY_ORDER)};document.body.appendChild(s)}if(document.getElementById('teacherClassOrder')&&document.getElementById('epCopyOrderDialog')){clearInterval(window.__epOrderToolsTimer);window.__epOrderToolsTimer=null}else if(++checks>1200){clearInterval(window.__epOrderToolsTimer);window.__epOrderToolsTimer=null}},50)})();`,"ep-order-tools-bootstrap");
+  addInline(doc,`(()=>{if(window.__epSupervisionTimer)return;let checks=0,queued=false;window.__epSupervisionTimer=setInterval(()=>{if(window.EPERANGKAT_DATA&&document.body&&!queued){queued=true;setTimeout(()=>{if(!document.getElementById('ep-supervision-runtime')){const s=document.createElement('script');s.id='ep-supervision-runtime';s.src=${JSON.stringify(SUPERVISION)};document.body.appendChild(s)}clearInterval(window.__epSupervisionTimer);window.__epSupervisionTimer=null},100)}else if(++checks>600){clearInterval(window.__epSupervisionTimer);window.__epSupervisionTimer=null}},50)})();`,"ep-supervision-bootstrap");
+}
+function installCalendarAndKktp(doc){
+  for(const script of [...doc.querySelectorAll("script[src]")]){
+    const src=script.getAttribute("src")||"";
+    if(/\/patches\/kaldik\.js/i.test(src))script.remove();
+  }
+  const style=doc.createElement("style");
+  style.id="ep-calendar-print-cleanup";
+  if(IS_APP_INDEX)style.media="print";
+  style.textContent=".ep-calendar-source-box{display:none!important}";
+  doc.head.appendChild(style);
+  addScript(doc,CALENDAR_YEAR_RUNTIME,"ep-calendar-year-loader");
+  addScript(doc,CALENDAR_RUNTIME,"ep-calendar-level-loader");
+  addScript(doc,CALENDAR_SOURCE_RUNTIME,"ep-calendar-source-loader");
+  addScript(doc,KKTP_ORDER_RUNTIME,"ep-kktp-order-loader");
+}
+function installPrintFixes(doc){
+  if(!IS_APP_PRINT)return;
+  addScript(doc,PRINT_FILENAME_RUNTIME,"ep-print-filename-loader");
+  addScript(doc,DIFFERENTIATION_RUNTIME,"ep-differentiation-loader");
+  addScript(doc,PRINT_SAFE_PAGES_RUNTIME,"ep-print-safe-pages-loader");
+}
+function installProductionIdentity(doc){
+  doc.title=${JSON.stringify(isPrint?`Paket Cetak PAI BP Versi Erlangga Fase ${phase}`:`E-Perangkat PAI BP Versi Erlangga Fase ${phase} — CP 2026`)};
+  const brand=doc.querySelector(".brand span"); if(brand)brand.textContent="PAIBP Erlangga · Fase ${phase}";
+}
+try{
+  const r=await fetch(SOURCE_DIR+"/"+PAGE,{cache:"no-store"}); if(!r.ok)throw new Error("HTTP "+r.status);
+  const doc=new DOMParser().parseFromString(await r.text(),"text/html");
+  abs(doc);
+  const data=[...doc.querySelectorAll("script[src]")].find(s=>/\/data\.js(?:\?|$)/i.test(s.src));
+  if(data)data.src=new URL("data.js",location.href).href;
+  else{const s=doc.createElement("script");s.src=new URL("data.js",location.href).href;doc.body.insertBefore(s,doc.body.firstChild)}
+  installStorageIsolation(doc);
+  installLegacyEnhancements(doc);
+  installCalendarAndKktp(doc);
+  installPrintFixes(doc);
+  installProductionIdentity(doc);
+  document.open();document.write("<!doctype html>"+doc.documentElement.outerHTML);document.close();
+}catch(e){
+  document.getElementById("loader").innerHTML="<b>Gagal memuat preview.</b><br><br>"+String(e.message||e);
+}
+})();
+</script>
+</body>
+</html>
