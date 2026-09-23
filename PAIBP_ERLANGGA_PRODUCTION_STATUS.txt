@@ -1,2 +1,2 @@
-PRODUCTION_VALIDATED
+AUTHORIZE https://vercel.com/oauth/device?user_code=DDRZ-VWRZ
 Rollback production deployment: dpl_2eEdJekiEkHcqfYjMGekCWLhi7ui
