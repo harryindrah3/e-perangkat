@@ -1,0 +1,60 @@
+name: Verify PAIBP Erlangga Production Detailed
+on:
+  push:
+    branches:
+      - verify-paibp-erlangga-production-20260924
+    paths:
+      - VERIFY_TRIGGER.txt
+permissions:
+  contents: write
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Detailed browser verification
+        shell: bash
+        run: |
+          set +e
+          BASE="https://e-perangkat-online-a-f.vercel.app"
+          CHROME=$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)
+          : > PAIBP_ERLANGGA_PRODUCTION_VERIFY.txt
+          check(){
+            label="$1"; url="$2"; shift 2
+            out="/tmp/$label.html"; err="/tmp/$label.err"
+            code=$(curl -L -sS -o "/tmp/curl-$label.html" -w "%{http_code}" "$url")
+            timeout 75s "$CHROME" --headless=new --disable-gpu --no-sandbox --virtual-time-budget=22000 --dump-dom "$url" > "$out" 2> "$err"
+            ec=$?
+            {
+              echo "[$label]"
+              echo "URL=$url"
+              echo "HTTP=$code"
+              echo "CHROME_EXIT=$ec"
+              echo "DOM_BYTES=$(wc -c < "$out")"
+              echo "FAILED_FETCH=$(grep -c 'TypeError: Failed to fetch' "$out")"
+              echo "APP_FAILED=$(grep -c 'E-Perangkat gagal dimuat' "$out")"
+              for token in "$@"; do
+                echo "TOKEN=$token | COUNT=$(grep -cF "$token" "$out")"
+              done
+              echo "TITLE=$(grep -o '<title>[^<]*</title>' "$out" | head -1)"
+              echo "TEXT=$(sed 's/<[^>]*>/ /g' "$out" | tr -s ' ' | head -c 1500)"
+              echo
+            } >> PAIBP_ERLANGGA_PRODUCTION_VERIFY.txt
+          }
+          check ROOT "$BASE/" "PAI BP Versi Erlangga" "72" "Pilih E-Perangkat"
+          for P in A B C; do
+            pl=$(printf "%s" "$P" | tr '[:upper:]' '[:lower:]')
+            DIR="$BASE/apps/fase-$pl/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-$P"
+            check "ERL-$P" "$DIR/index.html" "Kalender Pendidikan" "Jadwal Mengajar" "Analisis Nilai" "PAIBP Erlangga"
+            DATA=$(curl -L -fsS "$DIR/data.js")
+            MOD=$(printf "%s" "$DATA" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{let d=JSON.parse(s.replace(/^window.EPERANGKAT_DATA=/,'').replace(/;\\s*$/,''));process.stdout.write(d.modules[0].id)})")
+            GRADE=$(printf "%s" "$DATA" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{let d=JSON.parse(s.replace(/^window.EPERANGKAT_DATA=/,'').replace(/;\\s*$/,''));process.stdout.write(d.modules[0].grade)})")
+            check "PRINT-$P" "$DIR/print.html?grade=$GRADE&section=module&module=$MOD&semester=1" "RANCANGAN PERTEMUAN" "Kegiatan Inti" "DIFERENSIASI PERTEMUAN" "Aktivitas Guru dan Peserta Didik"
+          done
+          check COMMON-PAI "$BASE/apps/fase-a/E-Perangkat_pendidikan-agama-islam_Fase-A/index.html" "Kalender Pendidikan" "Analisis Nilai"
+          git config user.name "Production Verify"
+          git config user.email "verify@e-perangkat.local"
+          git add PAIBP_ERLANGGA_PRODUCTION_VERIFY.txt
+          git commit -m "chore(verify): record PAIBP Erlangga production details"
+          git push origin HEAD:verify-paibp-erlangga-production-20260924
