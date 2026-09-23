@@ -1,0 +1,71 @@
+name: Audit Generator PDF Routing
+on:
+  push:
+    branches:
+      - audit/generator-pdf-routing-20260924
+    paths:
+      - AUDIT_TRIGGER.txt
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Probe routes without changing production
+        shell: bash
+        run: |
+          set +e
+          : > GENERATOR_PDF_ROUTE_AUDIT.txt
+          probe_get(){
+            label="$1"; url="$2"
+            curl -L -sS -D "/tmp/$label.h" -o "/tmp/$label.b" --max-time 30 "$url"
+            ec=$?
+            status=$(awk 'toupper($1) ~ /^HTTP\// {s=$2} END{print s}' "/tmp/$label.h")
+            ctype=$(grep -i '^content-type:' "/tmp/$label.h" | tail -1 | tr -d '\r')
+            {
+              echo "[$label GET]"
+              echo "URL=$url"
+              echo "EXIT=$ec"
+              echo "STATUS=$status"
+              echo "$ctype"
+              echo "BODY_HEAD=$(head -c 500 "/tmp/$label.b" | tr '\n' ' ')"
+              echo
+            } >> GENERATOR_PDF_ROUTE_AUDIT.txt
+          }
+          probe_post(){
+            label="$1"; url="$2"
+            curl -L -sS -D "/tmp/$label-post.h" -o "/tmp/$label-post.b" --max-time 45 -X POST               -H 'Content-Type: application/json'               -H 'Accept: application/pdf, application/json'               --data '{}' "$url"
+            ec=$?
+            status=$(awk 'toupper($1) ~ /^HTTP\// {s=$2} END{print s}' "/tmp/$label-post.h")
+            ctype=$(grep -i '^content-type:' "/tmp/$label-post.h" | tail -1 | tr -d '\r')
+            disp=$(grep -i '^content-disposition:' "/tmp/$label-post.h" | tail -1 | tr -d '\r')
+            {
+              echo "[$label POST]"
+              echo "URL=$url"
+              echo "EXIT=$ec"
+              echo "STATUS=$status"
+              echo "$ctype"
+              echo "$disp"
+              echo "BYTES=$(wc -c < "/tmp/$label-post.b")"
+              echo "BODY_HEAD=$(head -c 500 "/tmp/$label-post.b" | tr '\n' ' ')"
+              echo
+            } >> GENERATOR_PDF_ROUTE_AUDIT.txt
+          }
+          MAIN="https://e-perangkat-online-a-f.vercel.app"
+          FUC="https://e-perangkat-online-a-fucdkqkuq-harryindrah3-6239s-projects.vercel.app"
+          PDFUP="https://e-perangkat-online-a-oi4bquaqk-harryindrah3-6239s-projects.vercel.app"
+          PRINT="$MAIN/apps/fase-b/E-Perangkat_ipas_Fase-B/print.html"
+          probe_get MAIN_PRINT "$PRINT"
+          probe_get MAIN_PDF "$MAIN/api/pdf"
+          probe_get FUC_PDF "$FUC/api/pdf"
+          probe_get UPSTREAM_PDF "$PDFUP/api/pdf"
+          probe_post MAIN_PDF "$MAIN/api/pdf"
+          probe_post FUC_PDF "$FUC/api/pdf"
+          probe_post UPSTREAM_PDF "$PDFUP/api/pdf"
+          git config user.name "Generator PDF Audit"
+          git config user.email "audit@e-perangkat.local"
+          git add GENERATOR_PDF_ROUTE_AUDIT.txt
+          git commit -m "chore(audit): record generator PDF routing probes"
+          git push origin HEAD:audit/generator-pdf-routing-20260924
