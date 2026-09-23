@@ -1,0 +1,169 @@
+name: Deploy PAIBP Erlangga Production
+on:
+  push:
+    branches:
+      - release/paibp-erlangga-production-20260924
+    paths:
+      - releases/calendar-2026-2027/PAIBP_ERLANGGA_PRODUCTION_DEPLOY_TRIGGER.txt
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      STATUS_BRANCH: paibp-erlangga-production-status-20260924
+      TEAM_ID: team_i5YnQIDbBKi8FgTPI0YD6uOu
+      PROJECT_ID: prj_KwCEjkE1OFX3CgBeBEenQcgX3P45
+      TEAM_SLUG: harryindrah3-6239s-projects
+      MAIN_DOMAIN: https://e-perangkat-online-a-f.vercel.app
+      ROLLBACK_DEPLOYMENT: dpl_2eEdJekiEkHcqfYjMGekCWLhi7ui
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: release/paibp-erlangga-production-20260924
+          fetch-depth: 0
+
+      - name: Prepare status channel
+        shell: bash
+        run: |
+          set -e
+          git config user.name "PAIBP Erlangga Production"
+          git config user.email "production@e-perangkat.local"
+          git fetch origin "$STATUS_BRANCH:$STATUS_BRANCH"
+          git worktree add /tmp/prod-status "$STATUS_BRANCH"
+          cat > /tmp/update-prod-status.sh <<'EOS'
+          #!/usr/bin/env bash
+          set -e
+          msg="$1"
+          cd /tmp/prod-status
+          {
+            printf "%s\n" "$msg"
+            printf "Rollback production deployment: %s\n" "$ROLLBACK_DEPLOYMENT"
+          } > PAIBP_ERLANGGA_PRODUCTION_STATUS.txt
+          git add PAIBP_ERLANGGA_PRODUCTION_STATUS.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(production-status): update PAIBP Erlangga production status"
+            git push origin HEAD:"$STATUS_BRANCH"
+          fi
+          EOS
+          chmod +x /tmp/update-prod-status.sh
+          /tmp/update-prod-status.sh "PREPARING_PRODUCTION_VALIDATION"
+
+      - name: Validate release before production
+        shell: bash
+        run: |
+          set -e
+          node <<'NODE'
+          const fs=require('fs');
+          const root='releases/calendar-2026-2027';
+          const expected={A:20,B:22,C:20};
+          const grades={A:['I','II'],B:['III','IV'],C:['V','VI']};
+          const main=fs.readFileSync(root+'/index.html','utf8');
+          if(!main.includes('installErlanggaPortal')) throw new Error('Main portal Erlangga injection missing');
+          const cat=fs.readFileSync(root+'/catalog-erlangga.js','utf8');
+          for(const p of ['fase-a-pai-bp-erlangga','fase-b-pai-bp-erlangga','fase-c-pai-bp-erlangga']) if(!cat.includes(p)) throw new Error('Catalog entry missing '+p);
+          for(const P of ['A','B','C']){
+            const dir=`${root}/apps/fase-${P.toLowerCase()}/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-${P}`;
+            const raw=fs.readFileSync(dir+'/data.js','utf8').replace(/^window\.EPERANGKAT_DATA=/,'').replace(/;\s*$/,'');
+            const d=JSON.parse(raw);
+            if(d.modules.length!==expected[P]) throw new Error('Module count mismatch Fase '+P);
+            const got=[...new Set(d.modules.map(m=>m.grade))];
+            if(JSON.stringify(got)!==JSON.stringify(grades[P])) throw new Error('Grade mismatch Fase '+P);
+            if(!d.modules.every(m=>m.subchapters?.length&&m.meetings?.length&&m.assessment?.length&&m.framework?.length&&m.deep)) throw new Error('Incomplete module Fase '+P);
+            for(const page of ['index.html','print.html']){
+              const h=fs.readFileSync(dir+'/'+page,'utf8');
+              for(const token of ['calendar-year.js','calendar-level-runtime.js','calendar-source-runtime.js','kktp-order-runtime.js','phase-c-supervision.js','promes-print-route-fix.js','ep-erlangga-storage-isolation']){
+                if(!h.includes(token)) throw new Error(page+' missing '+token+' Fase '+P);
+              }
+              if(h.includes('PREVIEW · PAI BP ERLANGGA')) throw new Error('Preview badge remains in production '+P+'/'+page);
+            }
+          }
+          console.log('Production release validation PASS');
+          NODE
+          /tmp/update-prod-status.sh "PRODUCTION_VALIDATED"
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Authenticate Vercel
+        shell: bash
+        run: |
+          set -e
+          vercel login --github > /tmp/vercel-login.log 2>&1 &
+          PID=$!
+          LOGIN_URL=""
+          for i in $(seq 1 120); do
+            LOGIN_URL=$(grep -Eo 'https://vercel.com/oauth/device\?user_code=[A-Z0-9-]+' /tmp/vercel-login.log | tail -1 || true)
+            if [ -n "$LOGIN_URL" ]; then break; fi
+            if ! kill -0 "$PID" 2>/dev/null; then break; fi
+            sleep 2
+          done
+          if [ -z "$LOGIN_URL" ]; then
+            cat /tmp/vercel-login.log
+            /tmp/update-prod-status.sh "LOGIN_URL_NOT_FOUND"
+            exit 1
+          fi
+          /tmp/update-prod-status.sh "AUTHORIZE $LOGIN_URL"
+          wait "$PID"
+          vercel whoami
+          /tmp/update-prod-status.sh "AUTHENTICATED"
+
+      - name: Deploy to exact production project
+        shell: bash
+        run: |
+          set -e
+          mkdir -p releases/calendar-2026-2027/.vercel
+          cat > releases/calendar-2026-2027/.vercel/project.json <<EOF
+          {"orgId":"$TEAM_ID","projectId":"$PROJECT_ID"}
+          EOF
+          /tmp/update-prod-status.sh "DEPLOYING_PRODUCTION"
+          DEPLOY_URL=$(vercel deploy --prod --yes --scope "$TEAM_SLUG" --cwd releases/calendar-2026-2027 2>&1 | tee /tmp/deploy.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
+          if [ -z "$DEPLOY_URL" ]; then
+            cat /tmp/deploy.log
+            /tmp/update-prod-status.sh "DEPLOY_FAILED"
+            exit 1
+          fi
+          echo "DEPLOY_URL=$DEPLOY_URL" >> "$GITHUB_ENV"
+          /tmp/update-prod-status.sh "DEPLOYED $DEPLOY_URL"
+
+      - name: Verify production root, Erlangga A-C, and existing PAIBP
+        shell: bash
+        run: |
+          set -e
+          sleep 12
+          CHROME=$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)
+          test -n "$CHROME"
+
+          timeout 70s "$CHROME" --headless=new --disable-gpu --no-sandbox --virtual-time-budget=18000 --dump-dom "$MAIN_DOMAIN/" > /tmp/root.html 2>/tmp/root.err
+          grep -q "PAI BP Versi Erlangga" /tmp/root.html
+          grep -q ">72<\|72" /tmp/root.html
+          ! grep -q "TypeError: Failed to fetch" /tmp/root.html
+
+          for P in A B C; do
+            pl=$(printf "%s" "$P" | tr '[:upper:]' '[:lower:]')
+            DIR="$MAIN_DOMAIN/apps/fase-$pl/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-$P"
+            timeout 70s "$CHROME" --headless=new --disable-gpu --no-sandbox --virtual-time-budget=18000 --dump-dom "$DIR/index.html" > "/tmp/erl-$P.html" 2>"/tmp/erl-$P.err"
+            grep -q "Kalender Pendidikan" "/tmp/erl-$P.html"
+            grep -q "Jadwal Mengajar" "/tmp/erl-$P.html"
+            grep -q "Analisis Nilai" "/tmp/erl-$P.html"
+            grep -q "PAIBP Erlangga" "/tmp/erl-$P.html"
+            ! grep -q "TypeError: Failed to fetch" "/tmp/erl-$P.html"
+
+            DATA=$(curl -L -fsS "$DIR/data.js")
+            MOD=$(printf "%s" "$DATA" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{let d=JSON.parse(s.replace(/^window.EPERANGKAT_DATA=/,'').replace(/;\\s*$/,''));process.stdout.write(d.modules[0].id)})")
+            GRADE=$(printf "%s" "$DATA" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{let d=JSON.parse(s.replace(/^window.EPERANGKAT_DATA=/,'').replace(/;\\s*$/,''));process.stdout.write(d.modules[0].grade)})")
+            timeout 80s "$CHROME" --headless=new --disable-gpu --no-sandbox --virtual-time-budget=22000 --dump-dom "$DIR/print.html?grade=$GRADE&section=module&module=$MOD&semester=1" > "/tmp/print-$P.html" 2>"/tmp/print-$P.err"
+            grep -q "RANCANGAN PERTEMUAN" "/tmp/print-$P.html"
+            grep -q "Kegiatan Inti" "/tmp/print-$P.html"
+            grep -q "DIFERENSIASI PERTEMUAN" "/tmp/print-$P.html"
+            grep -q "Aktivitas Guru dan Peserta Didik" "/tmp/print-$P.html"
+            ! grep -q "TypeError: Failed to fetch" "/tmp/print-$P.html"
+          done
+
+          timeout 70s "$CHROME" --headless=new --disable-gpu --no-sandbox --virtual-time-budget=18000 --dump-dom "$MAIN_DOMAIN/apps/fase-a/E-Perangkat_pendidikan-agama-islam_Fase-A/index.html" > /tmp/common-pai.html 2>/tmp/common-pai.err
+          grep -q "Kalender Pendidikan" /tmp/common-pai.html
+          grep -q "Analisis Nilai" /tmp/common-pai.html
+          ! grep -q "TypeError: Failed to fetch" /tmp/common-pai.html
+
+          /tmp/update-prod-status.sh "VERIFIED_OK $DEPLOY_URL"
