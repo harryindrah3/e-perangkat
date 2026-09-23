@@ -1,0 +1,128 @@
+name: Deploy production source recovery
+on:
+  push:
+    branches:
+      - recovery-source-tool
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      STATUS_BRANCH: vercel-auth-status-20260923
+      HOTFIX_BRANCH: hotfix/production-source-recovery-20260923
+      TEAM_ID: team_i5YnQIDbBKi8FgTPI0YD6uOu
+      PROJECT_ID: prj_KwCEjkE1OFX3CgBeBEenQcgX3P45
+      TEAM_SLUG: harryindrah3-6239s-projects
+      SOURCE_CDN: https://cdn.jsdelivr.net/gh/harryindrah3/e-perangkat@a37f7c9455df07b95146acec5bdecbc22c3799e7
+    steps:
+      - name: Checkout production hotfix
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.HOTFIX_BRANCH }}
+          fetch-depth: 0
+
+      - name: Prepare status channel
+        shell: bash
+        run: |
+          git config user.name "E-Perangkat Recovery"
+          git config user.email "recovery@e-perangkat.local"
+          git fetch origin "$STATUS_BRANCH:$STATUS_BRANCH"
+          git worktree add /tmp/vercel-status "$STATUS_BRANCH"
+          cat > /tmp/update-status.sh <<'EOS'
+          #!/usr/bin/env bash
+          set -e
+          msg="$1"
+          cd /tmp/vercel-status
+          printf "%s\n" "$msg" > VERCEL_RECOVERY_STATUS.txt
+          git add VERCEL_RECOVERY_STATUS.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(recovery-status): update Vercel recovery status"
+            git push origin HEAD:"$STATUS_BRANCH"
+          fi
+          EOS
+          chmod +x /tmp/update-status.sh
+          /tmp/update-status.sh "PREPARING_LOGIN"
+
+      - name: Verify recovered immutable source
+        shell: bash
+        run: |
+          set -e
+          curl --fail --silent --show-error --location "$SOURCE_CDN/index.html" -o /tmp/recovered-index.html
+          curl --fail --silent --show-error --location "$SOURCE_CDN/apps/fase-c/E-Perangkat_bahasa-indonesia_Fase-C/index.html" -o /tmp/recovered-app.html
+          grep -q "Pilih E-Perangkat" /tmp/recovered-index.html
+          grep -q "Capaian Pembelajaran" /tmp/recovered-app.html
+          /tmp/update-status.sh "SOURCE_VERIFIED"
+
+      - name: Install Vercel CLI
+        shell: bash
+        run: |
+          npm install --global vercel@latest
+          vercel --version
+
+      - name: Authenticate Vercel interactively
+        shell: bash
+        run: |
+          set -e
+          rm -f /tmp/vercel-login.log
+          vercel login --github > /tmp/vercel-login.log 2>&1 &
+          LOGIN_PID=$!
+          LOGIN_URL=""
+          for i in $(seq 1 90); do
+            LOGIN_URL=$(grep -Eo 'https://vercel.com/oauth/device\?user_code=[A-Z0-9-]+' /tmp/vercel-login.log | tail -1 || true)
+            if [ -n "$LOGIN_URL" ]; then break; fi
+            if ! kill -0 "$LOGIN_PID" 2>/dev/null; then break; fi
+            sleep 2
+          done
+          if [ -z "$LOGIN_URL" ]; then
+            cat /tmp/vercel-login.log
+            /tmp/update-status.sh "LOGIN_URL_NOT_FOUND"
+            exit 1
+          fi
+          /tmp/update-status.sh "AUTHORIZE $LOGIN_URL"
+          wait "$LOGIN_PID"
+          vercel whoami
+          /tmp/update-status.sh "AUTHENTICATED"
+
+      - name: Link exact production project
+        shell: bash
+        run: |
+          mkdir -p releases/calendar-2026-2027/.vercel
+          cat > releases/calendar-2026-2027/.vercel/project.json <<EOF
+          {"orgId":"$TEAM_ID","projectId":"$PROJECT_ID"}
+          EOF
+          grep -q "$SOURCE_CDN" releases/calendar-2026-2027/index.html
+
+      - name: Deploy source-only hotfix to production
+        shell: bash
+        run: |
+          set -e
+          /tmp/update-status.sh "DEPLOYING"
+          DEPLOY_URL=$(vercel deploy --prod --yes --scope "$TEAM_SLUG" --cwd releases/calendar-2026-2027 2>&1 | tee /tmp/vercel-deploy.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
+          if [ -z "$DEPLOY_URL" ]; then
+            cat /tmp/vercel-deploy.log
+            /tmp/update-status.sh "DEPLOY_FAILED"
+            exit 1
+          fi
+          /tmp/update-status.sh "DEPLOYED $DEPLOY_URL"
+
+      - name: Verify main domain in headless Chrome
+        shell: bash
+        run: |
+          set -e
+          sleep 12
+          curl --fail --silent --show-error https://e-perangkat-online-a-f.vercel.app/ -o /tmp/main-shell.html
+          grep -q "$SOURCE_CDN" /tmp/main-shell.html
+          CHROME=$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)
+          if [ -z "$CHROME" ]; then
+            /tmp/update-status.sh "DEPLOYED_SHELL_VERIFIED_BROWSER_NOT_AVAILABLE"
+            exit 0
+          fi
+          timeout 60s "$CHROME" --headless=new --disable-gpu --no-sandbox --virtual-time-budget=12000 --dump-dom https://e-perangkat-online-a-f.vercel.app/ > /tmp/main-dom.html 2>/tmp/chrome-main.err
+          ! grep -q "TypeError: Failed to fetch" /tmp/main-dom.html
+          grep -q "Pilih E-Perangkat" /tmp/main-dom.html
+          timeout 60s "$CHROME" --headless=new --disable-gpu --no-sandbox --virtual-time-budget=12000 --dump-dom https://e-perangkat-online-a-f.vercel.app/apps/fase-c/E-Perangkat_bahasa-indonesia_Fase-C/index.html > /tmp/app-dom.html 2>/tmp/chrome-app.err
+          ! grep -q "TypeError: Failed to fetch" /tmp/app-dom.html
+          grep -q "Capaian Pembelajaran" /tmp/app-dom.html
+          /tmp/update-status.sh "VERIFIED_OK"
