@@ -1,0 +1,164 @@
+name: Deploy PAIBP Erlangga Parity Preview
+on:
+  push:
+    branches:
+      - preview/paibp-erlangga-20260922
+    paths:
+      - releases/paibp-erlangga-preview/FINAL_PARITY_DEPLOY_TRIGGER.txt
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    env:
+      STATUS_BRANCH: paibp-erlangga-parity-status-20260924
+      TEAM_ID: team_i5YnQIDbBKi8FgTPI0YD6uOu
+      PROJECT_ID: prj_KwCEjkE1OFX3CgBeBEenQcgX3P45
+      TEAM_SLUG: harryindrah3-6239s-projects
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: preview/paibp-erlangga-20260922
+          fetch-depth: 0
+
+      - name: Prepare isolated status channel
+        shell: bash
+        run: |
+          set -e
+          git config user.name "PAIBP Erlangga Parity Preview"
+          git config user.email "preview@e-perangkat.local"
+          git fetch origin "$STATUS_BRANCH:$STATUS_BRANCH"
+          git worktree add /tmp/parity-status "$STATUS_BRANCH"
+          cat > /tmp/update-parity-status.sh <<'EOS'
+          #!/usr/bin/env bash
+          set -e
+          msg="$1"
+          cd /tmp/parity-status
+          printf "%s\n" "$msg" > PAIBP_ERLANGGA_PARITY_STATUS.txt
+          git add PAIBP_ERLANGGA_PARITY_STATUS.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(parity-status): update PAIBP Erlangga preview status"
+            git push origin HEAD:"$STATUS_BRANCH"
+          fi
+          EOS
+          chmod +x /tmp/update-parity-status.sh
+          /tmp/update-parity-status.sh "PREPARING_PARITY_VALIDATION"
+
+      - name: Validate PAIBP common feature parity
+        shell: bash
+        run: |
+          set -e
+          node releases/paibp-erlangga-preview/parity-check.js
+          node <<'NODE'
+          const fs=require('fs');
+          const root='releases/paibp-erlangga-preview';
+          const phases=['A','B','C'];
+          const expected={A:{grades:['I','II'],count:20},B:{grades:['III','IV'],count:22},C:{grades:['V','VI'],count:20}};
+          for(const phase of phases){
+            const dir=`${root}/apps/fase-${phase.toLowerCase()}/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-${phase}`;
+            const raw=fs.readFileSync(dir+'/data.js','utf8').replace(/^window\.EPERANGKAT_DATA=/,'').replace(/;\s*$/,'');
+            const d=JSON.parse(raw);
+            const grades=[...new Set(d.modules.map(m=>m.grade))];
+            if(JSON.stringify(grades)!==JSON.stringify(expected[phase].grades))throw new Error('Grade mismatch Fase '+phase);
+            if(d.modules.length!==expected[phase].count)throw new Error('Module count mismatch Fase '+phase);
+            if(!d.modules.every(m=>m.subchapters?.length&&m.meetings?.length&&m.assessment?.length&&m.framework?.length&&m.deep))throw new Error('Incomplete Erlangga module Fase '+phase);
+            const index=fs.readFileSync(dir+'/index.html','utf8');
+            const print=fs.readFileSync(dir+'/print.html','utf8');
+            for(const token of ['phase-c-supervision.js','calendar-year.js','calendar-level-runtime.js','calendar-source-runtime.js','kktp-order-runtime.js','promes-print-route-fix.js','ep-erlangga-storage-isolation']){
+              if(!index.includes(token))throw new Error('Index missing '+token+' Fase '+phase);
+              if(!print.includes(token))throw new Error('Print missing '+token+' Fase '+phase);
+            }
+            for(const token of ['print-filename.js','differentiation-runtime.js','print-safe-pages.js']){
+              if(!print.includes(token))throw new Error('Print missing '+token+' Fase '+phase);
+            }
+          }
+          console.log('PAIBP umum → Erlangga parity structure PASS');
+          NODE
+          /tmp/update-parity-status.sh "PARITY_VALIDATED"
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Authenticate Vercel for preview only
+        shell: bash
+        run: |
+          set -e
+          vercel login --github > /tmp/vercel-login.log 2>&1 &
+          PID=$!
+          LOGIN_URL=""
+          for i in $(seq 1 120); do
+            LOGIN_URL=$(grep -Eo 'https://vercel.com/oauth/device\?user_code=[A-Z0-9-]+' /tmp/vercel-login.log | tail -1 || true)
+            if [ -n "$LOGIN_URL" ]; then break; fi
+            if ! kill -0 "$PID" 2>/dev/null; then break; fi
+            sleep 2
+          done
+          if [ -z "$LOGIN_URL" ]; then
+            cat /tmp/vercel-login.log
+            /tmp/update-parity-status.sh "LOGIN_URL_NOT_FOUND"
+            exit 1
+          fi
+          /tmp/update-parity-status.sh "AUTHORIZE $LOGIN_URL"
+          wait "$PID"
+          vercel whoami
+          /tmp/update-parity-status.sh "AUTHENTICATED"
+
+      - name: Deploy target Preview only
+        shell: bash
+        run: |
+          set -e
+          mkdir -p releases/paibp-erlangga-preview/.vercel
+          cat > releases/paibp-erlangga-preview/.vercel/project.json <<EOF
+          {"orgId":"$TEAM_ID","projectId":"$PROJECT_ID"}
+          EOF
+          /tmp/update-parity-status.sh "DEPLOYING_PREVIEW"
+          DEPLOY_URL=$(vercel deploy --yes --scope "$TEAM_SLUG" --cwd releases/paibp-erlangga-preview 2>&1 | tee /tmp/deploy.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
+          if [ -z "$DEPLOY_URL" ]; then
+            cat /tmp/deploy.log
+            /tmp/update-parity-status.sh "DEPLOY_FAILED"
+            exit 1
+          fi
+          echo "DEPLOY_URL=$DEPLOY_URL" >> "$GITHUB_ENV"
+          /tmp/update-parity-status.sh "DEPLOYED $DEPLOY_URL"
+
+      - name: Verify UI features and detailed meetings
+        shell: bash
+        run: |
+          set -e
+          sleep 10
+          CHROME=$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)
+          test -n "$CHROME"
+
+          timeout 60s "$CHROME" --headless=new --disable-gpu --no-sandbox --virtual-time-budget=15000 --dump-dom "$DEPLOY_URL/" > /tmp/root.html 2>/tmp/root.err
+          grep -q "PAI BP Versi Erlangga" /tmp/root.html
+          ! grep -q "TypeError: Failed to fetch" /tmp/root.html
+
+          for P in A B C; do
+            pl=$(printf "%s" "$P" | tr '[:upper:]' '[:lower:]')
+            DIR="$DEPLOY_URL/apps/fase-$pl/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-$P"
+            timeout 60s "$CHROME" --headless=new --disable-gpu --no-sandbox --virtual-time-budget=18000 --dump-dom "$DIR/index.html" > "/tmp/index-$P.html" 2>"/tmp/index-$P.err"
+            grep -q "Kalender Pendidikan" "/tmp/index-$P.html"
+            grep -q "Jadwal Mengajar" "/tmp/index-$P.html"
+            grep -q "Analisis Nilai" "/tmp/index-$P.html"
+            grep -q "Pesanan &amp; Riwayat\|Pesanan & Riwayat" "/tmp/index-$P.html"
+            grep -q "ep-calendar-year-loader" "/tmp/index-$P.html"
+            grep -q "ep-calendar-level-loader" "/tmp/index-$P.html"
+            grep -q "ep-kktp-order-loader" "/tmp/index-$P.html"
+            grep -q "ep-supervision-runtime" "/tmp/index-$P.html"
+            ! grep -q "TypeError: Failed to fetch" "/tmp/index-$P.html"
+
+            DATA=$(curl -L -fsS "$DIR/data.js")
+            MOD=$(printf "%s" "$DATA" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{let d=JSON.parse(s.replace(/^window.EPERANGKAT_DATA=/,'').replace(/;\\s*$/,''));process.stdout.write(d.modules[0].id)})")
+            GRADE=$(printf "%s" "$DATA" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{let d=JSON.parse(s.replace(/^window.EPERANGKAT_DATA=/,'').replace(/;\\s*$/,''));process.stdout.write(d.modules[0].grade)})")
+            PRINT_URL="$DIR/print.html?grade=$GRADE&section=module&module=$MOD&semester=1"
+            timeout 75s "$CHROME" --headless=new --disable-gpu --no-sandbox --virtual-time-budget=22000 --dump-dom "$PRINT_URL" > "/tmp/print-$P.html" 2>"/tmp/print-$P.err"
+            grep -q "RANCANGAN PERTEMUAN" "/tmp/print-$P.html"
+            grep -q "Kegiatan Inti" "/tmp/print-$P.html"
+            grep -q "Tujuan:" "/tmp/print-$P.html"
+            grep -q "DIFERENSIASI PERTEMUAN" "/tmp/print-$P.html"
+            grep -q "Aktivitas Guru dan Peserta Didik" "/tmp/print-$P.html"
+            grep -q "ep-print-safe-page-style\|ep-print-safe-pages-loader" "/tmp/print-$P.html"
+            ! grep -q "TypeError: Failed to fetch" "/tmp/print-$P.html"
+          done
+
+          /tmp/update-parity-status.sh "VERIFIED_OK $DEPLOY_URL"
