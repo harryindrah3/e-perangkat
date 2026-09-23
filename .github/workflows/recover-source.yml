@@ -1,0 +1,30 @@
+name: Recover backed-up E-Perangkat source
+on:
+  push:
+    branches:
+      - recovery-source-tool
+permissions:
+  contents: write
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Reassemble verified bundle
+        shell: bash
+        run: |
+          cat backups/e-perangkat-source-2026-09-11.bundle.part-* > /tmp/e-perangkat-source.bundle
+          echo "3fbc5936318cf413e720ca1e720d94ff581cfd79e96e1f3057b8e43e06e61a32  /tmp/e-perangkat-source.bundle" | sha256sum -c -
+      - name: Recover source branch
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          rm -rf /tmp/e-perangkat-restored
+          git clone /tmp/e-perangkat-source.bundle /tmp/e-perangkat-restored
+          cd /tmp/e-perangkat-restored
+          test "$(git rev-parse HEAD)" = "9b4157c339b228e3ab0c7eb5f17ff294938e38f5"
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push origin HEAD:refs/heads/recovered-source-20260911 --force
