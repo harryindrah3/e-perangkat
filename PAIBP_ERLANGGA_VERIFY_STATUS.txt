@@ -1,0 +1,48 @@
+[ROOT]
+URL=https://e-perangkat-online-a-cwnogmex0-harryindrah3-6239s-projects.vercel.app/
+HTTP=200
+CHROME_EXIT=0
+DOM_BYTES=66424
+FAILED_FETCH=0
+EXPECT1_COUNT=2
+EXPECT2_COUNT=0
+TITLE=<title>Preview E-Perangkat · PAI BP Versi Erlangga</title>
+ERROR_TAIL=[2026:2026:0923/220803.106735:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type:  [2026:2048:0923/220803.106807:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix") [2026:2026:0923/220803.202394:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path=
+DOM_HEAD=<!DOCTYPE html> <html lang="id"><head>   <meta charset="utf-8">   <meta name="viewport" content="width=device-width,initial-scale=1">   <meta name="theme-color" content="#123f3a">   <title>Preview E-Perangkat · PAI BP Versi Erlangga</title>   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/harryindrah3/e-perangkat@a37f7c9455df07b95146acec5bdecbc22c3799e7/portal.css"> </head> <body> <div class="portal-shell">   <header class="topbar">     <a class="brand" href="#catalog" data-route="catalog">       <span class="brand-mark">EP</span>       <span><b>E-Perangkat</b><small>Perangkat Ajar A–F</small></span>     </a>     <button class="mobile-menu" id="mobileMenu" type="button">☰</button>     <nav class="topnav">       <button class="nav-button active" data-view="catalog" type="butt
+
+[A]
+URL=https://e-perangkat-online-a-cwnogmex0-harryindrah3-6239s-projects.vercel.app/apps/fase-a/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-A/index.html
+HTTP=200
+CHROME_EXIT=0
+DOM_BYTES=13156
+FAILED_FETCH=0
+EXPECT1_COUNT=1
+EXPECT2_COUNT=0
+TITLE=<title>E-Perangkat PAI BP Versi Erlangga Fase A — CP 2026</title>
+ERROR_TAIL=[2226:2226:0923/220806.345639:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type:  [2226:2247:0923/220806.345847:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix") [2226:2226:0923/220806.361397:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path=
+DOM_HEAD=<!DOCTYPE html> <html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"> <meta name="theme-color" content="#7A1F3D"><title>E-Perangkat PAI BP Versi Erlangga Fase A — CP 2026</title> <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/harryindrah3/e-perangkat@a37f7c9455df07b95146acec5bdecbc22c3799e7/apps/fase-a/E-Perangkat_pendidikan-agama-islam_Fase-A/assets/site.css"><link rel="manifest" href="https://cdn.jsdelivr.net/gh/harryindrah3/e-perangkat@a37f7c9455df07b95146acec5bdecbc22c3799e7/apps/fase-a/E-Perangkat_pendidikan-agama-islam_Fase-A/manifest.json"></head> <body> <div class="site-shell">   <aside class="sidebar" id="sidebar">     <div class="brand"><div class="brand-icon">PAI</div><div><b>E-PERANGKAT</b><span>PAIBP Erlangg
+
+[B]
+URL=https://e-perangkat-online-a-cwnogmex0-harryindrah3-6239s-projects.vercel.app/apps/fase-b/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-B/index.html
+HTTP=200
+CHROME_EXIT=0
+DOM_BYTES=13393
+FAILED_FETCH=0
+EXPECT1_COUNT=1
+EXPECT2_COUNT=0
+TITLE=<title>E-Perangkat PAI BP Versi Erlangga Fase B — CP 2026</title>
+ERROR_TAIL=[2429:2453:0923/220809.794735:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR [2429:2453:0923/220809.804306:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR [2429:2429:0923/220809.841660:ERROR:mojo/public/cpp/bindings/lib/interface_endpoint_client.cc:748] Message 1191753409 rejected by interface blink.mojom.FrameWidgetHost 
+DOM_HEAD=<!DOCTYPE html> <html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"> <meta name="theme-color" content="#7A1F3D"><title>E-Perangkat PAI BP Versi Erlangga Fase B — CP 2026</title> <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/harryindrah3/e-perangkat@a37f7c9455df07b95146acec5bdecbc22c3799e7/apps/fase-b/E-Perangkat_pendidikan-agama-islam_Fase-B/assets/site.css"><link rel="manifest" href="https://cdn.jsdelivr.net/gh/harryindrah3/e-perangkat@a37f7c9455df07b95146acec5bdecbc22c3799e7/apps/fase-b/E-Perangkat_pendidikan-agama-islam_Fase-B/manifest.json"></head> <body> <div class="site-shell">   <aside class="sidebar" id="sidebar">     <div class="brand"><div class="brand-icon">PAI</div><div><b>E-PERANGKAT</b><span>PAIBP Erlangg
+
+[C]
+URL=https://e-perangkat-online-a-cwnogmex0-harryindrah3-6239s-projects.vercel.app/apps/fase-c/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-C/index.html
+HTTP=200
+CHROME_EXIT=0
+DOM_BYTES=13108
+FAILED_FETCH=0
+EXPECT1_COUNT=1
+EXPECT2_COUNT=0
+TITLE=<title>E-Perangkat PAI BP Versi Erlangga Fase C — CP 2026</title>
+ERROR_TAIL=[2714:2739:0923/220813.655174:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR [2714:2739:0923/220813.656059:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR [2714:2739:0923/220813.656382:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR 
+DOM_HEAD=<!DOCTYPE html> <html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"> <meta name="theme-color" content="#7A1F3D"><title>E-Perangkat PAI BP Versi Erlangga Fase C — CP 2026</title> <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/harryindrah3/e-perangkat@a37f7c9455df07b95146acec5bdecbc22c3799e7/apps/fase-c/E-Perangkat_pendidikan-agama-islam_Fase-C/assets/site.css"><link rel="manifest" href="https://cdn.jsdelivr.net/gh/harryindrah3/e-perangkat@a37f7c9455df07b95146acec5bdecbc22c3799e7/apps/fase-c/E-Perangkat_pendidikan-agama-islam_Fase-C/manifest.json"></head> <body> <div class="site-shell">   <aside class="sidebar" id="sidebar">     <div class="brand"><div class="brand-icon">PAI</div><div><b>E-PERANGKAT</b><span>PAIBP Erlangg
+
