@@ -1,6 +1,6 @@
-<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Memuat PAI BP Versi Erlangga Fase A…</title></head><body><div id="loader" style="font-family:Arial,sans-serif;padding:32px">Memuat PAI BP Versi Erlangga Fase A…</div><script>
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Memuat PAI BP Versi Erlangga Fase A…</title><style>#ep-erlangga-preview-badge{position:fixed;right:14px;bottom:14px;z-index:99999;background:#7c4a2d;color:#fff;padding:8px 11px;border-radius:999px;font:700 11px/1.2 Arial,sans-serif;box-shadow:0 6px 18px #0003}</style></head><body><div id="loader" style="font-family:Arial,sans-serif;padding:32px">Memuat PAI BP Versi Erlangga Fase A…</div><script>
 (async()=>{"use strict";
-const SOURCE_DIR="https://e-perangkat-online-a-efzg7qnbn-harryindrah3-6239s-projects.vercel.app/apps/fase-a/E-Perangkat_pendidikan-agama-islam_Fase-A";
+const SOURCE_DIR="https://cdn.jsdelivr.net/gh/harryindrah3/e-perangkat@a37f7c9455df07b95146acec5bdecbc22c3799e7/apps/fase-a/E-Perangkat_pendidikan-agama-islam_Fase-A";
 const PAGE="index.html";
 function abs(doc){
  for(const n of doc.querySelectorAll("script[src]")){const v=n.getAttribute("src")||"";if(v&&!/^(?:https?:|data:|blob:)/i.test(v))n.src=new URL(v,SOURCE_DIR+"/").href}
@@ -19,4 +19,4 @@ try{
  document.open();document.write("<!doctype html>"+doc.documentElement.outerHTML);document.close();
 }catch(e){document.getElementById("loader").innerHTML="<b>Gagal memuat preview.</b><br><br>"+String(e.message||e)}
 })();
-</script></body></html>
+</script><div id="ep-erlangga-preview-badge">PREVIEW · PAI BP ERLANGGA</div></body></html>
