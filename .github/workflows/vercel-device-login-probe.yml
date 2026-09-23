@@ -1,0 +1,14 @@
+name: Vercel device login probe
+on:
+  push:
+    branches:
+      - recovery-source-tool
+jobs:
+  login:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Try Vercel GitHub login
+        shell: bash
+        run: |
+          timeout 90s npx --yes vercel@latest login --github || true
