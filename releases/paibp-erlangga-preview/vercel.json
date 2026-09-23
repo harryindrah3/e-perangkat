@@ -6,7 +6,7 @@
     },
     {
       "src": "/apps/(.*)",
-      "dest": "https://e-perangkat-online-a-efzg7qnbn-harryindrah3-6239s-projects.vercel.app/apps/$1"
+      "dest": "https://e-perangkat-online-a-f.vercel.app/apps/$1"
     },
     {
       "src": "/(.*)",
