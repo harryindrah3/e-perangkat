@@ -134,8 +134,9 @@
     try {
       let sourceOrigin = PORTAL;
       let html;
+      const portalPath = location.pathname === '/' ? '/index.html' : location.pathname;
       try {
-        html = await fetchText(PORTAL + location.pathname + location.search);
+        html = await fetchText(PORTAL + portalPath + location.search);
       } catch (_) {
         sourceOrigin = STABLE_SOURCE;
         html = await fetchText(STABLE_SOURCE + location.pathname + location.search);
