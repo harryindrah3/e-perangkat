@@ -1,0 +1,61 @@
+name: Verify PAIBP Erlangga Preview
+on:
+  push:
+    branches:
+      - verify-paibp-erlangga-preview-20260924
+    paths:
+      - VERIFY_TRIGGER.txt
+permissions:
+  contents: write
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify deployed preview in Chrome
+        shell: bash
+        run: |
+          set +e
+          BASE="https://e-perangkat-online-a-cwnogmex0-harryindrah3-6239s-projects.vercel.app"
+          CHROME=$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)
+          : > PAIBP_ERLANGGA_VERIFY_STATUS.txt
+          check_url() {
+            label="$1"
+            url="$2"
+            expect1="$3"
+            expect2="$4"
+            outfile="/tmp/${label}.html"
+            errfile="/tmp/${label}.err"
+            code=$(curl -L -sS -o /tmp/curl-${label}.html -w "%{http_code}" "$url")
+            timeout 55s "$CHROME" --headless=new --disable-gpu --no-sandbox --virtual-time-budget=14000 --dump-dom "$url" > "$outfile" 2> "$errfile"
+            exitcode=$?
+            bytes=$(wc -c < "$outfile")
+            failed=$(grep -c "TypeError: Failed to fetch" "$outfile")
+            e1=$(grep -c "$expect1" "$outfile")
+            e2=0
+            if [ -n "$expect2" ]; then e2=$(grep -c "$expect2" "$outfile"); fi
+            {
+              echo "[$label]"
+              echo "URL=$url"
+              echo "HTTP=$code"
+              echo "CHROME_EXIT=$exitcode"
+              echo "DOM_BYTES=$bytes"
+              echo "FAILED_FETCH=$failed"
+              echo "EXPECT1_COUNT=$e1"
+              echo "EXPECT2_COUNT=$e2"
+              echo "TITLE=$(grep -o '<title>[^<]*</title>' "$outfile" | head -1)"
+              echo "ERROR_TAIL=$(tail -3 "$errfile" | tr '\n' ' ' | cut -c1-500)"
+              echo "DOM_HEAD=$(head -c 800 "$outfile" | tr '\n' ' ' | cut -c1-800)"
+              echo
+            } >> PAIBP_ERLANGGA_VERIFY_STATUS.txt
+          }
+          check_url ROOT "$BASE/" "PAI BP Versi Erlangga" ""
+          check_url A "$BASE/apps/fase-a/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-A/index.html" "PAI BP Versi Erlangga Fase A" "PREVIEW · PAI BP ERLANGGA"
+          check_url B "$BASE/apps/fase-b/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-B/index.html" "PAI BP Versi Erlangga Fase B" "PREVIEW · PAI BP ERLANGGA"
+          check_url C "$BASE/apps/fase-c/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-C/index.html" "PAI BP Versi Erlangga Fase C" "PREVIEW · PAI BP ERLANGGA"
+          git config user.name "PAIBP Erlangga Verify"
+          git config user.email "verify@e-perangkat.local"
+          git add PAIBP_ERLANGGA_VERIFY_STATUS.txt
+          git commit -m "chore(verify): record PAIBP Erlangga preview verification"
+          git push origin HEAD:verify-paibp-erlangga-preview-20260924
