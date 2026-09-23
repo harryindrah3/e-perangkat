@@ -30,6 +30,8 @@
     const GRADE_ONE_COVER = OLD_RUNTIME + '/grade-one-cover.js?v=20260909-cute-cover-1';
     const COPY_ORDER = OLD_RUNTIME + '/copy-order.js?v=20260908-restore-1';
     const SUPERVISION = OLD_RUNTIME + '/phase-c-supervision.js?v=20260908-all-af-2';
+    const ERLANGGA_CATALOG = location.origin + '/catalog-erlangga.js?v=20260924-1';
+    const ERLANGGA_UI = location.origin + '/portal-erlangga-ui.js?v=20260924-1';
 
     const IS_APP_PRINT = /\/apps\/.+\/print\.html$/i.test(location.pathname);
     const IS_APP_INDEX = /\/apps\/.+\/index\.html$/i.test(location.pathname);
@@ -90,6 +92,30 @@
       doc.body.appendChild(script);
     }
 
+    function installErlanggaPortal(doc) {
+      if (location.pathname !== '/' && location.pathname !== '/index.html') return;
+      const catalog = [...doc.querySelectorAll('script[src]')].find(node => /\/catalog\.js(?:\?|$)/i.test(node.getAttribute('src') || ''));
+      if (catalog && !doc.getElementById('ep-erlangga-catalog-loader')) {
+        const patch = doc.createElement('script');
+        patch.id = 'ep-erlangga-catalog-loader';
+        patch.src = ERLANGGA_CATALOG;
+        patch.async = false;
+        catalog.insertAdjacentElement('afterend', patch);
+      } else if (!catalog) {
+        addScript(doc, ERLANGGA_CATALOG, 'ep-erlangga-catalog-loader');
+      }
+      const portal = [...doc.querySelectorAll('script[src]')].find(node => /\/portal\.js(?:\?|$)/i.test(node.getAttribute('src') || ''));
+      if (portal && !doc.getElementById('ep-erlangga-ui-loader')) {
+        const patch = doc.createElement('script');
+        patch.id = 'ep-erlangga-ui-loader';
+        patch.src = ERLANGGA_UI;
+        patch.async = false;
+        portal.insertAdjacentElement('afterend', patch);
+      } else if (!portal) {
+        addScript(doc, ERLANGGA_UI, 'ep-erlangga-ui-loader');
+      }
+    }
+
     function installLegacyEnhancements(doc) {
       addScript(doc, LOGO_FIX, 'ep-logo-fix-loader');
       addScript(doc, GRADE_ONE_COVER, 'ep-grade-one-cover-loader');
@@ -146,6 +172,7 @@
       const sourceBase = (sourceOrigin + sourceDirectory).replace(/\/+$/, '');
       const doc = new DOMParser().parseFromString(html, 'text/html');
       absolutize(doc, sourceBase);
+      installErlanggaPortal(doc);
       installLegacyEnhancements(doc);
       installCalendarAndKktp(doc);
       installPrintFixes(doc);
