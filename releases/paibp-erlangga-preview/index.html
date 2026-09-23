@@ -7,7 +7,7 @@ function abs(doc){
  for(const n of doc.querySelectorAll("img[src],source[src]")){const v=n.getAttribute("src")||"";if(v&&!/^(?:https?:|data:|blob:)/i.test(v))n.src=new URL(v,SOURCE+"/").href}
 }
 try{
- const r=await fetch(SOURCE+"/",{cache:"no-store"}); if(!r.ok) throw new Error("HTTP "+r.status);
+ const r=await fetch(SOURCE+"/index.html",{cache:"no-store"}); if(!r.ok) throw new Error("HTTP "+r.status);
  const doc=new DOMParser().parseFromString(await r.text(),"text/html"); abs(doc);
  const cat=[...doc.querySelectorAll("script[src]")].find(s=>/\/catalog\.js(?:\?|$)/i.test(s.src));
  if(cat){const p=doc.createElement("script");p.src=new URL("catalog-erlangga.js",location.href).href;cat.after(p)}
