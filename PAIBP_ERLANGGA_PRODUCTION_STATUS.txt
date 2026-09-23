@@ -1,2 +1,2 @@
-AUTHENTICATED
+DEPLOYING_PRODUCTION
 Rollback production deployment: dpl_2eEdJekiEkHcqfYjMGekCWLhi7ui
