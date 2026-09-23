@@ -1,0 +1,68 @@
+name: Audit Generator UI and Print DOM
+on:
+  push:
+    branches:
+      - audit/generator-pdf-routing-20260924
+    paths:
+      - UI_AUDIT_TRIGGER.txt
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect rendered production without mutations
+        shell: bash
+        run: |
+          set +e
+          BASE="https://e-perangkat-online-a-f.vercel.app"
+          APP="$BASE/apps/fase-b/E-Perangkat_ipas_Fase-B/index.html"
+          PRINT="$BASE/apps/fase-b/E-Perangkat_ipas_Fase-B/print.html?grade=III&section=all&semester=1"
+          CHROME=$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)
+          timeout 75s "$CHROME" --headless=new --disable-gpu --no-sandbox --virtual-time-budget=18000 --dump-dom "$APP" > /tmp/app.html 2>/tmp/app.err
+          APP_EC=$?
+          timeout 75s "$CHROME" --headless=new --disable-gpu --no-sandbox --virtual-time-budget=22000 --dump-dom "$PRINT" > /tmp/print.html 2>/tmp/print.err
+          PRINT_EC=$?
+          {
+            echo "[APP]"
+            echo "CHROME_EXIT=$APP_EC"
+            echo "DOM_BYTES=$(wc -c < /tmp/app.html)"
+            echo "FAILED_FETCH=$(grep -c 'Failed to fetch' /tmp/app.html)"
+            echo "LOAD_ERROR=$(grep -c 'E-Perangkat gagal dimuat' /tmp/app.html)"
+            echo "AUTO_PDF_BTN=$(grep -c 'autoPdfBothBtn' /tmp/app.html)"
+            echo "BATCH_PDF_BTN=$(grep -c 'batchClassPdfBtnReliable' /tmp/app.html)"
+            echo "SUBJECT_PDF_BTN=$(grep -c 'subject16PdfBtnReliable' /tmp/app.html)"
+            echo "API_PDF_TEXT=$(grep -c '/api/pdf' /tmp/app.html)"
+            echo "PDF_WORDS=$(grep -oi 'PDF' /tmp/app.html | wc -l)"
+            echo "BUTTON_TEXT=$(python - <<'PY'
+from bs4 import BeautifulSoup
+s=BeautifulSoup(open('/tmp/app.html',encoding='utf8',errors='ignore').read(),'html.parser')
+print(' | '.join(' '.join(b.stripped_strings)[:160] for b in s.find_all(['button','a']) if 'pdf' in ' '.join(b.stripped_strings).lower() or 'cetak' in ' '.join(b.stripped_strings).lower()))
+PY
+)"
+            echo
+            echo "[PRINT]"
+            echo "CHROME_EXIT=$PRINT_EC"
+            echo "DOM_BYTES=$(wc -c < /tmp/print.html)"
+            echo "FAILED_FETCH=$(grep -c 'Failed to fetch' /tmp/print.html)"
+            echo "LOAD_ERROR=$(grep -c 'E-Perangkat gagal dimuat' /tmp/print.html)"
+            echo "PRINT_ROOT=$(grep -c 'id="printRoot"' /tmp/print.html)"
+            echo "PAGE_COUNT=$(grep -o 'class="page ' /tmp/print.html | wc -l)"
+            echo "PAGE_STATUS=$(python - <<'PY'
+from bs4 import BeautifulSoup
+s=BeautifulSoup(open('/tmp/print.html',encoding='utf8',errors='ignore').read(),'html.parser')
+e=s.find(id='pageStatus'); print(' '.join(e.stripped_strings) if e else '')
+PY
+)"
+            echo "PRINT_RUNTIME_SAFE=$(grep -c 'ep-print-safe-pages-loader\|ep-print-safe-page-style' /tmp/print.html)"
+            echo "DIFFERENTIATION=$(grep -c 'ep-differentiation-loader\|DIFERENSIASI' /tmp/print.html)"
+            echo "APP_ERR_TAIL=$(tail -5 /tmp/app.err | tr '\n' ' ' | cut -c1-800)"
+            echo "PRINT_ERR_TAIL=$(tail -5 /tmp/print.err | tr '\n' ' ' | cut -c1-800)"
+          } > GENERATOR_UI_AUDIT.txt
+          git config user.name "Generator UI Audit"
+          git config user.email "audit@e-perangkat.local"
+          git add GENERATOR_UI_AUDIT.txt
+          git commit -m "chore(audit): record generator UI and print DOM"
+          git push origin HEAD:audit/generator-pdf-routing-20260924
