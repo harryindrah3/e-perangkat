@@ -1,4 +1,4 @@
-(function(){"use strict";const c=window.EPERANGKAT_CATALOG;if(!c||!Array.isArray(c.apps))return;for(const a of c.apps){if(a&&a.href&&!/^https?:/i.test(a.href))a.href="https://e-perangkat-online-a-efzg7qnbn-harryindrah3-6239s-projects.vercel.app/"+String(a.href).replace(/^\/+/,"");}const add=[
+(function(){"use strict";const c=window.EPERANGKAT_CATALOG;if(!c||!Array.isArray(c.apps))return;for(const a of c.apps){if(a&&a.href&&!/^https?:/i.test(a.href))a.href="https://e-perangkat-online-a-f.vercel.app/"+String(a.href).replace(/^\/+/,"");}const add=[
   {
     "id": "fase-a-pai-bp-erlangga",
     "phase": "A",
