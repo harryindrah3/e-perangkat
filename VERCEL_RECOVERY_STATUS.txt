@@ -1,1 +1,1 @@
-SOURCE_VERIFIED
+AUTHORIZE https://vercel.com/oauth/device?user_code=ZSVF-VWGG
