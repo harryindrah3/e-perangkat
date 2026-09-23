@@ -1,0 +1,23 @@
+name: Check Vercel recovery auth
+on:
+  push:
+    branches:
+      - recovery-source-tool
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report auth availability
+        env:
+          HAS_VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN != '' }}
+          HAS_VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID != '' }}
+          HAS_VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID != '' }}
+          HAS_VERCEL_TEAM_ID: ${{ secrets.VERCEL_TEAM_ID != '' }}
+        run: |
+          echo "HAS_VERCEL_TOKEN=$HAS_VERCEL_TOKEN"
+          echo "HAS_VERCEL_ORG_ID=$HAS_VERCEL_ORG_ID"
+          echo "HAS_VERCEL_PROJECT_ID=$HAS_VERCEL_PROJECT_ID"
+          echo "HAS_VERCEL_TEAM_ID=$HAS_VERCEL_TEAM_ID"
