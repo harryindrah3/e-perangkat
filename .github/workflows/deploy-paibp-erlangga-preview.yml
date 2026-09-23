@@ -1,0 +1,132 @@
+name: Deploy PAIBP Erlangga Preview
+on:
+  push:
+    branches:
+      - preview/paibp-erlangga-20260922
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      STATUS_BRANCH: paibp-erlangga-preview-status-20260924
+      TEAM_ID: team_i5YnQIDbBKi8FgTPI0YD6uOu
+      PROJECT_ID: prj_KwCEjkE1OFX3CgBeBEenQcgX3P45
+      TEAM_SLUG: harryindrah3-6239s-projects
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: preview/paibp-erlangga-20260922
+          fetch-depth: 0
+
+      - name: Prepare status channel
+        shell: bash
+        run: |
+          git config user.name "PAIBP Erlangga Preview"
+          git config user.email "preview@e-perangkat.local"
+          git fetch origin "$STATUS_BRANCH:$STATUS_BRANCH"
+          git worktree add /tmp/preview-status "$STATUS_BRANCH"
+          cat > /tmp/update-preview-status.sh <<'EOS'
+          #!/usr/bin/env bash
+          set -e
+          msg="$1"
+          cd /tmp/preview-status
+          printf "%s\n" "$msg" > PAIBP_ERLANGGA_PREVIEW_STATUS.txt
+          git add PAIBP_ERLANGGA_PREVIEW_STATUS.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(preview-status): update PAIBP Erlangga preview status"
+            git push origin HEAD:"$STATUS_BRANCH"
+          fi
+          EOS
+          chmod +x /tmp/update-preview-status.sh
+          /tmp/update-preview-status.sh "PREPARING"
+
+      - name: Validate preview data
+        shell: bash
+        run: |
+          set -e
+          node <<'NODE'
+          const fs=require('fs');
+          const phases=['A','B','C'];
+          const expected={A:20,B:22,C:20};
+          for(const p of phases){
+            const path=`releases/paibp-erlangga-preview/apps/fase-${p.toLowerCase()}/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-${p}/data.js`;
+            const raw=fs.readFileSync(path,'utf8').replace(/^window\.EPERANGKAT_DATA=/,'').replace(/;\s*$/,'');
+            const d=JSON.parse(raw);
+            if(d.modules.length!==expected[p]) throw new Error(`Fase ${p}: expected ${expected[p]} modules, got ${d.modules.length}`);
+            for(const m of d.modules){
+              if(!m.title || !Array.isArray(m.subchapters) || !m.subchapters.length) throw new Error(`Invalid module ${p} ${m.id}`);
+              if(!Array.isArray(m.meetings) || !m.meetings.length) throw new Error(`No meetings ${p} ${m.id}`);
+              if(!Array.isArray(m.assessment) || !m.assessment.length) throw new Error(`No assessment ${p} ${m.id}`);
+            }
+          }
+          console.log('PAIBP Erlangga preview data validation PASS');
+          NODE
+          grep -q "cdn.jsdelivr.net/gh/harryindrah3/e-perangkat@a37f7c9455df07b95146acec5bdecbc22c3799e7" releases/paibp-erlangga-preview/index.html
+          ! grep -R "e-perangkat-online-a-efzg7qnbn" releases/paibp-erlangga-preview
+          /tmp/update-preview-status.sh "DATA_VALIDATED"
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Authenticate Vercel
+        shell: bash
+        run: |
+          set -e
+          vercel login --github > /tmp/vercel-login.log 2>&1 &
+          PID=$!
+          LOGIN_URL=""
+          for i in $(seq 1 90); do
+            LOGIN_URL=$(grep -Eo 'https://vercel.com/oauth/device\?user_code=[A-Z0-9-]+' /tmp/vercel-login.log | tail -1 || true)
+            if [ -n "$LOGIN_URL" ]; then break; fi
+            if ! kill -0 "$PID" 2>/dev/null; then break; fi
+            sleep 2
+          done
+          if [ -z "$LOGIN_URL" ]; then
+            cat /tmp/vercel-login.log
+            /tmp/update-preview-status.sh "LOGIN_URL_NOT_FOUND"
+            exit 1
+          fi
+          /tmp/update-preview-status.sh "AUTHORIZE $LOGIN_URL"
+          wait "$PID"
+          vercel whoami
+          /tmp/update-preview-status.sh "AUTHENTICATED"
+
+      - name: Link project and deploy preview
+        shell: bash
+        run: |
+          set -e
+          mkdir -p releases/paibp-erlangga-preview/.vercel
+          cat > releases/paibp-erlangga-preview/.vercel/project.json <<EOF
+          {"orgId":"$TEAM_ID","projectId":"$PROJECT_ID"}
+          EOF
+          /tmp/update-preview-status.sh "DEPLOYING_PREVIEW"
+          DEPLOY_URL=$(vercel deploy --yes --scope "$TEAM_SLUG" --cwd releases/paibp-erlangga-preview 2>&1 | tee /tmp/deploy.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
+          if [ -z "$DEPLOY_URL" ]; then
+            cat /tmp/deploy.log
+            /tmp/update-preview-status.sh "DEPLOY_FAILED"
+            exit 1
+          fi
+          /tmp/update-preview-status.sh "DEPLOYED $DEPLOY_URL"
+          echo "DEPLOY_URL=$DEPLOY_URL" >> "$GITHUB_ENV"
+
+      - name: Verify preview pages
+        shell: bash
+        run: |
+          set -e
+          sleep 8
+          CHROME=$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)
+          test -n "$CHROME"
+          timeout 60s "$CHROME" --headless=new --disable-gpu --no-sandbox --virtual-time-budget=12000 --dump-dom "$DEPLOY_URL/" > /tmp/root.html 2>/tmp/root.err
+          grep -q "PAI BP Versi Erlangga" /tmp/root.html
+          ! grep -q "TypeError: Failed to fetch" /tmp/root.html
+          for p in A B C; do
+            pl=$(printf "%s" "$p" | tr '[:upper:]' '[:lower:]')
+            URL="$DEPLOY_URL/apps/fase-$pl/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-$p/index.html"
+            timeout 60s "$CHROME" --headless=new --disable-gpu --no-sandbox --virtual-time-budget=12000 --dump-dom "$URL" > "/tmp/fase-$p.html" 2>"/tmp/fase-$p.err"
+            grep -q "PAI BP Versi Erlangga Fase $p" "/tmp/fase-$p.html"
+            grep -q "PREVIEW · PAI BP ERLANGGA" "/tmp/fase-$p.html"
+            ! grep -q "TypeError: Failed to fetch" "/tmp/fase-$p.html"
+          done
+          /tmp/update-preview-status.sh "VERIFIED_OK $DEPLOY_URL"
