@@ -1,1 +1,1 @@
-AUTHORIZE https://vercel.com/oauth/device?user_code=DGDK-LBKX
+AUTHENTICATED
