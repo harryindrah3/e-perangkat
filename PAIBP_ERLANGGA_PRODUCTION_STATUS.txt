@@ -1,2 +1,2 @@
-AUTHORIZE https://vercel.com/oauth/device?user_code=KTPW-WVTB
+AUTHENTICATED
 Rollback production deployment: dpl_2eEdJekiEkHcqfYjMGekCWLhi7ui
