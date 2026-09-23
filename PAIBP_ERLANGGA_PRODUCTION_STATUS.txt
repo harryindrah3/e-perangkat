@@ -1,2 +1,2 @@
-DEPLOYED https://e-perangkat-online-a-dzn36xw5f-harryindrah3-6239s-projects.vercel.app
+PREPARING_PRODUCTION_VALIDATION
 Rollback production deployment: dpl_2eEdJekiEkHcqfYjMGekCWLhi7ui
