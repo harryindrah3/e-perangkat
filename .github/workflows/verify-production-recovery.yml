@@ -1,0 +1,52 @@
+name: Verify production recovery
+on:
+  push:
+    branches:
+      - verify-production-recovery-20260923
+permissions:
+  contents: write
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify portal and one application
+        shell: bash
+        run: |
+          set +e
+          CHROME=$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)
+          MAIN_URL="https://e-perangkat-online-a-f.vercel.app/"
+          APP_URL="https://e-perangkat-online-a-f.vercel.app/apps/fase-c/E-Perangkat_bahasa-indonesia_Fase-C/index.html"
+          curl -L -sS -o /tmp/main-shell.html -w "%{http_code}" "$MAIN_URL" > /tmp/main-http.txt
+          timeout 50s "$CHROME" --headless=new --disable-gpu --no-sandbox --virtual-time-budget=10000 --dump-dom "$MAIN_URL" > /tmp/main-dom.html 2>/tmp/main-chrome.err
+          MAIN_EXIT=$?
+          timeout 50s "$CHROME" --headless=new --disable-gpu --no-sandbox --virtual-time-budget=10000 --dump-dom "$APP_URL" > /tmp/app-dom.html 2>/tmp/app-chrome.err
+          APP_EXIT=$?
+          {
+            echo "MAIN_HTTP=$(cat /tmp/main-http.txt)"
+            echo "MAIN_CHROME_EXIT=$MAIN_EXIT"
+            echo "MAIN_DOM_BYTES=$(wc -c < /tmp/main-dom.html)"
+            echo "MAIN_HAS_FAILED_FETCH=$(grep -c 'TypeError: Failed to fetch' /tmp/main-dom.html)"
+            echo "MAIN_HAS_PICK=$(grep -c 'Pilih E-Perangkat' /tmp/main-dom.html)"
+            echo "MAIN_HAS_PORTAL=$(grep -c 'Perangkat ajar dalam' /tmp/main-dom.html)"
+            echo "APP_CHROME_EXIT=$APP_EXIT"
+            echo "APP_DOM_BYTES=$(wc -c < /tmp/app-dom.html)"
+            echo "APP_HAS_FAILED_FETCH=$(grep -c 'TypeError: Failed to fetch' /tmp/app-dom.html)"
+            echo "APP_HAS_CP=$(grep -c 'Capaian Pembelajaran' /tmp/app-dom.html)"
+            echo "APP_HAS_BI=$(grep -c 'B. Indonesia' /tmp/app-dom.html)"
+            echo "--- MAIN ERROR ---"
+            tail -20 /tmp/main-chrome.err
+            echo "--- APP ERROR ---"
+            tail -20 /tmp/app-chrome.err
+            echo "--- MAIN DOM HEAD ---"
+            head -c 1200 /tmp/main-dom.html
+            echo
+            echo "--- APP DOM HEAD ---"
+            head -c 1600 /tmp/app-dom.html
+          } > PRODUCTION_VERIFY_STATUS.txt
+          git config user.name "E-Perangkat Verify"
+          git config user.email "verify@e-perangkat.local"
+          git add PRODUCTION_VERIFY_STATUS.txt
+          git commit -m "chore(verify): record production recovery verification" || true
+          git push origin HEAD:verify-production-recovery-20260923
