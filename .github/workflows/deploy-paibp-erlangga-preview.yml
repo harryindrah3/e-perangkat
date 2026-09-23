@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - preview/paibp-erlangga-20260922
+    paths:
+      - releases/paibp-erlangga-preview/DEPLOY_TRIGGER.txt
 permissions:
   contents: write
 jobs:
