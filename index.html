@@ -1,1 +1,125 @@
-<!doctype html><meta charset="utf-8"><div id="x">Memuat…</div><script>(async()=>{const O='https://e-perangkat-online-a-efzg7qnbn-harryindrah3-6239s-projects.vercel.app',S=location.origin,F=S+'/identity-fix.js?v=20260830-3',p=location.pathname;try{if(!p.startsWith('/apps/')){let h=await fetch(O+'/').then(r=>r.text()),b='<base href="'+O+'/">',w=`<script>(()=>{const O=${JSON.stringify(O)},f=fetch.bind(window);window.fetch=(i,n)=>{try{let s=typeof i==='string'?i:i.url,u=new URL(s,location.href);if(u.pathname==='/api/database'){let d=O+u.pathname+u.search,x={...(n||{}),mode:'cors',credentials:'omit'};if((x.method||'GET').toUpperCase()==='POST'){let q=new Headers(x.headers||{});q.set('Content-Type','text/plain;charset=UTF-8');q.set('Accept','application/json');x.headers=q}return f(d,x)}}catch(e){}return f(i,n)}})();<\/script>`;h=h.replace(/<head([^>]*)>/i,'<head$1>'+b+w).replace(/<script\s+src=["']catalog\.js["']><\/script>/i,m=>m+`<script>(()=>{let C=EPERANGKAT_CATALOG;C&&C.apps&&C.apps.forEach(a=>{try{a.href=location.origin+new URL(a.href,${JSON.stringify(O+'/')}).pathname}catch(e){}})})();<\/script>`);document.open();document.write(h);document.close();return}let q=new URLSearchParams(location.search),z=p.slice(1);if(!/^apps\/fase-[a-f]\/.+\/(index|print)\.html$/i.test(z))throw Error('Path aplikasi tidak valid');let P=/\/print\.html$/i.test(z),u=new URL(O+'/'+z);q.forEach((v,k)=>u.searchParams.append(k,v));let d=new URL('./',u).href,r=await fetch(u).then(x=>x.text()),D=new DOMParser().parseFromString(r,'text/html'),b=D.createElement('base');b.href=O+'/';D.head.prepend(b);if(P){let hs=D.createElement('style');hs.textContent='.ep-calendar-source-box{display:none!important}';D.head.prepend(hs)}D.querySelectorAll('script[src],link[href],img[src]').forEach(e=>{let a=e.hasAttribute('src')?'src':'href',v=e.getAttribute(a);if(v)e.setAttribute(a,new URL(v,d).href)});let t=D.createElement('script');t.textContent=`(()=>{const O=${JSON.stringify(O)},S=location.origin,D=${JSON.stringify(d)},P=${JSON.stringify(P)};history.replaceState(null,'',${JSON.stringify(p+location.search)});if(P)try{let i=new URLSearchParams(location.search).get('order'),m=location.pathname.match(/\\/fase-([a-f])\\/E-Perangkat_([^/]+)_Fase-[A-F]/i),k=m?'eperangkat.'+m[2].toLowerCase()+'.fase'+m[1].toLowerCase()+'.v1.orders':'';if(i&&k){let s=JSON.parse(localStorage.getItem(k)||'{}'),o=(s.orders||[]).find(x=>x.id==i)||(s.orders||[]).find(x=>x.id===s.activeId);if(o){s.activeId=o.id;localStorage.setItem(k,JSON.stringify(s));let a=k.replace(/\\.orders$/,''),c={...(o.profile||{})};localStorage.setItem(a+'.profile',JSON.stringify(c));localStorage.setItem(a+'.students',JSON.stringify(o.students||[]));localStorage.setItem(a+'.grade',o.grade||'')}}}catch(e){}let f=fetch.bind(window);window.fetch=(i,n)=>{try{let s=typeof i==='string'||i instanceof URL?String(i):i.url,v=new URL(s,location.href);if(v.pathname==='/api/database'){let x={...(n||{}),mode:'cors',credentials:'omit'};if((x.method||'GET').toUpperCase()==='POST'){let h=new Headers(x.headers||{});h.set('Content-Type','text/plain;charset=UTF-8');h.set('Accept','application/json');x.headers=h}return f(O+v.pathname+v.search,x)}if(v.pathname==='/api/pdf')return f(S+v.pathname+v.search,n);if(v.pathname==='/api/patch')return f(O+v.pathname+v.search,n);if(!/^[a-z][a-z0-9+.-]*:/i.test(s)&&!s.startsWith('//'))return f(new URL(s,D).href,n)}catch(e){}return f(i,n)};let o=window.open.bind(window);window.open=(x,y,g)=>{try{let v=new URL(x,D);if(v.origin===new URL(O).origin&&v.pathname.startsWith('/apps/'))x=S+v.pathname+v.search+v.hash}catch(e){}return o(x,y||'_blank',g)}})();`;D.head.prepend(t);if(!P){let f=D.createElement('script');f.src=F;D.body.appendChild(f)}document.open();document.write('<!doctype html>'+D.documentElement.outerHTML);document.close()}catch(e){x.innerHTML='<p>'+e+'</p>'}})()</script>
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#123f3a">
+  <title>E-Perangkat Online A–F</title>
+  <link rel="stylesheet" href="portal.css">
+</head>
+<body>
+<div class="portal-shell">
+  <header class="topbar">
+    <a class="brand" href="#catalog" data-route="catalog">
+      <span class="brand-mark">EP</span>
+      <span><b>E-Perangkat</b><small>Perangkat Ajar A–F</small></span>
+    </a>
+    <button class="mobile-menu" id="mobileMenu" type="button">☰</button>
+    <nav class="topnav">
+      <button class="nav-button active" data-view="catalog" type="button">E-Perangkat</button>
+      <button class="nav-button" data-view="orders" type="button">Pesanan <span class="nav-badge" id="orderNavCount">0</span></button>
+      <button class="nav-button" data-view="help" type="button">Bantuan</button>
+    </nav>
+    <div class="connection-pill offline" id="connectionPill"><span></span><b>Memeriksa…</b></div>
+  </header>
+
+  <main>
+    <section class="view active" data-view-panel="catalog">
+      <div class="hero">
+        <div>
+          <div class="eyebrow">E-PERANGKAT ONLINE A–F</div>
+          <h1>Perangkat ajar dalam <em>satu portal.</em></h1>
+          <p>Pilih fase dan mata pelajaran, kelola pesanan, lalu buka E-Perangkat yang dibutuhkan.</p>
+          <label class="hero-search"><span>⌕</span><input id="catalogSearch" type="search" placeholder="Cari mata pelajaran atau fase…"><kbd>Ctrl K</kbd></label>
+        </div>
+        <div class="hero-panel">
+          <div class="hero-orbit"><b>A–F</b><span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span></div>
+          <div class="hero-panel-copy"><strong id="heroSyncState">Terhubung</strong><span id="heroSyncCaption">Menyiapkan data…</span></div>
+        </div>
+      </div>
+
+      <div class="overview-strip">
+        <div><small>Cakupan</small><b>A–F</b><span>SD/MI sampai SMA/MA</span></div>
+        <div><small>Aplikasi</small><b>69</b><span>Mapel dan fase</span></div>
+        <div><small>Pembelajaran</small><b>Mendalam</b><span>Mindful · Meaningful · Joyful</span></div>
+        <div><small>Pesanan</small><b id="statOrders">0</b><span>Tersimpan di perangkat</span></div>
+      </div>
+
+      <div class="catalog-toolbar">
+        <div class="phase-tabs" id="phaseTabs"></div>
+        <div class="toolbar-actions">
+          <button class="chip-button active" id="allAppsFilter" type="button">Semua</button>
+          <button class="chip-button" id="favoriteFilter" type="button">★ Favorit</button>
+          <select id="catalogSort">
+            <option value="subject">Urut Mata Pelajaran</option>
+            <option value="phase">Urut Fase</option>
+            <option value="recent">Terakhir Dibuka</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="section-heading">
+        <div><div class="eyebrow" id="catalogEyebrow">SEMUA FASE</div><h2 id="catalogTitle">Pilih E-Perangkat</h2></div>
+        <p id="catalogResult">Memuat katalog…</p>
+      </div>
+      <div class="app-grid" id="appGrid"></div>
+      <div class="empty-state" id="catalogEmpty" hidden><b>Tidak ada hasil</b><span>Coba kata kunci atau fase lain.</span></div>
+    </section>
+
+    <section class="view" data-view-panel="orders">
+      <div class="page-hero">
+        <div><div class="eyebrow">PESANAN & RIWAYAT</div><h1>Kelola semua pesanan.</h1><p>Pesanan dari seluruh E-Perangkat tampil di satu tempat dan tetap tersimpan secara lokal.</p></div>
+        <div class="page-actions">
+          <button class="button secondary" id="refreshData" type="button">Segarkan</button>
+          <button class="button primary" id="newOrder" type="button">+ Pesanan Baru</button>
+        </div>
+      </div>
+      <div class="sync-banner pending" id="syncBanner">
+        <div class="sync-icon">↻</div><div><b id="syncTitle">Menyiapkan sinkronisasi</b><span id="syncDetail">Memeriksa data lokal dan koneksi.</span></div>
+        <button class="text-button" id="syncNow" type="button">Sinkronkan Sekarang</button>
+      </div>
+      <div class="order-stats">
+        <div><small>Total Pesanan</small><b id="statOrders">0</b><i class="stat-dot total"></i></div>
+        <div><small>Belum Lunas</small><b id="statUnpaid">0</b><i class="stat-dot unpaid"></i></div>
+        <div><small>DP / Sebagian</small><b id="statPartial">0</b><i class="stat-dot partial"></i></div>
+        <div><small>Lunas</small><b id="statPaid">0</b><i class="stat-dot paid"></i></div>
+        <div><small>Nilai Pesanan</small><b id="statRevenue">Rp0</b><i class="stat-dot revenue"></i></div>
+      </div>
+      <div class="order-toolbar">
+        <label class="inline-search"><span>⌕</span><input id="orderSearch" type="search" placeholder="Cari nomor, nama, sekolah…"></label>
+        <select id="orderPhase"><option value="">Semua Fase</option></select>
+        <select id="orderStatus"><option value="">Semua Status</option><option value="belum_lunas">Belum Lunas</option><option value="dp">DP / Sebagian</option><option value="lunas">Lunas</option></select>
+        <label class="button secondary file-button">Impor Backup<input id="importBackup" type="file" accept=".json,application/json"></label>
+      </div>
+      <div class="page-actions" style="margin-bottom:12px"><button class="button secondary" id="exportBackup" type="button">Ekspor Backup</button></div>
+      <div class="table-card">
+        <div class="order-table-wrap"><table class="order-table"><thead><tr><th>Pesanan</th><th>E-Perangkat</th><th>Pemesan</th><th>Pembayaran</th><th>Diperbarui</th><th>Aksi</th></tr></thead><tbody id="orderBody"></tbody></table></div>
+        <div class="empty-state table-empty" id="orderEmpty"><b>Belum ada pesanan</b><span>Buat pesanan baru dari portal atau dari E-Perangkat.</span></div>
+      </div>
+    </section>
+
+    <section class="view" data-view-panel="help">
+      <div class="page-hero"><div><div class="eyebrow">BANTUAN</div><h1>Panduan singkat.</h1><p>Gunakan portal untuk memilih perangkat, mengelola pesanan, mencetak, dan membuat backup data secara berkala.</p></div></div>
+      <div class="help-grid">
+        <article><span>1</span><h2>Pilih E-Perangkat</h2><p>Gunakan pencarian atau filter fase, lalu buka mata pelajaran yang dibutuhkan.</p></article>
+        <article><span>2</span><h2>Isi Pesanan</h2><p>Lengkapi identitas, tahun pelajaran, kelas, jadwal, dan kebutuhan cetak dari menu Pesanan & Riwayat.</p></article>
+        <article><span>3</span><h2>Simpan Backup</h2><p>Ekspor backup secara berkala agar data pesanan dapat dipulihkan saat berpindah perangkat.</p></article>
+      </div>
+      <div class="help-note"><b>Data lokal tetap dipertahankan.</b><p>Perbaikan sumber portal ini tidak mengubah struktur data pesanan yang sudah tersimpan di browser.</p></div>
+    </section>
+  </main>
+  <footer><div><b>E-Perangkat Online A–F</b><span>Kurikulum Merdeka · Pembelajaran Mendalam</span></div><div><span>Portal perangkat ajar</span></div></footer>
+</div>
+
+<dialog id="newOrderDialog"><div class="modal">
+  <div class="modal-head"><div><div class="eyebrow">PESANAN BARU</div><h2>Pilih E-Perangkat</h2><p>Pilih mapel dan fase untuk mulai mengisi pesanan.</p></div><button class="modal-close" type="button" onclick="this.closest('dialog').close()">×</button></div>
+  <label>Cari mata pelajaran<input id="newOrderSearch" type="search" placeholder="Contoh: Bahasa Indonesia"></label>
+  <div class="modal-app-list" id="newOrderAppList"></div>
+</div></dialog>
+<div class="toast" id="toast"></div>
+
+<script src="catalog.js"></script>
+<script src="sync.js"></script>
+<script src="portal.js"></script>
+</body>
+</html>
