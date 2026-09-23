@@ -1,2 +1,2 @@
-PREPARING_PRODUCTION_VALIDATION
+PRODUCTION_VALIDATED
 Rollback production deployment: dpl_2eEdJekiEkHcqfYjMGekCWLhi7ui
