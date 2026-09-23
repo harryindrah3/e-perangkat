@@ -1,0 +1,251 @@
+[ROOT]
+URL=https://e-perangkat-online-a-f.vercel.app/
+HTTP=200
+CHROME_EXIT=0
+DOM_BYTES=367001
+FAILED_FETCH=0
+APP_FAILED=0
+TOKEN=PAI BP Versi Erlangga | COUNT=1
+TOKEN=72 | COUNT=4
+TOKEN=Pilih E-Perangkat | COUNT=3
+TITLE=<title>E-Perangkat Online A–F</title>
+TEXT= 
+ 
+ 
+ 
+ 
+ E-Perangkat Online A–F 
+ 
+ .ep-calendar-source-box{display:none!important} 
+ .ep-copy-cell{white-space:nowrap;min-width:248px}
+ .ep-copy-btn{border:1px solid #9cc5be;background:#eaf7f4;color:#0f5d55;border-radius:9px;padding:9px 11px;margin-right:7px;font-weight:800;cursor:pointer;white-space:nowrap}
+ .ep-copy-btn:hover{background:#d8f0eb}.ep-copy-btn:focus-visible{outline:3px solid #5eead4;outline-offset:2px}
+ #epCopyOrderDialog{width:min(760px,calc(100vw - 24px));max-height:92vh;border:0;border-radius:20px;padding:0;box-shadow:0 24px 80px #092f2a40;color:#173633}
+ #epCopyOrderDialog::backdrop{background:#092f2a99;backdrop-filter:blur(3px)}
+ .ep-copy-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;padding:22px 24px;background:linear-gradient(135deg,#123f3a,#0f766e);color:#fff}
+ .ep-copy-head small{display:block;color:#b9e9e3;font-weight:800;letter-spacing:.08em}.ep-copy-head h2{margin:5px 0 3px;font-size:25px}.ep-copy-head p{margin:0;color:#d9efec;line-height:1.4}
+ .ep-copy-close{border:1px solid #ffffff55;background:#ffffff18;color:#fff;border-radius:10px;width:38px;height:38px;font-size:22px;cursor:pointer}
+ .ep-copy-body{padding:20px 24px}.ep-copy-source{background:#eef8f6;border:1px solid #c9e4df;border-radius:12px;padding:13px;margin-bottom:15px;line-height:1.45}.ep-copy-source b{display:block}
+ .ep-copy-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.ep-copy-field label{display:block;font-size:13px;font-weight:800;
+
+[ERL-A]
+URL=https://e-perangkat-online-a-f.vercel.app/apps/fase-a/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-A/index.html
+HTTP=200
+CHROME_EXIT=0
+DOM_BYTES=7813
+FAILED_FETCH=0
+APP_FAILED=0
+TOKEN=Kalender Pendidikan | COUNT=0
+TOKEN=Jadwal Mengajar | COUNT=0
+TOKEN=Analisis Nilai | COUNT=0
+TOKEN=PAIBP Erlangga | COUNT=1
+TITLE=<title>E-Perangkat PAI BP Versi Erlangga Fase A — CP 2026</title>
+TEXT= 
+ 
+ 
+ 
+ E-Perangkat PAI BP Versi Erlangga Fase A — CP 2026 
+ 
+ 
+ Memuat PAI BP Versi Erlangga Fase A… 
+ 
+(async()=>{"use strict";
+const SOURCE_DIR="https://cdn.jsdelivr.net/gh/harryindrah3/e-perangkat@a37f7c9455df07b95146acec5bdecbc22c3799e7/apps/fase-a/E-Perangkat_pendidikan-agama-islam_Fase-A";
+const PAGE="index.html";
+const STABLE_RUNTIME="https://e-perangkat-online-a-6xpm8q2nz-harryindrah3-6239s-projects.vercel.app";
+const PRINT_PARITY="https://e-perangkat-online-a-afanit1w0-harryindrah3-6239s-projects.vercel.app";
+const OLD_RUNTIME="https://e-perangkat-online-a-irysp0h7o-harryindrah3-6239s-projects.vercel.app";
+const CALENDAR_RUNTIME=location.origin+"/calendar-level-runtime.js?v=20260917-2024-1";
+const CALENDAR_YEAR_RUNTIME=location.origin+"/calendar-year.js?v=20260917-2024-1";
+const CALENDAR_SOURCE_RUNTIME=location.origin+"/calendar-source-runtime.js?v=20260917-2024-1";
+const KKTP_ORDER_RUNTIME=location.origin+"/kktp-order-runtime.js?v=20260915-9";
+const PRINT_FILENAME_RUNTIME=STABLE_RUNTIME+"/print-filename.js?v=20260911-2";
+const DIFFERENTIATION_RUNTIME=PRINT_PARITY+"/differentiation-runtime.js?v=20260915-2";
+const PRINT_SAFE_PAGES_RUNTIME=PRINT_PARITY+"/print-safe-pages.js?v=20260915-5";
+const PROMES_FIX=OLD_RUNTIME+"/promes-print-route-fix.js?v=20260909-calendar-slot-fix-4";
+const LOGO_FIX=OLD_RUNTIME+"/logo-fix.js?v=20260909-logo-assets-2";
+const GRADE_ONE_COVER=OLD_RUNTIME+"/grade-one-cover.js?v=20260909-cute-cover-1";
+const COPY_ORDER=OLD_RUNTIME+"/copy-orde
+
+[PRINT-A]
+URL=https://e-perangkat-online-a-f.vercel.app/apps/fase-a/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-A/print.html?grade=I&section=module&module=i-1-mengenal-huruf-hijaiyah-harakat-dan-surah-al-fatihah&semester=1
+HTTP=200
+CHROME_EXIT=0
+DOM_BYTES=7801
+FAILED_FETCH=0
+APP_FAILED=0
+TOKEN=RANCANGAN PERTEMUAN | COUNT=0
+TOKEN=Kegiatan Inti | COUNT=0
+TOKEN=DIFERENSIASI PERTEMUAN | COUNT=0
+TOKEN=Aktivitas Guru dan Peserta Didik | COUNT=0
+TITLE=<title>Paket Cetak PAI BP Versi Erlangga Fase A</title>
+TEXT= 
+ 
+ 
+ 
+ Paket Cetak PAI BP Versi Erlangga Fase A 
+ 
+ 
+ Memuat PAI BP Versi Erlangga Fase A… 
+ 
+(async()=>{"use strict";
+const SOURCE_DIR="https://cdn.jsdelivr.net/gh/harryindrah3/e-perangkat@a37f7c9455df07b95146acec5bdecbc22c3799e7/apps/fase-a/E-Perangkat_pendidikan-agama-islam_Fase-A";
+const PAGE="print.html";
+const STABLE_RUNTIME="https://e-perangkat-online-a-6xpm8q2nz-harryindrah3-6239s-projects.vercel.app";
+const PRINT_PARITY="https://e-perangkat-online-a-afanit1w0-harryindrah3-6239s-projects.vercel.app";
+const OLD_RUNTIME="https://e-perangkat-online-a-irysp0h7o-harryindrah3-6239s-projects.vercel.app";
+const CALENDAR_RUNTIME=location.origin+"/calendar-level-runtime.js?v=20260917-2024-1";
+const CALENDAR_YEAR_RUNTIME=location.origin+"/calendar-year.js?v=20260917-2024-1";
+const CALENDAR_SOURCE_RUNTIME=location.origin+"/calendar-source-runtime.js?v=20260917-2024-1";
+const KKTP_ORDER_RUNTIME=location.origin+"/kktp-order-runtime.js?v=20260915-9";
+const PRINT_FILENAME_RUNTIME=STABLE_RUNTIME+"/print-filename.js?v=20260911-2";
+const DIFFERENTIATION_RUNTIME=PRINT_PARITY+"/differentiation-runtime.js?v=20260915-2";
+const PRINT_SAFE_PAGES_RUNTIME=PRINT_PARITY+"/print-safe-pages.js?v=20260915-5";
+const PROMES_FIX=OLD_RUNTIME+"/promes-print-route-fix.js?v=20260909-calendar-slot-fix-4";
+const LOGO_FIX=OLD_RUNTIME+"/logo-fix.js?v=20260909-logo-assets-2";
+const GRADE_ONE_COVER=OLD_RUNTIME+"/grade-one-cover.js?v=20260909-cute-cover-1";
+const COPY_ORDER=OLD_RUNTIME+"/copy-order.js?v=20260
+
+[ERL-B]
+URL=https://e-perangkat-online-a-f.vercel.app/apps/fase-b/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-B/index.html
+HTTP=200
+CHROME_EXIT=0
+DOM_BYTES=7813
+FAILED_FETCH=0
+APP_FAILED=0
+TOKEN=Kalender Pendidikan | COUNT=0
+TOKEN=Jadwal Mengajar | COUNT=0
+TOKEN=Analisis Nilai | COUNT=0
+TOKEN=PAIBP Erlangga | COUNT=1
+TITLE=<title>E-Perangkat PAI BP Versi Erlangga Fase B — CP 2026</title>
+TEXT= 
+ 
+ 
+ 
+ E-Perangkat PAI BP Versi Erlangga Fase B — CP 2026 
+ 
+ 
+ Memuat PAI BP Versi Erlangga Fase B… 
+ 
+(async()=>{"use strict";
+const SOURCE_DIR="https://cdn.jsdelivr.net/gh/harryindrah3/e-perangkat@a37f7c9455df07b95146acec5bdecbc22c3799e7/apps/fase-b/E-Perangkat_pendidikan-agama-islam_Fase-B";
+const PAGE="index.html";
+const STABLE_RUNTIME="https://e-perangkat-online-a-6xpm8q2nz-harryindrah3-6239s-projects.vercel.app";
+const PRINT_PARITY="https://e-perangkat-online-a-afanit1w0-harryindrah3-6239s-projects.vercel.app";
+const OLD_RUNTIME="https://e-perangkat-online-a-irysp0h7o-harryindrah3-6239s-projects.vercel.app";
+const CALENDAR_RUNTIME=location.origin+"/calendar-level-runtime.js?v=20260917-2024-1";
+const CALENDAR_YEAR_RUNTIME=location.origin+"/calendar-year.js?v=20260917-2024-1";
+const CALENDAR_SOURCE_RUNTIME=location.origin+"/calendar-source-runtime.js?v=20260917-2024-1";
+const KKTP_ORDER_RUNTIME=location.origin+"/kktp-order-runtime.js?v=20260915-9";
+const PRINT_FILENAME_RUNTIME=STABLE_RUNTIME+"/print-filename.js?v=20260911-2";
+const DIFFERENTIATION_RUNTIME=PRINT_PARITY+"/differentiation-runtime.js?v=20260915-2";
+const PRINT_SAFE_PAGES_RUNTIME=PRINT_PARITY+"/print-safe-pages.js?v=20260915-5";
+const PROMES_FIX=OLD_RUNTIME+"/promes-print-route-fix.js?v=20260909-calendar-slot-fix-4";
+const LOGO_FIX=OLD_RUNTIME+"/logo-fix.js?v=20260909-logo-assets-2";
+const GRADE_ONE_COVER=OLD_RUNTIME+"/grade-one-cover.js?v=20260909-cute-cover-1";
+const COPY_ORDER=OLD_RUNTIME+"/copy-orde
+
+[PRINT-B]
+URL=https://e-perangkat-online-a-f.vercel.app/apps/fase-b/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-B/print.html?grade=III&section=module&module=iii-1-surah-al-alaq-ayat-1-5&semester=1
+HTTP=200
+CHROME_EXIT=0
+DOM_BYTES=7801
+FAILED_FETCH=0
+APP_FAILED=0
+TOKEN=RANCANGAN PERTEMUAN | COUNT=0
+TOKEN=Kegiatan Inti | COUNT=0
+TOKEN=DIFERENSIASI PERTEMUAN | COUNT=0
+TOKEN=Aktivitas Guru dan Peserta Didik | COUNT=0
+TITLE=<title>Paket Cetak PAI BP Versi Erlangga Fase B</title>
+TEXT= 
+ 
+ 
+ 
+ Paket Cetak PAI BP Versi Erlangga Fase B 
+ 
+ 
+ Memuat PAI BP Versi Erlangga Fase B… 
+ 
+(async()=>{"use strict";
+const SOURCE_DIR="https://cdn.jsdelivr.net/gh/harryindrah3/e-perangkat@a37f7c9455df07b95146acec5bdecbc22c3799e7/apps/fase-b/E-Perangkat_pendidikan-agama-islam_Fase-B";
+const PAGE="print.html";
+const STABLE_RUNTIME="https://e-perangkat-online-a-6xpm8q2nz-harryindrah3-6239s-projects.vercel.app";
+const PRINT_PARITY="https://e-perangkat-online-a-afanit1w0-harryindrah3-6239s-projects.vercel.app";
+const OLD_RUNTIME="https://e-perangkat-online-a-irysp0h7o-harryindrah3-6239s-projects.vercel.app";
+const CALENDAR_RUNTIME=location.origin+"/calendar-level-runtime.js?v=20260917-2024-1";
+const CALENDAR_YEAR_RUNTIME=location.origin+"/calendar-year.js?v=20260917-2024-1";
+const CALENDAR_SOURCE_RUNTIME=location.origin+"/calendar-source-runtime.js?v=20260917-2024-1";
+const KKTP_ORDER_RUNTIME=location.origin+"/kktp-order-runtime.js?v=20260915-9";
+const PRINT_FILENAME_RUNTIME=STABLE_RUNTIME+"/print-filename.js?v=20260911-2";
+const DIFFERENTIATION_RUNTIME=PRINT_PARITY+"/differentiation-runtime.js?v=20260915-2";
+const PRINT_SAFE_PAGES_RUNTIME=PRINT_PARITY+"/print-safe-pages.js?v=20260915-5";
+const PROMES_FIX=OLD_RUNTIME+"/promes-print-route-fix.js?v=20260909-calendar-slot-fix-4";
+const LOGO_FIX=OLD_RUNTIME+"/logo-fix.js?v=20260909-logo-assets-2";
+const GRADE_ONE_COVER=OLD_RUNTIME+"/grade-one-cover.js?v=20260909-cute-cover-1";
+const COPY_ORDER=OLD_RUNTIME+"/copy-order.js?v=20260
+
+[ERL-C]
+URL=https://e-perangkat-online-a-f.vercel.app/apps/fase-c/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-C/index.html
+HTTP=200
+CHROME_EXIT=0
+DOM_BYTES=19364
+FAILED_FETCH=0
+APP_FAILED=0
+TOKEN=Kalender Pendidikan | COUNT=2
+TOKEN=Jadwal Mengajar | COUNT=1
+TOKEN=Analisis Nilai | COUNT=1
+TOKEN=PAIBP Erlangga | COUNT=1
+TITLE=<title>E-Perangkat PAI BP Versi Erlangga Fase C — CP 2026</title>
+TEXT= 
+ 
+ E-Perangkat PAI BP Versi Erlangga Fase C — CP 2026 
+ .ep-calendar-source-box{display:none!important} #epPromesCfg .option{padding:10px;border:1px solid #dbe4ea;border-radius:10px;background:#fff}#epPromesCfg [data-ep-start]{display:block;width:100%;max-width:240px;padding:8px;border:1px solid #94a3b8;border-radius:7px;background:#fff}.ep-date-head,.ep-date-cell{min-width:115px;white-space:normal;line-height:1.3}.ep-date-mark{font-size:8px!important;font-weight:700;white-space:nowrap;padding-left:1px!important;padding-right:1px!important;letter-spacing:-.2px}@media(max-width:760px){#epPromesCfg>div[style*="repeat(3"],#epPromesCfg .ep-school-start{grid-template-columns:1fr!important}} 
+ .ep-supervision-meeting{border-top:3px solid #0f766e!important}
+ .ep-supervision-meeting .topline{border-bottom:2px solid #0f766e!important;padding-bottom:2.2mm!important}
+ .ep-supervision-meeting .objective-box{border-left:4px solid #0f766e!important}
+ .ep-supervision-objective{margin:2.2mm 0 0!important;font-size:9.4pt!important;line-height:1.35!important}
+ .ep-supervision-stage td{background:#e9f6f4!important;color:#115e59!important;font-weight:700!important;border-top:2px solid #0f766e!important}
+ .ep-supervision-list{margin:0!important;padding-left:4.5mm!important}
+ .ep-supervision-list li{margin:0 0 1mm!important;line-height:1.32!important}
+ .ep-supervision-screen{border-top:4px solid #0f766e!important;padding-top:18px!important;margin-top:24px!important}
+ .ep-supervision-screen h3{
+
+[PRINT-C]
+URL=https://e-perangkat-online-a-f.vercel.app/apps/fase-c/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-C/print.html?grade=V&section=module&module=v-1-surah-al-ma-un-dan-hadis-tentang-toleransi-sosial&semester=1
+HTTP=200
+CHROME_EXIT=0
+DOM_BYTES=63701
+FAILED_FETCH=0
+APP_FAILED=0
+TOKEN=RANCANGAN PERTEMUAN | COUNT=1
+TOKEN=Kegiatan Inti | COUNT=1
+TOKEN=DIFERENSIASI PERTEMUAN | COUNT=1
+TOKEN=Aktivitas Guru dan Peserta Didik | COUNT=1
+TITLE=<title>[Nama Guru] E-Perangkat PAIBP Kelas 5 - Semester 1 - Tahun Pelajaran 2026-2027</title>
+TEXT= 
+ [Nama Guru] E-Perangkat PAIBP Kelas 5 - Semester 1 - Tahun Pelajaran 2026-2027 /* E-Perangkat cover theme: PAIBP Fase C */.cover{background:linear-gradient(160deg,#FFF9F4 0%,#F6E8DC 48%,#FFF1D7 100%)!important}.cover:before{background:linear-gradient(90deg,#6B3E26,#A05A2C,#D69A3A)!important}.cover:after{border-color:rgba(107,62,38,.14)!important}.cover-kicker,.cover-center small{color:#A05A2C!important}.cover h1{color:#6B3E26!important}.cover h2{color:#A05A2C!important}.accent-line{background:linear-gradient(90deg,#6B3E26,#A05A2C,#D69A3A)!important}.identity-box{border-color:#C9A184!important;box-shadow:0 3mm 9mm rgba(107,62,38,.12)!important}.cover-foot{color:#6B3E26!important}.cover-foot span{color:#A05A2C!important} .ep-calendar-source-box{display:none!important} .ep-supervision-meeting{border-top:0!important;background-image:linear-gradient(#0f766e,#0f766e)!important;background-size:100% 3px!important;background-repeat:no-repeat!important;background-position:left top!important}.ep-supervision-continuation .page-inner{padding:13mm 14mm 13mm!important}.ep-supervision-continuation .topline{padding-bottom:3mm;margin-bottom:5mm}.ep-supervision-continuation .tbl{margin-top:0!important}@page{size:A4 portrait;margin:0}@page epPortrait{size:A4 portrait;margin:0}@page epLandscape{size:A4 landscape;margin:0}@media print{html,body{margin:0!important;padding:0!important;background:#fff!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}body{widt
+
+[COMMON-PAI]
+URL=https://e-perangkat-online-a-f.vercel.app/apps/fase-a/E-Perangkat_pendidikan-agama-islam_Fase-A/index.html
+HTTP=200
+CHROME_EXIT=0
+DOM_BYTES=18941
+FAILED_FETCH=0
+APP_FAILED=0
+TOKEN=Kalender Pendidikan | COUNT=2
+TOKEN=Analisis Nilai | COUNT=1
+TITLE=<title>E-Perangkat Pendidikan Agama Islam dan Budi Pekerti Fase A — CP 2026</title>
+TEXT= 
+ 
+ E-Perangkat Pendidikan Agama Islam dan Budi Pekerti Fase A — CP 2026 
+ .ep-calendar-source-box{display:none!important} #epPromesCfg .option{padding:10px;border:1px solid #dbe4ea;border-radius:10px;background:#fff}#epPromesCfg [data-ep-start]{display:block;width:100%;max-width:240px;padding:8px;border:1px solid #94a3b8;border-radius:7px;background:#fff}.ep-date-head,.ep-date-cell{min-width:115px;white-space:normal;line-height:1.3}.ep-date-mark{font-size:8px!important;font-weight:700;white-space:nowrap;padding-left:1px!important;padding-right:1px!important;letter-spacing:-.2px}@media(max-width:760px){#epPromesCfg>div[style*="repeat(3"],#epPromesCfg .ep-school-start{grid-template-columns:1fr!important}} 
+ .ep-supervision-meeting{border-top:3px solid #0f766e!important}
+ .ep-supervision-meeting .topline{border-bottom:2px solid #0f766e!important;padding-bottom:2.2mm!important}
+ .ep-supervision-meeting .objective-box{border-left:4px solid #0f766e!important}
+ .ep-supervision-objective{margin:2.2mm 0 0!important;font-size:9.4pt!important;line-height:1.35!important}
+ .ep-supervision-stage td{background:#e9f6f4!important;color:#115e59!important;font-weight:700!important;border-top:2px solid #0f766e!important}
+ .ep-supervision-list{margin:0!important;padding-left:4.5mm!important}
+ .ep-supervision-list li{margin:0 0 1mm!important;line-height:1.32!important}
+ .ep-supervision-screen{border-top:4px solid #0f766e!important;padding-top:18px!important;margin-top:24px!important}
+ .ep-supe
+
