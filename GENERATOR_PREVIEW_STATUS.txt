@@ -1,3 +1,3 @@
-DEPLOYING_PREVIEW
+DEPLOYED https://genarator-e-perangkat-4vkdpeo2o-harryindrah3-6239s-projects.vercel.app
 Production Generator unchanged: https://genarator-e-perangkat.vercel.app/
 Production E-Perangkat unchanged: https://e-perangkat-online-a-f.vercel.app/
