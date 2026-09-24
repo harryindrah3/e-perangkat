@@ -2,3 +2,5 @@ Promote Generator route recovery Preview v1.0.4 to Production.
 User confirmed Preview connected and works.
 Rollback deployment: dpl_3bXyMaCCfZmA2qAUWc7jZLiB26R8
 Timestamp: 2026-09-24T00:32:39.348Z
+
+Re-authorize production deploy: 2026-09-24T00:58:02.352Z
