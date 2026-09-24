@@ -1,0 +1,23 @@
+GENARATOR E-PERANGKAT PREVIEW v1.0.4
+
+Tujuan:
+- Menguji jalur cetak Production terbaru tanpa mengubah Production Generator.
+- Membuka print.html pada https://e-perangkat-online-a-f.vercel.app
+- Menunggu wrapper recovery, font, gambar, dan pagination selesai.
+- Membuat PDF melalui Chrome DevTools Page.printToPDF.
+- Mengunduh PDF ke folder Unduhan Chrome.
+
+Cara pasang:
+1. Ekstrak ZIP.
+2. Buka chrome://extensions
+3. Aktifkan Developer mode.
+4. Klik Load unpacked / Muat yang belum dikemas.
+5. Pilih folder hasil ekstrak yang berisi manifest.json.
+6. Buka URL Preview Generator yang diberikan di chat.
+7. Klik Periksa koneksi lalu Ambil data pesanan.
+8. Uji satu pesanan terlebih dahulu sebelum batch.
+
+Catatan:
+- Versi Preview ini terpisah dari ekstensi Production 1.0.3.
+- Preview membuka jalur print.html pada domain Production E-Perangkat terbaru.
+- Production Generator dan Production E-Perangkat tidak diubah oleh paket ini.
