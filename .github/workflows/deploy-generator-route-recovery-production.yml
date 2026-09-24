@@ -1,0 +1,185 @@
+name: Deploy Generator Route Recovery Production
+on:
+  push:
+    branches:
+      - release/generator-route-recovery-20260924
+    paths:
+      - generator/GENERATOR_PRODUCTION_DEPLOY_TRIGGER.txt
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      STATUS_BRANCH: generator-production-status-20260924
+      TEAM_ID: team_i5YnQIDbBKi8FgTPI0YD6uOu
+      PROJECT_ID: prj_op2PrORnNlxHhoKrTW5c8grmFJpL
+      TEAM_SLUG: harryindrah3-6239s-projects
+      MAIN_DOMAIN: https://genarator-e-perangkat.vercel.app
+      E_PERANGKAT_DOMAIN: https://e-perangkat-online-a-f.vercel.app
+      ROLLBACK_DEPLOYMENT: dpl_3bXyMaCCfZmA2qAUWc7jZLiB26R8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: release/generator-route-recovery-20260924
+          fetch-depth: 0
+
+      - name: Prepare production status channel
+        shell: bash
+        run: |
+          set -e
+          git config user.name "Generator Production Deploy"
+          git config user.email "generator-production@e-perangkat.local"
+          git fetch origin "$STATUS_BRANCH:$STATUS_BRANCH"
+          git worktree add /tmp/generator-production-status "$STATUS_BRANCH"
+          cat > /tmp/update-generator-production-status.sh <<'EOS'
+          #!/usr/bin/env bash
+          set -e
+          msg="$1"
+          cd /tmp/generator-production-status
+          {
+            printf "%s\n" "$msg"
+            printf "Rollback deployment: %s\n" "$ROLLBACK_DEPLOYMENT"
+            printf "Production Generator: https://genarator-e-perangkat.vercel.app/\n"
+            printf "Production E-Perangkat: https://e-perangkat-online-a-f.vercel.app/\n"
+          } > GENERATOR_PRODUCTION_STATUS.txt
+          git add GENERATOR_PRODUCTION_STATUS.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(generator-production-status): update status"
+            git push origin HEAD:"$STATUS_BRANCH"
+          fi
+          EOS
+          chmod +x /tmp/update-generator-production-status.sh
+          /tmp/update-generator-production-status.sh "PREPARING_PRODUCTION"
+
+      - name: Validate release source
+        shell: bash
+        run: |
+          set -e
+          ROOT="generator"
+          for f in index.html app.js batch-core.js catalog.json style.css extension/manifest.json extension/content.js extension/background.js extension/PETUNJUK.txt; do
+            test -f "$ROOT/$f"
+          done
+          node --check "$ROOT/app.js"
+          node --check "$ROOT/batch-core.js"
+          node --check "$ROOT/extension/content.js"
+          node --check "$ROOT/extension/background.js"
+          node <<'NODE'
+          const fs=require('fs');
+          const root='generator';
+          const m=JSON.parse(fs.readFileSync(root+'/extension/manifest.json','utf8'));
+          if(m.version!=='1.0.4') throw new Error('Production extension must be 1.0.4');
+          if(!m.permissions.includes('debugger')||!m.permissions.includes('downloads')||!m.permissions.includes('scripting')) throw new Error('Required Chrome permissions missing');
+          if(!m.content_scripts?.some(x=>x.matches?.includes('https://genarator-e-perangkat.vercel.app/*'))) throw new Error('Production generator domain missing from content script matches');
+          const app=fs.readFileSync(root+'/app.js','utf8');
+          if(!app.includes("portalOrigin:'https://e-perangkat-online-a-f.vercel.app'")) throw new Error('Production E-Perangkat origin not passed by app');
+          if(!app.includes('>=1000004')) throw new Error('UI does not require v1.0.4');
+          const bg=fs.readFileSync(root+'/extension/background.js','utf8');
+          for(const token of ['Page.printToPDF','/print.html','preferCSSPageSize:true','Failed to fetch']){
+            if(!bg.includes(token)) throw new Error('Production background missing '+token);
+          }
+          if(bg.includes('e-perangkat-online-a-efzg7qnbn')) throw new Error('Dead E-Perangkat source remains');
+          const html=fs.readFileSync(root+'/index.html','utf8');
+          if(!html.includes('/downloads/genarator-e-perangkat-chrome.zip?v=1.0.4')) throw new Error('Production extension download link not updated');
+          if(/PREVIEW GENERATOR|generator-preview/i.test(html)) throw new Error('Preview wording remains in Production UI');
+          const cat=JSON.parse(fs.readFileSync(root+'/catalog.json','utf8'));
+          for(const id of ['fase-b-ipas','fase-a-pendidikan-agama-islam-erlangga','fase-b-pendidikan-agama-islam-erlangga','fase-c-pendidikan-agama-islam-erlangga']){
+            if(!cat.some(x=>x.id===id)) throw new Error('Catalog missing '+id);
+          }
+          console.log('Generator Production release validation PASS');
+          NODE
+          /tmp/update-generator-production-status.sh "SOURCE_VALIDATED"
+
+      - name: Build Production extension ZIP
+        shell: bash
+        run: |
+          set -e
+          ROOT="generator"
+          mkdir -p "$ROOT/downloads"
+          cp "$ROOT/downloads/genarator-e-perangkat-chrome.zip" /tmp/genarator-e-perangkat-chrome-v1.0.3-rollback.zip
+          rm -f "$ROOT/downloads/genarator-e-perangkat-chrome.zip"
+          (
+            cd "$ROOT/extension"
+            zip -r ../downloads/genarator-e-perangkat-chrome.zip manifest.json content.js background.js PETUNJUK.txt
+          )
+          test -s "$ROOT/downloads/genarator-e-perangkat-chrome.zip"
+          unzip -t "$ROOT/downloads/genarator-e-perangkat-chrome.zip"
+          rm -rf /tmp/extcheck
+          mkdir -p /tmp/extcheck
+          unzip -q "$ROOT/downloads/genarator-e-perangkat-chrome.zip" -d /tmp/extcheck
+          node -e "const m=require('/tmp/extcheck/manifest.json'); if(m.version!=='1.0.4') process.exit(1)"
+          /tmp/update-generator-production-status.sh "EXTENSION_ZIP_BUILT"
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Authenticate Vercel
+        shell: bash
+        run: |
+          set -e
+          vercel login --github > /tmp/vercel-login.log 2>&1 &
+          PID=$!
+          LOGIN_URL=""
+          for i in $(seq 1 120); do
+            LOGIN_URL=$(grep -Eo 'https://vercel.com/oauth/device\?user_code=[A-Z0-9-]+' /tmp/vercel-login.log | tail -1 || true)
+            if [ -n "$LOGIN_URL" ]; then break; fi
+            if ! kill -0 "$PID" 2>/dev/null; then break; fi
+            sleep 2
+          done
+          if [ -z "$LOGIN_URL" ]; then
+            cat /tmp/vercel-login.log
+            /tmp/update-generator-production-status.sh "LOGIN_URL_NOT_FOUND"
+            exit 1
+          fi
+          /tmp/update-generator-production-status.sh "AUTHORIZE $LOGIN_URL"
+          wait "$PID"
+          vercel whoami
+          /tmp/update-generator-production-status.sh "AUTHENTICATED"
+
+      - name: Deploy Generator Production
+        shell: bash
+        run: |
+          set -e
+          ROOT="generator"
+          mkdir -p "$ROOT/.vercel"
+          cat > "$ROOT/.vercel/project.json" <<EOF
+          {"orgId":"$TEAM_ID","projectId":"$PROJECT_ID"}
+          EOF
+          /tmp/update-generator-production-status.sh "DEPLOYING_PRODUCTION"
+          DEPLOY_URL=$(vercel deploy --prod --yes --scope "$TEAM_SLUG" --cwd "$ROOT" 2>&1 | tee /tmp/deploy.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
+          if [ -z "$DEPLOY_URL" ]; then
+            cat /tmp/deploy.log
+            /tmp/update-generator-production-status.sh "DEPLOY_FAILED"
+            exit 1
+          fi
+          echo "DEPLOY_URL=$DEPLOY_URL" >> "$GITHUB_ENV"
+          /tmp/update-generator-production-status.sh "DEPLOYED $DEPLOY_URL"
+
+      - name: Verify Production generator and print route
+        shell: bash
+        run: |
+          set -e
+          sleep 10
+          curl -L -fsS "$MAIN_DOMAIN/" -o /tmp/root.html
+          grep -q "Genarator E-Perangkat" /tmp/root.html
+          grep -q "1.0.4" /tmp/root.html
+          ! grep -qi "PREVIEW GENERATOR" /tmp/root.html
+
+          curl -L -fsS "$MAIN_DOMAIN/app.js" -o /tmp/app.js
+          grep -q "portalOrigin:'https://e-perangkat-online-a-f.vercel.app'" /tmp/app.js
+          grep -q ">=1000004" /tmp/app.js
+
+          curl -L -fsS "$MAIN_DOMAIN/downloads/genarator-e-perangkat-chrome.zip?v=1.0.4" -o /tmp/prod-ext.zip
+          unzip -t /tmp/prod-ext.zip
+          rm -rf /tmp/prod-ext
+          mkdir -p /tmp/prod-ext
+          unzip -q /tmp/prod-ext.zip -d /tmp/prod-ext
+          node -e "const m=require('/tmp/prod-ext/manifest.json'); if(m.version!=='1.0.4') process.exit(1)"
+
+          PRINT_URL="$E_PERANGKAT_DOMAIN/apps/fase-b/E-Perangkat_ipas_Fase-B/print.html?grade=III&section=all&semester=1"
+          code=$(curl -L -sS -o /tmp/print.html -w "%{http_code}" "$PRINT_URL")
+          test "$code" = "200"
+          ! grep -q "E-Perangkat gagal dimuat" /tmp/print.html
+
+          /tmp/update-generator-production-status.sh "VERIFIED_OK $DEPLOY_URL"
