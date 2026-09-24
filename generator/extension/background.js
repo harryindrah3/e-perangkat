@@ -118,7 +118,7 @@ async function waitDownload(downloadId,timeout=180000){
 async function generate(id,payload){
   const origin=safeOrigin(payload.portalOrigin);
   const app=payload.app;
-  if(!app?.appPath||!app?.storageKey)throw Error('Data perangkat tidak lengkap. Muat ulang Preview Generator.');
+  if(!app?.appPath||!app?.storageKey)throw Error('Data perangkat tidak lengkap. Muat ulang Generator.');
   const portalTab=await ensurePortalTab(origin);
   let snap=null,attached=false;
   activeJob.cancelled=false;
