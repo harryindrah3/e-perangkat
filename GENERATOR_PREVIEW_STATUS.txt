@@ -1,3 +1,6 @@
-DEPLOYED https://genarator-e-perangkat-4vkdpeo2o-harryindrah3-6239s-projects.vercel.app
+DEPLOYED_READY https://genarator-e-perangkat-4vkdpeo2o-harryindrah3-6239s-projects.vercel.app
+Vercel deployment: dpl_CY1WCCiukFSVVbiPNHBULHKqQAuQ
+Preview access is protected; use Vercel share/auth link in chat.
+Extension artifact v1.0.4 packaged and syntax-validated.
 Production Generator unchanged: https://genarator-e-perangkat.vercel.app/
 Production E-Perangkat unchanged: https://e-perangkat-online-a-f.vercel.app/
