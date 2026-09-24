@@ -1,0 +1,36 @@
+name: Package Generator Preview Extension
+on:
+  push:
+    branches:
+      - preview/generator-route-recovery-20260924
+    paths:
+      - releases/generator-preview/EXTENSION_PACKAGE_TRIGGER.txt
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: preview/generator-route-recovery-20260924
+      - name: Validate extension source
+        shell: bash
+        run: |
+          set -e
+          ROOT="releases/generator-preview/extension"
+          test -f "$ROOT/manifest.json"
+          test -f "$ROOT/content.js"
+          test -f "$ROOT/background.js"
+          node --check "$ROOT/content.js"
+          node --check "$ROOT/background.js"
+          node -e "const m=require('./$ROOT/manifest.json'); if(m.version!=='1.0.4') process.exit(1)"
+      - name: Upload unpacked Chrome extension
+        uses: actions/upload-artifact@v4
+        with:
+          name: genarator-e-perangkat-chrome-preview-v1.0.4
+          path: |
+            releases/generator-preview/extension/manifest.json
+            releases/generator-preview/extension/content.js
+            releases/generator-preview/extension/background.js
+            releases/generator-preview/extension/PETUNJUK.txt
+          if-no-files-found: error
+          retention-days: 7
