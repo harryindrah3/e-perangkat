@@ -1,0 +1,5 @@
+Generator route recovery Preview deployment.
+Target Vercel project: genarator-e-perangkat
+Production deployments must remain unchanged.
+Preview extension: v1.0.4
+Timestamp: 2026-09-24T00:03:33.346Z
