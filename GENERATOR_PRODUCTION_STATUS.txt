@@ -1,4 +1,4 @@
-AUTHORIZE https://vercel.com/oauth/device?user_code=HZKT-FGFK
+PREPARING_PRODUCTION
 Rollback deployment: dpl_3bXyMaCCfZmA2qAUWc7jZLiB26R8
 Production Generator: https://genarator-e-perangkat.vercel.app/
 Production E-Perangkat: https://e-perangkat-online-a-f.vercel.app/
