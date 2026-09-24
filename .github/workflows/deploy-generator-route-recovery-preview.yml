@@ -1,0 +1,166 @@
+name: Deploy Generator Route Recovery Preview
+on:
+  push:
+    branches:
+      - preview/generator-route-recovery-20260924
+    paths:
+      - releases/generator-preview/GENERATOR_PREVIEW_DEPLOY_TRIGGER.txt
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      STATUS_BRANCH: generator-preview-status-20260924
+      TEAM_ID: team_i5YnQIDbBKi8FgTPI0YD6uOu
+      PROJECT_ID: prj_op2PrORnNlxHhoKrTW5c8grmFJpL
+      TEAM_SLUG: harryindrah3-6239s-projects
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: preview/generator-route-recovery-20260924
+          fetch-depth: 0
+
+      - name: Prepare isolated status channel
+        shell: bash
+        run: |
+          set -e
+          git config user.name "Generator Preview Deploy"
+          git config user.email "generator-preview@e-perangkat.local"
+          git fetch origin "$STATUS_BRANCH:$STATUS_BRANCH"
+          git worktree add /tmp/generator-preview-status "$STATUS_BRANCH"
+          cat > /tmp/update-generator-preview-status.sh <<'EOS'
+          #!/usr/bin/env bash
+          set -e
+          msg="$1"
+          cd /tmp/generator-preview-status
+          {
+            printf "%s\n" "$msg"
+            printf "Production Generator unchanged: https://genarator-e-perangkat.vercel.app/\n"
+            printf "Production E-Perangkat unchanged: https://e-perangkat-online-a-f.vercel.app/\n"
+          } > GENERATOR_PREVIEW_STATUS.txt
+          git add GENERATOR_PREVIEW_STATUS.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(generator-preview-status): update preview status"
+            git push origin HEAD:"$STATUS_BRANCH"
+          fi
+          EOS
+          chmod +x /tmp/update-generator-preview-status.sh
+          /tmp/update-generator-preview-status.sh "PREPARING_PREVIEW"
+
+      - name: Validate Preview source
+        shell: bash
+        run: |
+          set -e
+          ROOT="releases/generator-preview"
+          test -f "$ROOT/index.html"
+          test -f "$ROOT/app.js"
+          test -f "$ROOT/batch-core.js"
+          test -f "$ROOT/catalog.json"
+          test -f "$ROOT/style.css"
+          test -f "$ROOT/extension/manifest.json"
+          test -f "$ROOT/extension/content.js"
+          test -f "$ROOT/extension/background.js"
+          node --check "$ROOT/app.js"
+          node --check "$ROOT/batch-core.js"
+          node --check "$ROOT/extension/content.js"
+          node --check "$ROOT/extension/background.js"
+          node - <<'NODE'
+          const fs=require('fs');
+          const root='releases/generator-preview';
+          const m=JSON.parse(fs.readFileSync(root+'/extension/manifest.json','utf8'));
+          if(m.version!=='1.0.4') throw new Error('Extension Preview must be 1.0.4');
+          if(!m.permissions.includes('debugger')||!m.permissions.includes('downloads')) throw new Error('Missing Chrome permissions');
+          const c=JSON.parse(fs.readFileSync(root+'/catalog.json','utf8'));
+          for(const id of ['fase-b-ipas','fase-a-pendidikan-agama-islam-erlangga','fase-b-pendidikan-agama-islam-erlangga','fase-c-pendidikan-agama-islam-erlangga']){
+            if(!c.some(x=>x.id===id)) throw new Error('Catalog missing '+id);
+          }
+          const app=fs.readFileSync(root+'/app.js','utf8');
+          if(!app.includes("portalOrigin:'https://e-perangkat-online-a-f.vercel.app'")) throw new Error('Current Production print origin missing');
+          const bg=fs.readFileSync(root+'/extension/background.js','utf8');
+          for(const token of ['Page.printToPDF','/print.html','Failed to fetch','preferCSSPageSize:true']){
+            if(!bg.includes(token)) throw new Error('Background missing '+token);
+          }
+          if(bg.includes('e-perangkat-online-a-efzg7qnbn')) throw new Error('Dead production source found');
+          console.log('Generator Preview source validation PASS');
+          NODE
+          /tmp/update-generator-preview-status.sh "SOURCE_VALIDATED"
+
+      - name: Build Preview extension ZIP
+        shell: bash
+        run: |
+          set -e
+          ROOT="releases/generator-preview"
+          mkdir -p "$ROOT/downloads"
+          rm -f "$ROOT/downloads/genarator-e-perangkat-chrome-preview-v1.0.4.zip"
+          (
+            cd "$ROOT/extension"
+            zip -r ../downloads/genarator-e-perangkat-chrome-preview-v1.0.4.zip .
+          )
+          test -s "$ROOT/downloads/genarator-e-perangkat-chrome-preview-v1.0.4.zip"
+          unzip -t "$ROOT/downloads/genarator-e-perangkat-chrome-preview-v1.0.4.zip"
+          /tmp/update-generator-preview-status.sh "EXTENSION_ZIP_BUILT"
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Authenticate Vercel for Preview only
+        shell: bash
+        run: |
+          set -e
+          vercel login --github > /tmp/vercel-login.log 2>&1 &
+          PID=$!
+          LOGIN_URL=""
+          for i in $(seq 1 120); do
+            LOGIN_URL=$(grep -Eo 'https://vercel.com/oauth/device\?user_code=[A-Z0-9-]+' /tmp/vercel-login.log | tail -1 || true)
+            if [ -n "$LOGIN_URL" ]; then break; fi
+            if ! kill -0 "$PID" 2>/dev/null; then break; fi
+            sleep 2
+          done
+          if [ -z "$LOGIN_URL" ]; then
+            cat /tmp/vercel-login.log
+            /tmp/update-generator-preview-status.sh "LOGIN_URL_NOT_FOUND"
+            exit 1
+          fi
+          /tmp/update-generator-preview-status.sh "AUTHORIZE $LOGIN_URL"
+          wait "$PID"
+          vercel whoami
+          /tmp/update-generator-preview-status.sh "AUTHENTICATED"
+
+      - name: Deploy Generator Preview only
+        shell: bash
+        run: |
+          set -e
+          ROOT="releases/generator-preview"
+          mkdir -p "$ROOT/.vercel"
+          cat > "$ROOT/.vercel/project.json" <<EOF
+          {"orgId":"$TEAM_ID","projectId":"$PROJECT_ID"}
+          EOF
+          /tmp/update-generator-preview-status.sh "DEPLOYING_PREVIEW"
+          DEPLOY_URL=$(vercel deploy --yes --scope "$TEAM_SLUG" --cwd "$ROOT" 2>&1 | tee /tmp/deploy.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
+          if [ -z "$DEPLOY_URL" ]; then
+            cat /tmp/deploy.log
+            /tmp/update-generator-preview-status.sh "DEPLOY_FAILED"
+            exit 1
+          fi
+          echo "DEPLOY_URL=$DEPLOY_URL" >> "$GITHUB_ENV"
+          /tmp/update-generator-preview-status.sh "DEPLOYED $DEPLOY_URL"
+
+      - name: Basic remote verification
+        shell: bash
+        run: |
+          set -e
+          sleep 8
+          code=$(curl -L -sS -o /tmp/root.html -w "%{http_code}" "$DEPLOY_URL/" || true)
+          if [ "$code" = "200" ]; then
+            grep -q "PREVIEW GENERATOR" /tmp/root.html
+            grep -q "1.0.4" /tmp/root.html
+            curl -L -fsS "$DEPLOY_URL/app.js" | grep -q "portalOrigin:'https://e-perangkat-online-a-f.vercel.app'"
+            zcode=$(curl -L -sS -o /tmp/ext.zip -w "%{http_code}" "$DEPLOY_URL/downloads/genarator-e-perangkat-chrome-preview-v1.0.4.zip" || true)
+            test "$zcode" = "200"
+            unzip -t /tmp/ext.zip
+            /tmp/update-generator-preview-status.sh "VERIFIED_OK $DEPLOY_URL"
+          else
+            /tmp/update-generator-preview-status.sh "DEPLOYED_PROTECTED $DEPLOY_URL"
+          fi
