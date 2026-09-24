@@ -1,215 +1,178 @@
 'use strict';
-importScripts('core.js', 'job-utils.js', 'pdf-lib.min.js');
-const {bounded, readPdfStream} = GeneratorJobs;
-const {ORIGIN,safeFilename,choose,snapshotForOrder,printUrl} = GeneratorCore;
-const CHANNEL = 'genarator-e-perangkat-v1';
-const SITE = 'https://genarator-e-perangkat.vercel.app';
-const catalogPromise = fetch(chrome.runtime.getURL('catalog.json')).then(r=>r.json());
-let running = null;
-const delay = ms => new Promise(resolve=>setTimeout(resolve,ms));
-chrome.action.onClicked.addListener(()=>chrome.tabs.create({url:SITE}));
+const VERSION='1.0.4';
+const DEFAULT_PORTAL='https://e-perangkat-online-a-f.vercel.app';
+let activeJob={cancelled:false,printTabId:null,debuggee:null,generatorTabId:null};
 
-function allowedSender(sender) {
-  try { return sender.tab?.id != null && new URL(sender.url).origin === SITE; } catch { return false; }
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+function safeOrigin(value){try{const u=new URL(value);return u.origin===DEFAULT_PORTAL?u.origin:DEFAULT_PORTAL}catch(_){return DEFAULT_PORTAL}}
+function sanitize(name){return String(name||'E-Perangkat').replace(/[<>:"/\\|?*\x00-\x1F]/g,' ').replace(/\s+/g,' ').trim().slice(0,180)||'E-Perangkat'}
+function sendProgress(id,message){
+  if(!activeJob.generatorTabId)return;
+  chrome.tabs.sendMessage(activeJob.generatorTabId,{type:'GENERATOR_PROGRESS',id,message}).catch(()=>{});
 }
-async function sourceTab() {
-  const tabs = await chrome.tabs.query({url:ORIGIN+'/*'});
-  let tab = tabs.find(t=>t.id !== running?.renderTabId && /\/index\.html|\.app\/$/.test(t.url||'')) || tabs.find(t=>t.id !== running?.renderTabId);
-  if (!tab) tab = await chrome.tabs.create({url:ORIGIN+'/',active:false});
-  for(let i=0;i<60;i++) {
-    const current = await chrome.tabs.get(tab.id);
-    if(current.status==='complete') return current;
-    await delay(500);
-  }
-  throw Error('E-Perangkat belum selesai dimuat. Buka portal lalu coba kembali.');
+function tabComplete(tabId,timeout=45000){
+  return new Promise((resolve,reject)=>{
+    const timer=setTimeout(()=>{chrome.tabs.onUpdated.removeListener(onUpdate);reject(Error('Tab E-Perangkat terlalu lama dimuat.'))},timeout);
+    const onUpdate=(id,info,tab)=>{if(id===tabId&&info.status==='complete'){clearTimeout(timer);chrome.tabs.onUpdated.removeListener(onUpdate);resolve(tab)}};
+    chrome.tabs.onUpdated.addListener(onUpdate);
+    chrome.tabs.get(tabId).then(tab=>{if(tab.status==='complete'){clearTimeout(timer);chrome.tabs.onUpdated.removeListener(onUpdate);resolve(tab)}}).catch(()=>{});
+  });
 }
-async function readStorage() {
-  const tab = await sourceTab();
-  const results = await chrome.scripting.executeScript({target:{tabId:tab.id},func:()=>{
-    const data={};
-    for(let i=0;i<localStorage.length;i++) {
-      const k=localStorage.key(i);
-      if(k?.startsWith('eperangkat.')) data[k]=localStorage.getItem(k);
+async function ensurePortalTab(origin){
+  const tabs=await chrome.tabs.query({url:origin+'/*'});
+  let tab=tabs.find(t=>t.url?.startsWith(origin+'/apps/'))||tabs[0];
+  if(tab)return tab;
+  tab=await chrome.tabs.create({url:origin+'/',active:false});
+  await tabComplete(tab.id,60000);
+  return tab;
+}
+async function execute(tabId,func,args=[]){
+  const res=await chrome.scripting.executeScript({target:{tabId},func,args});
+  return res?.[0]?.result;
+}
+async function collectOrders(tabId,apps){
+  return execute(tabId,(apps)=>{
+    const records=[];
+    for(const app of Array.isArray(apps)?apps:[]){
+      if(!app?.storageKey)continue;
+      let store;try{store=JSON.parse(localStorage.getItem(app.storageKey)||'{}')}catch(_){store={}};
+      for(const order of Array.isArray(store?.orders)?store.orders:[]){
+        if(!order?.id)continue;
+        const p=order.profile||{};
+        records.push({
+          appId:app.id,orderId:order.id,number:order.number||'',customer:order.customer||'',
+          teacher:p.teacher||order.teacher||order.customer||'',school:p.school||order.school||'',
+          year:p.year||order.year||'',grade:order.grade||localStorage.getItem(app.storageKey.replace(/\.orders$/,'.grade'))||'',
+          paymentStatus:order.paymentStatus||'belum_lunas',updatedAt:order.updatedAt||order.createdAt||'',
+          hasSignature:Boolean(p.teacherSignature||p.principalSignature),
+          hasCustomLogo:Boolean(p.customLogoLeft||p.customLogoRight)
+        });
+      }
     }
-    return data;
-  }});
-  return results[0]?.result || {};
+    return records;
+  },[apps]);
 }
-async function listOrders() {
-  const [raw,apps] = await Promise.all([readStorage(),catalogPromise]);
-  const records=[];
-  for(const app of apps) {
-    let store;
-    try {store=JSON.parse(raw[app.storageKey]||'{}')} catch {continue}
-    for(const o of store.orders||[]) {
-      if(!o.id) continue;
-      records.push({appId:app.id,orderId:o.id,number:o.number||'',customer:o.customer||'',teacher:o.profile?.teacher||'',school:o.profile?.school||'',year:o.profile?.year||'',grade:o.grade||'',paymentStatus:o.paymentStatus||'belum_lunas',updatedAt:o.updatedAt||'',hasSignature:!!(o.profile?.teacherSignature||o.profile?.principalSignature),hasCustomLogo:!!(o.profile?.customLogoLeft||o.profile?.customLogoRight)});
+async function snapshotAndActivate(tabId,app,orderId,grade){
+  return execute(tabId,(app,orderId,grade)=>{
+    const k=app.storageKey,prefix=k.replace(/\.orders$/,'');
+    const keys=[k,prefix+'.profile',prefix+'.students',prefix+'.grade'];
+    const before={};for(const key of keys)before[key]=localStorage.getItem(key);
+    const store=JSON.parse(localStorage.getItem(k)||'{}');
+    const order=(store.orders||[]).find(o=>o.id===orderId);
+    if(!order)throw new Error('Pesanan tidak ditemukan di browser E-Perangkat.');
+    store.activeId=order.id;
+    localStorage.setItem(k,JSON.stringify(store));
+    localStorage.setItem(prefix+'.profile',JSON.stringify(order.profile||{}));
+    localStorage.setItem(prefix+'.students',JSON.stringify(order.students||[]));
+    localStorage.setItem(prefix+'.grade',String(grade||order.grade||''));
+    return {before,keys};
+  },[app,orderId,grade]);
+}
+async function restore(tabId,snapshot){
+  if(!snapshot)return;
+  await execute(tabId,(snapshot)=>{
+    for(const key of snapshot.keys||[]){
+      const value=snapshot.before?.[key];
+      if(value===null||value===undefined)localStorage.removeItem(key);else localStorage.setItem(key,value);
     }
+  },[snapshot]).catch(()=>{});
+}
+async function waitPrintReady(tabId,id,timeout=100000){
+  const started=Date.now();let stable=0,last=-1;
+  while(Date.now()-started<timeout){
+    if(activeJob.cancelled)throw Error('Proses dibatalkan.');
+    const state=await execute(tabId,async()=>{
+      const text=(document.body?.innerText||'').slice(0,5000);
+      const error=/E-Perangkat gagal dimuat|Failed to fetch|TypeError:\s*Failed to fetch/i.test(text)?text:'';
+      if(document.fonts?.ready)await Promise.race([document.fonts.ready,new Promise(r=>setTimeout(r,1500))]);
+      const imagesReady=[...document.images].every(i=>i.complete);
+      const pages=document.querySelectorAll('#printRoot > .page').length;
+      return {ready:document.readyState,pages,imagesReady,title:document.title||'',status:document.getElementById('pageStatus')?.textContent||'',error};
+    });
+    if(state?.error)throw Error('Halaman cetak gagal dimuat: '+state.error.replace(/\s+/g,' ').slice(0,500));
+    if(state?.ready==='complete'&&state.pages>0&&state.imagesReady){
+      stable=state.pages===last?stable+1:0;last=state.pages;
+      sendProgress(id,'Menunggu layout cetak stabil · '+state.pages+' halaman…');
+      if(stable>=3){await sleep(1200);return state}
+    }else sendProgress(id,'Menunggu halaman cetak dan aset…');
+    await sleep(900);
   }
-  return {records,version:chrome.runtime.getManifest().version};
+  throw Error('Halaman cetak belum stabil dalam batas waktu.');
 }
-async function progress(job,message,extra={}) {
-  job.stage=message;
-  if(job.renderTabId && job.loaded) {
-    try { await bounded(chrome.scripting.executeScript({target:{tabId:job.renderTabId},func:(message)=>{
-      let box=document.getElementById('ep-generator-progress');
-      if(!box){box=document.createElement('aside');box.id='ep-generator-progress';box.setAttribute('role','status');
-        box.style.cssText='position:fixed;z-index:2147483647;top:12px;right:12px;max-width:380px;padding:16px 20px;background:#123c35;color:white;border-radius:12px;font:15px/1.5 Arial;box-shadow:0 4px 20px #0005';
-        const style=document.createElement('style');style.textContent='@media print {#ep-generator-progress{display:none!important}}';box.append(style);
-        const label=document.createElement('span');box.append(label);document.body.append(box);}
-      box.querySelector('span').textContent='Generator PDF: '+message;
-    },args:[message]}),2000,'Status tab'); } catch {}
-  }
-  try {await chrome.tabs.sendMessage(job.owner,{channel:CHANNEL,direction:'progress',id:job.id,message,...extra})} catch {}
+function debugSend(debuggee,method,params={}){
+  return new Promise((resolve,reject)=>chrome.debugger.sendCommand(debuggee,method,params,result=>{
+    const e=chrome.runtime.lastError;if(e)reject(Error(e.message));else resolve(result||{});
+  }));
 }
-function ensureActive(job) {if(job.cancelled) throw Error('Proses dibatalkan.');if(job.detached)throw Error('Koneksi mesin cetak terputus: '+job.detached);if(Date.now()>job.deadline)throw Error('Batas waktu pembuatan PDF terlampaui.');}
-async function command(job,method,params={},limit) {
-  ensureActive(job);
-  const timeout=Math.min(limit??(method==='Page.printToPDF'?600000:30000),job.deadline-Date.now());
-  return bounded(chrome.debugger.sendCommand({tabId:job.renderTabId},method,params),timeout,method);
+async function waitDownload(downloadId,timeout=180000){
+  return new Promise((resolve,reject)=>{
+    const timer=setTimeout(()=>{chrome.downloads.onChanged.removeListener(listener);reject(Error('Unduhan PDF melewati batas waktu.'))},timeout);
+    const listener=delta=>{
+      if(delta.id!==downloadId)return;
+      if(delta.state?.current==='complete'){clearTimeout(timer);chrome.downloads.onChanged.removeListener(listener);resolve()}
+      else if(delta.state?.current==='interrupted'){clearTimeout(timer);chrome.downloads.onChanged.removeListener(listener);reject(Error('Unduhan PDF terputus.'))}
+    };
+    chrome.downloads.onChanged.addListener(listener);
+  });
 }
-async function evaluate(job,expression) {
-  const r=await command(job,'Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true});
-  if(r.exceptionDetails) throw Error(r.exceptionDetails.exception?.description||r.exceptionDetails.text);
-  return r.result?.value;
-}
-const auditExpression = `(() => {
- const pages=[...document.querySelectorAll('#printRoot .page')];
- const images=[...document.images].filter(i=>i.closest('#printRoot'));
- const pending=images.filter(i=>!i.complete).length;
- const broken=images.filter(i=>i.complete&&!i.naturalWidth&&i.getAttribute('src')).map(i=>i.alt||'Gambar');
- const text=pages.map(p=>p.textContent).join('');let hash=2166136261;
- for(let i=0;i<text.length;i++) hash=Math.imul(hash^text.charCodeAt(i),16777619)>>>0;
- const sizes=pages.map(p=>{const r=p.getBoundingClientRect();return Math.round(r.width)+','+Math.round(r.height)+','+p.scrollHeight}).join(';');
- return {pages:pages.length,hash,sizes,pending,broken,ready:document.readyState==='complete'&&document.fonts.status==='loaded',title:document.title,printedPages:Number(document.documentElement.dataset.generatorPrintedPages)||0,
- firstText:pages.slice(0,5).map(p=>p.innerText).join(''), fonts:[...new Set(pages.slice(0,4).flatMap(p=>[...p.querySelectorAll('*')].map(e=>getComputedStyle(e).fontFamily)))]};
-})()`;
-async function stable(job,timeout=100000) {
-  const start=Date.now();let last='',matches=0,lastState;
-  while(Date.now()-start<timeout) {
-    ensureActive(job);
-    let s;
-    try {s=await evaluate(job,auditExpression)} catch(error) {
-      ensureActive(job);
-      if(!/context|navigat/i.test(error.message))throw error;
-      await delay(500);continue;
-    }
-    if(!s){await delay(500);continue;}
-    lastState=s;
-    if(job.loaded && Date.now()-(job.lastReport||0)>5000){job.lastReport=Date.now();await progress(job,'Menyiapkan '+s.pages+' halaman'+(s.pending?' · '+s.pending+' gambar menunggu':'')+'…',{pages:s.pages});}
-    const sig=JSON.stringify([s.pages,s.hash,s.sizes,s.pending,s.broken,s.ready]);
-    if(s.ready&&s.pages>0&&!s.pending&&sig===last) matches++;else matches=0;
-    last=sig;
-    if(matches>=6) {
-      if(s.broken.length) throw Error('Gambar belum termuat: '+[...new Set(s.broken)].slice(0,3).join(', ')+'. Coba buka pratinjau E-Perangkat terlebih dahulu.');
-      return s;
-    }
-    await delay(700);
-  }
-  throw Error('Halaman cetak belum stabil'+(lastState?' ('+lastState.pages+' halaman terbaca)':'')+'. Coba kembali setelah memeriksa pratinjau asli.');
-}
-function isolatedStorageScript(storage) {
-  return `(() => {
-    if(location.origin!==${JSON.stringify(ORIGIN)})return;
-    const data=${JSON.stringify(storage)};
-    const methods={getItem:k=>Object.prototype.hasOwnProperty.call(data,String(k))?data[String(k)]:null,
-      setItem:(k,v)=>{data[String(k)]=String(v)},removeItem:k=>{delete data[String(k)]},clear:()=>{for(const k of Object.keys(data))delete data[k]},
-      key:i=>Object.keys(data)[Number(i)]??null};
-    const memory=new Proxy(methods,{get:(t,k)=>k==='length'?Object.keys(data).length:k in t?t[k]:data[k],set:(t,k,v)=>{data[k]=String(v);return true},
-      ownKeys:()=>Object.keys(data),getOwnPropertyDescriptor:(t,k)=>({enumerable:true,configurable:true,value:data[k]})});
-    Object.defineProperty(window,'localStorage',{configurable:true,get:()=>memory});
-  })()`;
-}
-async function waitDownload(id) {
-  for(let i=0;i<120;i++) {
-    const [item]=await chrome.downloads.search({id});
-    if(item?.state==='complete')return;
-    if(item?.state==='interrupted')throw Error('Unduhan terhenti: '+(item.error||'periksa folder unduhan Chrome'));
-    await delay(500);
-  }
-  throw Error('PDF telah dikirim ke Chrome, tetapi penyimpanan belum selesai. Periksa menu Unduhan Chrome.');
-}
-async function generate(payload,job) {
-  let attached=false;
-  try {
-    const app=choose(await catalogPromise,payload);
-    await progress(job,'Membaca data lengkap pesanan…');
-    const {storage,order}=snapshotForOrder(await bounded(readStorage(),45000,'Membaca pesanan'),app,payload.orderId);
-    if(order.grade!==payload.grade)throw Error('Kelas pesanan berubah. Ambil ulang data sebelum membuat PDF.');
-    // Pagination uses requestAnimationFrame. Keep the temporary print tab
-    // visible so Chrome does not suspend layout work in a background tab.
-    const tab=await chrome.tabs.create({url:'about:blank',active:true});
-    job.renderTabId=tab.id;
-    await bounded(chrome.debugger.attach({tabId:tab.id},'1.3'),10000,'Menghubungkan mesin cetak');attached=true;
-    await command(job,'Page.enable');
-    await progress(job,'Memeriksa mesin PDF Chrome…');
-    const probe=await command(job,'Page.printToPDF',{transferMode:'ReturnAsBase64',generateTaggedPDF:false},15000);
-    if(!probe.data||!atob(probe.data).startsWith('%PDF-'))throw Error('Chrome tidak menghasilkan PDF pada pemeriksaan awal.');
-    await command(job,'Network.enable');
-    // The print tab is an isolated read-only view: no cloud synchronization.
-    await command(job,'Network.setBlockedURLs',{urls:['*://*/api/database*','*://script.google.com/*','*://script.googleusercontent.com/*']});
-    await command(job,'Page.addScriptToEvaluateOnNewDocument',{source:isolatedStorageScript(storage)});
-    await progress(job,'Memuat halaman cetak asli…');
-    await command(job,'Page.navigate',{url:printUrl(app,payload)});
-    await stable(job);
-    job.loaded=true;
-    await progress(job,'Memeriksa identitas dan kesiapan halaman…');
-    let before=await stable(job);
-    const teacher=String(order.profile?.teacher||'').replace(/\s+/g,' ').trim();
-    if(teacher&&!before.firstText.replace(/\s+/g,' ').includes(teacher))throw Error('Identitas pada halaman cetak tidak cocok dengan pesanan. PDF dibatalkan.');
-    // Complete the source's synchronous print preparation once, then wait for
-    // its deferred pagination to settle. Pause source JS only in this isolated
-    // tab so beforeprint/observers cannot rebuild it during the native PDF job.
-    await progress(job,'Menyiapkan hasil cetak akhir…');
-    await evaluate(job,`(() => {window.dispatchEvent(new Event('beforeprint'));return true})()`);
-    before=await stable(job);
-    await progress(job,'Membuat PDF '+before.pages+' halaman. Dokumen besar bisa memerlukan beberapa menit; biarkan tab ini terbuka.',{pages:before.pages});
-    await command(job,'Emulation.setScriptExecutionDisabled',{value:true});
-    let output;
-    try {
-      output=await command(job,'Page.printToPDF',{printBackground:true,preferCSSPageSize:true,displayHeaderFooter:false,generateTaggedPDF:false,scale:1,marginTop:0,marginBottom:0,marginLeft:0,marginRight:0,transferMode:'ReturnAsStream'});
-    } finally {
-      // Use the transport directly so cancellation/deadline does not prevent
-      // resetting the override. The tab is closed before debugger detachment.
-      try{await bounded(chrome.debugger.sendCommand({tabId:job.renderTabId},'Emulation.setScriptExecutionDisabled',{value:false}),3000,'Memulihkan tab cetak');}catch{}
-    }
-    await progress(job,'Membaca file PDF dari Chrome…');
-    const bytes=await readPdfStream(output,(method,params)=>command(job,method,params));
-    const pdf=await PDFLib.PDFDocument.load(bytes,{updateMetadata:false});
-    const pages=pdf.getPageCount();
-    const warning=GeneratorJobs.pageCountWarning(pages,before.pages);
-    const filename=safeFilename(before.title)+'.pdf';
-    await progress(job,'Menyimpan '+pages+' halaman ke Unduhan…',{pages});
-    const downloadId=await bounded(chrome.downloads.download({url:'data:application/pdf;base64,'+GeneratorJobs.toBase64(bytes),filename,saveAs:false}),45000,'Mengirim PDF ke folder Unduhan');
+async function generate(id,payload){
+  const origin=safeOrigin(payload.portalOrigin);
+  const app=payload.app;
+  if(!app?.appPath||!app?.storageKey)throw Error('Data perangkat tidak lengkap. Muat ulang Preview Generator.');
+  const portalTab=await ensurePortalTab(origin);
+  let snap=null,attached=false;
+  activeJob.cancelled=false;
+  try{
+    sendProgress(id,'Menyiapkan data pesanan…');
+    snap=await snapshotAndActivate(portalTab.id,app,payload.orderId,payload.grade);
+    const u=new URL(origin+app.appPath+'/print.html');
+    u.searchParams.set('grade',payload.grade||'');
+    u.searchParams.set('section','all');
+    u.searchParams.set('semester',payload.semester||'1');
+    u.searchParams.set('order',payload.orderId||'');
+    sendProgress(id,'Membuka jalur cetak Production terbaru…');
+    const printTab=await chrome.tabs.create({url:u.href,active:false});
+    activeJob.printTabId=printTab.id;
+    await tabComplete(printTab.id,70000);
+    const ready=await waitPrintReady(printTab.id,id,100000);
+    sendProgress(id,'Membuat PDF dengan mesin cetak Chrome…');
+    const debuggee={tabId:printTab.id};activeJob.debuggee=debuggee;
+    await chrome.debugger.attach(debuggee,'1.3');attached=true;
+    await debugSend(debuggee,'Page.enable');
+    const pdf=await debugSend(debuggee,'Page.printToPDF',{
+      printBackground:true,displayHeaderFooter:false,preferCSSPageSize:true,
+      scale:1,marginTop:0,marginBottom:0,marginLeft:0,marginRight:0
+    });
+    if(!pdf?.data)throw Error('Chrome tidak mengembalikan data PDF.');
+    const filename=sanitize(ready.title||('E-Perangkat '+(app.subject||'')+' Kelas '+payload.grade+' Semester '+payload.semester))+'.pdf';
+    sendProgress(id,'Mengirim PDF ke folder Unduhan…');
+    const downloadId=await chrome.downloads.download({url:'data:application/pdf;base64,'+pdf.data,filename,saveAs:false,conflictAction:'uniquify'});
     await waitDownload(downloadId);
-    return {filename,pages,bytes:bytes.length,fonts:before.fonts,semester:String(payload.semester),warning};
-  } catch(error) {
-    throw Error('Tahap: '+(job.stage||'Persiapan')+' — '+(error?.message||String(error)));
+    const bytes=Math.floor(pdf.data.length*3/4);
+    return {filename,pages:ready.pages,bytes,warning:'',printUrl:u.href};
   } finally {
-    // Close the isolated document while network blocking is still attached,
-    // so queued synchronization cannot resume on a restored source script.
-    if(job.renderTabId) {try{await bounded(chrome.tabs.remove(job.renderTabId),3000,'Menutup tab sementara')}catch{}}
-    if(attached) {try{await bounded(chrome.debugger.detach({tabId:job.renderTabId}),3000,'Melepas mesin cetak')}catch{}}
-    try{await bounded(chrome.tabs.update(job.owner,{active:true}),3000,'Kembali ke generator')}catch{}
+    if(attached&&activeJob.debuggee)await chrome.debugger.detach(activeJob.debuggee).catch(()=>{});
+    if(activeJob.printTabId)await chrome.tabs.remove(activeJob.printTabId).catch(()=>{});
+    await restore(portalTab.id,snap);
+    activeJob.printTabId=null;activeJob.debuggee=null;
   }
 }
-chrome.runtime.onMessage.addListener((message,sender,respond)=>{
-  if(!allowedSender(sender)||message?.channel!==CHANNEL) return;
+chrome.runtime.onMessage.addListener((message,sender,sendResponse)=>{
+  if(!message||message.type!=='GENERATOR_REQUEST')return;
+  activeJob.generatorTabId=sender.tab?.id||null;
   (async()=>{
-    if(message.action==='hello')return {version:chrome.runtime.getManifest().version};
-    if(message.action==='orders')return listOrders();
-    if(message.action==='cancel') {
-      if(running?.owner===sender.tab.id) {running.cancelled=true;if(running.renderTabId)try{await chrome.tabs.remove(running.renderTabId)}catch{}}
-      return {cancelled:true};
+    const {id,action,payload={}}=message;
+    if(action==='hello')return {result:{version:VERSION}};
+    if(action==='cancel'){activeJob.cancelled=true;if(activeJob.printTabId)await chrome.tabs.remove(activeJob.printTabId).catch(()=>{});return {result:{ok:true}}}
+    if(action==='orders'){
+      const origin=safeOrigin(payload.portalOrigin);
+      sendProgress(id,'Membaca pesanan dari E-Perangkat…');
+      const tab=await ensurePortalTab(origin);
+      const records=await collectOrders(tab.id,payload.apps||[]);
+      return {result:{records}};
     }
-    if(message.action==='generate') {
-      if(running)throw Error('Masih ada PDF yang diproses. Tunggu sampai selesai.');
-      const job={owner:sender.tab.id,id:message.id,renderTabId:null,cancelled:false,deadline:Date.now()+900000};running=job;
-      try{return await generate(message.payload,job)}finally{if(running===job)running=null}
-    }
-    throw Error('Perintah tidak dikenal.');
-  })().then(result=>respond({result}),error=>respond({error:error?.message||String(error)}));
+    if(action==='generate')return {result:await generate(id,payload)};
+    throw Error('Aksi ekstensi tidak dikenal: '+action);
+  })().then(sendResponse).catch(error=>sendResponse({error:error?.message||String(error)}));
   return true;
 });
-
-chrome.debugger.onDetach.addListener((source,reason)=>{if(running?.renderTabId===source.tabId)running.detached=reason;});
