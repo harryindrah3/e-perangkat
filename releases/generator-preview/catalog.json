@@ -1,0 +1,890 @@
+[
+  {
+    "id": "fase-e-bahasa-arab",
+    "subject": "Bahasa Arab",
+    "phase": "E",
+    "classes": [
+      "X"
+    ],
+    "appPath": "/apps/fase-e/E-Perangkat_bahasa-arab_Fase-E",
+    "storageKey": "eperangkat.bahasa-arab.fasee.v1.orders"
+  },
+  {
+    "id": "fase-f-bahasa-arab",
+    "subject": "Bahasa Arab",
+    "phase": "F",
+    "classes": [
+      "XI",
+      "XII"
+    ],
+    "appPath": "/apps/fase-f/E-Perangkat_bahasa-arab_Fase-F",
+    "storageKey": "eperangkat.bahasa-arab.fasef.v1.orders"
+  },
+  {
+    "id": "fase-a-bahasa-indonesia",
+    "subject": "Bahasa Indonesia",
+    "phase": "A",
+    "classes": [
+      "I",
+      "II"
+    ],
+    "appPath": "/apps/fase-a/E-Perangkat_bahasa-indonesia_Fase-A",
+    "storageKey": "eperangkat.bahasa-indonesia.fasea.v1.orders"
+  },
+  {
+    "id": "fase-b-bahasa-indonesia",
+    "subject": "Bahasa Indonesia",
+    "phase": "B",
+    "classes": [
+      "III",
+      "IV"
+    ],
+    "appPath": "/apps/fase-b/E-Perangkat_bahasa-indonesia_Fase-B",
+    "storageKey": "eperangkat.bahasa-indonesia.faseb.v1.orders"
+  },
+  {
+    "id": "fase-c-bahasa-indonesia",
+    "subject": "Bahasa Indonesia",
+    "phase": "C",
+    "classes": [
+      "V",
+      "VI"
+    ],
+    "appPath": "/apps/fase-c/E-Perangkat_bahasa-indonesia_Fase-C",
+    "storageKey": "eperangkat.bahasa-indonesia.fasec.v1.orders"
+  },
+  {
+    "id": "fase-d-bahasa-indonesia",
+    "subject": "Bahasa Indonesia",
+    "phase": "D",
+    "classes": [
+      "VII",
+      "VIII",
+      "IX"
+    ],
+    "appPath": "/apps/fase-d/E-Perangkat_bahasa-indonesia_Fase-D",
+    "storageKey": "eperangkat.bahasa-indonesia.fased.v1.orders"
+  },
+  {
+    "id": "fase-e-bahasa-indonesia",
+    "subject": "Bahasa Indonesia",
+    "phase": "E",
+    "classes": [
+      "X"
+    ],
+    "appPath": "/apps/fase-e/E-Perangkat_bahasa-indonesia_Fase-E",
+    "storageKey": "eperangkat.bahasa-indonesia.fasee.v1.orders"
+  },
+  {
+    "id": "fase-f-bahasa-indonesia",
+    "subject": "Bahasa Indonesia",
+    "phase": "F",
+    "classes": [
+      "XI",
+      "XII"
+    ],
+    "appPath": "/apps/fase-f/E-Perangkat_bahasa-indonesia_Fase-F",
+    "storageKey": "eperangkat.bahasa-indonesia.fasef.v1.orders"
+  },
+  {
+    "id": "fase-a-bahasa-inggris",
+    "subject": "Bahasa Inggris",
+    "phase": "A",
+    "classes": [
+      "I",
+      "II"
+    ],
+    "appPath": "/apps/fase-a/E-Perangkat_bahasa-inggris_Fase-A",
+    "storageKey": "eperangkat.bahasa-inggris.fasea.v1.orders"
+  },
+  {
+    "id": "fase-b-bahasa-inggris",
+    "subject": "Bahasa Inggris",
+    "phase": "B",
+    "classes": [
+      "III",
+      "IV"
+    ],
+    "appPath": "/apps/fase-b/E-Perangkat_bahasa-inggris_Fase-B",
+    "storageKey": "eperangkat.bahasa-inggris.faseb.v1.orders"
+  },
+  {
+    "id": "fase-c-bahasa-inggris",
+    "subject": "Bahasa Inggris",
+    "phase": "C",
+    "classes": [
+      "V",
+      "VI"
+    ],
+    "appPath": "/apps/fase-c/E-Perangkat_bahasa-inggris_Fase-C",
+    "storageKey": "eperangkat.bahasa-inggris.fasec.v1.orders"
+  },
+  {
+    "id": "fase-d-bahasa-inggris",
+    "subject": "Bahasa Inggris",
+    "phase": "D",
+    "classes": [
+      "VII",
+      "VIII",
+      "IX"
+    ],
+    "appPath": "/apps/fase-d/E-Perangkat_bahasa-inggris_Fase-D",
+    "storageKey": "eperangkat.bahasa-inggris.fased.v1.orders"
+  },
+  {
+    "id": "fase-e-bahasa-inggris",
+    "subject": "Bahasa Inggris",
+    "phase": "E",
+    "classes": [
+      "X"
+    ],
+    "appPath": "/apps/fase-e/E-Perangkat_bahasa-inggris_Fase-E",
+    "storageKey": "eperangkat.bahasa-inggris.fasee.v1.orders"
+  },
+  {
+    "id": "fase-f-bahasa-inggris",
+    "subject": "Bahasa Inggris",
+    "phase": "F",
+    "classes": [
+      "XI",
+      "XII"
+    ],
+    "appPath": "/apps/fase-f/E-Perangkat_bahasa-inggris_Fase-F",
+    "storageKey": "eperangkat.bahasa-inggris.fasef.v1.orders"
+  },
+  {
+    "id": "fase-f-bahasa-inggris-tingkat-lanjut",
+    "subject": "Bahasa Inggris Tingkat Lanjut",
+    "phase": "F",
+    "classes": [
+      "XI",
+      "XII"
+    ],
+    "appPath": "/apps/fase-f/E-Perangkat_bahasa-inggris-tingkat-lanjut_Fase-F",
+    "storageKey": "eperangkat.bahasa-inggris-tingkat-lanjut.fasef.v1.orders"
+  },
+  {
+    "id": "fase-e-biologi",
+    "subject": "Biologi",
+    "phase": "E",
+    "classes": [
+      "X"
+    ],
+    "appPath": "/apps/fase-e/E-Perangkat_biologi_Fase-E",
+    "storageKey": "eperangkat.biologi.fasee.v1.orders"
+  },
+  {
+    "id": "fase-f-biologi",
+    "subject": "Biologi",
+    "phase": "F",
+    "classes": [
+      "XI",
+      "XII"
+    ],
+    "appPath": "/apps/fase-f/E-Perangkat_biologi_Fase-F",
+    "storageKey": "eperangkat.biologi.fasef.v1.orders"
+  },
+  {
+    "id": "fase-e-ekonomi",
+    "subject": "Ekonomi",
+    "phase": "E",
+    "classes": [
+      "X"
+    ],
+    "appPath": "/apps/fase-e/E-Perangkat_ekonomi_Fase-E",
+    "storageKey": "eperangkat.ekonomi.fasee.v1.orders"
+  },
+  {
+    "id": "fase-f-ekonomi",
+    "subject": "Ekonomi",
+    "phase": "F",
+    "classes": [
+      "XI",
+      "XII"
+    ],
+    "appPath": "/apps/fase-f/E-Perangkat_ekonomi_Fase-F",
+    "storageKey": "eperangkat.ekonomi.fasef.v1.orders"
+  },
+  {
+    "id": "fase-e-fisika",
+    "subject": "Fisika",
+    "phase": "E",
+    "classes": [
+      "X"
+    ],
+    "appPath": "/apps/fase-e/E-Perangkat_fisika_Fase-E",
+    "storageKey": "eperangkat.fisika.fasee.v1.orders"
+  },
+  {
+    "id": "fase-f-fisika",
+    "subject": "Fisika",
+    "phase": "F",
+    "classes": [
+      "XI",
+      "XII"
+    ],
+    "appPath": "/apps/fase-f/E-Perangkat_fisika_Fase-F",
+    "storageKey": "eperangkat.fisika.fasef.v1.orders"
+  },
+  {
+    "id": "fase-e-geografi",
+    "subject": "Geografi",
+    "phase": "E",
+    "classes": [
+      "X"
+    ],
+    "appPath": "/apps/fase-e/E-Perangkat_geografi_Fase-E",
+    "storageKey": "eperangkat.geografi.fasee.v1.orders"
+  },
+  {
+    "id": "fase-f-geografi",
+    "subject": "Geografi",
+    "phase": "F",
+    "classes": [
+      "XI",
+      "XII"
+    ],
+    "appPath": "/apps/fase-f/E-Perangkat_geografi_Fase-F",
+    "storageKey": "eperangkat.geografi.fasef.v1.orders"
+  },
+  {
+    "id": "fase-d-ipa",
+    "subject": "Ilmu Pengetahuan Alam",
+    "phase": "D",
+    "classes": [
+      "VII",
+      "VIII",
+      "IX"
+    ],
+    "appPath": "/apps/fase-d/E-Perangkat_ipa_Fase-D",
+    "storageKey": "eperangkat.ipa.fased.v1.orders"
+  },
+  {
+    "id": "fase-b-ipas",
+    "subject": "Ilmu Pengetahuan Alam dan Sosial",
+    "phase": "B",
+    "classes": [
+      "III",
+      "IV"
+    ],
+    "appPath": "/apps/fase-b/E-Perangkat_ipas_Fase-B",
+    "storageKey": "eperangkat.ipas.faseb.v1.orders"
+  },
+  {
+    "id": "fase-c-ipas",
+    "subject": "Ilmu Pengetahuan Alam dan Sosial",
+    "phase": "C",
+    "classes": [
+      "V",
+      "VI"
+    ],
+    "appPath": "/apps/fase-c/E-Perangkat_ipas_Fase-C",
+    "storageKey": "eperangkat.ipas.fasec.v1.orders"
+  },
+  {
+    "id": "fase-d-ips",
+    "subject": "Ilmu Pengetahuan Sosial",
+    "phase": "D",
+    "classes": [
+      "VII",
+      "VIII",
+      "IX"
+    ],
+    "appPath": "/apps/fase-d/E-Perangkat_ips_Fase-D",
+    "storageKey": "eperangkat.ips.fased.v1.orders"
+  },
+  {
+    "id": "fase-d-informatika",
+    "subject": "Informatika",
+    "phase": "D",
+    "classes": [
+      "VII",
+      "VIII",
+      "IX"
+    ],
+    "appPath": "/apps/fase-d/E-Perangkat_informatika_Fase-D",
+    "storageKey": "eperangkat.informatika.fased.v1.orders"
+  },
+  {
+    "id": "fase-e-informatika",
+    "subject": "Informatika",
+    "phase": "E",
+    "classes": [
+      "X"
+    ],
+    "appPath": "/apps/fase-e/E-Perangkat_informatika_Fase-E",
+    "storageKey": "eperangkat.informatika.fasee.v1.orders"
+  },
+  {
+    "id": "fase-f-informatika",
+    "subject": "Informatika",
+    "phase": "F",
+    "classes": [
+      "XI",
+      "XII"
+    ],
+    "appPath": "/apps/fase-f/E-Perangkat_informatika_Fase-F",
+    "storageKey": "eperangkat.informatika.fasef.v1.orders"
+  },
+  {
+    "id": "fase-e-kimia",
+    "subject": "Kimia",
+    "phase": "E",
+    "classes": [
+      "X"
+    ],
+    "appPath": "/apps/fase-e/E-Perangkat_kimia_Fase-E",
+    "storageKey": "eperangkat.kimia.fasee.v1.orders"
+  },
+  {
+    "id": "fase-f-kimia",
+    "subject": "Kimia",
+    "phase": "F",
+    "classes": [
+      "XI",
+      "XII"
+    ],
+    "appPath": "/apps/fase-f/E-Perangkat_kimia_Fase-F",
+    "storageKey": "eperangkat.kimia.fasef.v1.orders"
+  },
+  {
+    "id": "fase-a-koding-ka",
+    "subject": "Koding dan Kecerdasan Artifisial",
+    "phase": "A",
+    "classes": [
+      "I",
+      "II"
+    ],
+    "appPath": "/apps/fase-a/E-Perangkat_koding-ka_Fase-A",
+    "storageKey": "eperangkat.koding-ka.fasea.v1.orders"
+  },
+  {
+    "id": "fase-b-koding-ka",
+    "subject": "Koding dan Kecerdasan Artifisial",
+    "phase": "B",
+    "classes": [
+      "III",
+      "IV"
+    ],
+    "appPath": "/apps/fase-b/E-Perangkat_koding-ka_Fase-B",
+    "storageKey": "eperangkat.koding-ka.faseb.v1.orders"
+  },
+  {
+    "id": "fase-c-koding-ka",
+    "subject": "Koding dan Kecerdasan Artifisial",
+    "phase": "C",
+    "classes": [
+      "V",
+      "VI"
+    ],
+    "appPath": "/apps/fase-c/E-Perangkat_koding-ka_Fase-C",
+    "storageKey": "eperangkat.koding-ka.fasec.v1.orders"
+  },
+  {
+    "id": "fase-d-koding-ka",
+    "subject": "Koding dan Kecerdasan Artifisial",
+    "phase": "D",
+    "classes": [
+      "VII",
+      "VIII",
+      "IX"
+    ],
+    "appPath": "/apps/fase-d/E-Perangkat_koding-ka_Fase-D",
+    "storageKey": "eperangkat.koding-ka.fased.v1.orders"
+  },
+  {
+    "id": "fase-a-matematika",
+    "subject": "Matematika",
+    "phase": "A",
+    "classes": [
+      "I",
+      "II"
+    ],
+    "appPath": "/apps/fase-a/E-Perangkat_matematika_Fase-A",
+    "storageKey": "eperangkat.matematika.fasea.v1.orders"
+  },
+  {
+    "id": "fase-b-matematika",
+    "subject": "Matematika",
+    "phase": "B",
+    "classes": [
+      "III",
+      "IV"
+    ],
+    "appPath": "/apps/fase-b/E-Perangkat_matematika_Fase-B",
+    "storageKey": "eperangkat.matematika.faseb.v1.orders"
+  },
+  {
+    "id": "fase-c-matematika",
+    "subject": "Matematika",
+    "phase": "C",
+    "classes": [
+      "V",
+      "VI"
+    ],
+    "appPath": "/apps/fase-c/E-Perangkat_matematika_Fase-C",
+    "storageKey": "eperangkat.matematika.fasec.v1.orders"
+  },
+  {
+    "id": "fase-d-matematika",
+    "subject": "Matematika",
+    "phase": "D",
+    "classes": [
+      "VII",
+      "VIII",
+      "IX"
+    ],
+    "appPath": "/apps/fase-d/E-Perangkat_matematika_Fase-D",
+    "storageKey": "eperangkat.matematika.fased.v1.orders"
+  },
+  {
+    "id": "fase-e-matematika",
+    "subject": "Matematika",
+    "phase": "E",
+    "classes": [
+      "X"
+    ],
+    "appPath": "/apps/fase-e/E-Perangkat_matematika_Fase-E",
+    "storageKey": "eperangkat.matematika.fasee.v1.orders"
+  },
+  {
+    "id": "fase-f-matematika",
+    "subject": "Matematika",
+    "phase": "F",
+    "classes": [
+      "XI",
+      "XII"
+    ],
+    "appPath": "/apps/fase-f/E-Perangkat_matematika_Fase-F",
+    "storageKey": "eperangkat.matematika.fasef.v1.orders"
+  },
+  {
+    "id": "fase-f-matematika-tingkat-lanjut",
+    "subject": "Matematika Tingkat Lanjut",
+    "phase": "F",
+    "classes": [
+      "XI",
+      "XII"
+    ],
+    "appPath": "/apps/fase-f/E-Perangkat_matematika-tingkat-lanjut_Fase-F",
+    "storageKey": "eperangkat.matematika-tingkat-lanjut.fasef.v1.orders"
+  },
+  {
+    "id": "fase-d-pendidikan-agama-islam-buku-2021",
+    "subject": "PAIBP (Buku 2021)",
+    "phase": "D",
+    "classes": [
+      "VII",
+      "VIII",
+      "IX"
+    ],
+    "appPath": "/apps/fase-d/E-Perangkat_pendidikan-agama-islam-buku-2021_Fase-D",
+    "storageKey": "eperangkat.pendidikan-agama-islam-buku-2021.fased.v1.orders"
+  },
+  {
+    "id": "fase-e-pendidikan-agama-islam",
+    "subject": "Pendidikan Agama Islam",
+    "phase": "E",
+    "classes": [
+      "X"
+    ],
+    "appPath": "/apps/fase-e/E-Perangkat_pendidikan-agama-islam_Fase-E",
+    "storageKey": "eperangkat.pendidikan-agama-islam.fasee.v1.orders"
+  },
+  {
+    "id": "fase-f-pendidikan-agama-islam",
+    "subject": "Pendidikan Agama Islam",
+    "phase": "F",
+    "classes": [
+      "XI",
+      "XII"
+    ],
+    "appPath": "/apps/fase-f/E-Perangkat_pendidikan-agama-islam_Fase-F",
+    "storageKey": "eperangkat.pendidikan-agama-islam.fasef.v1.orders"
+  },
+  {
+    "id": "fase-a-pendidikan-agama-islam",
+    "subject": "Pendidikan Agama Islam dan Budi Pekerti",
+    "phase": "A",
+    "classes": [
+      "I",
+      "II"
+    ],
+    "appPath": "/apps/fase-a/E-Perangkat_pendidikan-agama-islam_Fase-A",
+    "storageKey": "eperangkat.pendidikan-agama-islam.fasea.v1.orders"
+  },
+  {
+    "id": "fase-b-pendidikan-agama-islam",
+    "subject": "Pendidikan Agama Islam dan Budi Pekerti",
+    "phase": "B",
+    "classes": [
+      "III",
+      "IV"
+    ],
+    "appPath": "/apps/fase-b/E-Perangkat_pendidikan-agama-islam_Fase-B",
+    "storageKey": "eperangkat.pendidikan-agama-islam.faseb.v1.orders"
+  },
+  {
+    "id": "fase-c-pendidikan-agama-islam",
+    "subject": "Pendidikan Agama Islam dan Budi Pekerti",
+    "phase": "C",
+    "classes": [
+      "V",
+      "VI"
+    ],
+    "appPath": "/apps/fase-c/E-Perangkat_pendidikan-agama-islam_Fase-C",
+    "storageKey": "eperangkat.pendidikan-agama-islam.fasec.v1.orders"
+  },
+  {
+    "id": "fase-d-pendidikan-agama-islam",
+    "subject": "Pendidikan Agama Islam dan Budi Pekerti",
+    "phase": "D",
+    "classes": [
+      "VII",
+      "VIII",
+      "IX"
+    ],
+    "appPath": "/apps/fase-d/E-Perangkat_pendidikan-agama-islam_Fase-D",
+    "storageKey": "eperangkat.pendidikan-agama-islam.fased.v1.orders"
+  },
+  {
+    "id": "fase-a-pjok",
+    "subject": "Pendidikan Jasmani, Olahraga, dan Kesehatan",
+    "phase": "A",
+    "classes": [
+      "I",
+      "II"
+    ],
+    "appPath": "/apps/fase-a/E-Perangkat_pjok_Fase-A",
+    "storageKey": "eperangkat.pjok.fasea.v1.orders"
+  },
+  {
+    "id": "fase-b-pjok",
+    "subject": "Pendidikan Jasmani, Olahraga, dan Kesehatan",
+    "phase": "B",
+    "classes": [
+      "III",
+      "IV"
+    ],
+    "appPath": "/apps/fase-b/E-Perangkat_pjok_Fase-B",
+    "storageKey": "eperangkat.pjok.faseb.v1.orders"
+  },
+  {
+    "id": "fase-c-pjok",
+    "subject": "Pendidikan Jasmani, Olahraga, dan Kesehatan",
+    "phase": "C",
+    "classes": [
+      "V",
+      "VI"
+    ],
+    "appPath": "/apps/fase-c/E-Perangkat_pjok_Fase-C",
+    "storageKey": "eperangkat.pjok.fasec.v1.orders"
+  },
+  {
+    "id": "fase-d-pjok",
+    "subject": "Pendidikan Jasmani, Olahraga, dan Kesehatan",
+    "phase": "D",
+    "classes": [
+      "VII",
+      "VIII",
+      "IX"
+    ],
+    "appPath": "/apps/fase-d/E-Perangkat_pjok_Fase-D",
+    "storageKey": "eperangkat.pjok.fased.v1.orders"
+  },
+  {
+    "id": "fase-a-pendidikan-pancasila",
+    "subject": "Pendidikan Pancasila",
+    "phase": "A",
+    "classes": [
+      "I",
+      "II"
+    ],
+    "appPath": "/apps/fase-a/E-Perangkat_pendidikan-pancasila_Fase-A",
+    "storageKey": "eperangkat.pendidikan-pancasila.fasea.v1.orders"
+  },
+  {
+    "id": "fase-b-pendidikan-pancasila",
+    "subject": "Pendidikan Pancasila",
+    "phase": "B",
+    "classes": [
+      "III",
+      "IV"
+    ],
+    "appPath": "/apps/fase-b/E-Perangkat_pendidikan-pancasila_Fase-B",
+    "storageKey": "eperangkat.pendidikan-pancasila.faseb.v1.orders"
+  },
+  {
+    "id": "fase-c-pendidikan-pancasila",
+    "subject": "Pendidikan Pancasila",
+    "phase": "C",
+    "classes": [
+      "V",
+      "VI"
+    ],
+    "appPath": "/apps/fase-c/E-Perangkat_pendidikan-pancasila_Fase-C",
+    "storageKey": "eperangkat.pendidikan-pancasila.fasec.v1.orders"
+  },
+  {
+    "id": "fase-d-pendidikan-pancasila",
+    "subject": "Pendidikan Pancasila",
+    "phase": "D",
+    "classes": [
+      "VII",
+      "VIII",
+      "IX"
+    ],
+    "appPath": "/apps/fase-d/E-Perangkat_pendidikan-pancasila_Fase-D",
+    "storageKey": "eperangkat.pendidikan-pancasila.fased.v1.orders"
+  },
+  {
+    "id": "fase-e-pendidikan-pancasila",
+    "subject": "Pendidikan Pancasila",
+    "phase": "E",
+    "classes": [
+      "X"
+    ],
+    "appPath": "/apps/fase-e/E-Perangkat_pendidikan-pancasila_Fase-E",
+    "storageKey": "eperangkat.pendidikan-pancasila.fasee.v1.orders"
+  },
+  {
+    "id": "fase-f-pendidikan-pancasila",
+    "subject": "Pendidikan Pancasila",
+    "phase": "F",
+    "classes": [
+      "XI",
+      "XII"
+    ],
+    "appPath": "/apps/fase-f/E-Perangkat_pendidikan-pancasila_Fase-F",
+    "storageKey": "eperangkat.pendidikan-pancasila.fasef.v1.orders"
+  },
+  {
+    "id": "fase-e-pjok",
+    "subject": "PJOK",
+    "phase": "E",
+    "classes": [
+      "X"
+    ],
+    "appPath": "/apps/fase-e/E-Perangkat_pjok_Fase-E",
+    "storageKey": "eperangkat.pjok.fasee.v1.orders"
+  },
+  {
+    "id": "fase-f-pjok",
+    "subject": "PJOK",
+    "phase": "F",
+    "classes": [
+      "XI",
+      "XII"
+    ],
+    "appPath": "/apps/fase-f/E-Perangkat_pjok_Fase-F",
+    "storageKey": "eperangkat.pjok.fasef.v1.orders"
+  },
+  {
+    "id": "fase-d-prakarya",
+    "subject": "Prakarya",
+    "phase": "D",
+    "classes": [
+      "VII",
+      "VIII",
+      "IX"
+    ],
+    "appPath": "/apps/fase-d/E-Perangkat_prakarya_Fase-D",
+    "storageKey": "eperangkat.prakarya.fased.v1.orders"
+  },
+  {
+    "id": "fase-e-prakarya",
+    "subject": "Prakarya",
+    "phase": "E",
+    "classes": [
+      "X"
+    ],
+    "appPath": "/apps/fase-e/E-Perangkat_prakarya_Fase-E",
+    "storageKey": "eperangkat.prakarya.fasee.v1.orders"
+  },
+  {
+    "id": "fase-f-prakarya",
+    "subject": "Prakarya",
+    "phase": "F",
+    "classes": [
+      "XI",
+      "XII"
+    ],
+    "appPath": "/apps/fase-f/E-Perangkat_prakarya_Fase-F",
+    "storageKey": "eperangkat.prakarya.fasef.v1.orders"
+  },
+  {
+    "id": "fase-d-prakarya-erlangga",
+    "subject": "Prakarya Erlangga",
+    "phase": "D",
+    "classes": [
+      "IX"
+    ],
+    "appPath": "/apps/fase-d/E-Perangkat_prakarya-erlangga_Fase-D",
+    "storageKey": "eperangkat.prakarya-erlangga.fased.v1.orders"
+  },
+  {
+    "id": "fase-e-sejarah",
+    "subject": "Sejarah",
+    "phase": "E",
+    "classes": [
+      "X"
+    ],
+    "appPath": "/apps/fase-e/E-Perangkat_sejarah_Fase-E",
+    "storageKey": "eperangkat.sejarah.fasee.v1.orders"
+  },
+  {
+    "id": "fase-f-sejarah",
+    "subject": "Sejarah",
+    "phase": "F",
+    "classes": [
+      "XI",
+      "XII"
+    ],
+    "appPath": "/apps/fase-f/E-Perangkat_sejarah_Fase-F",
+    "storageKey": "eperangkat.sejarah.fasef.v1.orders"
+  },
+  {
+    "id": "fase-e-seni-budaya",
+    "subject": "Seni Budaya",
+    "phase": "E",
+    "classes": [
+      "X"
+    ],
+    "appPath": "/apps/fase-e/E-Perangkat_seni-budaya_Fase-E",
+    "storageKey": "eperangkat.seni-budaya.fasee.v1.orders"
+  },
+  {
+    "id": "fase-f-seni-budaya",
+    "subject": "Seni Budaya",
+    "phase": "F",
+    "classes": [
+      "XI",
+      "XII"
+    ],
+    "appPath": "/apps/fase-f/E-Perangkat_seni-budaya_Fase-F",
+    "storageKey": "eperangkat.seni-budaya.fasef.v1.orders"
+  },
+  {
+    "id": "fase-d-seni-musik",
+    "subject": "Seni Musik",
+    "phase": "D",
+    "classes": [
+      "VII",
+      "VIII",
+      "IX"
+    ],
+    "appPath": "/apps/fase-d/E-Perangkat_seni-musik_Fase-D",
+    "storageKey": "eperangkat.seni-musik.fased.v1.orders"
+  },
+  {
+    "id": "fase-a-seni-rupa",
+    "subject": "Seni Rupa",
+    "phase": "A",
+    "classes": [
+      "I",
+      "II"
+    ],
+    "appPath": "/apps/fase-a/E-Perangkat_seni-rupa_Fase-A",
+    "storageKey": "eperangkat.seni-rupa.fasea.v1.orders"
+  },
+  {
+    "id": "fase-b-seni-rupa",
+    "subject": "Seni Rupa",
+    "phase": "B",
+    "classes": [
+      "III",
+      "IV"
+    ],
+    "appPath": "/apps/fase-b/E-Perangkat_seni-rupa_Fase-B",
+    "storageKey": "eperangkat.seni-rupa.faseb.v1.orders"
+  },
+  {
+    "id": "fase-c-seni-rupa",
+    "subject": "Seni Rupa",
+    "phase": "C",
+    "classes": [
+      "V",
+      "VI"
+    ],
+    "appPath": "/apps/fase-c/E-Perangkat_seni-rupa_Fase-C",
+    "storageKey": "eperangkat.seni-rupa.fasec.v1.orders"
+  },
+  {
+    "id": "fase-d-seni-rupa",
+    "subject": "Seni Rupa",
+    "phase": "D",
+    "classes": [
+      "VII",
+      "VIII",
+      "IX"
+    ],
+    "appPath": "/apps/fase-d/E-Perangkat_seni-rupa_Fase-D",
+    "storageKey": "eperangkat.seni-rupa.fased.v1.orders"
+  },
+  {
+    "id": "fase-d-seni-tari",
+    "subject": "Seni Tari",
+    "phase": "D",
+    "classes": [
+      "VII",
+      "VIII",
+      "IX"
+    ],
+    "appPath": "/apps/fase-d/E-Perangkat_seni-tari_Fase-D",
+    "storageKey": "eperangkat.seni-tari.fased.v1.orders"
+  },
+  {
+    "id": "fase-e-sosiologi",
+    "subject": "Sosiologi",
+    "phase": "E",
+    "classes": [
+      "X"
+    ],
+    "appPath": "/apps/fase-e/E-Perangkat_sosiologi_Fase-E",
+    "storageKey": "eperangkat.sosiologi.fasee.v1.orders"
+  },
+  {
+    "id": "fase-f-sosiologi",
+    "subject": "Sosiologi",
+    "phase": "F",
+    "classes": [
+      "XI",
+      "XII"
+    ],
+    "appPath": "/apps/fase-f/E-Perangkat_sosiologi_Fase-F",
+    "storageKey": "eperangkat.sosiologi.fasef.v1.orders"
+  },
+  {
+    "id": "fase-a-pendidikan-agama-islam-erlangga",
+    "subject": "PAI BP Versi Erlangga",
+    "phase": "A",
+    "classes": [
+      "I",
+      "II"
+    ],
+    "appPath": "/apps/fase-a/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-A",
+    "storageKey": "eperangkat.pendidikan-agama-islam-erlangga.fasea.v1.orders"
+  },
+  {
+    "id": "fase-b-pendidikan-agama-islam-erlangga",
+    "subject": "PAI BP Versi Erlangga",
+    "phase": "B",
+    "classes": [
+      "III",
+      "IV"
+    ],
+    "appPath": "/apps/fase-b/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-B",
+    "storageKey": "eperangkat.pendidikan-agama-islam-erlangga.faseb.v1.orders"
+  },
+  {
+    "id": "fase-c-pendidikan-agama-islam-erlangga",
+    "subject": "PAI BP Versi Erlangga",
+    "phase": "C",
+    "classes": [
+      "V",
+      "VI"
+    ],
+    "appPath": "/apps/fase-c/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-C",
+    "storageKey": "eperangkat.pendidikan-agama-islam-erlangga.fasec.v1.orders"
+  }
+]
