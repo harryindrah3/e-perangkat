@@ -38,9 +38,9 @@ function refreshButtons(){
 async function connect() {
   $('connection').textContent='Memeriksa koneksi…';$('connect').disabled=true;
   try {
-    const result=await request('hello',{},1800);connected=result.version.split('.').map(Number).reduce((v,n)=>v*1000+n,0)>=1000003;
+    const result=await request('hello',{},1800);connected=result.version.split('.').map(Number).reduce((v,n)=>v*1000+n,0)>=1000004;
     $('update').hidden=connected;
-    $('connection').textContent='Terhubung · v'+result.version;$('connectionHint').textContent=connected?'Siap membaca pesanan dari Chrome ini.':'Pembaruan 1.0.3 diperlukan; ikuti petunjuk di bawah.';
+    $('connection').textContent='Terhubung · v'+result.version;$('connectionHint').textContent=connected?'Siap membaca pesanan dari Chrome ini.':'Ekstensi v1.0.4 diperlukan; ikuti petunjuk di bawah.';
     $('connection').parentElement.classList.toggle('connected',connected);$('setup').hidden=true;notice('');
   } catch {
     connected=false;$('update').hidden=true;$('connection').textContent='Belum terpasang';$('connectionHint').textContent='Pasang ekstensi pendamping untuk mengunduh PDF.';
@@ -100,7 +100,7 @@ function renderSelection(){
 }
 async function loadOrders(){
   $('refresh').disabled=true;$('refresh').textContent='Mengambil data…';notice('');
-  try{const result=await request('orders',{},45000);records=result.records||[];const valid=new Set(records.map(GeneratorBatch.key));for(const k of checkedOrders)if(!valid.has(k))checkedOrders.delete(k);const school=$('school').value;$('school').replaceChildren(new Option('Semua sekolah',''));for(const value of [...new Set(records.map(r=>r.school).filter(Boolean))].sort())$('school').add(new Option(value,value));if([...$('school').options].some(o=>o.value===school))$('school').value=school;renderOrders();if(!records.length)notice('Belum ditemukan pesanan. Buka portal E-Perangkat, tunggu sinkronisasi selesai, lalu klik Ambil data pesanan kembali.')}
+  try{const result=await request('orders',{apps,portalOrigin:'https://e-perangkat-online-a-f.vercel.app'},45000);records=result.records||[];const valid=new Set(records.map(GeneratorBatch.key));for(const k of checkedOrders)if(!valid.has(k))checkedOrders.delete(k);const school=$('school').value;$('school').replaceChildren(new Option('Semua sekolah',''));for(const value of [...new Set(records.map(r=>r.school).filter(Boolean))].sort())$('school').add(new Option(value,value));if([...$('school').options].some(o=>o.value===school))$('school').value=school;renderOrders();if(!records.length)notice('Belum ditemukan pesanan. Buka portal E-Perangkat, tunggu sinkronisasi selesai, lalu klik Ambil data pesanan kembali.')}
   catch(error){notice(error.message)}finally{$('refresh').textContent='Ambil data pesanan ↻';refreshButtons()}
 }
 function renderQueue(){
@@ -125,7 +125,7 @@ async function processQueue(){
    generate:async job=>{
     const index=queue.indexOf(job)+1;activeLabel=`PDF ${index}/${queue.length} · ${appFor(job.order)?.subject||''} kelas ${job.order.grade} · Semester ${job.semester}`;
     $('progress').textContent=activeLabel+' — Menyiapkan…';
-    const result=await request('generate',{appId:job.order.appId,orderId:job.order.orderId,grade:job.order.grade,semester:job.semester},960000);
+    const result=await request('generate',{appId:job.order.appId,app:appFor(job.order),orderId:job.order.orderId,grade:job.order.grade,semester:job.semester,portalOrigin:'https://e-perangkat-online-a-f.vercel.app'},960000);
     recordResult(result);return result;
    }
   });
