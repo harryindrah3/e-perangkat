@@ -1,15 +1,32 @@
 {
   "manifest_version": 3,
   "name": "Genarator E-Perangkat",
-  "description": "Unduh PDF melalui mesin cetak Chrome dengan data, font, dan halaman E-Perangkat asli.",
-  "version": "1.0.3",
-  "permissions": ["debugger", "scripting", "downloads"],
-  "host_permissions": ["https://e-perangkat-online-a-f.vercel.app/*"],
-  "background": {"service_worker": "background.js"},
-  "action": {"default_title": "Buka Genarator E-Perangkat"},
-  "content_scripts": [{
-    "matches": ["https://genarator-e-perangkat.vercel.app/*"],
-    "js": ["bridge.js"],
-    "run_at": "document_start"
-  }]
+  "version": "1.0.4",
+  "description": "Unduh PDF E-Perangkat melalui mesin cetak Chrome dengan data, font, dan halaman cetak Production terbaru.",
+  "permissions": [
+    "tabs",
+    "scripting",
+    "debugger",
+    "downloads"
+  ],
+  "host_permissions": [
+    "https://e-perangkat-online-a-f.vercel.app/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://genarator-e-perangkat.vercel.app/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "action": {
+    "default_title": "Genarator E-Perangkat"
+  }
 }
