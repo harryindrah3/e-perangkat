@@ -853,5 +853,38 @@
     ],
     "appPath": "/apps/fase-f/E-Perangkat_sosiologi_Fase-F",
     "storageKey": "eperangkat.sosiologi.fasef.v1.orders"
+  },
+  {
+    "id": "fase-a-pendidikan-agama-islam-erlangga",
+    "subject": "PAI BP Versi Erlangga",
+    "phase": "A",
+    "classes": [
+      "I",
+      "II"
+    ],
+    "appPath": "/apps/fase-a/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-A",
+    "storageKey": "eperangkat.pendidikan-agama-islam-erlangga.fasea.v1.orders"
+  },
+  {
+    "id": "fase-b-pendidikan-agama-islam-erlangga",
+    "subject": "PAI BP Versi Erlangga",
+    "phase": "B",
+    "classes": [
+      "III",
+      "IV"
+    ],
+    "appPath": "/apps/fase-b/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-B",
+    "storageKey": "eperangkat.pendidikan-agama-islam-erlangga.faseb.v1.orders"
+  },
+  {
+    "id": "fase-c-pendidikan-agama-islam-erlangga",
+    "subject": "PAI BP Versi Erlangga",
+    "phase": "C",
+    "classes": [
+      "V",
+      "VI"
+    ],
+    "appPath": "/apps/fase-c/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-C",
+    "storageKey": "eperangkat.pendidikan-agama-islam-erlangga.fasec.v1.orders"
   }
 ]
