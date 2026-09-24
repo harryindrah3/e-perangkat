@@ -1,4 +1,4 @@
-DEPLOYED https://genarator-e-perangkat-dnvawfasw-harryindrah3-6239s-projects.vercel.app
+VERIFIED_OK https://genarator-e-perangkat-dnvawfasw-harryindrah3-6239s-projects.vercel.app
 Rollback deployment: dpl_3bXyMaCCfZmA2qAUWc7jZLiB26R8
 Production Generator: https://genarator-e-perangkat.vercel.app/
 Production E-Perangkat: https://e-perangkat-online-a-f.vercel.app/
