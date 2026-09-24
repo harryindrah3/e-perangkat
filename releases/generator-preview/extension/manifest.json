@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "Genarator E-Perangkat Preview",
+  "version": "1.0.4",
+  "description": "Preview pemulihan jalur cetak E-Perangkat melalui Chrome.",
+  "permissions": [
+    "tabs",
+    "scripting",
+    "debugger",
+    "downloads"
+  ],
+  "host_permissions": [
+    "https://e-perangkat-online-a-f.vercel.app/*",
+    "https://*.vercel.app/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.vercel.app/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "action": {
+    "default_title": "Genarator E-Perangkat Preview"
+  }
+}
