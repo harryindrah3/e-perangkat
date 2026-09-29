@@ -1,0 +1,138 @@
+name: Deploy Bahasa Arab Fase D Preview
+on:
+  push:
+    branches:
+      - preview/bahasa-arab-fase-d-20260929
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      STATUS_BRANCH: bahasa-arab-preview-status-20260929
+      TEAM_ID: team_i5YnQIDbBKi8FgTPI0YD6uOu
+      PROJECT_ID: prj_KwCEjkE1OFX3CgBeBEenQcgX3P45
+      TEAM_SLUG: harryindrah3-6239s-projects
+      APP_DIR: apps/fase-d/E-Perangkat_bahasa-arab_Fase-D
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: preview/bahasa-arab-fase-d-20260929
+          fetch-depth: 0
+
+      - name: Prepare status channel
+        shell: bash
+        run: |
+          set -e
+          git config user.name "Bahasa Arab Preview"
+          git config user.email "preview@e-perangkat.local"
+          git fetch origin "$STATUS_BRANCH:$STATUS_BRANCH"
+          git worktree add /tmp/arabic-preview-status "$STATUS_BRANCH"
+          cat > /tmp/update-arabic-preview-status.sh <<'EOS'
+          #!/usr/bin/env bash
+          set -e
+          msg="$1"
+          cd /tmp/arabic-preview-status
+          printf "%s\n" "$msg" > BAHASA_ARAB_PREVIEW_STATUS.txt
+          git add BAHASA_ARAB_PREVIEW_STATUS.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(preview-status): update Bahasa Arab Fase D preview status"
+            git push origin HEAD:"$STATUS_BRANCH"
+          fi
+          EOS
+          chmod +x /tmp/update-arabic-preview-status.sh
+          /tmp/update-arabic-preview-status.sh "PREPARING_VALIDATION"
+
+      - name: Validate preview source
+        shell: bash
+        run: |
+          set -e
+          node <<'NODE'
+          const fs=require('fs');
+          const dir='apps/fase-d/E-Perangkat_bahasa-arab_Fase-D';
+          const raw=fs.readFileSync(dir+'/data.js','utf8').replace(/^window\.EPERANGKAT_DATA\s*=\s*/,'').replace(/;\s*$/,'');
+          const d=JSON.parse(raw);
+          if(d.meta.subject!=='Bahasa Arab') throw new Error('Subject mismatch');
+          if(d.modules.length!==18) throw new Error('Expected 18 modules');
+          for(const g of ['VII','VIII','IX']){
+            const mods=d.modules.filter(m=>m.grade===g);
+            if(mods.length!==6) throw new Error('Expected 6 modules for '+g);
+            if(!mods.every(m=>m.meetings?.length===6)) throw new Error('Meeting count mismatch '+g);
+            if(!mods.every(m=>m.objectives?.length===4)) throw new Error('Objective count mismatch '+g);
+            if(!mods.every(m=>m.assessment?.length&&m.framework?.length&&m.deep)) throw new Error('Feature structure incomplete '+g);
+          }
+          const index=fs.readFileSync(dir+'/index.html','utf8');
+          const print=fs.readFileSync(dir+'/print.html','utf8');
+          for(const token of ['Kalender Pendidikan','Jadwal Mengajar','Analisis Nilai','Paket Cetak','Bahasa Arab','arabic-rtl.css']){
+            if(!index.includes(token)) throw new Error('Index missing '+token);
+          }
+          for(const token of ['Bahasa Arab','arabic-rtl.css']){
+            if(!print.includes(token)) throw new Error('Print missing '+token);
+          }
+          if(!fs.existsSync(dir+'/assets/site.js') || !fs.existsSync(dir+'/assets/v3.js') || !fs.existsSync(dir+'/assets/print.js')) throw new Error('Shared Fase D assets missing');
+          console.log('SOURCE_VALIDATION_PASS');
+          NODE
+          /tmp/update-arabic-preview-status.sh "SOURCE_VALIDATION_PASS"
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Authenticate Vercel
+        shell: bash
+        run: |
+          set -e
+          vercel login --github > /tmp/vercel-login.log 2>&1 &
+          PID=$!
+          LOGIN_URL=""
+          for i in $(seq 1 120); do
+            LOGIN_URL=$(grep -Eo 'https://vercel.com/oauth/device\?user_code=[A-Z0-9-]+' /tmp/vercel-login.log | tail -1 || true)
+            if [ -n "$LOGIN_URL" ]; then break; fi
+            if ! kill -0 "$PID" 2>/dev/null; then break; fi
+            sleep 2
+          done
+          if [ -z "$LOGIN_URL" ]; then
+            cat /tmp/vercel-login.log
+            /tmp/update-arabic-preview-status.sh "LOGIN_URL_NOT_FOUND"
+            exit 1
+          fi
+          /tmp/update-arabic-preview-status.sh "AUTHORIZE $LOGIN_URL"
+          wait "$PID"
+          vercel whoami
+          /tmp/update-arabic-preview-status.sh "AUTHENTICATED"
+
+      - name: Deploy isolated preview
+        shell: bash
+        run: |
+          set -e
+          mkdir -p "$APP_DIR/.vercel"
+          cat > "$APP_DIR/.vercel/project.json" <<EOF
+          {"orgId":"$TEAM_ID","projectId":"$PROJECT_ID"}
+          EOF
+          /tmp/update-arabic-preview-status.sh "DEPLOYING_PREVIEW"
+          DEPLOY_URL=$(vercel deploy --yes --scope "$TEAM_SLUG" --cwd "$APP_DIR" 2>&1 | tee /tmp/deploy.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
+          if [ -z "$DEPLOY_URL" ]; then
+            cat /tmp/deploy.log
+            /tmp/update-arabic-preview-status.sh "DEPLOY_FAILED"
+            exit 1
+          fi
+          echo "DEPLOY_URL=$DEPLOY_URL" >> "$GITHUB_ENV"
+          /tmp/update-arabic-preview-status.sh "DEPLOYED $DEPLOY_URL"
+
+      - name: Verify deployed static files
+        shell: bash
+        run: |
+          set -e
+          sleep 8
+          vercel curl "$DEPLOY_URL/" --scope "$TEAM_SLUG" > /tmp/index.html
+          vercel curl "$DEPLOY_URL/data.js" --scope "$TEAM_SLUG" > /tmp/data.js
+          vercel curl "$DEPLOY_URL/print.html" --scope "$TEAM_SLUG" > /tmp/print.html
+          grep -q "Bahasa Arab" /tmp/index.html
+          grep -q "Kalender Pendidikan" /tmp/index.html
+          grep -q "Analisis Nilai" /tmp/index.html
+          grep -q "window.EPERANGKAT_DATA" /tmp/data.js
+          grep -q "Paket Cetak E-Perangkat Bahasa Arab" /tmp/print.html
+          /tmp/update-arabic-preview-status.sh "VERIFIED_OK $DEPLOY_URL"
