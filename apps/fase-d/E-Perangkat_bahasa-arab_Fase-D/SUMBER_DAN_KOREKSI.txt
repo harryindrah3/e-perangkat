@@ -1,0 +1,20 @@
+SUMBER DAN KOREKSI — BAHASA INGGRIS FASE D
+Kelas: VII, VIII, IX
+Folder acuan: https://drive.google.com/drive/folders/1sP39jrYmNtkj-5jb2fu6G_toKHsvfJbY
+
+Catatan normalisasi:
+1. Alokasi Modul Bahasa Inggris Kelas VII
+   Temuan: Beberapa dokumen sumber memiliki perbedaan antara total JP pada identitas modul dan penjumlahan durasi rinci pertemuan.
+   Penanganan: Aplikasi mempertahankan total JP pada identitas modul sebagai alokasi bab dan menormalisasi distribusi JP operasional agar jumlah pertemuan tepat sama dengan total tersebut.
+2. Dokumen CP Bahasa Inggris
+   Temuan: Dokumen CP kelas VII, VIII, dan IX disimpan dalam format .doc lama dan teksnya tidak terbaca langsung oleh sistem konektor.
+   Penanganan: Redaksi CP diambil dari dokumen ATP masing-masing kelas yang mencantumkan CP Fase D Nomor 46 Tahun 2025; berkas .doc asli tetap disertakan.
+3. Penamaan Folder Kelas IX
+   Temuan: Folder sumber di Google Drive tertulis “Bahasa Inggirs Kelas IX”.
+   Penanganan: Nama resmi pada aplikasi, dokumen cetak, dan sumber adalah “Bahasa Inggris Kelas IX”.
+4. Bahasa dan Istilah
+   Temuan: Dokumen sumber menggunakan campuran istilah Indonesia dan Inggris, termasuk Listening–Speaking, Reading–Viewing, dan Writing–Presenting.
+   Penanganan: Istilah bilingual dipertahankan pada bagian yang membantu pemahaman, sedangkan identitas dokumen dinormalisasi secara konsisten.
+5. Dokumen #Capaian Pembelajaran 2026
+   Temuan: PDF kebijakan tambahan tersedia dalam paket sumber.
+   Penanganan: Pemetaan utama Bahasa Inggris mengikuti CP Nomor 46 Tahun 2025 yang tertulis pada ATP sumber; PDF 2026 disertakan sebagai referensi kebijakan tambahan tanpa menambahkan perubahan yang tidak terbaca secara pasti.
