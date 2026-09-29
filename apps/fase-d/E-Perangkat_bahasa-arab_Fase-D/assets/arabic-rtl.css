@@ -1,0 +1,14 @@
+/* Bahasa Arab Fase D - isolated preview bidi/RTL support.
+   Does not modify shared Fase D assets. */
+:root{--arabic-accent:#0F766E;--arabic-gold:#D4A017}
+.brand-icon{background:linear-gradient(135deg,var(--arabic-accent),#115E59)!important}
+[dir="rtl"],.arabic,.text-arabic{direction:rtl;text-align:right;unicode-bidi:isolate;font-family:"Noto Naskh Arabic","Amiri","Traditional Arabic","Segoe UI",Tahoma,sans-serif}
+#app p,#app li,#app td,#app th,#app h1,#app h2,#app h3,#app h4,
+#printRoot p,#printRoot li,#printRoot td,#printRoot th,#printRoot h1,#printRoot h2,#printRoot h3,#printRoot h4{
+  unicode-bidi:plaintext;
+}
+#app td,#app th,#printRoot td,#printRoot th{vertical-align:top}
+@media print{
+  body{font-kerning:normal;text-rendering:optimizeLegibility}
+  #printRoot{unicode-bidi:plaintext}
+}

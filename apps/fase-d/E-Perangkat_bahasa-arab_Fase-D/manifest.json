@@ -1,8 +1,8 @@
 {
-  "name": "E-Perangkat Bahasa Inggris Fase D",
-  "short_name": "B. Inggris FD",
+  "name": "E-Perangkat Bahasa Arab Fase D",
+  "short_name": "B. Arab FD",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#f8fafc",
-  "theme_color": "#1E3A8A"
+  "theme_color": "#0F766E"
 }

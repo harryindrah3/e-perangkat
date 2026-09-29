@@ -1,11 +1,11 @@
 window.EPERANGKAT_CATALOG = {
   "generatedAt": "2026-08-09T04:26:57.226Z",
-  "total": 69,
+  "total": 70,
   "summary": {
     "A": 7,
     "B": 8,
     "C": 8,
-    "D": 12,
+    "D": 13,
     "E": 16,
     "F": 18
   },
@@ -686,6 +686,26 @@ window.EPERANGKAT_CATALOG = {
       "href": "apps/fase-d/E-Perangkat_seni-rupa_Fase-D/index.html",
       "storageKey": "eperangkat.seni-rupa.fased.v1.orders",
       "fileCount": 33
+    },
+    {
+      "id": "fase-d-bahasa-arab",
+      "phase": "D",
+      "phaseLabel": "Fase D",
+      "phaseDescription": "Kelas VII–IX",
+      "classes": [
+        "VII",
+        "VIII",
+        "IX"
+      ],
+      "subject": "Bahasa Arab",
+      "slug": "bahasa-arab",
+      "name": "E-Perangkat Bahasa Arab",
+      "description": "E-Perangkat Bahasa Arab Fase D · Kelas VII–VIII–IX.",
+      "themeColor": "#0F766E",
+      "backgroundColor": "#f8fafc",
+      "href": "apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/index.html",
+      "storageKey": "eperangkat.bahasa-arab.fased.v1.orders",
+      "fileCount": 35
     },
     {
       "id": "fase-e-bahasa-indonesia",
