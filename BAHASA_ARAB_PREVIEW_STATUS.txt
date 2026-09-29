@@ -1,1 +1,1 @@
-AUTHORIZE https://vercel.com/oauth/device?user_code=SWJK-LMZV
+PREPARING_VALIDATION
