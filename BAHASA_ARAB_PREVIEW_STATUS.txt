@@ -1,1 +1,1 @@
-SOURCE_VALIDATION_PASS
+AUTHORIZE https://vercel.com/oauth/device?user_code=JHLV-PMXP
