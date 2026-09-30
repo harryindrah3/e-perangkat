@@ -1,1 +1,1 @@
-DEPLOYED https://e-perangkat-bahasa-arab-preview-8xbufxldd.vercel.app
+VERIFIED_OK https://e-perangkat-bahasa-arab-preview-8xbufxldd.vercel.app
