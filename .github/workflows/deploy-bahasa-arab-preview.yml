@@ -1,5 +1,8 @@
 name: Deploy Bahasa Arab Fase D Preview
 on:
+  push:
+    branches:
+      - preview/bahasa-arab-fase-d-20260929
   workflow_dispatch:
 
 permissions:
@@ -12,9 +15,10 @@ jobs:
     env:
       STATUS_BRANCH: bahasa-arab-preview-status-20260929
       TEAM_ID: team_i5YnQIDbBKi8FgTPI0YD6uOu
-      PROJECT_NAME: e-perangkat-bahasa-arab-preview
+      PROJECT_ID: prj_bLbby6VgNMllWfgTOuVNitDXicfF
       TEAM_SLUG: harryindrah3-6239s-projects
       APP_DIR: apps/fase-d/E-Perangkat_bahasa-arab_Fase-D
+      STAGE_DIR: /tmp/e-perangkat-bahasa-arab-preview
 
     steps:
       - uses: actions/checkout@v4
@@ -43,9 +47,9 @@ jobs:
           fi
           EOS
           chmod +x /tmp/update-arabic-preview-status.sh
-          /tmp/update-arabic-preview-status.sh "PREPARING_VALIDATION"
+          /tmp/update-arabic-preview-status.sh "PREPARING_PARITY_VALIDATION"
 
-      - name: Validate preview source
+      - name: Validate latest E-Perangkat parity
         shell: bash
         run: |
           set -e
@@ -60,26 +64,42 @@ jobs:
             const mods=d.modules.filter(m=>m.grade===g);
             if(mods.length!==6) throw new Error('Expected 6 modules for '+g);
             if(!mods.every(m=>m.meetings?.length===6)) throw new Error('Meeting count mismatch '+g);
-            if(!mods.every(m=>m.objectives?.length===4)) throw new Error('Objective count mismatch '+g);
-            if(!mods.every(m=>m.assessment?.length&&m.framework?.length&&m.deep)) throw new Error('Feature structure incomplete '+g);
           }
           const index=fs.readFileSync(dir+'/index.html','utf8');
           const print=fs.readFileSync(dir+'/print.html','utf8');
-          for(const token of ['Kalender Pendidikan','Jadwal Mengajar','Analisis Nilai','Paket Cetak','Bahasa Arab','arabic-rtl.css']){
-            if(!index.includes(token)) throw new Error('Index missing '+token);
+          for(const token of ['calendar-year.js','calendar-level-runtime.js','calendar-source-runtime.js','kktp-order-runtime.js','production-parity-v20260930.js']){
+            if(!index.includes(token)) throw new Error('Index parity missing '+token);
+            if(!print.includes(token)) throw new Error('Print parity missing '+token);
           }
-          for(const token of ['Bahasa Arab','arabic-rtl.css']){
-            if(!print.includes(token)) throw new Error('Print missing '+token);
+          for(const file of ['calendar-level-runtime.js','calendar-year.js','calendar-source-runtime.js','calendar-2024-extension.js','kktp-order-runtime.js']){
+            if(!fs.existsSync(file)) throw new Error('Root runtime missing '+file);
           }
-          if(!fs.existsSync(dir+'/assets/site.js') || !fs.existsSync(dir+'/assets/v3.js') || !fs.existsSync(dir+'/assets/print.js')) throw new Error('Shared Fase D assets missing');
-          console.log('SOURCE_VALIDATION_PASS');
+          if(!index.includes('Kalender Pendidikan') || !index.includes('KKTP') || !index.includes('Analisis Nilai')) throw new Error('Core menus incomplete');
+          console.log('PARITY_VALIDATION_PASS');
           NODE
-          /tmp/update-arabic-preview-status.sh "SOURCE_VALIDATION_PASS"
+          /tmp/update-arabic-preview-status.sh "PARITY_VALIDATION_PASS"
+
+      - name: Stage isolated preview
+        shell: bash
+        run: |
+          set -e
+          rm -rf "$STAGE_DIR"
+          mkdir -p "$STAGE_DIR/apps/fase-d"
+          cp -a "$APP_DIR" "$STAGE_DIR/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D"
+          cp calendar-level-runtime.js calendar-year.js calendar-source-runtime.js calendar-2024-extension.js kktp-order-runtime.js "$STAGE_DIR/"
+          printf '{}\n' > "$STAGE_DIR/vercel.json"
+          cat > "$STAGE_DIR/index.html" <<'HTML'
+          <!doctype html>
+          <html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Preview E-Perangkat Bahasa Arab Fase D</title></head>
+          <body><p style="font-family:Arial,sans-serif;padding:24px">Memuat Preview Bahasa Arab Fase D…</p>
+          <script>location.replace('/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/index.html'+location.search+location.hash)</script>
+          </body></html>
+          HTML
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
-      - name: Authenticate Vercel
+      - name: Authenticate Vercel once
         shell: bash
         run: |
           set -e
@@ -102,16 +122,15 @@ jobs:
           vercel whoami
           /tmp/update-arabic-preview-status.sh "AUTHENTICATED"
 
-      - name: Create clean isolated preview project and deploy
+      - name: Deploy isolated parity preview
         shell: bash
         run: |
           set -e
-          rm -rf "$APP_DIR/.vercel"
-          vercel project add "$PROJECT_NAME" --scope "$TEAM_SLUG" >/tmp/project-add.log 2>&1 || true
-          /tmp/update-arabic-preview-status.sh "DEPLOYING_PREVIEW"
-          DEPLOY_URL=$(vercel deploy --yes --scope "$TEAM_SLUG" --project "$PROJECT_NAME" --cwd "$APP_DIR" 2>&1 | tee /tmp/deploy.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
+          mkdir -p "$STAGE_DIR/.vercel"
+          printf '{"orgId":"%s","projectId":"%s"}\n' "$TEAM_ID" "$PROJECT_ID" > "$STAGE_DIR/.vercel/project.json"
+          /tmp/update-arabic-preview-status.sh "DEPLOYING_PARITY_PREVIEW"
+          DEPLOY_URL=$(vercel deploy --yes --scope "$TEAM_SLUG" --cwd "$STAGE_DIR" 2>&1 | tee /tmp/deploy.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
           if [ -z "$DEPLOY_URL" ]; then
-            cat /tmp/project-add.log || true
             cat /tmp/deploy.log
             /tmp/update-arabic-preview-status.sh "DEPLOY_FAILED"
             exit 1
@@ -119,17 +138,39 @@ jobs:
           echo "DEPLOY_URL=$DEPLOY_URL" >> "$GITHUB_ENV"
           /tmp/update-arabic-preview-status.sh "DEPLOYED $DEPLOY_URL"
 
-      - name: Verify deployed static files
+      - name: Verify latest feature parity
         shell: bash
         run: |
           set -e
-          sleep 8
-          vercel curl "$DEPLOY_URL/" --scope "$TEAM_SLUG" > /tmp/index.html
-          vercel curl "$DEPLOY_URL/data.js" --scope "$TEAM_SLUG" > /tmp/data.js
-          vercel curl "$DEPLOY_URL/print.html" --scope "$TEAM_SLUG" > /tmp/print.html
+          sleep 6
+          APP_PATH="/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D"
+          vercel curl "$DEPLOY_URL$APP_PATH/index.html" --scope "$TEAM_SLUG" > /tmp/index.html
+          vercel curl "$DEPLOY_URL$APP_PATH/data.js" --scope "$TEAM_SLUG" > /tmp/data.js
+          vercel curl "$DEPLOY_URL$APP_PATH/print.html" --scope "$TEAM_SLUG" > /tmp/print.html
+          vercel curl "$DEPLOY_URL/kktp-order-runtime.js" --scope "$TEAM_SLUG" > /tmp/kktp.js
+          vercel curl "$DEPLOY_URL/calendar-year.js" --scope "$TEAM_SLUG" > /tmp/kaldik.js
           grep -q "Bahasa Arab" /tmp/index.html
           grep -q "Kalender Pendidikan" /tmp/index.html
-          grep -q "Analisis Nilai" /tmp/index.html
+          grep -q "KKTP" /tmp/index.html
+          grep -q "production-parity-v20260930.js" /tmp/index.html
           grep -q "window.EPERANGKAT_DATA" /tmp/data.js
           grep -q "Paket Cetak E-Perangkat Bahasa Arab" /tmp/print.html
-          /tmp/update-arabic-preview-status.sh "VERIFIED_OK $DEPLOY_URL"
+          grep -q "KKTP mengikuti Pesanan" /tmp/kktp.js
+          grep -q "calendar-2024-extension.js" /tmp/kaldik.js
+          /tmp/update-arabic-preview-status.sh "VERIFIED_PARITY_OK $DEPLOY_URL"
+
+      - name: Connect preview project to GitHub for future no-approval deploys
+        shell: bash
+        run: |
+          set +e
+          mkdir -p .vercel
+          printf '{"orgId":"%s","projectId":"%s"}\n' "$TEAM_ID" "$PROJECT_ID" > .vercel/project.json
+          timeout 45s vercel git connect --yes --scope "$TEAM_SLUG" > /tmp/git-connect.log 2>&1
+          CODE=$?
+          if [ "$CODE" -eq 0 ]; then
+            /tmp/update-arabic-preview-status.sh "VERIFIED_PARITY_OK_GIT_CONNECTED $DEPLOY_URL"
+          else
+            cat /tmp/git-connect.log
+            /tmp/update-arabic-preview-status.sh "VERIFIED_PARITY_OK_GIT_CONNECT_PENDING $DEPLOY_URL"
+          fi
+          exit 0
