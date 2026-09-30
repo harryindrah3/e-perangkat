@@ -14,7 +14,7 @@ jobs:
     env:
       STATUS_BRANCH: bahasa-arab-preview-status-20260929
       TEAM_ID: team_i5YnQIDbBKi8FgTPI0YD6uOu
-      PROJECT_ID: prj_KwCEjkE1OFX3CgBeBEenQcgX3P45
+      PROJECT_ID: prj_rSgi4Hyql0vXffp9KHDbgYFMKRIt
       TEAM_SLUG: harryindrah3-6239s-projects
       APP_DIR: apps/fase-d/E-Perangkat_bahasa-arab_Fase-D
 
@@ -104,7 +104,7 @@ jobs:
           vercel whoami
           /tmp/update-arabic-preview-status.sh "AUTHENTICATED"
 
-      - name: Deploy isolated preview
+      - name: Deploy isolated preview to ep-test
         shell: bash
         run: |
           set -e
