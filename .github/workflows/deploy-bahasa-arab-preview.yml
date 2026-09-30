@@ -14,7 +14,7 @@ jobs:
     env:
       STATUS_BRANCH: bahasa-arab-preview-status-20260929
       TEAM_ID: team_i5YnQIDbBKi8FgTPI0YD6uOu
-      PROJECT_ID: prj_rSgi4Hyql0vXffp9KHDbgYFMKRIt
+      PROJECT_NAME: e-perangkat-bahasa-arab-preview
       TEAM_SLUG: harryindrah3-6239s-projects
       APP_DIR: apps/fase-d/E-Perangkat_bahasa-arab_Fase-D
 
@@ -104,17 +104,16 @@ jobs:
           vercel whoami
           /tmp/update-arabic-preview-status.sh "AUTHENTICATED"
 
-      - name: Deploy isolated preview to ep-test
+      - name: Create clean isolated preview project and deploy
         shell: bash
         run: |
           set -e
-          mkdir -p "$APP_DIR/.vercel"
-          cat > "$APP_DIR/.vercel/project.json" <<EOF
-          {"orgId":"$TEAM_ID","projectId":"$PROJECT_ID"}
-          EOF
+          rm -rf "$APP_DIR/.vercel"
+          vercel project add "$PROJECT_NAME" --scope "$TEAM_SLUG" >/tmp/project-add.log 2>&1 || true
           /tmp/update-arabic-preview-status.sh "DEPLOYING_PREVIEW"
-          DEPLOY_URL=$(vercel deploy --yes --scope "$TEAM_SLUG" --cwd "$APP_DIR" 2>&1 | tee /tmp/deploy.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
+          DEPLOY_URL=$(vercel deploy --yes --scope "$TEAM_SLUG" --project "$PROJECT_NAME" --cwd "$APP_DIR" 2>&1 | tee /tmp/deploy.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
           if [ -z "$DEPLOY_URL" ]; then
+            cat /tmp/project-add.log || true
             cat /tmp/deploy.log
             /tmp/update-arabic-preview-status.sh "DEPLOY_FAILED"
             exit 1
