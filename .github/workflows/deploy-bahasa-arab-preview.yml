@@ -41,7 +41,7 @@ jobs:
           git add BAHASA_ARAB_PREVIEW_STATUS.txt
           if ! git diff --cached --quiet; then
             git commit -m "chore(preview-status): update Bahasa Arab Fase D preview status"
-            git push origin HEAD:"$STATUS_BRANCH"
+            git push origin HEAD:"$STATUS_BRANCH" || true
           fi
           EOS
           chmod +x /tmp/update-arabic-preview-status.sh
