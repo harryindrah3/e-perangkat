@@ -1,69 +1,66 @@
 (() => {
   'use strict';
 
-  const OLD_RUNTIME = 'https://e-perangkat-online-a-irysp0h7o-harryindrah3-6239s-projects.vercel.app';
-  const STABLE_RUNTIME = 'https://e-perangkat-online-a-6xpm8q2nz-harryindrah3-6239s-projects.vercel.app';
-  const PRINT_PARITY = 'https://e-perangkat-online-a-afanit1w0-harryindrah3-6239s-projects.vercel.app';
+  if (window.__epBahasaArabLatestParityV2) return;
+  window.__epBahasaArabLatestParityV2 = true;
 
-  function addScript(src, id) {
-    if (id && document.getElementById(id)) return;
-    const s = document.createElement('script');
-    if (id) s.id = id;
-    s.src = src;
-    s.async = false;
-    document.body.appendChild(s);
+  const current = document.currentScript?.src || location.href;
+  const RUNTIME = new URL('./latest-runtime/', current).href;
+
+  function load(name, id) {
+    return new Promise((resolve, reject) => {
+      if (id && document.getElementById(id)) return resolve();
+      const script = document.createElement('script');
+      if (id) script.id = id;
+      script.src = RUNTIME + name;
+      script.async = false;
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error('Gagal memuat runtime terbaru: ' + name));
+      document.body.appendChild(script);
+    });
   }
 
-  addScript(OLD_RUNTIME + '/logo-fix.js?v=20260909-logo-assets-2', 'ep-logo-fix-loader');
-  addScript(OLD_RUNTIME + '/grade-one-cover.js?v=20260909-cute-cover-1', 'ep-grade-one-cover-loader');
-  addScript(OLD_RUNTIME + '/promes-print-route-fix.js?v=20260909-calendar-slot-fix-4', 'ep-promes-fix-loader');
+  async function boot() {
+    // Baseline fitur terbaru yang berlaku pada E-Perangkat A-F.
+    await load('identity-fix.js', 'ep-latest-identity-fix');
+    await load('logo-fix.js', 'ep-logo-fix-loader');
+    await load('grade-one-cover.js', 'ep-grade-one-cover-loader');
+    await load('promes-print-route-fix.js', 'ep-promes-fix-loader');
 
-  if (!window.__epOrderToolsTimer) {
-    let checks = 0;
-    window.__epOrderToolsTimer = setInterval(() => {
-      const newOrder = document.getElementById('newOrder');
-      if (newOrder && !document.getElementById('teacherClassOrder')) {
-        const a = document.createElement('a');
-        a.id = 'teacherClassOrder';
-        a.className = 'button primary';
-        a.href = '/pesanan-guru-kelas';
-        a.textContent = '+ Guru Kelas';
-        a.title = 'Isi identitas sekali untuk banyak mapel';
-        newOrder.parentNode?.insertBefore(a, newOrder);
-      }
-      if (window.EPERANGKAT_CATALOG?.apps?.length && window.PortalSync && document.body && !document.getElementById('epCopyOrderDialog') && !document.getElementById('ep-copy-order-loader')) {
-        addScript(OLD_RUNTIME + '/copy-order.js?v=20260908-restore-1', 'ep-copy-order-loader');
-      }
-      if (document.getElementById('teacherClassOrder') && document.getElementById('epCopyOrderDialog')) {
-        clearInterval(window.__epOrderToolsTimer);
-        window.__epOrderToolsTimer = null;
-      } else if (++checks > 1200) {
-        clearInterval(window.__epOrderToolsTimer);
-        window.__epOrderToolsTimer = null;
-      }
-    }, 50);
+    // Kalender Pendidikan multi-tahun 2024/2025, 2025/2026, 2026/2027.
+    await load('calendar-year.js', 'ep-calendar-year-loader');
+    await load('calendar-2024-extension.js', 'ep-calendar-2024-loader');
+    await load('calendar-level-runtime.js', 'ep-calendar-level-loader');
+    await load('calendar-source-runtime.js', 'ep-calendar-source-loader');
+
+    // KKTP mengikuti Pesanan & Riwayat dan sinkron ke Analisis Nilai.
+    await load('kktp-order-runtime.js', 'ep-kktp-order-loader');
+
+    // Aktivitas guru/peserta didik rinci untuk seluruh fase/mapel.
+    await load('phase-c-supervision.js', 'ep-supervision-runtime');
+
+    // Tool pesanan/copy order; aman jika dependensi portal tidak tersedia.
+    if (window.EPERANGKAT_CATALOG?.apps?.length && window.PortalSync) {
+      await load('copy-order.js', 'ep-copy-order-loader');
+    }
+
+    // Pipeline print terbaru hanya pada halaman print.
+    if (/\/print\.html$/i.test(location.pathname)) {
+      await load('uploaded-schedule-print.js', 'ep-uploaded-schedule-print');
+      await load('print-safety-v2.js', 'ep-print-safety-v2');
+      await load('print-filename.js', 'ep-print-filename-loader');
+      await load('differentiation-runtime.js', 'ep-differentiation-loader');
+      await load('print-safe-pages.js', 'ep-print-safe-pages-loader');
+    }
+
+    document.documentElement.dataset.epLatestParity = '20260930-v2';
+    window.dispatchEvent(new CustomEvent('eperangkat:latest-parity-ready', {
+      detail: { version: '20260930-v2', subject: 'Bahasa Arab', phase: 'D' }
+    }));
   }
 
-  if (!window.__epSupervisionTimer) {
-    let checks = 0, queued = false;
-    window.__epSupervisionTimer = setInterval(() => {
-      if (window.EPERANGKAT_DATA && document.body && !queued) {
-        queued = true;
-        setTimeout(() => {
-          addScript(OLD_RUNTIME + '/phase-c-supervision.js?v=20260908-all-af-2', 'ep-supervision-runtime');
-          clearInterval(window.__epSupervisionTimer);
-          window.__epSupervisionTimer = null;
-        }, 150);
-      } else if (++checks > 600) {
-        clearInterval(window.__epSupervisionTimer);
-        window.__epSupervisionTimer = null;
-      }
-    }, 50);
-  }
-
-  if (/\/print\.html$/i.test(location.pathname)) {
-    addScript(STABLE_RUNTIME + '/print-filename.js?v=20260911-2', 'ep-print-filename-loader');
-    addScript(PRINT_PARITY + '/differentiation-runtime.js?v=20260915-2', 'ep-differentiation-loader');
-    addScript(PRINT_PARITY + '/print-safe-pages.js?v=20260915-5', 'ep-print-safe-pages-loader');
-  }
+  boot().catch((error) => {
+    console.error('[E-Perangkat Bahasa Arab] latest parity gagal:', error);
+    document.documentElement.dataset.epLatestParity = 'error';
+  });
 })();
