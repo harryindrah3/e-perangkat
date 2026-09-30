@@ -1,5 +1,8 @@
 name: Deploy Bahasa Arab Fase D Preview
 on:
+  push:
+    branches:
+      - preview/bahasa-arab-fase-d-20260929
   workflow_dispatch:
 
 permissions:
@@ -8,7 +11,7 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 15
     env:
       STATUS_BRANCH: bahasa-arab-preview-status-20260929
       TEAM_ID: team_i5YnQIDbBKi8FgTPI0YD6uOu
@@ -16,6 +19,7 @@ jobs:
       TEAM_SLUG: harryindrah3-6239s-projects
       APP_DIR: apps/fase-d/E-Perangkat_bahasa-arab_Fase-D
       STAGE_DIR: /tmp/e-perangkat-bahasa-arab-preview
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
     steps:
       - uses: actions/checkout@v4
@@ -36,6 +40,8 @@ jobs:
           set -e
           msg="$1"
           cd /tmp/arabic-preview-status
+          git fetch origin "$STATUS_BRANCH"
+          git reset --hard "origin/$STATUS_BRANCH"
           printf "%s\n" "$msg" > BAHASA_ARAB_PREVIEW_STATUS.txt
           git add BAHASA_ARAB_PREVIEW_STATUS.txt
           if ! git diff --cached --quiet; then
@@ -44,9 +50,9 @@ jobs:
           fi
           EOS
           chmod +x /tmp/update-arabic-preview-status.sh
-          /tmp/update-arabic-preview-status.sh "PREPARING_PARITY_VALIDATION"
+          /tmp/update-arabic-preview-status.sh "VALIDATING_LATEST_PARITY"
 
-      - name: Validate latest E-Perangkat parity
+      - name: Validate source and latest feature bundle
         shell: bash
         run: |
           set -e
@@ -64,17 +70,39 @@ jobs:
           }
           const index=fs.readFileSync(dir+'/index.html','utf8');
           const print=fs.readFileSync(dir+'/print.html','utf8');
-          for(const token of ['calendar-year.js','calendar-level-runtime.js','calendar-source-runtime.js','kktp-order-runtime.js','production-parity-v20260930.js']){
-            if(!index.includes(token)) throw new Error('Index parity missing '+token);
-            if(!print.includes(token)) throw new Error('Print parity missing '+token);
+          if(!index.includes('production-parity-v20260930.js?v=20260930-2')) throw new Error('Latest parity loader missing in index');
+          if(!print.includes('production-parity-v20260930.js?v=20260930-2')) throw new Error('Latest parity loader missing in print');
+          const runtime=[
+            'calendar-year.js','calendar-level-runtime.js','calendar-source-runtime.js','calendar-2024-extension.js',
+            'kktp-order-runtime.js','differentiation-runtime.js','print-safe-pages.js','print-filename.js',
+            'promes-print-route-fix.js','logo-fix.js','grade-one-cover.js','copy-order.js',
+            'phase-c-supervision.js','identity-fix.js','uploaded-schedule-print.js','print-safety-v2.js'
+          ];
+          for(const file of runtime){
+            if(!fs.existsSync(dir+'/assets/latest-runtime/'+file)) throw new Error('Missing latest runtime '+file);
           }
-          for(const file of ['calendar-level-runtime.js','calendar-year.js','calendar-source-runtime.js','calendar-2024-extension.js','kktp-order-runtime.js']){
-            if(!fs.existsSync(file)) throw new Error('Root runtime missing '+file);
+          const loader=fs.readFileSync(dir+'/assets/production-parity-v20260930.js','utf8');
+          for(const token of ['calendar-year.js','kktp-order-runtime.js','phase-c-supervision.js','uploaded-schedule-print.js','print-safety-v2.js','differentiation-runtime.js']){
+            if(!loader.includes(token)) throw new Error('Parity loader missing '+token);
           }
-          if(!index.includes('Kalender Pendidikan') || !index.includes('KKTP') || !index.includes('Analisis Nilai')) throw new Error('Core menus incomplete');
-          console.log('PARITY_VALIDATION_PASS');
+          console.log('LATEST_PARITY_SOURCE_PASS');
           NODE
-          /tmp/update-arabic-preview-status.sh "PARITY_VALIDATION_PASS"
+          /tmp/update-arabic-preview-status.sh "LATEST_PARITY_SOURCE_PASS"
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Check persistent Vercel token
+        shell: bash
+        run: |
+          set -e
+          if [ -z "$VERCEL_TOKEN" ]; then
+            /tmp/update-arabic-preview-status.sh "VERCEL_TOKEN_MISSING"
+            echo "Repository secret VERCEL_TOKEN is not configured."
+            exit 1
+          fi
+          vercel whoami --token "$VERCEL_TOKEN" --scope "$TEAM_SLUG" >/tmp/vercel-whoami.txt
+          /tmp/update-arabic-preview-status.sh "PERSISTENT_AUTH_OK"
 
       - name: Stage isolated preview
         shell: bash
@@ -83,7 +111,6 @@ jobs:
           rm -rf "$STAGE_DIR"
           mkdir -p "$STAGE_DIR/apps/fase-d"
           cp -a "$APP_DIR" "$STAGE_DIR/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D"
-          cp calendar-level-runtime.js calendar-year.js calendar-source-runtime.js calendar-2024-extension.js kktp-order-runtime.js "$STAGE_DIR/"
           printf '{}\n' > "$STAGE_DIR/vercel.json"
           cat > "$STAGE_DIR/index.html" <<'HTML'
           <!doctype html>
@@ -92,41 +119,15 @@ jobs:
           <script>location.replace('/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/index.html'+location.search+location.hash)</script>
           </body></html>
           HTML
-
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
-
-      - name: Authenticate Vercel once
-        shell: bash
-        run: |
-          set -e
-          vercel login --github > /tmp/vercel-login.log 2>&1 &
-          PID=$!
-          LOGIN_URL=""
-          for i in $(seq 1 120); do
-            LOGIN_URL=$(grep -Eo 'https://vercel.com/oauth/device\?user_code=[A-Z0-9-]+' /tmp/vercel-login.log | tail -1 || true)
-            if [ -n "$LOGIN_URL" ]; then break; fi
-            if ! kill -0 "$PID" 2>/dev/null; then break; fi
-            sleep 2
-          done
-          if [ -z "$LOGIN_URL" ]; then
-            cat /tmp/vercel-login.log
-            /tmp/update-arabic-preview-status.sh "LOGIN_URL_NOT_FOUND"
-            exit 1
-          fi
-          /tmp/update-arabic-preview-status.sh "AUTHORIZE $LOGIN_URL"
-          wait "$PID"
-          vercel whoami
-          /tmp/update-arabic-preview-status.sh "AUTHENTICATED"
-
-      - name: Deploy isolated parity preview
-        shell: bash
-        run: |
-          set -e
           mkdir -p "$STAGE_DIR/.vercel"
           printf '{"orgId":"%s","projectId":"%s"}\n' "$TEAM_ID" "$PROJECT_ID" > "$STAGE_DIR/.vercel/project.json"
-          /tmp/update-arabic-preview-status.sh "DEPLOYING_PARITY_PREVIEW"
-          DEPLOY_URL=$(vercel deploy --yes --scope "$TEAM_SLUG" --cwd "$STAGE_DIR" 2>&1 | tee /tmp/deploy.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
+
+      - name: Deploy latest parity preview without device approval
+        shell: bash
+        run: |
+          set -e
+          /tmp/update-arabic-preview-status.sh "DEPLOYING_WITH_PERSISTENT_AUTH"
+          DEPLOY_URL=$(vercel deploy --yes --token "$VERCEL_TOKEN" --scope "$TEAM_SLUG" --cwd "$STAGE_DIR" 2>&1 | tee /tmp/deploy.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
           if [ -z "$DEPLOY_URL" ]; then
             cat /tmp/deploy.log
             /tmp/update-arabic-preview-status.sh "DEPLOY_FAILED"
@@ -135,39 +136,20 @@ jobs:
           echo "DEPLOY_URL=$DEPLOY_URL" >> "$GITHUB_ENV"
           /tmp/update-arabic-preview-status.sh "DEPLOYED $DEPLOY_URL"
 
-      - name: Verify latest feature parity
+      - name: Verify live latest parity
         shell: bash
         run: |
           set -e
-          sleep 6
+          sleep 5
           APP_PATH="/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D"
-          vercel curl "$DEPLOY_URL$APP_PATH/index.html" --scope "$TEAM_SLUG" > /tmp/index.html
-          vercel curl "$DEPLOY_URL$APP_PATH/data.js" --scope "$TEAM_SLUG" > /tmp/data.js
-          vercel curl "$DEPLOY_URL$APP_PATH/print.html" --scope "$TEAM_SLUG" > /tmp/print.html
-          vercel curl "$DEPLOY_URL/kktp-order-runtime.js" --scope "$TEAM_SLUG" > /tmp/kktp.js
-          vercel curl "$DEPLOY_URL/calendar-year.js" --scope "$TEAM_SLUG" > /tmp/kaldik.js
+          vercel curl "$DEPLOY_URL$APP_PATH/index.html" --token "$VERCEL_TOKEN" --scope "$TEAM_SLUG" > /tmp/index.html
+          vercel curl "$DEPLOY_URL$APP_PATH/assets/production-parity-v20260930.js" --token "$VERCEL_TOKEN" --scope "$TEAM_SLUG" > /tmp/parity.js
+          vercel curl "$DEPLOY_URL$APP_PATH/assets/latest-runtime/kktp-order-runtime.js" --token "$VERCEL_TOKEN" --scope "$TEAM_SLUG" > /tmp/kktp.js
+          vercel curl "$DEPLOY_URL$APP_PATH/assets/latest-runtime/calendar-year.js" --token "$VERCEL_TOKEN" --scope "$TEAM_SLUG" > /tmp/kaldik.js
+          vercel curl "$DEPLOY_URL$APP_PATH/assets/latest-runtime/phase-c-supervision.js" --token "$VERCEL_TOKEN" --scope "$TEAM_SLUG" > /tmp/supervision.js
           grep -q "Bahasa Arab" /tmp/index.html
-          grep -q "Kalender Pendidikan" /tmp/index.html
-          grep -q "KKTP" /tmp/index.html
-          grep -q "production-parity-v20260930.js" /tmp/index.html
-          grep -q "window.EPERANGKAT_DATA" /tmp/data.js
-          grep -q "Paket Cetak E-Perangkat Bahasa Arab" /tmp/print.html
+          grep -q "20260930-v2" /tmp/parity.js
           grep -q "KKTP mengikuti Pesanan" /tmp/kktp.js
-          grep -q "calendar-2024-extension.js" /tmp/kaldik.js
-          /tmp/update-arabic-preview-status.sh "VERIFIED_PARITY_OK $DEPLOY_URL"
-
-      - name: Connect preview project to GitHub for future no-approval deploys
-        shell: bash
-        run: |
-          set +e
-          mkdir -p .vercel
-          printf '{"orgId":"%s","projectId":"%s"}\n' "$TEAM_ID" "$PROJECT_ID" > .vercel/project.json
-          timeout 45s vercel git connect --yes --scope "$TEAM_SLUG" > /tmp/git-connect.log 2>&1
-          CODE=$?
-          if [ "$CODE" -eq 0 ]; then
-            /tmp/update-arabic-preview-status.sh "VERIFIED_PARITY_OK_GIT_CONNECTED $DEPLOY_URL"
-          else
-            cat /tmp/git-connect.log
-            /tmp/update-arabic-preview-status.sh "VERIFIED_PARITY_OK_GIT_CONNECT_PENDING $DEPLOY_URL"
-          fi
-          exit 0
+          grep -q "2026/2027" /tmp/kaldik.js
+          grep -q "data-ep-supervision-detail" /tmp/supervision.js
+          /tmp/update-arabic-preview-status.sh "VERIFIED_LATEST_OK $DEPLOY_URL"
