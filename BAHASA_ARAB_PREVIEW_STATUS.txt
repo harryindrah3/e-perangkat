@@ -1,1 +1,1 @@
-DEPLOYING_PARITY_PREVIEW
+DEPLOYED https://e-perangkat-bahasa-arab-preview-4tv4rc2bd.vercel.app
