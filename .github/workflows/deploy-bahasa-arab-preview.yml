@@ -1,8 +1,5 @@
 name: Deploy Bahasa Arab Fase D Preview
 on:
-  push:
-    branches:
-      - preview/bahasa-arab-fase-d-20260929
   workflow_dispatch:
 
 permissions:
