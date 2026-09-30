@@ -1,1 +1,1 @@
-VERIFIED_PARITY_OK https://e-perangkat-bahasa-arab-preview-4tv4rc2bd.vercel.app
+VERIFIED_PARITY_OK_GIT_CONNECT_PENDING https://e-perangkat-bahasa-arab-preview-4tv4rc2bd.vercel.app
