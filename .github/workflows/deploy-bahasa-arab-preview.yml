@@ -202,12 +202,24 @@ jobs:
           APP_PATH="/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D"
           vercel curl "$DEPLOY_URL$APP_PATH/index.html" --scope "$TEAM_SLUG" > /tmp/index.html
           vercel curl "$DEPLOY_URL$APP_PATH/assets/production-parity-v20260930.js" --scope "$TEAM_SLUG" > /tmp/parity.js
+          vercel curl "$DEPLOY_URL$APP_PATH/assets/arabic-storage-migration.js" --scope "$TEAM_SLUG" > /tmp/migration.js
+          vercel curl "$DEPLOY_URL$APP_PATH/assets/site.js" --scope "$TEAM_SLUG" > /tmp/site.js
+          vercel curl "$DEPLOY_URL$APP_PATH/assets/v3.js" --scope "$TEAM_SLUG" > /tmp/v3.js
           vercel curl "$DEPLOY_URL$APP_PATH/assets/latest-runtime/kktp-order-runtime.js" --scope "$TEAM_SLUG" > /tmp/kktp.js
           vercel curl "$DEPLOY_URL$APP_PATH/assets/latest-runtime/calendar-year.js" --scope "$TEAM_SLUG" > /tmp/kaldik.js
+          vercel curl "$DEPLOY_URL$APP_PATH/assets/latest-runtime/calendar-2024-extension.js" --scope "$TEAM_SLUG" > /tmp/kaldik24.js
           vercel curl "$DEPLOY_URL$APP_PATH/assets/latest-runtime/phase-c-supervision.js" --scope "$TEAM_SLUG" > /tmp/supervision.js
           grep -q "Bahasa Arab" /tmp/index.html
-          grep -q "20260930-v2" /tmp/parity.js
+          grep -q "arabic-storage-migration.js?v=20261002-1" /tmp/index.html
+          grep -q "20261002-v3" /tmp/parity.js
+          grep -q "eperangkat.bahasa-arab.fased.v1" /tmp/migration.js
+          grep -q "eperangkat.bahasa-arab.fased.v1" /tmp/site.js
+          grep -q "eperangkat.bahasa-arab.fased.v1" /tmp/v3.js
+          ! grep -Eqi "bahasa-inggris|Bahasa Inggris|B\. Inggris" /tmp/site.js
+          ! grep -Eqi "bahasa-inggris|Bahasa Inggris|B\. Inggris" /tmp/v3.js
           grep -q "KKTP mengikuti Pesanan" /tmp/kktp.js
+          grep -q "epCalendarYear" /tmp/kaldik.js
           grep -q "2026/2027" /tmp/kaldik.js
+          grep -q "2024/2025" /tmp/kaldik24.js
           grep -q "data-ep-supervision-detail" /tmp/supervision.js
-          /tmp/update-arabic-preview-status.sh "VERIFIED_LATEST_OK $DEPLOY_URL"
+          /tmp/update-arabic-preview-status.sh "VERIFIED_PRODUCTION_PARITY_OK $DEPLOY_URL"
