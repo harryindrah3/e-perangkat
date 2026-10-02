@@ -1,1 +1,1 @@
-LATEST_PARITY_SOURCE_PASS
+AUTHORIZE https://vercel.com/oauth/device?user_code=GKNK-JDRD
