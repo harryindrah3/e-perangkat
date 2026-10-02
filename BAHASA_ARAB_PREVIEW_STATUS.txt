@@ -1,1 +1,1 @@
-VERIFIED_LATEST_OK https://e-perangkat-bahasa-arab-preview-fwmtmdb35.vercel.app
+VALIDATING_LATEST_PARITY
