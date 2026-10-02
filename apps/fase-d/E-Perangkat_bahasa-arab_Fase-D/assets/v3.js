@@ -1,7 +1,7 @@
 (()=>{
   'use strict';
   const D=window.EPERANGKAT_DATA;
-  const KEY='eperangkat.bahasa-inggris.fased.v1.orders';
+  const KEY='eperangkat.bahasa-arab.fased.v1.orders';
   const $=(s,r=document)=>r.querySelector(s);
   const $$=(s,r=document)=>[...r.querySelectorAll(s)];
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -93,8 +93,8 @@
       const value=localStorage.getItem(key)||'';
       const size=(key.length+value.length)*2;
       total+=size;
-      if(key.startsWith('eperangkat.bahasa-inggris.fased.v1.'))current+=size;
-      else if(key.startsWith('eperangkat.bahasa-inggris.fased.v1.legacy.')&&!key.startsWith('eperangkat.bahasa-inggris.fased.v1.'))oldMath+=size;
+      if(key.startsWith('eperangkat.bahasa-arab.fased.v1.'))current+=size;
+      else if(key.startsWith('eperangkat.bahasa-arab.fased.v1.legacy.')&&!key.startsWith('eperangkat.bahasa-arab.fased.v1.'))oldMath+=size;
     }
     return {total,current,oldMath};
   }
@@ -107,7 +107,7 @@
     const keys=[];
     for(let index=0;index<localStorage.length;index++){
       const key=localStorage.key(index)||'';
-      if(key.startsWith('eperangkat.bahasa-inggris.fased.v1.legacy.')&&!key.startsWith('eperangkat.bahasa-inggris.fased.v1.'))keys.push(key);
+      if(key.startsWith('eperangkat.bahasa-arab.fased.v1.legacy.')&&!key.startsWith('eperangkat.bahasa-arab.fased.v1.'))keys.push(key);
     }
     return keys;
   }
@@ -118,7 +118,7 @@
   }
   function storageStatusHtml(){
     const size=storageBytes(),count=obsoleteMathKeys().length;
-    return `<div class="storage-status-panel"><div><b>Penggunaan penyimpanan browser</b><span>Total ${formatBytes(size.total)} · V23.1 ${formatBytes(size.current)} · B. Inggris versi lama ${formatBytes(size.oldMath)}</span></div><div><b>${count}</b><span>kunci data B. Inggris versi lama</span></div></div>`;
+    return `<div class="storage-status-panel"><div><b>Penggunaan penyimpanan browser</b><span>Total ${formatBytes(size.total)} · V23.1 ${formatBytes(size.current)} · B. Arab versi lama ${formatBytes(size.oldMath)}</span></div><div><b>${count}</b><span>kunci data B. Arab versi lama</span></div></div>`;
   }
   function writeStore(store){
     localStorage.setItem(KEY,JSON.stringify(store));
@@ -139,7 +139,7 @@
       if(!isQuotaError(error))throw error;
     }
     const oldKeys=obsoleteMathKeys();
-    if(oldKeys.length&&confirm(`Penyimpanan browser penuh. Ditemukan ${oldKeys.length} data B. Inggris dari versi lama. Hapus data browser versi lama agar penyimpanan tersedia? File aplikasi lama tetap aman di komputer.`)){
+    if(oldKeys.length&&confirm(`Penyimpanan browser penuh. Ditemukan ${oldKeys.length} data B. Arab dari versi lama. Hapus data browser versi lama agar penyimpanan tersedia? File aplikasi lama tetap aman di komputer.`)){
       cleanupOldMathStorage();
       try{
         writeStore(lean);
@@ -148,7 +148,7 @@
         if(!isQuotaError(error))throw error;
       }
     }
-    const storageError=new Error('Penyimpanan browser penuh. Gunakan tombol “Bersihkan Data B. Inggris Lama”, lalu ulangi impor.');
+    const storageError=new Error('Penyimpanan browser penuh. Gunakan tombol “Bersihkan Data B. Arab Lama”, lalu ulangi impor.');
     storageError.name='StorageQuotaError';
     throw storageError;
   }
@@ -234,9 +234,9 @@
     const saved=setStore(store);
     const active=saved.orders.find(item=>item.id===saved.activeId)||saved.orders[0];
     if(active){
-      localStorage.setItem('eperangkat.bahasa-inggris.fased.v1.profile',JSON.stringify(lightProfile(active.profile||D.defaults)));
-      localStorage.setItem('eperangkat.bahasa-inggris.fased.v1.students',JSON.stringify(active.students||[]));
-      localStorage.setItem('eperangkat.bahasa-inggris.fased.v1.grade',active.grade||'VII');
+      localStorage.setItem('eperangkat.bahasa-arab.fased.v1.profile',JSON.stringify(lightProfile(active.profile||D.defaults)));
+      localStorage.setItem('eperangkat.bahasa-arab.fased.v1.students',JSON.stringify(active.students||[]));
+      localStorage.setItem('eperangkat.bahasa-arab.fased.v1.grade',active.grade||'VII');
     }
     refreshOrderBar();
     if(reload) location.reload();
@@ -267,7 +267,7 @@
     return `<option value="" ${!code?'selected':''}>Kosong saja / tanpa rombel</option><option value="A" ${code==='A'?'selected':''}>Rombel A</option><option value="B" ${code==='B'?'selected':''}>Rombel B</option>`;
   }
   function pageHead(title,description,actions=''){
-    const store=getStore(),order=activeOrder(store),grade=order?.grade||localStorage.getItem('eperangkat.bahasa-inggris.fased.v1.grade')||'VII';
+    const store=getStore(),order=activeOrder(store),grade=order?.grade||localStorage.getItem('eperangkat.bahasa-arab.fased.v1.grade')||'VII';
     const kelas=classLabel(grade,order?.profile?.rombel);
     return `<div class="page-head"><div><span class="eyebrow">Kelas ${kelas} · Fase D</span><h1>${esc(title)}</h1><p>${esc(description)}</p></div><div class="actions">${actions}</div></div>`;
   }
@@ -591,7 +591,7 @@
       const backup=await optimizeStoreImages(getStore(),false);
       const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'}),a=document.createElement('a');
       a.href=URL.createObjectURL(blob);
-      a.download=`backup-eperangkat-B. Inggris-v23-1-${new Date().toISOString().slice(0,10)}.json`;
+      a.download=`backup-eperangkat-B. Arab-v23-1-${new Date().toISOString().slice(0,10)}.json`;
       a.click();
       setTimeout(()=>URL.revokeObjectURL(a.href),500);
     };
@@ -611,7 +611,7 @@
             if(!isQuotaError(error)&&error.name!=='StorageQuotaError')throw error;
             prepared=await optimizeStoreImages(parsed,true);
             const oldKeys=obsoleteMathKeys();
-            if(oldKeys.length&&!confirm(`Backup sudah dipadatkan, tetapi ruang masih kurang. Hapus ${oldKeys.length} data browser B. Inggris versi lama lalu lanjutkan impor?`)){
+            if(oldKeys.length&&!confirm(`Backup sudah dipadatkan, tetapi ruang masih kurang. Hapus ${oldKeys.length} data browser B. Arab versi lama lalu lanjutkan impor?`)){
               throw new Error('Impor dibatalkan karena ruang penyimpanan belum tersedia.');
             }
             if(oldKeys.length)cleanupOldMathStorage();
@@ -640,10 +640,10 @@
     };
     $('#cleanupOldMathBtn').onclick=()=>{
       const keys=obsoleteMathKeys();
-      if(!keys.length){alert('Tidak ada data B. Inggris versi lama di penyimpanan browser.');return}
-      if(!confirm(`Hapus ${keys.length} data browser B. Inggris versi lama? File ZIP dan folder aplikasi lama di komputer tidak ikut terhapus.`))return;
+      if(!keys.length){alert('Tidak ada data B. Arab versi lama di penyimpanan browser.');return}
+      if(!confirm(`Hapus ${keys.length} data browser B. Arab versi lama? File ZIP dan folder aplikasi lama di komputer tidak ikut terhapus.`))return;
       cleanupOldMathStorage();
-      alert('Data browser B. Inggris versi lama berhasil dibersihkan.');
+      alert('Data browser B. Arab versi lama berhasil dibersihkan.');
       renderOrders();
     };
   }
@@ -672,7 +672,7 @@
   function renderCalendar(){
     const store=getStore(),o=activeOrder(store);if(!o.calendar)o.calendar=defaultCalendar();const cal=o.calendar,p=o.profile||D.defaults;
     const sem=calendarSemester;
-    app.innerHTML=pageHead('Kalender Pendidikan','Kalender Pendidikan: MES 24, MEB 21, HES 112 hari, dan HEB 100 hari menjadi dasar Program Tahunan serta Program Semester B. Inggris.',`<a class="btn primary" href="print.html?grade=${o.grade}&section=calendar&semester=${sem}">Cetak Semester ${sem===1?'I':'II'}</a><a class="btn secondary" href="print.html?grade=${o.grade}&section=calendar&semester=both">Cetak Keduanya</a>`)+`
+    app.innerHTML=pageHead('Kalender Pendidikan','Kalender Pendidikan: MES 24, MEB 21, HES 112 hari, dan HEB 100 hari menjadi dasar Program Tahunan serta Program Semester B. Arab.',`<a class="btn primary" href="print.html?grade=${o.grade}&section=calendar&semester=${sem}">Cetak Semester ${sem===1?'I':'II'}</a><a class="btn secondary" href="print.html?grade=${o.grade}&section=calendar&semester=both">Cetak Keduanya</a>`)+`
       <div class="calendar-toolbar"><div class="semester-tabs"><button class="${sem===1?'active':''}" data-semester="1">Semester I · Ganjil</button><button class="${sem===2?'active':''}" data-semester="2">Semester II · Genap</button></div><div class="actions"><button class="btn secondary" id="resetCalendarBtn">Reset Contoh</button><button class="btn primary" id="saveCalendarBtn">Simpan Kalender</button></div></div>
       <section class="calendar-sheet-web">${calendarLetterhead(p)}<div class="calendar-title-row"><b>KALENDER PENDIDIKAN TAHUN AJARAN ${esc(p.year)}</b><strong>SEMESTER ${sem===1?'I (GANJIL)':'II (GENAP)'}</strong></div>${calendarTable(cal,sem)}<div class="calendar-legend"><span class="national">Libur nasional</span><span class="semester">Libur semester</span><span class="unit">Kegiatan satuan</span><span class="assessment">Asesmen</span><span class="report">Rapor</span><span class="learning">Pembelajaran/kegiatan</span></div></section>
       <section class="card calendar-editor"><div class="history-head"><div><span class="eyebrow">EDITOR KALENDER</span><h2>Kegiatan dan Hari Libur</h2><p>Perubahan disimpan khusus untuk pesanan aktif <b>${esc(o.number)}</b> dan masuk ke riwayat pengeditan.</p></div><button class="btn teal" id="addCalendarEvent">+ Tambah Kegiatan</button></div><div class="calendar-event-list">${cal.events.filter(e=>sem===1?e.end<'2027-01-03':e.end>='2027-01-01').map(e=>calendarEventRow(e)).join('')}</div></section>`;
@@ -691,7 +691,7 @@
     $('#resetCalendarBtn').onclick=()=>{if(!confirm('Kembalikan kalender ke contoh Tahun Ajaran 2026/2027?'))return;const s=getStore(),o=activeOrder(s),before=snapshot(o);o.calendar=defaultCalendar();history(o,'Kalender direset','Kalender dikembalikan ke data contoh 2026/2027.',before);saveAndSync(s,o);renderCalendar()};
   }
 
-  function currentCustomView(){return localStorage.getItem('eperangkat.bahasa-inggris.fased.v1.view')}
+  function currentCustomView(){return localStorage.getItem('eperangkat.bahasa-arab.fased.v1.view')}
   function renderCustom(){const v=currentCustomView();if(v==='orders')renderOrders();if(v==='calendar')renderCalendar();enhancePrintView()}
   function enhancePrintView(){
     if(currentCustomView()!=='print')return;const store=getStore(),o=activeOrder(store),root=$('#app');if(!root||$('#paymentPrintNotice'))return;
@@ -707,26 +707,26 @@
   $$('[data-view="orders"],[data-view="calendar"]').forEach(b=>b.addEventListener('click',()=>setTimeout(renderCustom,0)));
   $$('[data-grade]').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{
     const v=currentCustomView();if(v==='orders'||v==='calendar')renderCustom();
-    const s=getStore(),o=activeOrder(s),g=localStorage.getItem('eperangkat.bahasa-inggris.fased.v1.grade')||b.dataset.grade;if(o&&o.grade!==g){const before=snapshot(o);o.grade=g;history(o,'Kelas pesanan diubah',`Kelas diubah menjadi ${g}.`,before);setStore(s)}
+    const s=getStore(),o=activeOrder(s),g=localStorage.getItem('eperangkat.bahasa-arab.fased.v1.grade')||b.dataset.grade;if(o&&o.grade!==g){const before=snapshot(o);o.grade=g;history(o,'Kelas pesanan diubah',`Kelas diubah menjadi ${g}.`,before);setStore(s)}
   },0)));
 
   // Semua tautan cetak mendapatkan identitas pesanan dan mode watermark otomatis.
   document.addEventListener('click',e=>{
     const a=e.target.closest('a[href*="print.html"]');if(!a)return;e.preventDefault();e.stopImmediatePropagation();if(a.classList.contains('disabled')||a.getAttribute('aria-disabled')==='true'){alert('Cetak bersih belum tersedia karena pesanan belum lunas.');return}openPrint(a.getAttribute('href'),a.dataset.printMode||'auto');
   },true);
-  $('#quickPrint')?.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();openPrint(`print.html?grade=${localStorage.getItem('eperangkat.bahasa-inggris.fased.v1.grade')||'VII'}&section=all`,'auto')},true);
+  $('#quickPrint')?.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();openPrint(`print.html?grade=${localStorage.getItem('eperangkat.bahasa-arab.fased.v1.grade')||'VII'}&section=all`,'auto')},true);
 
   // Profil menjadi milik pesanan aktif dan setiap penyimpanan dicatat.
   $('#saveProfile')?.addEventListener('click',()=>{const s=getStore(),o=activeOrder(s);beforeProfileSnapshot=o?snapshot(o):null},true);
   document.addEventListener('click',e=>{
-    if(e.target.id==='saveProfile')setTimeout(()=>{const s=getStore(),o=activeOrder(s);if(!o)return;let p={...D.defaults};try{p={...p,...JSON.parse(localStorage.getItem('eperangkat.bahasa-inggris.fased.v1.profile')||'{}')}}catch(_){}o.profile=p;o.school=p.school;history(o,'Profil satuan pendidikan diperbarui','Identitas dokumen disimpan melalui menu Profil.',beforeProfileSnapshot);setStore(s);refreshOrderBar()},20);
-    if(e.target.id==='saveStudents')setTimeout(()=>{const s=getStore(),o=activeOrder(s);if(!o)return;const before=snapshot(o);try{o.students=JSON.parse(localStorage.getItem('eperangkat.bahasa-inggris.fased.v1.students')||'[]')}catch(_){o.students=[]}history(o,'Data peserta dan nilai diperbarui',`${o.students.length} peserta tersimpan.`,before);setStore(s)},20);
+    if(e.target.id==='saveProfile')setTimeout(()=>{const s=getStore(),o=activeOrder(s);if(!o)return;let p={...D.defaults};try{p={...p,...JSON.parse(localStorage.getItem('eperangkat.bahasa-arab.fased.v1.profile')||'{}')}}catch(_){}o.profile=p;o.school=p.school;history(o,'Profil satuan pendidikan diperbarui','Identitas dokumen disimpan melalui menu Profil.',beforeProfileSnapshot);setStore(s);refreshOrderBar()},20);
+    if(e.target.id==='saveStudents')setTimeout(()=>{const s=getStore(),o=activeOrder(s);if(!o)return;const before=snapshot(o);try{o.students=JSON.parse(localStorage.getItem('eperangkat.bahasa-arab.fased.v1.students')||'[]')}catch(_){o.students=[]}history(o,'Data peserta dan nilai diperbarui',`${o.students.length} peserta tersimpan.`,before);setStore(s)},20);
   });
 
   // Tombol profil diarahkan ke profil milik pesanan aktif, bukan profil global terpisah.
   $('#profileBtn')?.addEventListener('click',e=>{
     e.preventDefault();e.stopImmediatePropagation();
-    localStorage.setItem('eperangkat.bahasa-inggris.fased.v1.view','orders');
+    localStorage.setItem('eperangkat.bahasa-arab.fased.v1.view','orders');
     const s=getStore();selectedOrderId=activeOrder(s)?.id||selectedOrderId;
     const nav=$('[data-view="orders"]');
     nav?.click();
@@ -738,7 +738,7 @@
   window.addEventListener('eperangkat:students-updated',event=>{
     const s=getStore(),o=activeOrder(s);if(!o)return;
     const before=snapshot(o);
-    try{o.students=JSON.parse(localStorage.getItem('eperangkat.bahasa-inggris.fased.v1.students')||'[]')}
+    try{o.students=JSON.parse(localStorage.getItem('eperangkat.bahasa-arab.fased.v1.students')||'[]')}
     catch(_){o.students=[]}
     o.students=Array.isArray(o.students)?o.students.slice(0,30):[];
     const info=event.detail||{};
