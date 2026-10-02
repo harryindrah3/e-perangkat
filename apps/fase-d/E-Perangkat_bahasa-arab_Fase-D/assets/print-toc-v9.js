@@ -48,7 +48,7 @@
   });
 
   const D=window.EPERANGKAT_DATA||{};
-  const STORE='eperangkat.bahasa-inggris.fased.v1.orders';
+  const STORE='eperangkat.bahasa-arab.fased.v1.orders';
   function getStore(){try{return JSON.parse(localStorage.getItem(STORE)||'{"activeId":"","orders":[]}')}catch(_){return {activeId:'',orders:[]}}}
   const store=getStore(),orderId=params.get('order')||'',order=store.orders?.find(o=>o.id===orderId)||store.orders?.find(o=>o.id===store.activeId)||store.orders?.[0]||{};
   const profile={...(D.defaults||{}),...(order.profile||{})};
@@ -67,7 +67,7 @@
     <div class="toc-kicker">E-PERANGKAT PEMBELAJARAN · KURIKULUM MERDEKA</div>
     <h1>DAFTAR ISI</h1>
     <div class="toc-meta">
-      <div><span>Mata Pelajaran</span><b>B. Inggris</b></div>
+      <div><span>Mata Pelajaran</span><b>B. Arab</b></div>
       <div><span>Kelas / Fase</span><b>${esc(grade)} / D</b></div>
       <div><span>Cakupan</span><b>${esc(semesterLabel)}</b></div>
       <div><span>Tahun Pelajaran</span><b>${esc(profile.year||'')}</b></div>
@@ -75,7 +75,7 @@
     <div class="toc-rule"></div>
     <ol class="toc-list">${list.map((item,i)=>`<li><span class="toc-no">${String(i+1).padStart(2,'0')}</span><span class="toc-label">${esc(item.label)}</span><span class="toc-dots"></span><span class="toc-page-number">${esc(item.number)}</span></li>`).join('')}</ol>
     <div class="toc-note"><b>Catatan:</b> Nomor halaman mengikuti susunan paket cetak yang sedang dipilih. Komponen semester otomatis menampilkan perangkat yang sesuai dengan Semester I atau Semester II.</div>
-    <div class="page-foot"><span>Daftar Isi · E-Perangkat B. Inggris Fase D</span><span>Kelas ${esc(grade)} · ${esc(profile.year||'')}</span></div>
+    <div class="page-foot"><span>Daftar Isi · E-Perangkat B. Arab Fase D</span><span>Kelas ${esc(grade)} · ${esc(profile.year||'')}</span></div>
   </div>`;
   pages[0].after(toc);
 
