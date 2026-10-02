@@ -1,7 +1,7 @@
 (()=>{
   'use strict';
-  const PROFILE_KEY='eperangkat.bahasa-inggris.fased.v1.profile';
-  const ORDER_KEY='eperangkat.bahasa-inggris.fased.v1.orders';
+  const PROFILE_KEY='eperangkat.bahasa-arab.fased.v1.profile';
+  const ORDER_KEY='eperangkat.bahasa-arab.fased.v1.orders';
   const $=(s,r=document)=>r.querySelector(s);
   const form=$('#profileForm');
   if(!form)return;
