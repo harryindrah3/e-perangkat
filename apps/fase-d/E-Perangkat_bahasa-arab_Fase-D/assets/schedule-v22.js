@@ -1,10 +1,10 @@
 (()=>{
   'use strict';
   const D=window.EPERANGKAT_DATA||{};
-  const PROFILE_KEY='eperangkat.bahasa-inggris.fased.v1.profile';
-  const ORDER_KEY='eperangkat.bahasa-inggris.fased.v1.orders';
-  const VIEW_KEY='eperangkat.bahasa-inggris.fased.v1.view';
-  const GRADE_KEY='eperangkat.bahasa-inggris.fased.v1.grade';
+  const PROFILE_KEY='eperangkat.bahasa-arab.fased.v1.profile';
+  const ORDER_KEY='eperangkat.bahasa-arab.fased.v1.orders';
+  const VIEW_KEY='eperangkat.bahasa-arab.fased.v1.view';
+  const GRADE_KEY='eperangkat.bahasa-arab.fased.v1.grade';
   const $=(s,r=document)=>r.querySelector(s);
   const $$=(s,r=document)=>[...r.querySelectorAll(s)];
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -103,7 +103,7 @@
         <div class="schedule-tabs"><button class="${activeSemester==='1'?'active':''}" data-schedule-semester="1">Semester I · Ganjil</button><button class="${activeSemester==='2'?'active':''}" data-schedule-semester="2">Semester II · Genap</button></div>
         <div class="schedule-identity">
           <div><span>Nama Sekolah</span><b>${esc(p.school||'')}</b></div>
-          <div><span>Mata Pelajaran</span><b>B. Inggris</b></div>
+          <div><span>Mata Pelajaran</span><b>B. Arab</b></div>
           <div><span>Kelas / Semester</span><b>${esc(grade)} / ${activeSemester==='1'?'I':'II'}</b></div>
           <div><span>Tahun Pelajaran</span><b>${esc(p.year||'')}</b></div>
         </div>
