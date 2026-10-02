@@ -19,7 +19,7 @@ jobs:
       TEAM_SLUG: harryindrah3-6239s-projects
       APP_DIR: apps/fase-d/E-Perangkat_bahasa-arab_Fase-D
       STAGE_DIR: /tmp/e-perangkat-bahasa-arab-preview
-steps:
+    steps:
       - uses: actions/checkout@v4
         with:
           ref: preview/bahasa-arab-fase-d-20260929
