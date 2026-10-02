@@ -1,0 +1,230 @@
+name: Release Bahasa Arab Fase D to Production
+
+on:
+  push:
+    branches:
+      - release/bahasa-arab-production-20261002
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: e-perangkat-production-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      RELEASE_DIR: releases/calendar-2026-2027
+      STAGE_DIR: /tmp/e-perangkat-production
+      STATUS_BRANCH: bahasa-arab-production-status-20261002
+      TEAM_ID: team_i5YnQIDbBKi8FgTPI0YD6uOu
+      PROJECT_ID: prj_KwCEjkE1OFX3CgBeBEenQcgX3P45
+      TEAM_SLUG: harryindrah3-6239s-projects
+      BASE_PROD_SHA: 021977facb18b0723e39360ab249a271407695c2
+      OLD_PROD_DEPLOYMENT: dpl_HRj9sPx9H6aPWYuGRVMmRSMRZ777
+      OLD_PROD_URL: https://e-perangkat-online-a-9424otdje-harryindrah3-6239s-projects.vercel.app
+      PROD_DOMAIN: https://e-perangkat-online-a-f.vercel.app
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: release/bahasa-arab-production-20261002
+          fetch-depth: 0
+
+      - name: Prepare release status channel
+        shell: bash
+        run: |
+          set -e
+          git config user.name "Bahasa Arab Production Release"
+          git config user.email "release@e-perangkat.local"
+          git fetch origin "$STATUS_BRANCH:$STATUS_BRANCH"
+          git worktree add /tmp/arabic-prod-status "$STATUS_BRANCH"
+          cat > /tmp/update-arabic-prod-status.sh <<'EOS'
+          #!/usr/bin/env bash
+          set -e
+          msg="$1"
+          cd /tmp/arabic-prod-status
+          git fetch origin "$STATUS_BRANCH"
+          git reset --hard "origin/$STATUS_BRANCH"
+          printf "%s\n" "$msg" > BAHASA_ARAB_PRODUCTION_STATUS.txt
+          git add BAHASA_ARAB_PRODUCTION_STATUS.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(status): update Bahasa Arab production status"
+            git push origin HEAD:"$STATUS_BRANCH" || true
+          fi
+          EOS
+          chmod +x /tmp/update-arabic-prod-status.sh
+          /tmp/update-arabic-prod-status.sh "VALIDATING_RELEASE_SCOPE"
+
+      - name: Guard existing Production files
+        shell: bash
+        run: |
+          set -e
+          changed=$(git diff --name-only "$BASE_PROD_SHA"..HEAD -- "$RELEASE_DIR" || true)
+          printf '%s\n' "$changed"
+          while IFS= read -r file; do
+            [ -z "$file" ] && continue
+            case "$file" in
+              "$RELEASE_DIR/catalog-erlangga.js") ;;
+              "$RELEASE_DIR/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/"*) ;;
+              *)
+                echo "Unexpected Production file changed: $file"
+                /tmp/update-arabic-prod-status.sh "ABORTED_UNEXPECTED_PRODUCTION_CHANGE $file"
+                exit 1
+                ;;
+            esac
+          done <<< "$changed"
+
+          git diff --exit-code "$BASE_PROD_SHA"..HEAD --             "$RELEASE_DIR/index.html"             "$RELEASE_DIR/vercel.json"             "$RELEASE_DIR/calendar-year.js"             "$RELEASE_DIR/calendar-level-runtime.js"             "$RELEASE_DIR/calendar-source-runtime.js"             "$RELEASE_DIR/kktp-order-runtime.js"             "$RELEASE_DIR/phase-c-supervision.js"             "$RELEASE_DIR/differentiation-runtime.js"             "$RELEASE_DIR/print-safe-pages.js"             "$RELEASE_DIR/print-filename.js"             "$RELEASE_DIR/promes-print-route-fix.js"
+          /tmp/update-arabic-prod-status.sh "PRODUCTION_BASE_UNCHANGED"
+
+      - name: Validate Bahasa Arab addition
+        shell: bash
+        run: |
+          set -e
+          node <<'NODE'
+          const fs=require('fs');
+          const root='releases/calendar-2026-2027';
+          const dir=root+'/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D';
+          const raw=fs.readFileSync(dir+'/data.js','utf8').replace(/^window\.EPERANGKAT_DATA\s*=\s*/,'').replace(/;\s*$/,'');
+          const d=JSON.parse(raw);
+          if(d.meta.subject!=='Bahasa Arab') throw new Error('Subject mismatch');
+          if(d.meta.storage?.namespace!=='bahasa-arab.fased.v1') throw new Error('Metadata namespace mismatch');
+          if(d.modules.length!==18) throw new Error('Expected 18 modules');
+          for(const grade of ['VII','VIII','IX']){
+            const mods=d.modules.filter(m=>m.grade===grade);
+            if(mods.length!==6) throw new Error('Expected 6 modules for '+grade);
+            if(!mods.every(m=>m.meetings?.length===6)) throw new Error('Meeting count mismatch '+grade);
+          }
+          const catalog=fs.readFileSync(root+'/catalog-erlangga.js','utf8');
+          for(const token of [
+            '"id":"fase-d-bahasa-arab"',
+            '"subject":"Bahasa Arab"',
+            '"href":"apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/index.html"',
+            '"storageKey":"eperangkat.bahasa-arab.fased.v1.orders"'
+          ]) if(!catalog.includes(token)) throw new Error('Catalog missing '+token);
+
+          const files=['site.js','v3.js','analysis-v7.js','schedule-v22.js','signature-v22.js','print.js','print-v3.js','print-analysis-v7.js','print-schedule-v22.js','print-toc-v9.js','v3-bootstrap.js'];
+          for(const file of files){
+            const text=fs.readFileSync(dir+'/assets/'+file,'utf8');
+            if(/bahasa-inggris|Bahasa Inggris|B\. Inggris/.test(text)) throw new Error('Inherited Bahasa Inggris identity remains in '+file);
+          }
+          const index=fs.readFileSync(dir+'/index.html','utf8');
+          const print=fs.readFileSync(dir+'/print.html','utf8');
+          if(!index.includes('production-parity-v20260930.js?v=20261002-3')) throw new Error('Parity runtime missing in index');
+          if(!print.includes('production-parity-v20260930.js?v=20261002-3')) throw new Error('Parity runtime missing in print');
+          console.log('ARABIC_RELEASE_VALIDATION_PASS');
+          NODE
+          /tmp/update-arabic-prod-status.sh "ARABIC_RELEASE_VALIDATION_PASS"
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Authorize Vercel once
+        shell: bash
+        run: |
+          set -e
+          vercel login --github > /tmp/vercel-login.log 2>&1 &
+          PID=$!
+          LOGIN_URL=""
+          for i in $(seq 1 120); do
+            LOGIN_URL=$(grep -Eo 'https://vercel.com/oauth/device\?user_code=[A-Z0-9-]+' /tmp/vercel-login.log | tail -1 || true)
+            if [ -n "$LOGIN_URL" ]; then break; fi
+            if ! kill -0 "$PID" 2>/dev/null; then break; fi
+            sleep 2
+          done
+          if [ -z "$LOGIN_URL" ]; then
+            cat /tmp/vercel-login.log
+            /tmp/update-arabic-prod-status.sh "LOGIN_URL_NOT_FOUND"
+            exit 1
+          fi
+          /tmp/update-arabic-prod-status.sh "AUTHORIZE $LOGIN_URL"
+          wait "$PID"
+          vercel whoami
+          /tmp/update-arabic-prod-status.sh "AUTHENTICATED"
+
+      - name: Stage exact Production release
+        shell: bash
+        run: |
+          set -e
+          rm -rf "$STAGE_DIR"
+          cp -a "$RELEASE_DIR" "$STAGE_DIR"
+          mkdir -p "$STAGE_DIR/.vercel"
+          printf '{"orgId":"%s","projectId":"%s"}\n' "$TEAM_ID" "$PROJECT_ID" > "$STAGE_DIR/.vercel/project.json"
+          /tmp/update-arabic-prod-status.sh "STAGED_EXACT_PRODUCTION_PLUS_BAHASA_ARAB"
+
+      - name: Deploy and verify Preview candidate
+        shell: bash
+        run: |
+          set -e
+          PREVIEW_URL=$(vercel deploy --yes --scope "$TEAM_SLUG" --cwd "$STAGE_DIR" 2>&1 | tee /tmp/preview-deploy.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
+          if [ -z "$PREVIEW_URL" ]; then
+            cat /tmp/preview-deploy.log
+            /tmp/update-arabic-prod-status.sh "PREVIEW_DEPLOY_FAILED"
+            exit 1
+          fi
+          echo "PREVIEW_URL=$PREVIEW_URL" >> "$GITHUB_ENV"
+          /tmp/update-arabic-prod-status.sh "PREVIEW_DEPLOYED $PREVIEW_URL"
+          sleep 5
+
+          vercel curl "$PREVIEW_URL/catalog-erlangga.js" --scope "$TEAM_SLUG" > /tmp/catalog.js
+          vercel curl "$PREVIEW_URL/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/index.html" --scope "$TEAM_SLUG" > /tmp/arab-index.html
+          vercel curl "$PREVIEW_URL/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/data.js" --scope "$TEAM_SLUG" > /tmp/arab-data.js
+          vercel curl "$PREVIEW_URL/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/v3.js" --scope "$TEAM_SLUG" > /tmp/arab-v3.js
+          vercel curl "$PREVIEW_URL/apps/fase-c/E-Perangkat_bahasa-indonesia_Fase-C/index.html" --scope "$TEAM_SLUG" > /tmp/existing-fasec.html
+          vercel curl "$PREVIEW_URL/apps/fase-c/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-C/index.html" --scope "$TEAM_SLUG" > /tmp/existing-erlangga.html
+          vercel curl "$PREVIEW_URL/index.html" --scope "$TEAM_SLUG" > /tmp/root.html
+
+          grep -q '"fase-d-bahasa-arab"' /tmp/catalog.js
+          grep -q '"fase-c-pai-bp-erlangga"' /tmp/catalog.js
+          grep -q "E-Perangkat Bahasa Arab Fase D" /tmp/arab-index.html
+          grep -q '"subject":"Bahasa Arab"' /tmp/arab-data.js
+          grep -q 'eperangkat.bahasa-arab.fased.v1.orders' /tmp/arab-v3.js
+          grep -q "E-Perangkat Online A–F" /tmp/existing-fasec.html
+          grep -q "PAI" /tmp/existing-erlangga.html
+          grep -q "a37f7c9455df07b95146acec5bdecbc22c3799e7" /tmp/root.html
+          /tmp/update-arabic-prod-status.sh "PREVIEW_CANDIDATE_VERIFIED $PREVIEW_URL"
+
+      - name: Promote verified candidate to Production
+        shell: bash
+        run: |
+          set -e
+          /tmp/update-arabic-prod-status.sh "PROMOTING_VERIFIED_CANDIDATE $PREVIEW_URL"
+          vercel promote "$PREVIEW_URL" --yes --scope "$TEAM_SLUG"
+          sleep 6
+
+      - name: Verify Production and auto-rollback on failure
+        shell: bash
+        run: |
+          set +e
+          verify_prod() {
+            vercel curl "$PROD_DOMAIN/catalog-erlangga.js" --scope "$TEAM_SLUG" > /tmp/prod-catalog.js || return 1
+            vercel curl "$PROD_DOMAIN/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/index.html" --scope "$TEAM_SLUG" > /tmp/prod-arab.html || return 1
+            vercel curl "$PROD_DOMAIN/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/data.js" --scope "$TEAM_SLUG" > /tmp/prod-arab-data.js || return 1
+            vercel curl "$PROD_DOMAIN/apps/fase-c/E-Perangkat_bahasa-indonesia_Fase-C/index.html" --scope "$TEAM_SLUG" > /tmp/prod-existing.html || return 1
+            vercel curl "$PROD_DOMAIN/apps/fase-c/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-C/index.html" --scope "$TEAM_SLUG" > /tmp/prod-erlangga.html || return 1
+            grep -q '"fase-d-bahasa-arab"' /tmp/prod-catalog.js || return 1
+            grep -q '"fase-c-pai-bp-erlangga"' /tmp/prod-catalog.js || return 1
+            grep -q "E-Perangkat Bahasa Arab Fase D" /tmp/prod-arab.html || return 1
+            grep -q '"subject":"Bahasa Arab"' /tmp/prod-arab-data.js || return 1
+            grep -q "E-Perangkat Online A–F" /tmp/prod-existing.html || return 1
+            grep -q "PAI" /tmp/prod-erlangga.html || return 1
+            return 0
+          }
+
+          if verify_prod; then
+            /tmp/update-arabic-prod-status.sh "PRODUCTION_VERIFIED_OK $PREVIEW_URL"
+            exit 0
+          fi
+
+          /tmp/update-arabic-prod-status.sh "PRODUCTION_VERIFY_FAILED_ROLLING_BACK $OLD_PROD_DEPLOYMENT"
+          vercel rollback "$OLD_PROD_DEPLOYMENT" --yes --scope "$TEAM_SLUG"
+          sleep 6
+          vercel curl "$PROD_DOMAIN/index.html" --scope "$TEAM_SLUG" > /tmp/rollback-root.html
+          grep -q "E-Perangkat Online A–F" /tmp/rollback-root.html
+          /tmp/update-arabic-prod-status.sh "ROLLED_BACK_TO_PREVIOUS_PRODUCTION $OLD_PROD_DEPLOYMENT"
+          exit 1
