@@ -1,1 +1,1 @@
-AUTHORIZE https://vercel.com/oauth/device?user_code=HFPX-QDDP
+VALIDATING_RELEASE_SCOPE
