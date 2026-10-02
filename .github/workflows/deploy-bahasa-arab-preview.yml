@@ -1,12 +1,13 @@
 name: Deploy Bahasa Arab Fase D Preview
 on:
-  push:
-    branches:
-      - preview/bahasa-arab-fase-d-20260929
   workflow_dispatch:
 
 permissions:
   contents: write
+
+concurrency:
+  group: bahasa-arab-fase-d-preview
+  cancel-in-progress: true
 
 jobs:
   deploy:
