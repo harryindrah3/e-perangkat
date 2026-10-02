@@ -19,9 +19,7 @@ jobs:
       TEAM_SLUG: harryindrah3-6239s-projects
       APP_DIR: apps/fase-d/E-Perangkat_bahasa-arab_Fase-D
       STAGE_DIR: /tmp/e-perangkat-bahasa-arab-preview
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-
-    steps:
+steps:
       - uses: actions/checkout@v4
         with:
           ref: preview/bahasa-arab-fase-d-20260929
@@ -92,17 +90,28 @@ jobs:
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
-      - name: Check persistent Vercel token
+      - name: Authenticate Vercel for this preview
         shell: bash
         run: |
           set -e
-          if [ -z "$VERCEL_TOKEN" ]; then
-            /tmp/update-arabic-preview-status.sh "VERCEL_TOKEN_MISSING"
-            echo "Repository secret VERCEL_TOKEN is not configured."
+          vercel login --github > /tmp/vercel-login.log 2>&1 &
+          PID=$!
+          LOGIN_URL=""
+          for i in $(seq 1 120); do
+            LOGIN_URL=$(grep -Eo 'https://vercel.com/oauth/device\?user_code=[A-Z0-9-]+' /tmp/vercel-login.log | tail -1 || true)
+            if [ -n "$LOGIN_URL" ]; then break; fi
+            if ! kill -0 "$PID" 2>/dev/null; then break; fi
+            sleep 2
+          done
+          if [ -z "$LOGIN_URL" ]; then
+            cat /tmp/vercel-login.log
+            /tmp/update-arabic-preview-status.sh "LOGIN_URL_NOT_FOUND"
             exit 1
           fi
-          vercel whoami --token "$VERCEL_TOKEN" --scope "$TEAM_SLUG" >/tmp/vercel-whoami.txt
-          /tmp/update-arabic-preview-status.sh "PERSISTENT_AUTH_OK"
+          /tmp/update-arabic-preview-status.sh "AUTHORIZE $LOGIN_URL"
+          wait "$PID"
+          vercel whoami
+          /tmp/update-arabic-preview-status.sh "AUTHENTICATED"
 
       - name: Stage isolated preview
         shell: bash
@@ -122,12 +131,12 @@ jobs:
           mkdir -p "$STAGE_DIR/.vercel"
           printf '{"orgId":"%s","projectId":"%s"}\n' "$TEAM_ID" "$PROJECT_ID" > "$STAGE_DIR/.vercel/project.json"
 
-      - name: Deploy latest parity preview without device approval
+      - name: Deploy latest parity preview
         shell: bash
         run: |
           set -e
-          /tmp/update-arabic-preview-status.sh "DEPLOYING_WITH_PERSISTENT_AUTH"
-          DEPLOY_URL=$(vercel deploy --yes --token "$VERCEL_TOKEN" --scope "$TEAM_SLUG" --cwd "$STAGE_DIR" 2>&1 | tee /tmp/deploy.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
+          /tmp/update-arabic-preview-status.sh "DEPLOYING_LATEST_PARITY"
+          DEPLOY_URL=$(vercel deploy --yes --scope "$TEAM_SLUG" --cwd "$STAGE_DIR" 2>&1 | tee /tmp/deploy.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
           if [ -z "$DEPLOY_URL" ]; then
             cat /tmp/deploy.log
             /tmp/update-arabic-preview-status.sh "DEPLOY_FAILED"
@@ -142,11 +151,11 @@ jobs:
           set -e
           sleep 5
           APP_PATH="/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D"
-          vercel curl "$DEPLOY_URL$APP_PATH/index.html" --token "$VERCEL_TOKEN" --scope "$TEAM_SLUG" > /tmp/index.html
-          vercel curl "$DEPLOY_URL$APP_PATH/assets/production-parity-v20260930.js" --token "$VERCEL_TOKEN" --scope "$TEAM_SLUG" > /tmp/parity.js
-          vercel curl "$DEPLOY_URL$APP_PATH/assets/latest-runtime/kktp-order-runtime.js" --token "$VERCEL_TOKEN" --scope "$TEAM_SLUG" > /tmp/kktp.js
-          vercel curl "$DEPLOY_URL$APP_PATH/assets/latest-runtime/calendar-year.js" --token "$VERCEL_TOKEN" --scope "$TEAM_SLUG" > /tmp/kaldik.js
-          vercel curl "$DEPLOY_URL$APP_PATH/assets/latest-runtime/phase-c-supervision.js" --token "$VERCEL_TOKEN" --scope "$TEAM_SLUG" > /tmp/supervision.js
+          vercel curl "$DEPLOY_URL$APP_PATH/index.html" --scope "$TEAM_SLUG" > /tmp/index.html
+          vercel curl "$DEPLOY_URL$APP_PATH/assets/production-parity-v20260930.js" --scope "$TEAM_SLUG" > /tmp/parity.js
+          vercel curl "$DEPLOY_URL$APP_PATH/assets/latest-runtime/kktp-order-runtime.js" --scope "$TEAM_SLUG" > /tmp/kktp.js
+          vercel curl "$DEPLOY_URL$APP_PATH/assets/latest-runtime/calendar-year.js" --scope "$TEAM_SLUG" > /tmp/kaldik.js
+          vercel curl "$DEPLOY_URL$APP_PATH/assets/latest-runtime/phase-c-supervision.js" --scope "$TEAM_SLUG" > /tmp/supervision.js
           grep -q "Bahasa Arab" /tmp/index.html
           grep -q "20260930-v2" /tmp/parity.js
           grep -q "KKTP mengikuti Pesanan" /tmp/kktp.js
