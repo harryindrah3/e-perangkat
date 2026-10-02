@@ -1,2 +1,0 @@
-Bahasa Arab Production auth retries
-Retry requested 2026-10-02 14:55 +08:00 after expired Vercel device code
