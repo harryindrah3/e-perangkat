@@ -1,8 +1,21 @@
 (() => {
   'use strict';
 
-  if (window.__epBahasaArabLatestParityV2) return;
-  window.__epBahasaArabLatestParityV2 = true;
+  if (window.__epBahasaArabLatestParityV3) return;
+  window.__epBahasaArabLatestParityV3 = true;
+
+  window.EPERANGKAT_PARITY_FEATURES = Object.freeze([
+    'Kalender Pendidikan multi-tahun',
+    'Sumber Kalender Pendidikan',
+    'KKTP dari Pesanan & Riwayat',
+    'Sinkronisasi Analisis Nilai',
+    'Promes dan jadwal mengajar',
+    'Tanda tangan dan identitas',
+    'Aktivitas guru/peserta didik rinci',
+    'Diferensiasi pembelajaran',
+    'Print safety dan safe pages',
+    'Nama file PDF'
+  ]);
 
   const current = document.currentScript?.src || location.href;
   const RUNTIME = new URL('./latest-runtime/', current).href;
@@ -53,9 +66,9 @@
       await load('print-safe-pages.js', 'ep-print-safe-pages-loader');
     }
 
-    document.documentElement.dataset.epLatestParity = '20260930-v2';
+    document.documentElement.dataset.epLatestParity = '20261002-v3';
     window.dispatchEvent(new CustomEvent('eperangkat:latest-parity-ready', {
-      detail: { version: '20260930-v2', subject: 'Bahasa Arab', phase: 'D' }
+      detail: { version: '20261002-v3', subject: 'Bahasa Arab', phase: 'D' }
     }));
   }
 
