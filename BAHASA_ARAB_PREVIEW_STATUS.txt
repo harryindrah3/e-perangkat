@@ -1,1 +1,1 @@
-AUTHORIZE https://vercel.com/oauth/device?user_code=MTTT-RNNC
+VALIDATING_LATEST_PARITY
