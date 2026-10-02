@@ -1,1 +1,1 @@
-PREVIEW_DEPLOYED https://e-perangkat-online-a-r9utfgcyw-harryindrah3-6239s-projects.vercel.app
+PREVIEW_CANDIDATE_VERIFIED https://e-perangkat-online-a-r9utfgcyw-harryindrah3-6239s-projects.vercel.app
