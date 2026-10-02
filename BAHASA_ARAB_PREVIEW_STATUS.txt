@@ -1,1 +1,1 @@
-DEPLOYED https://e-perangkat-bahasa-arab-preview-fwmtmdb35.vercel.app
+VERIFIED_LATEST_OK https://e-perangkat-bahasa-arab-preview-fwmtmdb35.vercel.app
