@@ -1,1 +1,1 @@
-AUTHORIZE https://vercel.com/oauth/device?user_code=JWFV-PCGK
+VALIDATING_LATEST_PARITY
