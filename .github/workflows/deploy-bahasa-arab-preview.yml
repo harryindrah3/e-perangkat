@@ -51,7 +51,7 @@ jobs:
           chmod +x /tmp/update-arabic-preview-status.sh
           /tmp/update-arabic-preview-status.sh "VALIDATING_LATEST_PARITY"
 
-      - name: Validate source and latest feature bundle
+      - name: Validate source and audited Production parity
         shell: bash
         run: |
           set -e
@@ -60,17 +60,52 @@ jobs:
           const dir='apps/fase-d/E-Perangkat_bahasa-arab_Fase-D';
           const raw=fs.readFileSync(dir+'/data.js','utf8').replace(/^window\.EPERANGKAT_DATA\s*=\s*/,'').replace(/;\s*$/,'');
           const d=JSON.parse(raw);
+
           if(d.meta.subject!=='Bahasa Arab') throw new Error('Subject mismatch');
-          if(d.modules.length!==18) throw new Error('Expected 18 modules');
+          if(d.modules.length!==18) throw new Error('Expected 18 Bahasa Arab modules');
           for(const g of ['VII','VIII','IX']){
             const mods=d.modules.filter(m=>m.grade===g);
             if(mods.length!==6) throw new Error('Expected 6 modules for '+g);
             if(!mods.every(m=>m.meetings?.length===6)) throw new Error('Meeting count mismatch '+g);
+            if(!mods.every(m=>m.objectives?.length===4)) throw new Error('Objective count mismatch '+g);
           }
+
           const index=fs.readFileSync(dir+'/index.html','utf8');
           const print=fs.readFileSync(dir+'/print.html','utf8');
-          if(!index.includes('production-parity-v20260930.js?v=20260930-2')) throw new Error('Latest parity loader missing in index');
-          if(!print.includes('production-parity-v20260930.js?v=20260930-2')) throw new Error('Latest parity loader missing in print');
+          for(const html of [index,print]){
+            if(!html.includes('assets/arabic-storage-migration.js?v=20261002-1')) throw new Error('Arabic storage migration missing');
+            if(!html.includes('production-parity-v20260930.js?v=20261002-3')) throw new Error('Audited parity loader missing');
+          }
+          if(index.indexOf('arabic-storage-migration.js')>index.indexOf('assets/v3-bootstrap.js')) throw new Error('Storage migration must load before app bootstrap');
+          if(print.indexOf('arabic-storage-migration.js')>print.indexOf('assets/print.js')) throw new Error('Storage migration must load before print engine');
+
+          const core=[
+            'site.js','v3.js','analysis-v7.js','schedule-v22.js','signature-v22.js',
+            'print.js','print-v3.js','print-analysis-v7.js','print-schedule-v22.js',
+            'print-toc-v9.js','special-pai-v25.js','v3-bootstrap.js'
+          ];
+          for(const file of core){
+            const text=fs.readFileSync(dir+'/assets/'+file,'utf8');
+            if(/bahasa-inggris|Bahasa Inggris|B\. Inggris/.test(text)) throw new Error('Inherited Bahasa Inggris identity remains in '+file);
+          }
+
+          const storageFiles=[
+            'site.js','v3.js','analysis-v7.js','schedule-v22.js','signature-v22.js',
+            'print.js','print-v3.js','print-analysis-v7.js','print-schedule-v22.js',
+            'print-toc-v9.js','special-pai-v25.js','v3-bootstrap.js'
+          ];
+          for(const file of storageFiles){
+            const text=fs.readFileSync(dir+'/assets/'+file,'utf8');
+            if(text.includes('eperangkat.') && !text.includes('eperangkat.bahasa-arab.fased.v1') && !file.startsWith('print-integrity')){
+              throw new Error('Expected Arabic storage namespace not found in '+file);
+            }
+          }
+
+          const migration=fs.readFileSync(dir+'/assets/arabic-storage-migration.js','utf8');
+          if(!migration.includes("eperangkat.bahasa-inggris.fased.v1") || !migration.includes("eperangkat.bahasa-arab.fased.v1")){
+            throw new Error('Safe legacy namespace migration incomplete');
+          }
+
           const runtime=[
             'calendar-year.js','calendar-level-runtime.js','calendar-source-runtime.js','calendar-2024-extension.js',
             'kktp-order-runtime.js','differentiation-runtime.js','print-safe-pages.js','print-filename.js',
@@ -78,15 +113,28 @@ jobs:
             'phase-c-supervision.js','identity-fix.js','uploaded-schedule-print.js','print-safety-v2.js'
           ];
           for(const file of runtime){
-            if(!fs.existsSync(dir+'/assets/latest-runtime/'+file)) throw new Error('Missing latest runtime '+file);
+            if(!fs.existsSync(dir+'/assets/latest-runtime/'+file)) throw new Error('Missing Production runtime '+file);
           }
+
           const loader=fs.readFileSync(dir+'/assets/production-parity-v20260930.js','utf8');
-          for(const token of ['calendar-year.js','kktp-order-runtime.js','phase-c-supervision.js','uploaded-schedule-print.js','print-safety-v2.js','differentiation-runtime.js']){
-            if(!loader.includes(token)) throw new Error('Parity loader missing '+token);
-          }
-          console.log('LATEST_PARITY_SOURCE_PASS');
+          const required=[
+            'calendar-year.js','calendar-2024-extension.js','calendar-level-runtime.js','calendar-source-runtime.js',
+            'kktp-order-runtime.js','promes-print-route-fix.js','phase-c-supervision.js',
+            'uploaded-schedule-print.js','print-safety-v2.js','differentiation-runtime.js',
+            'print-safe-pages.js','print-filename.js','20261002-v3'
+          ];
+          for(const token of required) if(!loader.includes(token)) throw new Error('Parity loader missing '+token);
+
+          const kaldik=fs.readFileSync(dir+'/assets/latest-runtime/calendar-year.js','utf8');
+          const kaldik24=fs.readFileSync(dir+'/assets/latest-runtime/calendar-2024-extension.js','utf8');
+          const kktp=fs.readFileSync(dir+'/assets/latest-runtime/kktp-order-runtime.js','utf8');
+          if(!kaldik.includes('epCalendarYear') || !kaldik.includes('2026/2027')) throw new Error('Calendar selector runtime incomplete');
+          if(!kaldik24.includes('2024/2025')) throw new Error('Calendar 2024/2025 extension missing');
+          if(!kktp.includes('KKTP mengikuti Pesanan')) throw new Error('Order-driven KKTP runtime incomplete');
+
+          console.log('BAHASA_ARAB_PRODUCTION_PARITY_SOURCE_PASS');
           NODE
-          /tmp/update-arabic-preview-status.sh "LATEST_PARITY_SOURCE_PASS"
+          /tmp/update-arabic-preview-status.sh "BAHASA_ARAB_PRODUCTION_PARITY_SOURCE_PASS"
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
