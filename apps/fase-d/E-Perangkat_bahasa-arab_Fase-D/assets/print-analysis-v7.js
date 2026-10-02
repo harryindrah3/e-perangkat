@@ -7,11 +7,11 @@
   const section=params.get('section')||'all';
   if(section!=='all'&&section!=='analysis')return;
   const semesterParam=params.get('semester')||'both';
-  const STORE='eperangkat.bahasa-inggris.fased.v1.orders';
+  const STORE='eperangkat.bahasa-arab.fased.v1.orders';
   const gradeNumber={I:1,II:2,III:3,IV:4,V:5,VI:6,VII:7,VIII:8,IX:9,X:10,XI:11,XII:12};
   function getStore(){try{return JSON.parse(localStorage.getItem(STORE)||'{"activeId":"","orders":[]}')}catch(_){return {activeId:'',orders:[]}}}
   const store=getStore(),orderId=params.get('order')||'',order=store.orders?.find(o=>o.id===orderId)||store.orders?.find(o=>o.id===store.activeId)||store.orders?.[0]||{};
-  const grade=params.get('grade')||order.grade||localStorage.getItem('eperangkat.bahasa-inggris.fased.v1.grade')||'VII';
+  const grade=params.get('grade')||order.grade||localStorage.getItem('eperangkat.bahasa-arab.fased.v1.grade')||'VII';
   const profile={...(D.defaults||{}),...(order.profile||{})};
   function classLabel(g,r=''){g=String(g||'VII').trim().toUpperCase();const raw=String(r||'').trim().toUpperCase().replace(/\s+/g,' ');if(!raw)return g;const compact=raw.replace(/\s+/g,'');if(compact.startsWith(g)){const suffix=compact.slice(g.length);return suffix?`${g} ${suffix}`:g}return `${g} ${compact}`}
   const className=classLabel(grade,profile.rombel);
@@ -60,8 +60,8 @@
   function semesterDate(sem){return sem==='2'?(String(profile.dateSemester2||'').trim()||profile.date):profile.date}
   function signature(sem){return `<div class="signature analysis-signature"><div>Mengetahui,<br>Kepala Sekolah${signatureSpace(profile.principalSignature,'Tanda tangan kepala sekolah')}<b>${esc(profile.principal)}</b>${identifierLine(profile.principalIdType,profile.principalId)}</div><div>${esc(profile.place)}, ${esc(semesterDate(sem))}<br>${esc(teacherRole)} Mata Pelajaran${signatureSpace(profile.teacherSignature,'Tanda tangan pengajar')}<b>${esc(profile.teacher)}</b>${identifierLine(profile.teacherIdType,profile.teacherId)}</div></div>`}
   function footer(text,sem){return `<div class="page-foot"><span>${esc(text)}</span><span>Kelas ${className} · Semester ${sem==='1'?'I':'II'} · ${esc(profile.year)}</span></div>`}
-  function cover(sem){return `<section class="page portrait cover analysis-cover"><div class="page-inner cover-content"><div class="cover-kicker">KURIKULUM MERDEKA · PEMBELAJARAN MENDALAM</div><div class="cover-center"><small>E-PERANGKAT PEMBELAJARAN</small><h1>ANALISIS NILAI FORMATIF DAN SUMATIF</h1><h2>B. Inggris · Kelas ${className} · Fase D · Semester ${sem==='1'?'I (Ganjil)':'II (Genap)'}</h2><div class="accent-line"></div><div class="identity-box"><table><tr><td>Satuan Pendidikan</td><td>:</td><td><b>${esc(profile.school)}</b></td></tr><tr><td>Program</td><td>:</td><td><b>${esc(profile.program)}</b></td></tr><tr><td>${esc(teacherRole)}</td><td>:</td><td><b>${esc(profile.teacher)}</b></td></tr><tr><td>Tahun Pelajaran</td><td>:</td><td><b>${esc(profile.year)}</b></td></tr></table></div></div><div class="cover-foot"><b>${esc(profile.school)}</b><span>${esc(profile.address||profile.region||'')}</span></div></div></section>`}
-  function header(title,sem){return `<h1 class="doc-title">${esc(title)}</h1><div class="doc-head"><dl><dt>Satuan Pendidikan</dt><dd>:</dd><dd>${esc(profile.school)}</dd><dt>Mata Pelajaran</dt><dd>:</dd><dd>B. Inggris</dd><dt>Tahun Pelajaran</dt><dd>:</dd><dd>${esc(profile.year)}</dd></dl><dl><dt>Program</dt><dd>:</dd><dd>${esc(profile.program)}</dd><dt>Kelas / Fase / Semester</dt><dd>:</dd><dd>${className} / D / ${sem==='1'?'I (Ganjil)':'II (Genap)'}</dd><dt>${esc(teacherRole)}</dt><dd>:</dd><dd>${esc(profile.teacher)}</dd></dl></div>`}
+  function cover(sem){return `<section class="page portrait cover analysis-cover"><div class="page-inner cover-content"><div class="cover-kicker">KURIKULUM MERDEKA · PEMBELAJARAN MENDALAM</div><div class="cover-center"><small>E-PERANGKAT PEMBELAJARAN</small><h1>ANALISIS NILAI FORMATIF DAN SUMATIF</h1><h2>B. Arab · Kelas ${className} · Fase D · Semester ${sem==='1'?'I (Ganjil)':'II (Genap)'}</h2><div class="accent-line"></div><div class="identity-box"><table><tr><td>Satuan Pendidikan</td><td>:</td><td><b>${esc(profile.school)}</b></td></tr><tr><td>Program</td><td>:</td><td><b>${esc(profile.program)}</b></td></tr><tr><td>${esc(teacherRole)}</td><td>:</td><td><b>${esc(profile.teacher)}</b></td></tr><tr><td>Tahun Pelajaran</td><td>:</td><td><b>${esc(profile.year)}</b></td></tr></table></div></div><div class="cover-foot"><b>${esc(profile.school)}</b><span>${esc(profile.address||profile.region||'')}</span></div></div></section>`}
+  function header(title,sem){return `<h1 class="doc-title">${esc(title)}</h1><div class="doc-head"><dl><dt>Satuan Pendidikan</dt><dd>:</dd><dd>${esc(profile.school)}</dd><dt>Mata Pelajaran</dt><dd>:</dd><dd>B. Arab</dd><dt>Tahun Pelajaran</dt><dd>:</dd><dd>${esc(profile.year)}</dd></dl><dl><dt>Program</dt><dd>:</dd><dd>${esc(profile.program)}</dd><dt>Kelas / Fase / Semester</dt><dd>:</dd><dd>${className} / D / ${sem==='1'?'I (Ganjil)':'II (Genap)'}</dd><dt>${esc(teacherRole)}</dt><dd>:</dd><dd>${esc(profile.teacher)}</dd></dl></div>`}
   function scorePages(sem,c){
     const tpChunks=[];for(let i=0;i<c.tps.length;i+=5)tpChunks.push(c.tps.slice(i,i+5));if(!tpChunks.length)tpChunks.push([]);
     const studentChunks=[];for(let i=0;i<students.length;i+=15)studentChunks.push(students.slice(i,i+15));
@@ -81,6 +81,6 @@
   function buildAnalysis(){let html='';for(const sem of semesters){const c=calc(sem);html+=cover(sem)+scorePages(sem,c)+recapPages(sem,c)}return html}
   const html=buildAnalysis();
   if(section==='analysis')root.innerHTML=html;else root.insertAdjacentHTML('beforeend',html);
-  document.title=`Analisis Nilai B. Inggris Kelas ${className} - ${semesterParam}`;
+  document.title=`Analisis Nilai B. Arab Kelas ${className} - ${semesterParam}`;
 })();
 
