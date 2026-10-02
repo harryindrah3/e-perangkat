@@ -1,1 +1,1 @@
-AUTHORIZE https://vercel.com/oauth/device?user_code=JTZT-JXPX
+AUTHORIZE https://vercel.com/oauth/device?user_code=CPDK-XMRQ
