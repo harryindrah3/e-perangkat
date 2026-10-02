@@ -1,6 +1,10 @@
 (() => {
   'use strict';
 
+  // Hanya untuk pemulihan data selama project Preview terisolasi.
+  // Jangan pernah menyalin data Bahasa Inggris saat app ini kelak berada pada origin Production bersama.
+  if (!/^e-perangkat-bahasa-arab-preview(?:-|\.)/i.test(location.hostname)) return;
+
   const OLD = 'eperangkat.bahasa-inggris.fased.v1';
   const CURRENT = 'eperangkat.bahasa-arab.fased.v1';
   const MARKER = CURRENT + '.migration-from-bahasa-inggris-v1';
