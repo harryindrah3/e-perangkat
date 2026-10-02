@@ -1,0 +1,28 @@
+SUMBER BAHASA ARAB FASE D — PREVIEW
+
+Dasar CP yang digunakan pada pemetaan preview:
+https://www.mtssmusliminbjp.sch.id/2026/01/cp-bahasa-arab-fase-d-9941-2025.html
+Catatan: rujukan primer resmi SK Dirjen Pendis 9941/2025 masih perlu diverifikasi sebelum Production.
+
+Buku Kelas VII:
+https://arabiyyah.id/wp-content/uploads/2022/11/Bahasa-Arab-MTs-Kelas-7.pdf
+Penulis: Faruq Baharudin
+Kemenag RI, 2020
+ISBN 978-623-6687-40-6
+
+Buku Kelas VIII:
+https://arabiyyah.id/wp-content/uploads/2022/11/Bahasa-Arab-MTs-Kelas-8.pdf
+Penulis: Masrukhin
+Kemenag RI, 2020
+ISBN 978-623-6687-41-3
+
+Buku Kelas IX:
+https://arabiyyah.id/wp-content/uploads/2022/11/Bahasa-Arab-MTs-Kelas-9.pdf
+Penulis: Yushi M. Mahmudah
+Kemenag RI, 2020
+ISBN 978-623-6687-42-0
+
+Pemetaan isi:
+- 6 bab per kelas, VII–IX.
+- Konten bab, mufradat, fungsi komunikasi, dan struktur/tarakib mengikuti pemetaan Bahasa Arab yang sudah dibuat pada data.js.
+- Alokasi 18 JP per bab masih khusus preview dan belum dinyatakan sebagai alokasi resmi Production.
