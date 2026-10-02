@@ -1,7 +1,7 @@
 (()=>{
   'use strict';
   const D=window.EPERANGKAT_DATA||{};
-  const KEY='eperangkat.bahasa-inggris.fased.v1.orders';
+  const KEY='eperangkat.bahasa-arab.fased.v1.orders';
   const now=()=>new Date().toISOString();
   const clone=x=>JSON.parse(JSON.stringify(x));
   const isQuotaError=error=>!!error&&(error.name==='QuotaExceededError'||error.code===22||/quota/i.test(String(error.message||'')));
@@ -10,7 +10,7 @@
     const keys=[];
     for(let index=0;index<localStorage.length;index++){
       const key=localStorage.key(index)||'';
-      if(key.startsWith('eperangkat.bahasa-inggris.fased.v1.legacy.')&&!key.startsWith('eperangkat.bahasa-inggris.fased.v1.'))keys.push(key);
+      if(key.startsWith('eperangkat.bahasa-arab.fased.v1.legacy.')&&!key.startsWith('eperangkat.bahasa-arab.fased.v1.'))keys.push(key);
     }
     keys.forEach(key=>localStorage.removeItem(key));
     return keys.length;
@@ -19,7 +19,7 @@
     try{localStorage.setItem(key,value);return true}
     catch(error){
       if(!isQuotaError(error))throw error;
-      if(confirm('Penyimpanan browser penuh. Hapus data B. Inggris versi lama agar V23.1 dapat dijalankan? File aplikasi lama di komputer tetap aman.')){
+      if(confirm('Penyimpanan browser penuh. Hapus data B. Arab versi lama agar V23.1 dapat dijalankan? File aplikasi lama di komputer tetap aman.')){
         cleanupOldMath();
         localStorage.setItem(key,value);
         return true;
@@ -36,10 +36,10 @@
   try{store=JSON.parse(localStorage.getItem(KEY)||'null')}catch(_){store=null}
   if(!store||!Array.isArray(store.orders)||!store.orders.length){
     let profile={...(D.defaults||{})};
-    try{profile={...profile,...JSON.parse(localStorage.getItem('eperangkat.bahasa-inggris.fased.v1.profile')||'{}')}}catch(_){}
+    try{profile={...profile,...JSON.parse(localStorage.getItem('eperangkat.bahasa-arab.fased.v1.profile')||'{}')}}catch(_){}
     let students=[];
-    try{students=JSON.parse(localStorage.getItem('eperangkat.bahasa-inggris.fased.v1.students')||'[]')}catch(_){}
-    const grade=localStorage.getItem('eperangkat.bahasa-inggris.fased.v1.grade')||'VII';
+    try{students=JSON.parse(localStorage.getItem('eperangkat.bahasa-arab.fased.v1.students')||'[]')}catch(_){}
+    const grade=localStorage.getItem('eperangkat.bahasa-arab.fased.v1.grade')||'VII';
     const id=`order-${Date.now()}`;
     store={activeId:id,orders:[{
       id,number:makeNo(),customer:'',whatsapp:'',grade,school:profile.school||'',total:0,paid:0,
@@ -55,8 +55,8 @@
   active.students=Array.isArray(active.students)?active.students:[];
   active.grade=active.grade||'VII';
   safeSet(KEY,JSON.stringify(store));
-  safeSet('eperangkat.bahasa-inggris.fased.v1.profile',JSON.stringify(lightProfile(active.profile)));
-  safeSet('eperangkat.bahasa-inggris.fased.v1.students',JSON.stringify(active.students));
-  safeSet('eperangkat.bahasa-inggris.fased.v1.grade',active.grade);
+  safeSet('eperangkat.bahasa-arab.fased.v1.profile',JSON.stringify(lightProfile(active.profile)));
+  safeSet('eperangkat.bahasa-arab.fased.v1.students',JSON.stringify(active.students));
+  safeSet('eperangkat.bahasa-arab.fased.v1.grade',active.grade);
 })();
 
