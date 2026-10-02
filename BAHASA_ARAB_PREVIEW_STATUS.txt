@@ -1,1 +1,1 @@
-DEPLOYING_LATEST_PARITY
+DEPLOYED https://e-perangkat-bahasa-arab-preview-emvs6ld1r.vercel.app
