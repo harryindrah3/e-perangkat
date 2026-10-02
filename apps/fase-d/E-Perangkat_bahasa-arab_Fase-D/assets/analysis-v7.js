@@ -2,15 +2,15 @@
   'use strict';
 
   const D=window.EPERANGKAT_DATA||{};
-  const ORDER_KEY='eperangkat.bahasa-inggris.fased.v1.orders';
-  const VIEW_KEY='eperangkat.bahasa-inggris.fased.v1.view';
-  const GRADE_KEY='eperangkat.bahasa-inggris.fased.v1.grade';
+  const ORDER_KEY='eperangkat.bahasa-arab.fased.v1.orders';
+  const VIEW_KEY='eperangkat.bahasa-arab.fased.v1.view';
+  const GRADE_KEY='eperangkat.bahasa-arab.fased.v1.grade';
   const $=(s,r=document)=>r.querySelector(s);
   const $$=(s,r=document)=>[...r.querySelectorAll(s)];
   const clone=x=>JSON.parse(JSON.stringify(x));
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const gradeNumber={I:1,II:2,III:3,IV:4,V:5,VI:6,VII:7,VIII:8,IX:9,X:10,XI:11,XII:12};
-  let currentSemester=localStorage.getItem('eperangkat.bahasa-inggris.fased.v1.analysis.semester')||'1';
+  let currentSemester=localStorage.getItem('eperangkat.bahasa-arab.fased.v1.analysis.semester')||'1';
   let draftOrder=null;
   let recalcTimer=null;
 
@@ -158,7 +158,7 @@
     draftOrder=normalizeOrder(clone(live));
     const calc=analysisCalc();
     localStorage.setItem(VIEW_KEY,'analysis');
-    localStorage.setItem('eperangkat.bahasa-inggris.fased.v1.analysis.semester',currentSemester);
+    localStorage.setItem('eperangkat.bahasa-arab.fased.v1.analysis.semester',currentSemester);
     $$('#mainNav [data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view==='analysis'));
     $$('[data-grade]').forEach(b=>b.classList.toggle('active',b.dataset.grade===grade()));
     const app=$('#app');if(!app)return;
@@ -187,7 +187,7 @@
   }
   function scheduleCalc(){clearTimeout(recalcTimer);recalcTimer=setTimeout(updateCalculations,120)}
   function bindAnalysisEvents(){
-    $$('[data-analysis-semester]').forEach(btn=>btn.onclick=()=>{currentSemester=btn.dataset.analysisSemester;localStorage.setItem('eperangkat.bahasa-inggris.fased.v1.analysis.semester',currentSemester);renderAnalysis()});
+    $$('[data-analysis-semester]').forEach(btn=>btn.onclick=()=>{currentSemester=btn.dataset.analysisSemester;localStorage.setItem('eperangkat.bahasa-arab.fased.v1.analysis.semester',currentSemester);renderAnalysis()});
     $('#analysisThreshold').oninput=e=>{draftOrder.analysis.settings.thresholds=draftOrder.analysis.settings.thresholds&&typeof draftOrder.analysis.settings.thresholds==='object'?draftOrder.analysis.settings.thresholds:{};draftOrder.analysis.settings.thresholds[grade()]=numeric(e.target.value)??75;scheduleCalc()};
     $('#analysisFormativeWeight').oninput=e=>{draftOrder.analysis.settings.formativeWeight=numeric(e.target.value)??0;scheduleCalc()};
     $('#analysisSummativeWeight').oninput=e=>{draftOrder.analysis.settings.summativeWeight=numeric(e.target.value)??0;scheduleCalc()};
@@ -212,7 +212,7 @@
     live.analysis=clone(draftOrder.analysis);
     addHistory(live,action,detail,before);
     setStore(store);
-    if(store.activeId===live.id)localStorage.setItem('eperangkat.bahasa-inggris.fased.v1.students',JSON.stringify(live.students));
+    if(store.activeId===live.id)localStorage.setItem('eperangkat.bahasa-arab.fased.v1.students',JSON.stringify(live.students));
     toast('Analisis nilai berhasil disimpan.');
   }
   function csvEscape(v){const s=String(v??'');return /[",;\n]/.test(s)?`"${s.replace(/"/g,'""')}"`:s}
