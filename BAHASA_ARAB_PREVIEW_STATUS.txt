@@ -1,1 +1,1 @@
-AUTHORIZE https://vercel.com/oauth/device?user_code=BVFF-RCWL
+AUTHORIZE https://vercel.com/oauth/device?user_code=KGQG-SDGG
