@@ -1,1 +1,1 @@
-AUTHORIZE https://vercel.com/oauth/device?user_code=FGRX-FSNJ
+VALIDATING_LATEST_PARITY
