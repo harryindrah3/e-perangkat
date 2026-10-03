@@ -1,0 +1,34 @@
+name: Package Generator Production Extension v1.0.4
+on:
+  push:
+    branches:
+      - release/generator-route-recovery-20260924
+    paths:
+      - generator/PRODUCTION_EXTENSION_PACKAGE_TRIGGER.txt
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: release/generator-route-recovery-20260924
+      - name: Validate and package Production extension
+        shell: bash
+        run: |
+          set -e
+          ROOT="generator/extension"
+          node --check "$ROOT/content.js"
+          node --check "$ROOT/background.js"
+          node -e "const m=require('./$ROOT/manifest.json'); if(m.version!=='1.0.4') process.exit(1)"
+          mkdir -p package
+          cp "$ROOT/manifest.json" package/
+          cp "$ROOT/content.js" package/
+          cp "$ROOT/background.js" package/
+          cp "$ROOT/PETUNJUK.txt" package/
+      - name: Upload Production extension
+        uses: actions/upload-artifact@v4
+        with:
+          name: genarator-e-perangkat-chrome-production-v1.0.4
+          path: package/
+          if-no-files-found: error
+          retention-days: 7
