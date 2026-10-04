@@ -1,1 +1,1 @@
-VERIFIED_PRODUCTION_PARITY_OK https://e-perangkat-bahasa-arab-preview-br6g19ks6.vercel.app
+VALIDATING_LATEST_PARITY
