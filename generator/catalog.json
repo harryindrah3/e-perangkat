@@ -1,5 +1,17 @@
 [
   {
+    "id": "fase-d-bahasa-arab",
+    "subject": "Bahasa Arab",
+    "phase": "D",
+    "classes": [
+      "VII",
+      "VIII",
+      "IX"
+    ],
+    "appPath": "/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D",
+    "storageKey": "eperangkat.bahasa-arab.fased.v1.orders"
+  },
+  {
     "id": "fase-e-bahasa-arab",
     "subject": "Bahasa Arab",
     "phase": "E",
