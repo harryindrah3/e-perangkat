@@ -2,8 +2,8 @@
 const D=window.EPERANGKAT_DATA;
 if(!D)return;
 const N={1:'Cinta Allah dan Rasul-Nya',2:'Cinta Ilmu',3:'Cinta Lingkungan',4:'Cinta Diri dan Sesama',5:'Cinta Tanah Air'};
-D.meta.subtitle='Kurikulum Berbasis Cinta (KBC) · Kementerian Agama · Fase D';
-D.meta.version='PREVIEW-KBC-1.0';
+D.meta.title='Perangkat Pembelajaran Bahasa Arab Fase D'; D.meta.subtitle='Kurikulum Berbasis Cinta (KBC) · Kementerian Agama · Fase D';
+D.meta.version='KBC-2026.10';
 D.meta.generated='4 Oktober 2026';
 D.meta.basis='SK Dirjen Pendis Nomor 9941 Tahun 2025 tentang CP PAI dan Bahasa Arab pada Madrasah; Keputusan Dirjen Pendidikan Islam Nomor 6077 Tahun 2025 tentang Panduan Kurikulum Berbasis Cinta; KMA Nomor 1503 Tahun 2025 tentang Pedoman Implementasi Kurikulum pada RA, MI, MTs, MA, dan MAK.';
 D.kbc={
@@ -49,13 +49,13 @@ const M={
 };
 for(const m of D.modules||[]){
   const x=M[m.id]||{material:'Konteks materi bab',themeIds:[2,4],type:'operasional',insert:['Nilai KBC dipilih berdasarkan konteks tujuan pembelajaran.']};
-  m.kbcMapping={...x,themes:x.themeIds.map(id=>N[id]),basis:x.type==='resmi'?'Pemetaan CP dan Tema KBC Bahasa Arab Fase D/MTs dalam Panduan KBC 6077/2025':'Pemetaan operasional E-Perangkat yang diturunkan dari konteks materi dan Panca Cinta'};
+  m.kbcMapping={...x,themes:x.themeIds.map(id=>N[id]),basis:x.type==='resmi'?'Pemetaan CP dan Tema KBC Bahasa Arab Fase D/MTs dalam Panduan KBC 6077/2025':'Pemetaan kontekstual berdasarkan materi pembelajaran dan nilai Panca Cinta'};
 }
 const p=(D.modules||[]).find(m=>m.id==='ix-5-pencipta-alam');
 if(p){
   p.kbcPrototype={
     officialExample:true,
-    label:'PROTOTYPE KBC · CONTOH RESMI BAHASA ARAB FASE D',
+    label:'CONTOH IMPLEMENTASI KBC · BAHASA ARAB FASE D',
     source:'Panduan KBC, contoh RPP Bahasa Arab Fase D, halaman 82–86',
     material:'خَالِقُ الْعَالَم — Pencipta Alam',
     themes:[N[1],N[3]],
@@ -86,4 +86,23 @@ if(p){
     }
   };
 }
+
+ // Normalisasi keluaran yang dibaca pengguna/cetakan: dokumen final, tanpa catatan proses pengembangan.
+ (D.modules||[]).forEach(m=>{
+   if(typeof m.allocationDetail==='string')m.allocationDetail=m.allocationDetail.replace(/\s*\(alokasi rancangan preview; validasi final sebelum Production\)/gi,'');
+ });
+ (D.coreDocuments||[]).forEach(doc=>{
+   if(typeof doc.filename==='string')doc.filename=doc.filename.replace(/\s*\(Deep Learning\)/gi,'');
+   if(Array.isArray(doc.paragraphs))doc.paragraphs=doc.paragraphs.map(p=>String(p)
+     .replace(/KURIKULUM MERDEKA\s*·\s*PEMBELAJARAN MENDALAM/gi,'KURIKULUM BERBASIS CINTA · KEMENTERIAN AGAMA')
+     .replace(/Alokasi preview/gi,'Alokasi pembelajaran')
+     .replace(/sebelum Production/gi,'sesuai ketentuan satuan pendidikan'));
+ });
+ if(D.specialSchedule){
+   if(typeof D.specialSchedule.status==='string')D.specialSchedule.status=D.specialSchedule.status.replace(/Rancangan preview/gi,'Rancangan pembelajaran');
+   if(typeof D.specialSchedule.basis==='string')D.specialSchedule.basis=D.specialSchedule.basis
+     .replace(/pada kerangka E-Perangkat/gi,'sebagai dasar penyusunan program pembelajaran')
+     .replace(/pada preview/gi,'pada perangkat ini')
+     .replace(/untuk pengujian fitur dan wajib divalidasi sebelum Production/gi,'dan disesuaikan dengan struktur kurikulum serta kalender satuan pendidikan');
+ }
 })();
