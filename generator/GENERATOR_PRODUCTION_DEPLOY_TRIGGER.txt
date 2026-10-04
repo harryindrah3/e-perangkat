@@ -4,3 +4,5 @@ Rollback deployment: dpl_3bXyMaCCfZmA2qAUWc7jZLiB26R8
 Timestamp: 2026-09-24T00:32:39.348Z
 
 Re-authorize production deploy: 2026-09-24T00:58:02.352Z
+
+Hotfix catalog Bahasa Arab Fase D: 2026-10-04T04:49:40.150Z
