@@ -22,7 +22,7 @@
     ['journal','Jurnal Mengajar',['JURNAL MENGAJAR']],
     ['attendance','Daftar Hadir',['DAFTAR HADIR']],
     ['kktp','Kriteria Ketercapaian Tujuan Pembelajaran (KKTP)',['KRITERIA KETERCAPAIAN TUJUAN PEMBELAJARAN','KKTP']],
-    ['modules','Modul Ajar Deep Learning',['MODUL AJAR DEEP LEARNING']],
+    ['modules','Modul Ajar Kurikulum Berbasis Cinta',['MODUL AJAR KURIKULUM BERBASIS CINTA']],
     ['materials','Bahan Ajar',['BAHAN AJAR']],
     ['lkpd','Lembar Kerja Peserta Didik (LKPD)',['LEMBAR KERJA PESERTA DIDIK','LKPD']],
     ['assessment','Asesmen Pembelajaran',['ASESMEN PEMBELAJARAN']],
@@ -64,7 +64,7 @@
   const toc=document.createElement('section');
   toc.className='page portrait toc-page';
   toc.innerHTML=`<div class="page-inner toc-inner">
-    <div class="toc-kicker">E-PERANGKAT PEMBELAJARAN · KURIKULUM MERDEKA</div>
+    <div class="toc-kicker">PERANGKAT PEMBELAJARAN · KURIKULUM BERBASIS CINTA</div>
     <h1>DAFTAR ISI</h1>
     <div class="toc-meta">
       <div><span>Mata Pelajaran</span><b>B. Arab</b></div>
@@ -75,7 +75,7 @@
     <div class="toc-rule"></div>
     <ol class="toc-list">${list.map((item,i)=>`<li><span class="toc-no">${String(i+1).padStart(2,'0')}</span><span class="toc-label">${esc(item.label)}</span><span class="toc-dots"></span><span class="toc-page-number">${esc(item.number)}</span></li>`).join('')}</ol>
     <div class="toc-note"><b>Catatan:</b> Nomor halaman mengikuti susunan paket cetak yang sedang dipilih. Komponen semester otomatis menampilkan perangkat yang sesuai dengan Semester I atau Semester II.</div>
-    <div class="page-foot"><span>Daftar Isi · E-Perangkat B. Arab Fase D</span><span>Kelas ${esc(grade)} · ${esc(profile.year||'')}</span></div>
+    <div class="page-foot"><span>Daftar Isi · Perangkat Pembelajaran Bahasa Arab Fase D</span><span>Kelas ${esc(grade)} · ${esc(profile.year||'')}</span></div>
   </div>`;
   pages[0].after(toc);
 
@@ -85,7 +85,7 @@
   if(watermarkEnabled){
     const mark=document.createElement('div');
     mark.className='payment-watermark';
-    mark.innerHTML=`<strong>${esc(order.watermark||'BELUM LUNAS')}</strong><span>DOKUMEN PRATINJAU · ${esc(order.number||'PESANAN')}</span><small>${esc(order.customer||profile.school||'Pemesan')}</small>`;
+    mark.innerHTML=`<strong>${esc(order.watermark||'BELUM LUNAS')}</strong>`;
     toc.appendChild(mark);
   }
   const statusEl=$('#pageStatus');

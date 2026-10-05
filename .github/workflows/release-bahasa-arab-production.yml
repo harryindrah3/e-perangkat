@@ -25,8 +25,8 @@ jobs:
       PROJECT_ID: prj_KwCEjkE1OFX3CgBeBEenQcgX3P45
       TEAM_SLUG: harryindrah3-6239s-projects
       BASE_PROD_SHA: 021977facb18b0723e39360ab249a271407695c2
-      OLD_PROD_DEPLOYMENT: dpl_HRj9sPx9H6aPWYuGRVMmRSMRZ777
-      OLD_PROD_URL: https://e-perangkat-online-a-9424otdje-harryindrah3-6239s-projects.vercel.app
+      OLD_PROD_DEPLOYMENT: dpl_BTk5NhbNpPSmXzXCfwoVswDbJ4LX
+      OLD_PROD_URL: https://e-perangkat-online-a-pc6j4l5pd-harryindrah3-6239s-projects.vercel.app
       PROD_DOMAIN: https://e-perangkat-online-a-f.vercel.app
 
     steps:
@@ -115,8 +115,23 @@ jobs:
           }
           const index=fs.readFileSync(dir+'/index.html','utf8');
           const print=fs.readFileSync(dir+'/print.html','utf8');
+          const kbc=fs.readFileSync(dir+'/assets/kbc-data.js','utf8');
+          const printJs=fs.readFileSync(dir+'/assets/print.js','utf8');
           if(!index.includes('production-parity-v20260930.js?v=20261002-3')) throw new Error('Parity runtime missing in index');
           if(!print.includes('production-parity-v20260930.js?v=20261002-3')) throw new Error('Parity runtime missing in print');
+          for(const token of [
+            "D.meta.subtitle='Kurikulum Berbasis Cinta (KBC) · Kementerian Agama · Fase D'",
+            "name:'Menyimak–Berbicara'",
+            "name:'Membaca–Memirsa'",
+            "name:'Menulis–Mempresentasikan'",
+            "m.allocationDetail='9 × 40 menit · 3 pertemuan'",
+            "iktp.splice(0,iktp.length"
+          ]) if(!kbc.includes(token)) throw new Error('KBC runtime missing '+token);
+          for(const token of [
+            'ALUR TUJUAN PEMBELAJARAN BAHASA ARAB',
+            'INDIKATOR KETERCAPAIAN TUJUAN PEMBELAJARAN',
+            'LANGKAH PEMBELAJARAN KBC'
+          ]) if(!printJs.includes(token)) throw new Error('KBC print missing '+token);
           console.log('ARABIC_RELEASE_VALIDATION_PASS');
           NODE
           /tmp/update-arabic-prod-status.sh "ARABIC_RELEASE_VALIDATION_PASS"
@@ -175,15 +190,21 @@ jobs:
           vercel curl "$PREVIEW_URL/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/index.html" --scope "$TEAM_SLUG" > /tmp/arab-index.html
           vercel curl "$PREVIEW_URL/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/data.js" --scope "$TEAM_SLUG" > /tmp/arab-data.js
           vercel curl "$PREVIEW_URL/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/v3.js" --scope "$TEAM_SLUG" > /tmp/arab-v3.js
+          vercel curl "$PREVIEW_URL/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/kbc-data.js" --scope "$TEAM_SLUG" > /tmp/arab-kbc.js
+          vercel curl "$PREVIEW_URL/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/print.js" --scope "$TEAM_SLUG" > /tmp/arab-print.js
           vercel curl "$PREVIEW_URL/apps/fase-c/E-Perangkat_bahasa-indonesia_Fase-C/index.html" --scope "$TEAM_SLUG" > /tmp/existing-fasec.html
           vercel curl "$PREVIEW_URL/apps/fase-c/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-C/index.html" --scope "$TEAM_SLUG" > /tmp/existing-erlangga.html
           vercel curl "$PREVIEW_URL/index.html" --scope "$TEAM_SLUG" > /tmp/root.html
 
           grep -q '"fase-d-bahasa-arab"' /tmp/catalog.js
           grep -q '"fase-c-pai-bp-erlangga"' /tmp/catalog.js
-          grep -q "E-Perangkat Bahasa Arab Fase D" /tmp/arab-index.html
+          grep -q "Perangkat Pembelajaran Bahasa Arab Fase D" /tmp/arab-index.html
+          grep -q "KURIKULUM BERBASIS CINTA" /tmp/arab-index.html
           grep -q '"subject":"Bahasa Arab"' /tmp/arab-data.js
           grep -q 'eperangkat.bahasa-arab.fased.v1.orders' /tmp/arab-v3.js
+          grep -q "Menyimak–Berbicara" /tmp/arab-kbc.js
+          grep -q "9 × 40 menit · 3 pertemuan" /tmp/arab-kbc.js
+          grep -q "ALUR TUJUAN PEMBELAJARAN BAHASA ARAB" /tmp/arab-print.js
           grep -q "E-Perangkat Online A–F" /tmp/existing-fasec.html
           grep -q "PAI" /tmp/existing-erlangga.html
           grep -q "a37f7c9455df07b95146acec5bdecbc22c3799e7" /tmp/root.html
@@ -205,12 +226,18 @@ jobs:
             vercel curl "$PROD_DOMAIN/catalog-erlangga.js" --scope "$TEAM_SLUG" > /tmp/prod-catalog.js || return 1
             vercel curl "$PROD_DOMAIN/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/index.html" --scope "$TEAM_SLUG" > /tmp/prod-arab.html || return 1
             vercel curl "$PROD_DOMAIN/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/data.js" --scope "$TEAM_SLUG" > /tmp/prod-arab-data.js || return 1
+            vercel curl "$PROD_DOMAIN/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/kbc-data.js" --scope "$TEAM_SLUG" > /tmp/prod-arab-kbc.js || return 1
+            vercel curl "$PROD_DOMAIN/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/print.js" --scope "$TEAM_SLUG" > /tmp/prod-arab-print.js || return 1
             vercel curl "$PROD_DOMAIN/apps/fase-c/E-Perangkat_bahasa-indonesia_Fase-C/index.html" --scope "$TEAM_SLUG" > /tmp/prod-existing.html || return 1
             vercel curl "$PROD_DOMAIN/apps/fase-c/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-C/index.html" --scope "$TEAM_SLUG" > /tmp/prod-erlangga.html || return 1
             grep -q '"fase-d-bahasa-arab"' /tmp/prod-catalog.js || return 1
             grep -q '"fase-c-pai-bp-erlangga"' /tmp/prod-catalog.js || return 1
-            grep -q "E-Perangkat Bahasa Arab Fase D" /tmp/prod-arab.html || return 1
+            grep -q "Perangkat Pembelajaran Bahasa Arab Fase D" /tmp/prod-arab.html || return 1
+            grep -q "KURIKULUM BERBASIS CINTA" /tmp/prod-arab.html || return 1
             grep -q '"subject":"Bahasa Arab"' /tmp/prod-arab-data.js || return 1
+            grep -q "Menyimak–Berbicara" /tmp/prod-arab-kbc.js || return 1
+            grep -q "9 × 40 menit · 3 pertemuan" /tmp/prod-arab-kbc.js || return 1
+            grep -q "ALUR TUJUAN PEMBELAJARAN BAHASA ARAB" /tmp/prod-arab-print.js || return 1
             grep -q "E-Perangkat Online A–F" /tmp/prod-existing.html || return 1
             grep -q "PAI" /tmp/prod-erlangga.html || return 1
             return 0
