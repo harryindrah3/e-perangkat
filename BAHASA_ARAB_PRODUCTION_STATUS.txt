@@ -1,1 +1,1 @@
-PRODUCTION_VERIFIED_OK https://e-perangkat-online-a-r9utfgcyw-harryindrah3-6239s-projects.vercel.app
+VALIDATING_RELEASE_SCOPE
