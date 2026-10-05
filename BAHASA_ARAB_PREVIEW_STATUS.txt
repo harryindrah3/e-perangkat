@@ -1,1 +1,1 @@
-BAHASA_ARAB_PRODUCTION_PARITY_SOURCE_PASS
+AUTHORIZE https://vercel.com/oauth/device?user_code=QMXW-TNQT
