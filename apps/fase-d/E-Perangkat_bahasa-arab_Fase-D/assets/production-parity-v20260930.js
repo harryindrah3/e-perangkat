@@ -35,6 +35,7 @@
 
   async function boot() {
     const isPrint=/\/print\.html$/i.test(location.pathname);
+    // differentiation-runtime.js sengaja tidak dimuat pada print: diferensiasi KBC sudah dibangun oleh print.js.
 
     // Jalur cetak dibuat ringan. Halaman print sudah membangun kalender, jadwal,
     // analisis, modul, bahan ajar, LKPD, dan asesmen dari pipeline print lokal.
