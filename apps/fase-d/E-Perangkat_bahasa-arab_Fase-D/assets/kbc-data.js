@@ -40,6 +40,31 @@ D.kbc={
   note:'KBC menjadi ruh dan kerangka integrasi nilai pada seluruh perangkat. Kompetensi Bahasa Arab tetap mengacu pada CP; model dan strategi belajar dipilih sesuai tujuan, karakter materi, serta konteks peserta didik.'
 };
 
+
+const OFFICIAL_GRAMMAR='الجملة الاسمية، العدد، التصريف اللغوي، فعل الأمر، الجملة الفعلية، الفعل المضارع، المصدر الصريح، الفعل الماضي، كان واسمها وخبرها، الفعل المزيد، اسم الموصول، اسم التفضيل';
+D.cp={
+  source:'Panduan Kurikulum Berbasis Cinta, Keputusan Dirjen Pendidikan Islam Nomor 6077 Tahun 2025, Lampiran 1 halaman 58 (PDF halaman 62).',
+  rationale:'Pembelajaran Bahasa Arab Fase D/MTs pada perangkat KBC ini mengikuti tiga elemen resmi dalam pemetaan CP: Menyimak–Berbicara, Membaca–Memirsa, serta Menulis–Mempresentasikan. Panca Cinta diintegrasikan ke materi dan pengalaman belajar tanpa mengganti kompetensi Bahasa Arab.',
+  goals:[
+    'Memahami informasi tersirat dan tersurat serta berinteraksi tentang tema madrasah, rumah, hobi, pekerjaan, kesehatan, hari-hari besar Islam, pariwisata, alam, dan lingkungan.',
+    'Memahami informasi tersurat dan tersirat dari berbagai jenis teks visual atau multimodal pada tema-tema Fase D.',
+    'Mengomunikasikan ide secara tertulis maupun lisan melalui paragraf sederhana pada berbagai jenis teks yang terstruktur.'
+  ],
+  elements:[
+    {name:'Menyimak–Berbicara',description:'Memahami informasi yang diterima secara tersirat dan tersurat serta berinteraksi tentang tema-tema Fase D dengan susunan gramatikal yang ditetapkan dalam CP. Rujukan gramatikal: '+OFFICIAL_GRAMMAR+'.'},
+    {name:'Membaca–Memirsa',description:'Memahami informasi secara tersurat dan tersirat dari berbagai jenis teks visual atau multimodal tentang tema-tema Fase D dengan susunan gramatikal yang ditetapkan dalam CP. Rujukan gramatikal: '+OFFICIAL_GRAMMAR+'.'},
+    {name:'Menulis–Mempresentasikan',description:'Mengomunikasikan ide secara tertulis maupun lisan melalui paragraf sederhana pada berbagai jenis teks yang terstruktur tentang tema-tema Fase D dengan susunan gramatikal yang ditetapkan dalam CP. Rujukan gramatikal: '+OFFICIAL_GRAMMAR+'.'}
+  ],
+  process:[
+    'Menyimak model bahasa dan menangkap informasi tersurat maupun tersirat.',
+    'Berinteraksi lisan dengan ungkapan, mufradat, pelafalan, dan kesantunan yang sesuai konteks.',
+    'Membaca dan memirsa teks visual atau multimodal untuk menemukan informasi, gagasan, dan makna.',
+    'Mengidentifikasi serta menggunakan susunan gramatikal dalam konteks komunikasi.',
+    'Menulis paragraf sederhana dan produk berbahasa Arab yang terstruktur.',
+    'Mempresentasikan gagasan, menerima umpan balik, melakukan revisi, dan merefleksikan Panca Cinta.'
+  ]
+};
+
 const M={
   'vii-1-perkenalan':{
     material:'Madrasah (konteks operasional)',themeIds:[2,4],type:'operasional',
@@ -173,7 +198,7 @@ const M={
     material:'Alam',themeIds:[1,3],type:'resmi',
     insert:['Mensyukuri nikmat Allah melalui perilaku sehari-hari.','Larangan merusak lingkungan sebagaimana pesan Q.S. Ar-Rum ayat 41.'],
     stimulus:'video atau rangkaian gambar langit, bumi, manusia, hewan, tumbuhan, matahari, dan bulan sebagai pemantik tentang Sang Pencipta',
-    action:'membuat produk komunikasi berbahasa Arab yang menunjukkan satu aksi nyata menjaga alam dan menggunakan isim mausul secara tepat',
+    action:'membuat video tentang langkah konkret menjaga keseimbangan alam sesuai ajaran Islam, menyertakan ayat Al-Qur’an atau hadis yang relevan, dan menggunakan isim mausul secara tepat',
     reflection:'rasa syukur kepada Allah dibuktikan melalui cara manusia memperlakukan dan menjaga ciptaan-Nya',
     model:'Project Based Learning (PjBL), diadaptasi dari contoh implementasi resmi KBC Bahasa Arab Fase D'
   },
@@ -403,10 +428,120 @@ for(const m of (D.modules||[])){
     ]
   };
 
+
+  if(official){
+    m.allocation='9 × 40 menit';
+    m.allocationDetail='9 × 40 menit · 3 pertemuan';
+    m.objectives=[{
+      text:'Mengomunikasikan ide secara tertulis maupun lisan melalui paragraf sederhana dan teks terstruktur tentang alam dengan susunan gramatikal isim mausul sebagai wujud cinta kepada Allah Swt. dan lingkungan.',
+      jp:9
+    }];
+
+    iktp.splice(0,iktp.length,
+      'Menjelaskan pengertian isim mausul.',
+      'Mengenali jenis-jenis isim mausul.',
+      'Mengidentifikasi isim mausul di dalam kalimat.',
+      'Menggunakan isim mausul dalam kalimat.',
+      'Menjelaskan fungsi isim mausul dalam kalimat.',
+      'Menyebutkan ayat Al-Qur’an atau hadis yang berkaitan dengan penciptaan bumi dan langit sebagai tanda kebesaran Allah Swt.',
+      'Menuliskan tindakan nyata yang mencerminkan rasa syukur kepada Allah Swt. atas alam semesta.',
+      'Menjelaskan dampak negatif tindakan manusia yang merusak keseimbangan alam.',
+      'Membuat video langkah konkret menjaga keseimbangan alam sesuai ajaran Islam dengan memasukkan kaidah isim mausul.'
+    );
+
+    meetings.splice(0,meetings.length,
+      {
+        number:1,duration:'3 × 40 menit',title:'Orientasi dan perancangan projek خَالِقُ الْعَالَم',
+        phaseLabels:['Orientasi terhadap Projek','Orientasi terhadap Projek','Orientasi terhadap Projek','Orientasi terhadap Projek','Perancangan Projek','Perancangan Projek'],
+        opening:[
+          'Guru membuka pembelajaran dengan salam dan doa.',
+          'Apersepsi: peserta didik menyebutkan satu ciptaan Allah Swt. yang paling mereka kagumi.',
+          'Guru menyampaikan tujuan pembelajaran, projek, serta kaitannya dengan kebesaran Allah Swt. sebagai Pencipta alam semesta.'
+        ],
+        core:[
+          'Peserta didik mengamati gambar atau video tentang keindahan alam semesta dan menanggapi pertanyaan pemantik tentang Sang Pencipta.',
+          'Peserta didik menyimak ayat Al-Qur’an yang relevan, lalu mendiskusikan hubungan خَالِق, مَخْلُوق, dan خَالِقُ الْعَالَم serta tanggung jawab manusia terhadap ciptaan.',
+          'Guru memperdengarkan teks خَالِقُ الْعَالَم; peserta didik menyimak, membaca dengan bimbingan, dan mendalami gagasan teks.',
+          'Peserta didik menyampaikan pendapat secara lisan tentang cinta kepada Allah Swt., rasa syukur, dan kepedulian terhadap alam.',
+          'Peserta didik bekerja dalam kelompok untuk merancang projek video langkah menjaga keseimbangan alam.',
+          'Rancangan video wajib menyertakan ayat Al-Qur’an atau hadis yang relevan serta penggunaan isim mausul.'
+        ],
+        closing:[
+          'Peserta didik menyimpulkan pembelajaran dan rancangan projek.',
+          'Guru mengajak peserta didik membaca doa syukur atas ilmu yang diperoleh.',
+          'Guru menyampaikan salam penutup.'
+        ]
+      },
+      {
+        number:2,duration:'3 × 40 menit',title:'Pelaksanaan dan monitoring projek KBC',
+        phaseLabels:['Pelaksanaan Projek','Monitoring','Monitoring','Monitoring','Monitoring'],
+        opening:[
+          'Guru membuka pembelajaran dengan salam dan doa.',
+          'Guru menanyakan kembali bagaimana manusia menjaga ciptaan Allah Swt. sebagai wujud cinta kepada-Nya.',
+          'Guru menegaskan konsep خَالِق dan مَخْلُوق, tanggung jawab manusia terhadap alam, serta nilai keimanan dan ketakwaan dalam projek.'
+        ],
+        core:[
+          'Setiap kelompok melaksanakan pembuatan video tentang langkah menjaga keseimbangan alam dengan menyertakan ayat Al-Qur’an atau hadis yang relevan.',
+          'Guru memantau partisipasi setiap anggota kelompok dan perkembangan projek.',
+          'Guru memberikan umpan balik atau alternatif solusi ketika kelompok mengalami kesulitan.',
+          'Guru mencocokkan isi projek dengan IKTP, termasuk penggunaan isim mausul dan integrasi Cinta Allah serta Cinta Lingkungan.',
+          'Kelompok merevisi projek berdasarkan umpan balik dan mendokumentasikan perkembangan projek.'
+        ],
+        closing:[
+          'Setiap kelompok melaporkan progres projek.',
+          'Guru memberi umpan balik dan arahan untuk penyelesaian projek.',
+          'Kelas menutup dengan doa syukur dan salam.'
+        ]
+      },
+      {
+        number:3,duration:'3 × 40 menit',title:'Presentasi, evaluasi, dan refleksi projek',
+        phaseLabels:['Penyajian Hasil/Presentasi Projek','Penyajian Hasil/Presentasi Projek','Evaluasi dan Refleksi','Evaluasi dan Refleksi','Evaluasi dan Refleksi'],
+        opening:[
+          'Guru membuka pembelajaran dengan salam dan doa.',
+          'Peserta didik merefleksikan proses projek yang telah dilakukan.',
+          'Guru menegaskan bahwa menjaga alam merupakan wujud cinta kepada Allah Swt.'
+        ],
+        core:[
+          'Setiap kelompok mempresentasikan hasil video projek di depan kelas.',
+          'Guru dan kelompok lain memberikan apresiasi serta umpan balik terhadap isi, Bahasa Arab, penggunaan isim mausul, dan pesan KBC.',
+          'Guru bersama peserta didik mengevaluasi projek dan merefleksikan wujud cinta kepada Allah Swt. melalui kepedulian lingkungan.',
+          'Kelas mendiskusikan dampak tindakan manusia yang merusak keseimbangan alam.',
+          'Peserta didik menyusun langkah konkret menjaga alam sebagai wujud syukur kepada Allah Swt.'
+        ],
+        closing:[
+          'Peserta didik menyimpulkan hasil pembelajaran.',
+          'Peserta didik membuat jurnal refleksi tentang خَالِقُ الْعَالَم dan tindakan kecil menjaga ciptaan Allah Swt.',
+          'Guru mengajak membaca doa syukur dan menyampaikan salam penutup.'
+        ]
+      }
+    );
+
+    assessment.diagnostic.splice(0,assessment.diagnostic.length,
+      'Pertanyaan pemantik tentang ciptaan Allah Swt., pengetahuan awal tentang isim mausul, dan pengalaman menjaga lingkungan.'
+    );
+    assessment.formative.splice(0,assessment.formative.length,
+      'Kuis singkat tentang ciptaan Allah Swt. dan peran makhluk hidup dalam menjaga keseimbangan.',
+      'Observasi partisipasi peserta didik dalam diskusi serta proses pengerjaan projek.',
+      'Monitoring penggunaan isim mausul dan keterpaduan ayat Al-Qur’an atau hadis dalam projek.'
+    );
+    assessment.summative.splice(0,assessment.summative.length,
+      'Poster atau infografik tentang cara menjaga keseimbangan alam sebagai bentuk cinta kepada Allah Swt.',
+      'Jurnal refleksi tentang rasa syukur terhadap ciptaan Allah Swt.',
+      'Video projek digunakan sebagai bukti kinerja proses dan komunikasi Bahasa Arab.'
+    );
+    assessment.attitude.splice(0,assessment.attitude.length,
+      'Observasi kepedulian peserta didik terhadap ciptaan Allah Swt.',
+      'Penilaian komitmen peserta didik dalam menjaga keseimbangan alam.'
+    );
+    assessment.reflection.splice(0,assessment.reflection.length,
+      'Refleksi hubungan cinta kepada Allah Swt., rasa syukur, dan tindakan menjaga lingkungan.'
+    );
+  }
+
   const plan={
     officialExample:official,
     label:official?'CONTOH RESMI KBC · BAHASA ARAB FASE D':'IMPLEMENTASI KBC · BAHASA ARAB FASE D',
-    source:official?'Panduan KBC 6077/2025, contoh RPP Bahasa Arab Fase D halaman 82–86; diadaptasi ke alokasi perangkat ini.':source,
+    source:official?'Panduan KBC 6077/2025, Lampiran 2 contoh RPP Bahasa Arab Fase D halaman 78–82 (PDF halaman 82–86); struktur pokok dipertahankan dan redaksi aktivitas disesuaikan untuk perangkat cetak.':source,
     material:m.title,
     themes:themes,
     inserts:x.insert.slice(),
@@ -440,7 +575,8 @@ for(const m of (D.modules||[])){
       topic:mt.title,
       pendahuluan:mt.opening.slice(),
       inti:mt.core.slice(),
-      penutup:mt.closing.slice()
+      penutup:mt.closing.slice(),
+      phaseLabels:Array.isArray(mt.phaseLabels)?mt.phaseLabels.slice():[]
     };
   });
   m.assessment=[
