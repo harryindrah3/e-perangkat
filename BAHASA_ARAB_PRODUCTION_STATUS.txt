@@ -1,1 +1,1 @@
-PROMOTING_VERIFIED_CANDIDATE https://e-perangkat-online-a-6p6kj7lxk-harryindrah3-6239s-projects.vercel.app
+PRODUCTION_VERIFIED_OK https://e-perangkat-online-a-6p6kj7lxk-harryindrah3-6239s-projects.vercel.app
