@@ -84,10 +84,22 @@ function sanitize(){
   }finally{busy=false}
 }
 
-sanitize();
-const observer=new MutationObserver(()=>queueMicrotask(sanitize));
+let sanitizeTimer=0;
+function scheduleSanitize(delay=120){
+  clearTimeout(sanitizeTimer);
+  sanitizeTimer=setTimeout(sanitize,delay);
+}
+
+// Biarkan paket tampil terlebih dahulu, lalu bersihkan teks internal.
+// Ini menghindari pemindaian ribuan node sebelum first paint pada paket besar.
+if('requestIdleCallback' in window){
+  requestIdleCallback(()=>sanitize(),{timeout:500});
+}else{
+  scheduleSanitize(80);
+}
+const observer=new MutationObserver(()=>scheduleSanitize(140));
 observer.observe(root,{subtree:true,childList:true,characterData:true});
 window.addEventListener('beforeprint',sanitize,true);
-window.addEventListener('load',sanitize,{once:true});
-window.EPERANGKAT_OFFICIAL_PRINT_GUARD={sanitize};
+window.addEventListener('load',()=>scheduleSanitize(80),{once:true});
+window.EPERANGKAT_OFFICIAL_PRINT_GUARD={sanitize,scheduleSanitize};
 })();
