@@ -1,1 +1,1 @@
-AUTHORIZE https://vercel.com/oauth/device?user_code=LMNB-ZFPQ
+VALIDATING_RELEASE_SCOPE
