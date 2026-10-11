@@ -1,0 +1,95 @@
+name: Audit 73 E-Perangkat Production
+
+on:
+  push:
+    branches:
+      - audit/all-73-production-open-20261011
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Playwright
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Audit all 73 application routes
+        env:
+          PROD: https://e-perangkat-online-a-f.vercel.app
+          PATHS_JSON: '["apps/fase-a/E-Perangkat_bahasa-indonesia_Fase-A/index.html","apps/fase-a/E-Perangkat_bahasa-inggris_Fase-A/index.html","apps/fase-a/E-Perangkat_matematika_Fase-A/index.html","apps/fase-a/E-Perangkat_pendidikan-agama-islam_Fase-A/index.html","apps/fase-a/E-Perangkat_pendidikan-pancasila_Fase-A/index.html","apps/fase-a/E-Perangkat_pjok_Fase-A/index.html","apps/fase-a/E-Perangkat_seni-rupa_Fase-A/index.html","apps/fase-b/E-Perangkat_bahasa-indonesia_Fase-B/index.html","apps/fase-b/E-Perangkat_bahasa-inggris_Fase-B/index.html","apps/fase-b/E-Perangkat_ipas_Fase-B/index.html","apps/fase-b/E-Perangkat_matematika_Fase-B/index.html","apps/fase-b/E-Perangkat_pendidikan-agama-islam_Fase-B/index.html","apps/fase-b/E-Perangkat_pendidikan-pancasila_Fase-B/index.html","apps/fase-b/E-Perangkat_pjok_Fase-B/index.html","apps/fase-b/E-Perangkat_seni-rupa_Fase-B/index.html","apps/fase-c/E-Perangkat_bahasa-indonesia_Fase-C/index.html","apps/fase-c/E-Perangkat_bahasa-inggris_Fase-C/index.html","apps/fase-c/E-Perangkat_ipas_Fase-C/index.html","apps/fase-c/E-Perangkat_matematika_Fase-C/index.html","apps/fase-c/E-Perangkat_pendidikan-agama-islam_Fase-C/index.html","apps/fase-c/E-Perangkat_pendidikan-pancasila_Fase-C/index.html","apps/fase-c/E-Perangkat_pjok_Fase-C/index.html","apps/fase-c/E-Perangkat_seni-rupa_Fase-C/index.html","apps/fase-d/E-Perangkat_bahasa-indonesia_Fase-D/index.html","apps/fase-d/E-Perangkat_bahasa-inggris_Fase-D/index.html","apps/fase-d/E-Perangkat_informatika_Fase-D/index.html","apps/fase-d/E-Perangkat_ipa_Fase-D/index.html","apps/fase-d/E-Perangkat_ips_Fase-D/index.html","apps/fase-d/E-Perangkat_matematika_Fase-D/index.html","apps/fase-d/E-Perangkat_pendidikan-agama-islam_Fase-D/index.html","apps/fase-d/E-Perangkat_pendidikan-pancasila_Fase-D/index.html","apps/fase-d/E-Perangkat_pjok_Fase-D/index.html","apps/fase-d/E-Perangkat_prakarya_Fase-D/index.html","apps/fase-d/E-Perangkat_seni-musik_Fase-D/index.html","apps/fase-d/E-Perangkat_seni-rupa_Fase-D/index.html","apps/fase-e/E-Perangkat_bahasa-indonesia_Fase-E/index.html","apps/fase-e/E-Perangkat_bahasa-inggris_Fase-E/index.html","apps/fase-e/E-Perangkat_biologi_Fase-E/index.html","apps/fase-e/E-Perangkat_ekonomi_Fase-E/index.html","apps/fase-e/E-Perangkat_fisika_Fase-E/index.html","apps/fase-e/E-Perangkat_geografi_Fase-E/index.html","apps/fase-e/E-Perangkat_informatika_Fase-E/index.html","apps/fase-e/E-Perangkat_kimia_Fase-E/index.html","apps/fase-e/E-Perangkat_matematika_Fase-E/index.html","apps/fase-e/E-Perangkat_pendidikan-agama-islam_Fase-E/index.html","apps/fase-e/E-Perangkat_pendidikan-pancasila_Fase-E/index.html","apps/fase-e/E-Perangkat_pjok_Fase-E/index.html","apps/fase-e/E-Perangkat_prakarya_Fase-E/index.html","apps/fase-e/E-Perangkat_sejarah_Fase-E/index.html","apps/fase-e/E-Perangkat_seni-budaya_Fase-E/index.html","apps/fase-e/E-Perangkat_sosiologi_Fase-E/index.html","apps/fase-f/E-Perangkat_bahasa-indonesia_Fase-F/index.html","apps/fase-f/E-Perangkat_bahasa-inggris-tingkat-lanjut_Fase-F/index.html","apps/fase-f/E-Perangkat_bahasa-inggris_Fase-F/index.html","apps/fase-f/E-Perangkat_biologi_Fase-F/index.html","apps/fase-f/E-Perangkat_ekonomi_Fase-F/index.html","apps/fase-f/E-Perangkat_fisika_Fase-F/index.html","apps/fase-f/E-Perangkat_geografi_Fase-F/index.html","apps/fase-f/E-Perangkat_informatika_Fase-F/index.html","apps/fase-f/E-Perangkat_kimia_Fase-F/index.html","apps/fase-f/E-Perangkat_matematika-tingkat-lanjut_Fase-F/index.html","apps/fase-f/E-Perangkat_matematika_Fase-F/index.html","apps/fase-f/E-Perangkat_pendidikan-agama-islam_Fase-F/index.html","apps/fase-f/E-Perangkat_pendidikan-pancasila_Fase-F/index.html","apps/fase-f/E-Perangkat_pjok_Fase-F/index.html","apps/fase-f/E-Perangkat_prakarya_Fase-F/index.html","apps/fase-f/E-Perangkat_sejarah_Fase-F/index.html","apps/fase-f/E-Perangkat_seni-budaya_Fase-F/index.html","apps/fase-f/E-Perangkat_sosiologi_Fase-F/index.html","apps/fase-a/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-A/index.html","apps/fase-b/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-B/index.html","apps/fase-c/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-C/index.html","apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/index.html"]'
+        run: |
+          node <<'NODE'
+          const { chromium } = require('playwright');
+          const paths = JSON.parse(process.env.PATHS_JSON);
+          const prod = process.env.PROD.replace(/\/$/,'');
+          const concurrency = 6;
+          const timeout = 18000;
+          (async()=>{
+            const browser = await chromium.launch({headless:true});
+            const results = new Array(paths.length);
+            let next = 0;
+            async function worker(){
+              while(true){
+                const i=next++;
+                if(i>=paths.length) return;
+                const path=paths[i];
+                const url=prod+'/'+path;
+                const context=await browser.newContext();
+                const page=await context.newPage();
+                const pageErrors=[];
+                const requestFails=[];
+                page.on('pageerror',e=>pageErrors.push(String(e.message||e).slice(0,220)));
+                page.on('requestfailed',r=>requestFails.push((r.url()+' :: '+(r.failure()?.errorText||'failed')).slice(0,300)));
+                let status=null,gotoError=null;
+                try{
+                  const resp=await page.goto(url,{waitUntil:'domcontentloaded',timeout});
+                  status=resp?.status()||null;
+                  await page.waitForFunction(()=>{
+                    const t=document.title||'';
+                    const body=document.body?.innerText||'';
+                    return !!window.EPERANGKAT_DATA || /E-Perangkat gagal dimuat/i.test(body) || (t && t!=='E-Perangkat Online A–F');
+                  },null,{timeout:14000}).catch(()=>{});
+                  await page.waitForTimeout(800);
+                }catch(e){gotoError=String(e.message||e).slice(0,300);}
+                const state=await page.evaluate(()=>({
+                  title:document.title||'',
+                  body:(document.body?.innerText||'').slice(0,500),
+                  hasData:!!window.EPERANGKAT_DATA,
+                  hasApp:!!document.getElementById('app'),
+                  hasFail:/E-Perangkat gagal dimuat/i.test(document.body?.innerText||''),
+                  href:location.href
+                })).catch(()=>({title:'',body:'',hasData:false,hasApp:false,hasFail:true,href:url}));
+                const ok=status===200 && state.hasData && !state.hasFail && !gotoError;
+                results[i]={i:i+1,path,url,status,ok,...state,gotoError,pageErrors:pageErrors.slice(0,4),requestFails:requestFails.slice(0,6)};
+                console.log(JSON.stringify({i:i+1,path,status,ok,title:state.title,hasData:state.hasData,fail:state.hasFail,gotoError,requestFails:requestFails.slice(0,2)}));
+                await context.close();
+              }
+            }
+            await Promise.all(Array.from({length:concurrency},()=>worker()));
+            await browser.close();
+            const failures=results.filter(x=>!x.ok);
+            const phases={};
+            for(const r of results){
+              const m=r.path.match(/fase-([a-f])/i); const p=(m?.[1]||'?').toUpperCase();
+              phases[p]??={total:0,ok:0,fail:0}; phases[p].total++; if(r.ok)phases[p].ok++; else phases[p].fail++;
+            }
+            const mathA=results.find(r=>/matematika_Fase-A/.test(r.path));
+            console.log('AUDIT_PHASES='+JSON.stringify(phases));
+            console.log('AUDIT_MATH_A='+JSON.stringify(mathA));
+            console.log('AUDIT_FAILURES='+JSON.stringify(failures));
+            console.log('AUDIT_SUMMARY='+JSON.stringify({total:results.length,ok:results.length-failures.length,fail:failures.length}));
+            require('fs').writeFileSync('audit-73-report.json',JSON.stringify({summary:{total:results.length,ok:results.length-failures.length,fail:failures.length},phases,mathA,failures,results},null,2));
+            if(failures.length) process.exitCode=2;
+          })().catch(e=>{console.error(e);process.exit(3)});
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: audit-73-report
+          path: audit-73-report.json
