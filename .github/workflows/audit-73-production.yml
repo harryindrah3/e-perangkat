@@ -1,9 +1,9 @@
-name: Audit 73 E-Perangkat Production
+name: Audit 73 E-Perangkat Production V2
 
 on:
   push:
     branches:
-      - audit/all-73-production-open-20261011
+      - audit/all-73-production-open-v2-20261011
 
 permissions:
   contents: read
@@ -65,9 +65,9 @@ jobs:
                   hasFail:/E-Perangkat gagal dimuat/i.test(document.body?.innerText||''),
                   href:location.href
                 })).catch(()=>({title:'',body:'',hasData:false,hasApp:false,hasFail:true,href:url}));
-                const ok=status===200 && state.hasData && !state.hasFail && !gotoError;
+                const realTitle=state.title && state.title!=='E-Perangkat Online A–F'; const hasRealUi=state.hasApp && /Beranda/i.test(state.body) && /Paket Cetak/i.test(state.body); const ok=status===200 && realTitle && hasRealUi && !state.hasFail && !gotoError;
                 results[i]={i:i+1,path,url,status,ok,...state,gotoError,pageErrors:pageErrors.slice(0,4),requestFails:requestFails.slice(0,6)};
-                console.log(JSON.stringify({i:i+1,path,status,ok,title:state.title,hasData:state.hasData,fail:state.hasFail,gotoError,requestFails:requestFails.slice(0,2)}));
+                console.log(JSON.stringify({i:i+1,path,status,ok,title:state.title,hasData:state.hasData,hasApp:state.hasApp,fail:state.hasFail,gotoError,requestFails:requestFails.slice(0,3)}));
                 await context.close();
               }
             }
