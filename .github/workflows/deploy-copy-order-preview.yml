@@ -1,0 +1,160 @@
+name: Deploy Copy Order Preview
+
+on:
+  push:
+    branches:
+      - fix/copy-order-preview-20261016
+    paths:
+      - releases/calendar-2026-2027/index.html
+      - releases/calendar-2026-2027/copy-order.js
+      - .github/workflows/deploy-copy-order-preview.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: e-perangkat-copy-order-preview
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      RELEASE_DIR: releases/calendar-2026-2027
+      STATUS_BRANCH: copy-order-preview-status-20261016
+      TEAM_ID: team_i5YnQIDbBKi8FgTPI0YD6uOu
+      PROJECT_ID: prj_KwCEjkE1OFX3CgBeBEenQcgX3P45
+      TEAM_SLUG: harryindrah3-6239s-projects
+      BASE_SHA: fa4aaa6ff8f71104913d54adacb7439f344122c3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/copy-order-preview-20261016
+          fetch-depth: 0
+
+      - name: Prepare status channel
+        shell: bash
+        run: |
+          set -e
+          git config user.name "Copy Order Preview"
+          git config user.email "preview@e-perangkat.local"
+          git fetch origin "$STATUS_BRANCH:$STATUS_BRANCH"
+          git worktree add /tmp/copy-order-status "$STATUS_BRANCH"
+          cat > /tmp/update-copy-order-status.sh <<'EOS'
+          #!/usr/bin/env bash
+          set -e
+          msg="$1"
+          cd /tmp/copy-order-status
+          git fetch origin "$STATUS_BRANCH"
+          git reset --hard "origin/$STATUS_BRANCH"
+          printf "%s\n" "$msg" > COPY_ORDER_PREVIEW_STATUS.txt
+          git add COPY_ORDER_PREVIEW_STATUS.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(status): update copy-order preview status"
+            git push origin HEAD:"$STATUS_BRANCH" || true
+          fi
+          EOS
+          chmod +x /tmp/update-copy-order-status.sh
+          /tmp/update-copy-order-status.sh "VALIDATING_NO_REGRESSION"
+
+      - name: Guard latest Production updates
+        shell: bash
+        run: |
+          set -e
+          changed=$(git diff --name-only "$BASE_SHA"..HEAD -- "$RELEASE_DIR" || true)
+          printf '%s\n' "$changed"
+          while IFS= read -r file; do
+            [ -z "$file" ] && continue
+            case "$file" in
+              "$RELEASE_DIR/index.html"|"$RELEASE_DIR/copy-order.js") ;;
+              *) echo "Unexpected release change: $file"; exit 1 ;;
+            esac
+          done <<< "$changed"
+
+          git diff --numstat "$BASE_SHA"..HEAD -- "$RELEASE_DIR/index.html"
+          test "$(git diff --numstat "$BASE_SHA"..HEAD -- "$RELEASE_DIR/index.html" | awk '{print $1":"$2}')" = "1:1"
+
+          node <<'NODE'
+          const fs=require('fs');
+          const root='releases/calendar-2026-2027';
+          const oldLine="const COPY_ORDER = OLD_RUNTIME + '/copy-order.js?v=20260908-restore-1';";
+          const newLine="const COPY_ORDER = location.origin + '/copy-order.js?v=20261016-1';";
+          const index=fs.readFileSync(root+'/index.html','utf8');
+          if(!index.includes(newLine)) throw new Error('New local COPY_ORDER loader missing');
+          if(index.includes(oldLine)) throw new Error('Old COPY_ORDER loader still active');
+          const copy=fs.readFileSync(root+'/copy-order.js','utf8');
+          const source=fs.readFileSync(root+'/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/latest-runtime/copy-order.js','utf8');
+          if(copy!==source) throw new Error('Root copy-order runtime differs from known-good runtime');
+          for(const token of ['Salin ke Mapel','epCopyOrderDialog','Buat Pesanan Salinan','Pesanan disalin ke mapel lain']){
+            if(!copy.includes(token)) throw new Error('copy-order token missing: '+token);
+          }
+          const kbc=fs.readFileSync(root+'/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/kbc-data.js','utf8');
+          for(const token of ['Menyimak–Berbicara','9 × 40 menit · 3 pertemuan','Kurikulum Berbasis Cinta']){
+            if(!kbc.includes(token)) throw new Error('Latest Bahasa Arab KBC update missing: '+token);
+          }
+          console.log('NO_REGRESSION_GUARD_PASS');
+          NODE
+          /tmp/update-copy-order-status.sh "NO_REGRESSION_GUARD_PASS"
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Authorize Vercel
+        shell: bash
+        run: |
+          set -e
+          vercel login --github > /tmp/vercel-login.log 2>&1 &
+          PID=$!
+          LOGIN_URL=""
+          for i in $(seq 1 120); do
+            LOGIN_URL=$(grep -Eo 'https://vercel.com/oauth/device\?user_code=[A-Z0-9-]+' /tmp/vercel-login.log | tail -1 || true)
+            if [ -n "$LOGIN_URL" ]; then break; fi
+            if ! kill -0 "$PID" 2>/dev/null; then break; fi
+            sleep 2
+          done
+          if [ -z "$LOGIN_URL" ]; then
+            cat /tmp/vercel-login.log
+            /tmp/update-copy-order-status.sh "LOGIN_URL_NOT_FOUND"
+            exit 1
+          fi
+          /tmp/update-copy-order-status.sh "AUTHORIZE $LOGIN_URL"
+          wait "$PID"
+          vercel whoami
+          /tmp/update-copy-order-status.sh "AUTHENTICATED"
+
+      - name: Deploy isolated Preview candidate
+        shell: bash
+        run: |
+          set -e
+          STAGE=/tmp/e-perangkat-copy-order-preview
+          rm -rf "$STAGE"
+          cp -a "$RELEASE_DIR" "$STAGE"
+          mkdir -p "$STAGE/.vercel"
+          printf '{"orgId":"%s","projectId":"%s"}\n' "$TEAM_ID" "$PROJECT_ID" > "$STAGE/.vercel/project.json"
+          URL=$(vercel deploy --yes --scope "$TEAM_SLUG" --cwd "$STAGE" 2>&1 | tee /tmp/deploy.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
+          if [ -z "$URL" ]; then
+            cat /tmp/deploy.log
+            /tmp/update-copy-order-status.sh "PREVIEW_DEPLOY_FAILED"
+            exit 1
+          fi
+          echo "PREVIEW_URL=$URL" >> "$GITHUB_ENV"
+          /tmp/update-copy-order-status.sh "PREVIEW_DEPLOYED $URL"
+
+      - name: Verify candidate assets and latest update
+        shell: bash
+        run: |
+          set -e
+          sleep 5
+          vercel curl "$PREVIEW_URL/index.html" --scope "$TEAM_SLUG" > /tmp/index.html
+          vercel curl "$PREVIEW_URL/copy-order.js" --scope "$TEAM_SLUG" > /tmp/copy-order.js
+          vercel curl "$PREVIEW_URL/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/kbc-data.js" --scope "$TEAM_SLUG" > /tmp/kbc.js
+          vercel curl "$PREVIEW_URL/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/print.js" --scope "$TEAM_SLUG" > /tmp/arab-print.js
+          grep -q "location.origin + '/copy-order.js?v=20261016-1'" /tmp/index.html
+          grep -q "Salin ke Mapel" /tmp/copy-order.js
+          grep -q "epCopyOrderDialog" /tmp/copy-order.js
+          grep -q "Menyimak–Berbicara" /tmp/kbc.js
+          grep -q "9 × 40 menit · 3 pertemuan" /tmp/kbc.js
+          grep -q "ALUR TUJUAN PEMBELAJARAN BAHASA ARAB" /tmp/arab-print.js
+          /tmp/update-copy-order-status.sh "PREVIEW_VERIFIED_OK $PREVIEW_URL"
