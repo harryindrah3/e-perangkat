@@ -1,1 +1,1 @@
-NO_REGRESSION_GUARD_PASS
+AUTHORIZE https://vercel.com/oauth/device?user_code=BHNV-SBVR
