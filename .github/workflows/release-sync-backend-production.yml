@@ -33,6 +33,7 @@ jobs:
       PROD_DOMAIN: https://e-perangkat-online-a-f.vercel.app
       PROD_ALIAS_1: e-perangkat-online-a-f.vercel.app
       PROD_ALIAS_2: e-perangkat-online-a-f-harryindrah3-6239s-projects.vercel.app
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
     steps:
       - uses: actions/checkout@v4
@@ -105,28 +106,13 @@ jobs:
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
-      - name: Authorize Vercel
+      - name: Verify Vercel token
         shell: bash
         run: |
           set -e
-          vercel login --github > /tmp/vercel-login.log 2>&1 &
-          PID=$!
-          LOGIN_URL=""
-          for i in $(seq 1 120); do
-            LOGIN_URL=$(grep -Eo 'https://vercel.com/oauth/device\?user_code=[A-Z0-9-]+' /tmp/vercel-login.log | tail -1 || true)
-            if [ -n "$LOGIN_URL" ]; then break; fi
-            if ! kill -0 "$PID" 2>/dev/null; then break; fi
-            sleep 2
-          done
-          if [ -z "$LOGIN_URL" ]; then
-            cat /tmp/vercel-login.log
-            /tmp/update-sync-status.sh "LOGIN_URL_NOT_FOUND"
-            exit 1
-          fi
-          /tmp/update-sync-status.sh "AUTHORIZE $LOGIN_URL"
-          wait "$PID"
+          test -n "$VERCEL_TOKEN"
           vercel whoami
-          /tmp/update-sync-status.sh "AUTHENTICATED"
+          /tmp/update-sync-status.sh "AUTHENTICATED_WITH_TOKEN"
 
       - name: Stage exact current release plus local API
         shell: bash
