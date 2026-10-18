@@ -1,1 +1,1 @@
-DEPLOYING_PRODUCTION
+PRODUCTION_DEPLOYED https://e-perangkat-online-a-f.vercel.app
