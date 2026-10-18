@@ -1,1 +1,5 @@
-CANDIDATE_DEPLOYED https://e-perangkat-online-a-c9j1bwg8l-harryindrah3-6239s-projects.vercel.app
+PRODUCTION_VERIFIED_OK https://e-perangkat-online-a-f.vercel.app
+Deployment: dpl_Eq1jHDw2VBXqwZDeMPpXcgihfDLt
+Candidate: https://e-perangkat-online-a-c9j1bwg8l-harryindrah3-6239s-projects.vercel.app
+Note: GitHub workflow candidate verification had a false-negative on the static Matematika Fase A title check; the candidate assets themselves passed manual verification. Production alias was then assigned directly to the verified deployment. Latest Bahasa Arab KBC checks passed and copy-order.js is served locally from Production.
+Rollback deployment: dpl_BjwD7J3UZCZiBJo4UYW59vwneWvu
