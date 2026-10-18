@@ -1,0 +1,211 @@
+name: Release Copy Order to Production
+
+on:
+  push:
+    branches:
+      - release/copy-order-production-20261018
+    paths:
+      - releases/calendar-2026-2027/index.html
+      - releases/calendar-2026-2027/copy-order.js
+      - .github/workflows/release-copy-order-production.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: e-perangkat-production-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      RELEASE_DIR: releases/calendar-2026-2027
+      STAGE_DIR: /tmp/e-perangkat-production-copy-order
+      STATUS_BRANCH: copy-order-production-status-20261018
+      TEAM_ID: team_i5YnQIDbBKi8FgTPI0YD6uOu
+      PROJECT_ID: prj_KwCEjkE1OFX3CgBeBEenQcgX3P45
+      TEAM_SLUG: harryindrah3-6239s-projects
+      BASE_SHA: fa4aaa6ff8f71104913d54adacb7439f344122c3
+      PREVIOUS_PROD_DEPLOYMENT: dpl_BjwD7J3UZCZiBJo4UYW59vwneWvu
+      PROD_DOMAIN: https://e-perangkat-online-a-f.vercel.app
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: release/copy-order-production-20261018
+          fetch-depth: 0
+
+      - name: Prepare status channel
+        shell: bash
+        run: |
+          set -e
+          git config user.name "Copy Order Production"
+          git config user.email "production@e-perangkat.local"
+          git fetch origin "$STATUS_BRANCH:$STATUS_BRANCH"
+          git worktree add /tmp/copy-order-prod-status "$STATUS_BRANCH"
+          cat > /tmp/update-copy-order-prod-status.sh <<'EOS'
+          #!/usr/bin/env bash
+          set -e
+          msg="$1"
+          cd /tmp/copy-order-prod-status
+          git fetch origin "$STATUS_BRANCH"
+          git reset --hard "origin/$STATUS_BRANCH"
+          printf "%s\n" "$msg" > COPY_ORDER_PRODUCTION_STATUS.txt
+          git add COPY_ORDER_PRODUCTION_STATUS.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(status): update copy-order production status"
+            git push origin HEAD:"$STATUS_BRANCH" || true
+          fi
+          EOS
+          chmod +x /tmp/update-copy-order-prod-status.sh
+          /tmp/update-copy-order-prod-status.sh "VALIDATING_RELEASE_SCOPE"
+
+      - name: Guard all latest Production updates
+        shell: bash
+        run: |
+          set -e
+          changed=$(git diff --name-only "$BASE_SHA"..HEAD -- "$RELEASE_DIR" || true)
+          printf '%s\n' "$changed"
+          while IFS= read -r file; do
+            [ -z "$file" ] && continue
+            case "$file" in
+              "$RELEASE_DIR/index.html"|"$RELEASE_DIR/copy-order.js") ;;
+              *) echo "Unexpected Production release change: $file"; exit 1 ;;
+            esac
+          done <<< "$changed"
+
+          num=$(git diff --numstat "$BASE_SHA"..HEAD -- "$RELEASE_DIR/index.html" | awk '{print $1":"$2}')
+          [ "$num" = "1:1" ] || { echo "index.html change is not exactly 1 line replaced: $num"; exit 1; }
+
+          node <<'NODE'
+          const fs=require('fs');
+          const root='releases/calendar-2026-2027';
+          const index=fs.readFileSync(root+'/index.html','utf8');
+          const copy=fs.readFileSync(root+'/copy-order.js','utf8');
+          const known=fs.readFileSync(root+'/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/latest-runtime/copy-order.js','utf8');
+          if(!index.includes("const COPY_ORDER = location.origin + '/copy-order.js?v=20261016-1';")) throw new Error('Local COPY_ORDER loader missing');
+          if(index.includes("const COPY_ORDER = OLD_RUNTIME + '/copy-order.js")) throw new Error('Old broken COPY_ORDER loader still active');
+          if(copy!==known) throw new Error('copy-order.js does not match known-good runtime');
+          for(const token of ['Salin ke Mapel','epCopyOrderDialog','Buat Pesanan Salinan','Pesanan disalin ke mapel lain']) if(!copy.includes(token)) throw new Error('copy-order token missing '+token);
+
+          const kbc=fs.readFileSync(root+'/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/kbc-data.js','utf8');
+          const print=fs.readFileSync(root+'/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/print.js','utf8');
+          for(const token of ['Menyimak–Berbicara','Membaca–Memirsa','Menulis–Mempresentasikan','9 × 40 menit · 3 pertemuan','Kurikulum Berbasis Cinta']) if(!kbc.includes(token)) throw new Error('Latest KBC update missing '+token);
+          for(const token of ['ALUR TUJUAN PEMBELAJARAN BAHASA ARAB','INDIKATOR KETERCAPAIAN TUJUAN PEMBELAJARAN','LANGKAH PEMBELAJARAN KBC']) if(!print.includes(token)) throw new Error('Latest print update missing '+token);
+
+          const catalog=fs.readFileSync(root+'/catalog-erlangga.js','utf8');
+          for(const token of ['fase-d-bahasa-arab','fase-a-pai-bp-erlangga','fase-b-pai-bp-erlangga','fase-c-pai-bp-erlangga']) if(!catalog.includes(token)) throw new Error('Catalog latest item missing '+token);
+          console.log('PRODUCTION_NO_REGRESSION_GUARD_PASS');
+          NODE
+          /tmp/update-copy-order-prod-status.sh "PRODUCTION_NO_REGRESSION_GUARD_PASS"
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Authorize Vercel
+        shell: bash
+        run: |
+          set -e
+          vercel login --github > /tmp/vercel-login.log 2>&1 &
+          PID=$!
+          LOGIN_URL=""
+          for i in $(seq 1 120); do
+            LOGIN_URL=$(grep -Eo 'https://vercel.com/oauth/device\?user_code=[A-Z0-9-]+' /tmp/vercel-login.log | tail -1 || true)
+            if [ -n "$LOGIN_URL" ]; then break; fi
+            if ! kill -0 "$PID" 2>/dev/null; then break; fi
+            sleep 2
+          done
+          if [ -z "$LOGIN_URL" ]; then
+            cat /tmp/vercel-login.log
+            /tmp/update-copy-order-prod-status.sh "LOGIN_URL_NOT_FOUND"
+            exit 1
+          fi
+          /tmp/update-copy-order-prod-status.sh "AUTHORIZE $LOGIN_URL"
+          wait "$PID"
+          vercel whoami
+          /tmp/update-copy-order-prod-status.sh "AUTHENTICATED"
+
+      - name: Stage exact Production plus copy-order fix
+        shell: bash
+        run: |
+          set -e
+          rm -rf "$STAGE_DIR"
+          cp -a "$RELEASE_DIR" "$STAGE_DIR"
+          mkdir -p "$STAGE_DIR/.vercel"
+          printf '{"orgId":"%s","projectId":"%s"}\n' "$TEAM_ID" "$PROJECT_ID" > "$STAGE_DIR/.vercel/project.json"
+          /tmp/update-copy-order-prod-status.sh "STAGED_EXACT_PRODUCTION_PLUS_COPY_ORDER"
+
+      - name: Deploy and verify candidate
+        shell: bash
+        run: |
+          set -e
+          URL=$(vercel deploy --yes --scope "$TEAM_SLUG" --cwd "$STAGE_DIR" 2>&1 | tee /tmp/deploy.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
+          if [ -z "$URL" ]; then
+            cat /tmp/deploy.log
+            /tmp/update-copy-order-prod-status.sh "CANDIDATE_DEPLOY_FAILED"
+            exit 1
+          fi
+          echo "CANDIDATE_URL=$URL" >> "$GITHUB_ENV"
+          /tmp/update-copy-order-prod-status.sh "CANDIDATE_DEPLOYED $URL"
+          sleep 5
+
+          vercel curl "$URL/index.html" --scope "$TEAM_SLUG" > /tmp/index.html
+          vercel curl "$URL/copy-order.js" --scope "$TEAM_SLUG" > /tmp/copy-order.js
+          vercel curl "$URL/apps/fase-a/E-Perangkat_matematika_Fase-A/index.html" --scope "$TEAM_SLUG" > /tmp/math-a.html
+          vercel curl "$URL/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/kbc-data.js" --scope "$TEAM_SLUG" > /tmp/kbc.js
+          vercel curl "$URL/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/print.js" --scope "$TEAM_SLUG" > /tmp/arab-print.js
+          vercel curl "$URL/apps/fase-c/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-C/index.html" --scope "$TEAM_SLUG" > /tmp/erl-c.html
+
+          grep -q "location.origin + '/copy-order.js?v=20261016-1'" /tmp/index.html
+          grep -q "Salin ke Mapel" /tmp/copy-order.js
+          grep -q "epCopyOrderDialog" /tmp/copy-order.js
+          grep -q "E-Perangkat Matematika Fase A" /tmp/math-a.html
+          grep -q "Menyimak–Berbicara" /tmp/kbc.js
+          grep -q "9 × 40 menit · 3 pertemuan" /tmp/kbc.js
+          grep -q "ALUR TUJUAN PEMBELAJARAN BAHASA ARAB" /tmp/arab-print.js
+          grep -q "PAI" /tmp/erl-c.html
+          /tmp/update-copy-order-prod-status.sh "CANDIDATE_VERIFIED_OK $URL"
+
+      - name: Promote candidate to Production
+        shell: bash
+        run: |
+          set -e
+          /tmp/update-copy-order-prod-status.sh "PROMOTING_CANDIDATE $CANDIDATE_URL"
+          vercel promote "$CANDIDATE_URL" --yes --scope "$TEAM_SLUG"
+          sleep 7
+
+      - name: Verify Production and auto-rollback
+        shell: bash
+        run: |
+          set +e
+          verify_prod() {
+            vercel curl "$PROD_DOMAIN/index.html" --scope "$TEAM_SLUG" > /tmp/prod-index.html || return 1
+            vercel curl "$PROD_DOMAIN/copy-order.js" --scope "$TEAM_SLUG" > /tmp/prod-copy-order.js || return 1
+            vercel curl "$PROD_DOMAIN/apps/fase-a/E-Perangkat_matematika_Fase-A/index.html" --scope "$TEAM_SLUG" > /tmp/prod-math-a.html || return 1
+            vercel curl "$PROD_DOMAIN/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/kbc-data.js" --scope "$TEAM_SLUG" > /tmp/prod-kbc.js || return 1
+            vercel curl "$PROD_DOMAIN/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/print.js" --scope "$TEAM_SLUG" > /tmp/prod-print.js || return 1
+            grep -q "location.origin + '/copy-order.js?v=20261016-1'" /tmp/prod-index.html || return 1
+            grep -q "Salin ke Mapel" /tmp/prod-copy-order.js || return 1
+            grep -q "epCopyOrderDialog" /tmp/prod-copy-order.js || return 1
+            grep -q "E-Perangkat Matematika Fase A" /tmp/prod-math-a.html || return 1
+            grep -q "Menyimak–Berbicara" /tmp/prod-kbc.js || return 1
+            grep -q "9 × 40 menit · 3 pertemuan" /tmp/prod-kbc.js || return 1
+            grep -q "ALUR TUJUAN PEMBELAJARAN BAHASA ARAB" /tmp/prod-print.js || return 1
+            return 0
+          }
+
+          if verify_prod; then
+            /tmp/update-copy-order-prod-status.sh "PRODUCTION_VERIFIED_OK $CANDIDATE_URL"
+            exit 0
+          fi
+
+          /tmp/update-copy-order-prod-status.sh "PRODUCTION_VERIFY_FAILED_ROLLING_BACK $PREVIOUS_PROD_DEPLOYMENT"
+          vercel rollback "$PREVIOUS_PROD_DEPLOYMENT" --yes --scope "$TEAM_SLUG"
+          sleep 7
+          vercel curl "$PROD_DOMAIN/index.html" --scope "$TEAM_SLUG" > /tmp/rollback-index.html
+          grep -q "E-Perangkat Online A–F" /tmp/rollback-index.html
+          /tmp/update-copy-order-prod-status.sh "ROLLED_BACK_TO_PREVIOUS_PRODUCTION $PREVIOUS_PROD_DEPLOYMENT"
+          exit 1
