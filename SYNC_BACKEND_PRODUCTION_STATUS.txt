@@ -1,1 +1,1 @@
-PRODUCTION_DEPLOYED https://e-perangkat-online-a-f.vercel.app
+PRODUCTION_SYNC_VERIFIED_OK https://e-perangkat-online-a-f.vercel.app
