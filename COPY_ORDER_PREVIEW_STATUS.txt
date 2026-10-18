@@ -1,1 +1,1 @@
-AUTHENTICATED
+PREVIEW_DEPLOYED https://e-perangkat-online-a-ayn7xwjan-harryindrah3-6239s-projects.vercel.app
