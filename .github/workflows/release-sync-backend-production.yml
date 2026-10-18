@@ -1,0 +1,216 @@
+name: Release Sync Backend to Production
+
+on:
+  push:
+    branches:
+      - fix/sync-backend-20261018
+    paths:
+      - releases/calendar-2026-2027/api/database.js
+      - releases/calendar-2026-2027/vercel.json
+      - .github/workflows/release-sync-backend-production.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: e-perangkat-production-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      RELEASE_DIR: releases/calendar-2026-2027
+      STAGE_DIR: /tmp/e-perangkat-sync-backend
+      STATUS_BRANCH: sync-backend-production-status-20261018
+      TEAM_ID: team_i5YnQIDbBKi8FgTPI0YD6uOu
+      PROJECT_ID: prj_KwCEjkE1OFX3CgBeBEenQcgX3P45
+      TEAM_SLUG: harryindrah3-6239s-projects
+      BASE_SHA: 6df3cc1b2ac382801e6defa3e4a4c44c1532181e
+      PREVIOUS_PROD_URL: https://e-perangkat-online-a-c9j1bwg8l-harryindrah3-6239s-projects.vercel.app
+      PROD_DOMAIN: https://e-perangkat-online-a-f.vercel.app
+      PROD_ALIAS_1: e-perangkat-online-a-f.vercel.app
+      PROD_ALIAS_2: e-perangkat-online-a-f-harryindrah3-6239s-projects.vercel.app
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/sync-backend-20261018
+          fetch-depth: 0
+
+      - name: Prepare status channel
+        shell: bash
+        run: |
+          set -e
+          git config user.name "Sync Backend Production"
+          git config user.email "production@e-perangkat.local"
+          git fetch origin "$STATUS_BRANCH:$STATUS_BRANCH"
+          git worktree add /tmp/sync-backend-status "$STATUS_BRANCH"
+          cat > /tmp/update-sync-status.sh <<'EOS'
+          #!/usr/bin/env bash
+          set -e
+          msg="$1"
+          cd /tmp/sync-backend-status
+          git fetch origin "$STATUS_BRANCH"
+          git reset --hard "origin/$STATUS_BRANCH"
+          printf "%s\n" "$msg" > SYNC_BACKEND_PRODUCTION_STATUS.txt
+          git add SYNC_BACKEND_PRODUCTION_STATUS.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(status): update sync backend production status"
+            git push origin HEAD:"$STATUS_BRANCH" || true
+          fi
+          EOS
+          chmod +x /tmp/update-sync-status.sh
+          /tmp/update-sync-status.sh "VALIDATING_NO_REGRESSION"
+
+      - name: Guard latest Production updates
+        shell: bash
+        run: |
+          set -e
+          changed=$(git diff --name-only "$BASE_SHA"..HEAD -- "$RELEASE_DIR" || true)
+          printf '%s\n' "$changed"
+          while IFS= read -r file; do
+            [ -z "$file" ] && continue
+            case "$file" in
+              "$RELEASE_DIR/api/database.js"|"$RELEASE_DIR/vercel.json") ;;
+              *) echo "Unexpected Production release change: $file"; exit 1 ;;
+            esac
+          done <<< "$changed"
+
+          node <<'NODE'
+          const fs=require('fs');
+          const root='releases/calendar-2026-2027';
+          const v=fs.readFileSync(root+'/vercel.json','utf8');
+          const db=fs.readFileSync(root+'/api/database.js','utf8');
+          if(v.includes('e-perangkat-online-a-fucdkqkuq')) throw new Error('Removed backend proxy is still referenced');
+          if(!db.includes('GOOGLE_APPS_SCRIPT_URL')) throw new Error('Database handler missing Apps Script URL env');
+          if(!db.includes('GOOGLE_APPS_SCRIPT_ACCESS_KEY')) throw new Error('Database handler missing access key env');
+          if(!db.includes('module.exports = async function handler')) throw new Error('Database handler export missing');
+
+          const index=fs.readFileSync(root+'/index.html','utf8');
+          if(!index.includes("const COPY_ORDER = location.origin + '/copy-order.js?v=20261016-1';")) throw new Error('Copy-order Production fix missing');
+          const copy=fs.readFileSync(root+'/copy-order.js','utf8');
+          for(const token of ['Salin ke Mapel','epCopyOrderDialog','Buat Pesanan Salinan']) if(!copy.includes(token)) throw new Error('Copy-order token missing '+token);
+
+          const kbc=fs.readFileSync(root+'/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/kbc-data.js','utf8');
+          const print=fs.readFileSync(root+'/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/print.js','utf8');
+          for(const token of ['Menyimak–Berbicara','Membaca–Memirsa','Menulis–Mempresentasikan','9 × 40 menit · 3 pertemuan','Kurikulum Berbasis Cinta']) if(!kbc.includes(token)) throw new Error('Latest Bahasa Arab KBC update missing '+token);
+          for(const token of ['ALUR TUJUAN PEMBELAJARAN BAHASA ARAB','INDIKATOR KETERCAPAIAN TUJUAN PEMBELAJARAN','LANGKAH PEMBELAJARAN KBC']) if(!print.includes(token)) throw new Error('Latest Bahasa Arab print update missing '+token);
+          console.log('SYNC_BACKEND_NO_REGRESSION_GUARD_PASS');
+          NODE
+          /tmp/update-sync-status.sh "SYNC_BACKEND_NO_REGRESSION_GUARD_PASS"
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Authorize Vercel
+        shell: bash
+        run: |
+          set -e
+          vercel login --github > /tmp/vercel-login.log 2>&1 &
+          PID=$!
+          LOGIN_URL=""
+          for i in $(seq 1 120); do
+            LOGIN_URL=$(grep -Eo 'https://vercel.com/oauth/device\?user_code=[A-Z0-9-]+' /tmp/vercel-login.log | tail -1 || true)
+            if [ -n "$LOGIN_URL" ]; then break; fi
+            if ! kill -0 "$PID" 2>/dev/null; then break; fi
+            sleep 2
+          done
+          if [ -z "$LOGIN_URL" ]; then
+            cat /tmp/vercel-login.log
+            /tmp/update-sync-status.sh "LOGIN_URL_NOT_FOUND"
+            exit 1
+          fi
+          /tmp/update-sync-status.sh "AUTHORIZE $LOGIN_URL"
+          wait "$PID"
+          vercel whoami
+          /tmp/update-sync-status.sh "AUTHENTICATED"
+
+      - name: Stage exact current release plus local API
+        shell: bash
+        run: |
+          set -e
+          rm -rf "$STAGE_DIR"
+          cp -a "$RELEASE_DIR" "$STAGE_DIR"
+          mkdir -p "$STAGE_DIR/.vercel"
+          printf '{"orgId":"%s","projectId":"%s"}\n' "$TEAM_ID" "$PROJECT_ID" > "$STAGE_DIR/.vercel/project.json"
+          /tmp/update-sync-status.sh "STAGED_EXACT_CURRENT_RELEASE_PLUS_LOCAL_API"
+
+      - name: Deploy and verify Preview candidate
+        shell: bash
+        run: |
+          set -e
+          PREVIEW_URL=$(vercel deploy --yes --scope "$TEAM_SLUG" --cwd "$STAGE_DIR" 2>&1 | tee /tmp/preview.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
+          if [ -z "$PREVIEW_URL" ]; then
+            cat /tmp/preview.log
+            /tmp/update-sync-status.sh "PREVIEW_DEPLOY_FAILED"
+            exit 1
+          fi
+          echo "PREVIEW_URL=$PREVIEW_URL" >> "$GITHUB_ENV"
+          /tmp/update-sync-status.sh "PREVIEW_DEPLOYED $PREVIEW_URL"
+          sleep 5
+
+          vercel curl "$PREVIEW_URL/index.html" --scope "$TEAM_SLUG" > /tmp/index.html
+          vercel curl "$PREVIEW_URL/copy-order.js" --scope "$TEAM_SLUG" > /tmp/copy-order.js
+          vercel curl "$PREVIEW_URL/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/kbc-data.js" --scope "$TEAM_SLUG" > /tmp/kbc.js
+          vercel curl "$PREVIEW_URL/api/database?action=ping" --scope "$TEAM_SLUG" > /tmp/ping.txt 2>/tmp/ping.err || true
+
+          grep -q "location.origin + '/copy-order.js?v=20261016-1'" /tmp/index.html
+          grep -q "Salin ke Mapel" /tmp/copy-order.js
+          grep -q "Menyimak–Berbicara" /tmp/kbc.js
+          ! grep -q "The deployment has been removed" /tmp/ping.txt
+          ! grep -q "GONE" /tmp/ping.txt
+          /tmp/update-sync-status.sh "PREVIEW_LOCAL_API_PRESENT $PREVIEW_URL"
+
+      - name: Deploy Production with Production environment
+        shell: bash
+        run: |
+          set -e
+          /tmp/update-sync-status.sh "DEPLOYING_PRODUCTION_WITH_LOCAL_API"
+          PROD_URL=$(vercel deploy --prod --yes --scope "$TEAM_SLUG" --cwd "$STAGE_DIR" 2>&1 | tee /tmp/prod.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
+          if [ -z "$PROD_URL" ]; then
+            cat /tmp/prod.log
+            /tmp/update-sync-status.sh "PRODUCTION_DEPLOY_FAILED"
+            exit 1
+          fi
+          echo "PROD_URL=$PROD_URL" >> "$GITHUB_ENV"
+          /tmp/update-sync-status.sh "PRODUCTION_DEPLOYED $PROD_URL"
+          sleep 8
+
+      - name: Verify database sync and latest features
+        shell: bash
+        run: |
+          set +e
+          verify_prod() {
+            curl -fsS "$PROD_DOMAIN/api/database?action=ping" > /tmp/prod-ping.json || return 1
+            grep -q '"ok"[[:space:]]*:[[:space:]]*true' /tmp/prod-ping.json || return 1
+
+            curl -fsS "$PROD_DOMAIN/index.html" > /tmp/prod-index.html || return 1
+            curl -fsS "$PROD_DOMAIN/copy-order.js" > /tmp/prod-copy.js || return 1
+            curl -fsS "$PROD_DOMAIN/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/kbc-data.js" > /tmp/prod-kbc.js || return 1
+            curl -fsS "$PROD_DOMAIN/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/print.js" > /tmp/prod-print.js || return 1
+
+            grep -q "location.origin + '/copy-order.js?v=20261016-1'" /tmp/prod-index.html || return 1
+            grep -q "Salin ke Mapel" /tmp/prod-copy.js || return 1
+            grep -q "epCopyOrderDialog" /tmp/prod-copy.js || return 1
+            grep -q "Menyimak–Berbicara" /tmp/prod-kbc.js || return 1
+            grep -q "9 × 40 menit · 3 pertemuan" /tmp/prod-kbc.js || return 1
+            grep -q "ALUR TUJUAN PEMBELAJARAN BAHASA ARAB" /tmp/prod-print.js || return 1
+            return 0
+          }
+
+          if verify_prod; then
+            /tmp/update-sync-status.sh "PRODUCTION_SYNC_VERIFIED_OK $PROD_URL"
+            exit 0
+          fi
+
+          /tmp/update-sync-status.sh "PRODUCTION_VERIFY_FAILED_RESTORING_PREVIOUS_ALIAS"
+          vercel alias set "$PREVIOUS_PROD_URL" "$PROD_ALIAS_1" --scope "$TEAM_SLUG"
+          vercel alias set "$PREVIOUS_PROD_URL" "$PROD_ALIAS_2" --scope "$TEAM_SLUG"
+          sleep 6
+          curl -fsS "$PROD_DOMAIN/index.html" > /tmp/restored-index.html
+          grep -q "E-Perangkat Online A–F" /tmp/restored-index.html
+          /tmp/update-sync-status.sh "RESTORED_PREVIOUS_PRODUCTION $PREVIOUS_PROD_URL"
+          exit 1
