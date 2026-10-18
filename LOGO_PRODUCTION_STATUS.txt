@@ -1,1 +1,1 @@
-STAGED_LOGO_PATCH
+PREVIEW_DEPLOYED https://e-perangkat-online-a-2sj8dnfdr-harryindrah3-6239s-projects.vercel.app
