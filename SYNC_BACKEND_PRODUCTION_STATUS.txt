@@ -1,1 +1,1 @@
-AUTHORIZE https://vercel.com/oauth/device?user_code=XMGH-ZNGS
+VALIDATING_NO_REGRESSION
