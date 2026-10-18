@@ -1,0 +1,215 @@
+name: Release Logo Runtime to Production
+
+on:
+  push:
+    branches:
+      - fix/logo-runtime-20261018
+    paths:
+      - releases/calendar-2026-2027/index.html
+      - releases/calendar-2026-2027/logo-fix.js
+      - .github/workflows/release-logo-production.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: e-perangkat-production-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      RELEASE_DIR: releases/calendar-2026-2027
+      STAGE_DIR: /tmp/e-perangkat-logo-runtime
+      STATUS_BRANCH: logo-production-status-20261018
+      TEAM_ID: team_i5YnQIDbBKi8FgTPI0YD6uOu
+      PROJECT_ID: prj_KwCEjkE1OFX3CgBeBEenQcgX3P45
+      TEAM_SLUG: harryindrah3-6239s-projects
+      BASE_SHA: ccce63a7663382ac1328fc29fd17672cc87971b9
+      PREVIOUS_PROD_URL: https://e-perangkat-online-a-pbp9t4iza-harryindrah3-6239s-projects.vercel.app
+      PROD_DOMAIN: https://e-perangkat-online-a-f.vercel.app
+      PROD_ALIAS_1: e-perangkat-online-a-f.vercel.app
+      PROD_ALIAS_2: e-perangkat-online-a-f-harryindrah3-6239s-projects.vercel.app
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/logo-runtime-20261018
+          fetch-depth: 0
+
+      - name: Prepare status channel
+        shell: bash
+        run: |
+          set -e
+          git config user.name "Logo Runtime Production"
+          git config user.email "production@e-perangkat.local"
+          git fetch origin "$STATUS_BRANCH:$STATUS_BRANCH"
+          git worktree add /tmp/logo-production-status "$STATUS_BRANCH"
+          cat > /tmp/update-logo-status.sh <<'EOS'
+          #!/usr/bin/env bash
+          set -e
+          msg="$1"
+          cd /tmp/logo-production-status
+          git fetch origin "$STATUS_BRANCH"
+          git reset --hard "origin/$STATUS_BRANCH"
+          printf "%s\n" "$msg" > LOGO_PRODUCTION_STATUS.txt
+          git add LOGO_PRODUCTION_STATUS.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(status): update logo production status"
+            git push origin HEAD:"$STATUS_BRANCH" || true
+          fi
+          EOS
+          chmod +x /tmp/update-logo-status.sh
+          /tmp/update-logo-status.sh "VALIDATING_LOGO_PATCH"
+
+      - name: Guard minimal logo-only patch and latest updates
+        shell: bash
+        run: |
+          set -e
+          changed=$(git diff --name-only "$BASE_SHA"..HEAD -- "$RELEASE_DIR" || true)
+          printf '%s\n' "$changed"
+          while IFS= read -r file; do
+            [ -z "$file" ] && continue
+            case "$file" in
+              "$RELEASE_DIR/index.html"|"$RELEASE_DIR/logo-fix.js") ;;
+              *) echo "Unexpected Production release change: $file"; exit 1 ;;
+            esac
+          done <<< "$changed"
+
+          num=$(git diff --numstat "$BASE_SHA"..HEAD -- "$RELEASE_DIR/index.html" | awk '{print $1":"$2}')
+          [ "$num" = "1:1" ] || { echo "index.html logo loader change is not exactly 1 line replaced: $num"; exit 1; }
+
+          node <<'NODE'
+          const fs=require('fs');
+          const root='releases/calendar-2026-2027';
+          const index=fs.readFileSync(root+'/index.html','utf8');
+          const logo=fs.readFileSync(root+'/logo-fix.js','utf8');
+          const known=fs.readFileSync(root+'/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/latest-runtime/logo-fix.js','utf8');
+
+          if(!index.includes("const LOGO_FIX = location.origin + '/logo-fix.js?v=20261018-1';")) throw new Error('Local LOGO_FIX loader missing');
+          if(index.includes("const LOGO_FIX = OLD_RUNTIME + '/logo-fix.js")) throw new Error('Old broken logo loader still active');
+          if(logo!==known) throw new Error('Root logo-fix.js differs from known-good runtime');
+          for(const token of ["'logo-buol.png': 'data:image/png;base64","'tut-wuri-handayani.png': 'data:image/png;base64","/assets/logos/"]) {
+            if(!logo.includes(token)) throw new Error('Logo runtime token missing '+token);
+          }
+
+          if(!index.includes("const COPY_ORDER = location.origin + '/copy-order.js?v=20261016-1';")) throw new Error('Copy-order fix missing');
+          const copy=fs.readFileSync(root+'/copy-order.js','utf8');
+          for(const token of ['Salin ke Mapel','epCopyOrderDialog','Buat Pesanan Salinan']) if(!copy.includes(token)) throw new Error('Copy-order token missing '+token);
+
+          const db=fs.readFileSync(root+'/api/database.js','utf8');
+          const v=fs.readFileSync(root+'/vercel.json','utf8');
+          if(v.includes('e-perangkat-online-a-fucdkqkuq')) throw new Error('Removed database backend proxy returned');
+          if(!db.includes('GOOGLE_APPS_SCRIPT_URL') || !db.includes('GOOGLE_APPS_SCRIPT_ACCESS_KEY')) throw new Error('Local database API missing');
+
+          const kbc=fs.readFileSync(root+'/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/kbc-data.js','utf8');
+          const print=fs.readFileSync(root+'/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/print.js','utf8');
+          for(const token of ['Menyimak–Berbicara','Membaca–Memirsa','Menulis–Mempresentasikan','9 × 40 menit · 3 pertemuan','Kurikulum Berbasis Cinta']) if(!kbc.includes(token)) throw new Error('Latest KBC token missing '+token);
+          for(const token of ['ALUR TUJUAN PEMBELAJARAN BAHASA ARAB','INDIKATOR KETERCAPAIAN TUJUAN PEMBELAJARAN','LANGKAH PEMBELAJARAN KBC']) if(!print.includes(token)) throw new Error('Latest print token missing '+token);
+
+          console.log('LOGO_NO_REGRESSION_GUARD_PASS');
+          NODE
+          /tmp/update-logo-status.sh "LOGO_NO_REGRESSION_GUARD_PASS"
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Verify Vercel token
+        shell: bash
+        run: |
+          set -e
+          test -n "$VERCEL_TOKEN"
+          vercel whoami
+          /tmp/update-logo-status.sh "AUTHENTICATED_WITH_TOKEN"
+
+      - name: Stage exact current release plus local logo runtime
+        shell: bash
+        run: |
+          set -e
+          rm -rf "$STAGE_DIR"
+          cp -a "$RELEASE_DIR" "$STAGE_DIR"
+          mkdir -p "$STAGE_DIR/.vercel"
+          printf '{"orgId":"%s","projectId":"%s"}\n' "$TEAM_ID" "$PROJECT_ID" > "$STAGE_DIR/.vercel/project.json"
+          /tmp/update-logo-status.sh "STAGED_LOGO_PATCH"
+
+      - name: Deploy and verify Preview candidate
+        shell: bash
+        run: |
+          set -e
+          PREVIEW_URL=$(vercel deploy --yes --scope "$TEAM_SLUG" --cwd "$STAGE_DIR" 2>&1 | tee /tmp/preview.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
+          if [ -z "$PREVIEW_URL" ]; then
+            cat /tmp/preview.log
+            /tmp/update-logo-status.sh "PREVIEW_DEPLOY_FAILED"
+            exit 1
+          fi
+          echo "PREVIEW_URL=$PREVIEW_URL" >> "$GITHUB_ENV"
+          /tmp/update-logo-status.sh "PREVIEW_DEPLOYED $PREVIEW_URL"
+          sleep 5
+
+          vercel curl "$PREVIEW_URL/index.html" --scope "$TEAM_SLUG" > /tmp/index.html
+          vercel curl "$PREVIEW_URL/logo-fix.js" --scope "$TEAM_SLUG" > /tmp/logo-fix.js
+          vercel curl "$PREVIEW_URL/copy-order.js" --scope "$TEAM_SLUG" > /tmp/copy-order.js
+          vercel curl "$PREVIEW_URL/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/kbc-data.js" --scope "$TEAM_SLUG" > /tmp/kbc.js
+
+          grep -q "location.origin + '/logo-fix.js?v=20261018-1'" /tmp/index.html
+          grep -q "'logo-buol.png': 'data:image/png;base64" /tmp/logo-fix.js
+          grep -q "'tut-wuri-handayani.png': 'data:image/png;base64" /tmp/logo-fix.js
+          grep -q "Salin ke Mapel" /tmp/copy-order.js
+          grep -q "Menyimak–Berbicara" /tmp/kbc.js
+          /tmp/update-logo-status.sh "PREVIEW_LOGO_VERIFIED_OK $PREVIEW_URL"
+
+      - name: Deploy Production
+        shell: bash
+        run: |
+          set -e
+          /tmp/update-logo-status.sh "DEPLOYING_PRODUCTION"
+          PROD_URL=$(vercel deploy --prod --yes --scope "$TEAM_SLUG" --cwd "$STAGE_DIR" 2>&1 | tee /tmp/prod.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
+          if [ -z "$PROD_URL" ]; then
+            cat /tmp/prod.log
+            /tmp/update-logo-status.sh "PRODUCTION_DEPLOY_FAILED"
+            exit 1
+          fi
+          echo "PROD_URL=$PROD_URL" >> "$GITHUB_ENV"
+          /tmp/update-logo-status.sh "PRODUCTION_DEPLOYED $PROD_URL"
+          sleep 8
+
+      - name: Verify Production and rollback on failure
+        shell: bash
+        run: |
+          set +e
+          verify_prod() {
+            curl -fsS "$PROD_DOMAIN/index.html" > /tmp/prod-index.html || return 1
+            curl -fsS "$PROD_DOMAIN/logo-fix.js" > /tmp/prod-logo.js || return 1
+            curl -fsS "$PROD_DOMAIN/copy-order.js" > /tmp/prod-copy.js || return 1
+            curl -fsS "$PROD_DOMAIN/api/database?action=ping" > /tmp/prod-ping.json || return 1
+            curl -fsS "$PROD_DOMAIN/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/kbc-data.js" > /tmp/prod-kbc.js || return 1
+            curl -fsS "$PROD_DOMAIN/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/print.js" > /tmp/prod-print.js || return 1
+
+            grep -q "location.origin + '/logo-fix.js?v=20261018-1'" /tmp/prod-index.html || return 1
+            grep -q "'logo-buol.png': 'data:image/png;base64" /tmp/prod-logo.js || return 1
+            grep -q "'tut-wuri-handayani.png': 'data:image/png;base64" /tmp/prod-logo.js || return 1
+            grep -q "Salin ke Mapel" /tmp/prod-copy.js || return 1
+            grep -q '"ok"[[:space:]]*:[[:space:]]*true' /tmp/prod-ping.json || return 1
+            grep -q "Menyimak–Berbicara" /tmp/prod-kbc.js || return 1
+            grep -q "9 × 40 menit · 3 pertemuan" /tmp/prod-kbc.js || return 1
+            grep -q "ALUR TUJUAN PEMBELAJARAN BAHASA ARAB" /tmp/prod-print.js || return 1
+            return 0
+          }
+
+          if verify_prod; then
+            /tmp/update-logo-status.sh "PRODUCTION_LOGO_VERIFIED_OK $PROD_URL"
+            exit 0
+          fi
+
+          /tmp/update-logo-status.sh "PRODUCTION_VERIFY_FAILED_RESTORING_PREVIOUS"
+          vercel alias set "$PREVIOUS_PROD_URL" "$PROD_ALIAS_1" --scope "$TEAM_SLUG"
+          vercel alias set "$PREVIOUS_PROD_URL" "$PROD_ALIAS_2" --scope "$TEAM_SLUG"
+          sleep 6
+          curl -fsS "$PROD_DOMAIN/index.html" > /tmp/restored-index.html
+          grep -q "E-Perangkat Online A–F" /tmp/restored-index.html
+          /tmp/update-logo-status.sh "RESTORED_PREVIOUS_PRODUCTION $PREVIOUS_PROD_URL"
+          exit 1
