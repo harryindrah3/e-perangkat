@@ -57,7 +57,7 @@ function installStorageIsolation(doc){
   addInline(doc,code,"ep-erlangga-storage-isolation",true);
 }
 function installLegacyEnhancements(doc){
-  addScript(doc,LOGO_FIX,"ep-logo-fix-loader");
+  addScript(doc,LOGO_FIX,"ep-logo-fix-loader");addScript(doc,location.origin+"/erlangga-subject-name-fix.js?v=20261108-1","ep-erlangga-subject-name-fix");
   addScript(doc,GRADE_ONE_COVER,"ep-grade-one-cover-loader");
   addScript(doc,PROMES_FIX,"ep-promes-fix-loader");
   addInline(doc,`(()=>{if(window.__epOrderToolsTimer)return;let checks=0;window.__epOrderToolsTimer=setInterval(()=>{const newOrder=document.getElementById('newOrder');if(newOrder&&!document.getElementById('teacherClassOrder')){const a=document.createElement('a');a.id='teacherClassOrder';a.className='button primary';a.href='/pesanan-guru-kelas';a.textContent='+ Guru Kelas';a.title='Isi identitas sekali untuk banyak mapel';newOrder.parentNode?.insertBefore(a,newOrder)}if(window.EPERANGKAT_CATALOG?.apps?.length&&window.PortalSync&&document.body&&!document.getElementById('epCopyOrderDialog')&&!document.getElementById('ep-copy-order-loader')){const s=document.createElement('script');s.id='ep-copy-order-loader';s.src=${JSON.stringify(COPY_ORDER)};document.body.appendChild(s)}if(document.getElementById('teacherClassOrder')&&document.getElementById('epCopyOrderDialog')){clearInterval(window.__epOrderToolsTimer);window.__epOrderToolsTimer=null}else if(++checks>1200){clearInterval(window.__epOrderToolsTimer);window.__epOrderToolsTimer=null}},50)})();`,"ep-order-tools-bootstrap");
