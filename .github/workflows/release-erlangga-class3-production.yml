@@ -1,0 +1,239 @@
+name: Release Erlangga Class III to Production
+
+on:
+  push:
+    branches:
+      - fix/erlangga-class3-20261107
+    paths:
+      - releases/calendar-2026-2027/catalog-erlangga.js
+      - releases/calendar-2026-2027/apps/fase-b/E-Perangkat_bahasa-indonesia-erlangga_Fase-B/**
+      - releases/calendar-2026-2027/apps/fase-b/E-Perangkat_ipas-erlangga_Fase-B/**
+      - releases/calendar-2026-2027/apps/fase-b/E-Perangkat_matematika-erlangga_Fase-B/**
+      - releases/calendar-2026-2027/apps/fase-b/E-Perangkat_pendidikan-pancasila-erlangga_Fase-B/**
+      - releases/calendar-2026-2027/apps/fase-b/E-Perangkat_seni-budaya-erlangga_Fase-B/**
+      - .github/workflows/release-erlangga-class3-production.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: e-perangkat-production-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      RELEASE_DIR: releases/calendar-2026-2027
+      STAGE_DIR: /tmp/e-perangkat-erlangga-class3
+      STATUS_BRANCH: erlangga-class3-production-status-20261107
+      TEAM_ID: team_i5YnQIDbBKi8FgTPI0YD6uOu
+      PROJECT_ID: prj_KwCEjkE1OFX3CgBeBEenQcgX3P45
+      TEAM_SLUG: harryindrah3-6239s-projects
+      BASE_SHA: 0bc64365f92da751d331fca6fbf4f8e343c68115
+      PREVIOUS_PROD_URL: https://e-perangkat-online-a-p2xbw74qb-harryindrah3-6239s-projects.vercel.app
+      PROD_DOMAIN: https://e-perangkat-online-a-f.vercel.app
+      PROD_ALIAS_1: e-perangkat-online-a-f.vercel.app
+      PROD_ALIAS_2: e-perangkat-online-a-f-harryindrah3-6239s-projects.vercel.app
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/erlangga-class3-20261107
+          fetch-depth: 0
+
+      - name: Prepare status channel
+        shell: bash
+        run: |
+          set -e
+          git config user.name "Erlangga Class III Production"
+          git config user.email "production@e-perangkat.local"
+          git fetch origin "$STATUS_BRANCH:$STATUS_BRANCH"
+          git worktree add /tmp/erlangga-class3-status "$STATUS_BRANCH"
+          cat > /tmp/update-status.sh <<'EOS'
+          #!/usr/bin/env bash
+          set -e
+          msg="$1"
+          cd /tmp/erlangga-class3-status
+          git fetch origin "$STATUS_BRANCH"
+          git reset --hard "origin/$STATUS_BRANCH"
+          printf "%s\n" "$msg" > ERLANGGA_CLASS3_PRODUCTION_STATUS.txt
+          git add ERLANGGA_CLASS3_PRODUCTION_STATUS.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(status): update Erlangga Class III production status"
+            git push origin HEAD:"$STATUS_BRANCH" || true
+          fi
+          EOS
+          chmod +x /tmp/update-status.sh
+          /tmp/update-status.sh "VALIDATING_ERLANGGA_CLASS3"
+
+      - name: Guard new variants and existing Production fixes
+        shell: bash
+        run: |
+          set -e
+          changed=$(git diff --name-only "$BASE_SHA"..HEAD -- "$RELEASE_DIR" || true)
+          printf '%s\n' "$changed"
+          while IFS= read -r file; do
+            [ -z "$file" ] && continue
+            case "$file" in
+              "$RELEASE_DIR/catalog-erlangga.js") ;;
+              "$RELEASE_DIR/apps/fase-b/E-Perangkat_bahasa-indonesia-erlangga_Fase-B/"*) ;;
+              "$RELEASE_DIR/apps/fase-b/E-Perangkat_ipas-erlangga_Fase-B/"*) ;;
+              "$RELEASE_DIR/apps/fase-b/E-Perangkat_matematika-erlangga_Fase-B/"*) ;;
+              "$RELEASE_DIR/apps/fase-b/E-Perangkat_pendidikan-pancasila-erlangga_Fase-B/"*) ;;
+              "$RELEASE_DIR/apps/fase-b/E-Perangkat_seni-budaya-erlangga_Fase-B/"*) ;;
+              *) echo "Unexpected release change: $file"; exit 1 ;;
+            esac
+          done <<< "$changed"
+
+          node <<'NODE'
+          const fs=require('fs');
+          const root='releases/calendar-2026-2027';
+          const expected={
+            'bahasa-indonesia-erlangga':[
+              'Makhluk Hidup di Bumi','Merawat Hewan dan Tumbuhan','Benda-Benda Penunjang Kehidupan',
+              'Kewajiban dan Hak Setiap Individu','Fenomena Alam di Sekitarku','Bangga Menjadi Anggota Pramuka'
+            ],
+            'ipas-erlangga':[
+              'Pancaindra Manusia','Keluarga dan Tradisi Budaya','Perkembangan Manusia dan Kehidupan Bermasyarakat',
+              'Siklus Hidup Makhluk Hidup dan Perubahan Alam','Kebutuhan, Keinginan, dan Uang','Energi di Sekitar Kita',
+              'Lingkungan Sekitarku','Wujud Benda di Sekitar Kita'
+            ],
+            'matematika-erlangga':['Bilangan Cacah sampai 1.000','Kalimat Matematika','Pengukuran Panjang dan Berat','Unsur-Unsur Bangun Datar','Penyajian Data dalam Tabel'],
+            'pendidikan-pancasila-erlangga':['Ayo, Memahami Makna Pancasila','Kewajiban dan Hak dalam Melaksanakan Aturan','Ayo, Menghargai Perbedaan','Persatuan dan Kesatuan di Lingkungan Sekitar'],
+            'seni-budaya-erlangga':['Seni Rupa: Menggambar dan Seni Dekorasi','Seni Musik: Unsur-Unsur Seni Musik','Seni Tari: Gerak Tari dan Maknanya','Seni Teater: Menirukan Karakter','Seni Rupa: Memanfaatkan Bahan Bekas','Seni Musik: Dinamika dan Lagu','Seni Tari: Bercerita Melalui Tarian','Seni Teater: Bermain Peran Berdasarkan Fabel dan Cerita']
+          };
+          for(const [slug,titles] of Object.entries(expected)){
+            const dir=root+'/apps/fase-b/E-Perangkat_'+slug+'_Fase-B';
+            for(const file of ['data.js','index.html','print.html']) if(!fs.existsSync(dir+'/'+file)) throw new Error('Missing '+dir+'/'+file);
+            const raw=fs.readFileSync(dir+'/data.js','utf8').replace(/^window\.EPERANGKAT_DATA=/,'').replace(/;\s*$/,'');
+            const d=JSON.parse(raw);
+            if(JSON.stringify(d.meta.gradeLabels)!=='["III"]') throw new Error(slug+' gradeLabels');
+            if(d.modules.length!==titles.length) throw new Error(slug+' module count');
+            if(JSON.stringify(d.modules.map(x=>x.title))!==JSON.stringify(titles)) throw new Error(slug+' chapter titles');
+            if(d.modules.some(x=>x.grade!=='III'||x.branch!=='Erlangga')) throw new Error(slug+' branch/grade');
+            if((d.chapterPlan?.III||[]).length!==titles.length) throw new Error(slug+' chapterPlan');
+          }
+          const catalog=fs.readFileSync(root+'/catalog-erlangga.js','utf8');
+          for(const slug of Object.keys(expected)) if(!catalog.includes('"slug":"'+slug+'"')) throw new Error('Catalog missing '+slug);
+
+          const index=fs.readFileSync(root+'/index.html','utf8');
+          if(!index.includes("const LOGO_FIX = location.origin + '/logo-fix.js?v=20261018-2';")) throw new Error('Current logo fix missing');
+          if(!index.includes("const COPY_ORDER = location.origin + '/copy-order.js?v=20261016-1';")) throw new Error('Copy-order fix missing');
+
+          const logo=fs.readFileSync(root+'/logo-fix.js','utf8');
+          for(const t of ["'logo-buol.png': 'data:image/png;base64","'tut-wuri-handayani.png': 'data:image/png;base64","'logo-kemenag.png': 'data:image/png;base64"]) if(!logo.includes(t)) throw new Error('Logo token missing '+t);
+          const copy=fs.readFileSync(root+'/copy-order.js','utf8');
+          for(const t of ['Salin ke Mapel','epCopyOrderDialog','Buat Pesanan Salinan']) if(!copy.includes(t)) throw new Error('Copy-order token missing '+t);
+          const db=fs.readFileSync(root+'/api/database.js','utf8');
+          if(!db.includes('GOOGLE_APPS_SCRIPT_URL')||!db.includes('GOOGLE_APPS_SCRIPT_ACCESS_KEY')) throw new Error('Database API missing');
+          const kbc=fs.readFileSync(root+'/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/kbc-data.js','utf8');
+          for(const t of ['Menyimak–Berbicara','Membaca–Memirsa','Kurikulum Berbasis Cinta']) if(!kbc.includes(t)) throw new Error('KBC regression '+t);
+          console.log('ERLANGGA_CLASS3_NO_REGRESSION_GUARD_PASS');
+          NODE
+          /tmp/update-status.sh "ERLANGGA_CLASS3_NO_REGRESSION_GUARD_PASS"
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Verify Vercel token
+        shell: bash
+        run: |
+          set -e
+          test -n "$VERCEL_TOKEN"
+          vercel whoami
+          /tmp/update-status.sh "AUTHENTICATED_WITH_TOKEN"
+
+      - name: Stage exact release
+        shell: bash
+        run: |
+          set -e
+          rm -rf "$STAGE_DIR"
+          cp -a "$RELEASE_DIR" "$STAGE_DIR"
+          mkdir -p "$STAGE_DIR/.vercel"
+          printf '{"orgId":"%s","projectId":"%s"}\n' "$TEAM_ID" "$PROJECT_ID" > "$STAGE_DIR/.vercel/project.json"
+          /tmp/update-status.sh "STAGED_ERLANGGA_CLASS3"
+
+      - name: Deploy and verify Preview
+        shell: bash
+        run: |
+          set -e
+          PREVIEW_URL=$(vercel deploy --yes --scope "$TEAM_SLUG" --cwd "$STAGE_DIR" 2>&1 | tee /tmp/preview.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
+          if [ -z "$PREVIEW_URL" ]; then
+            cat /tmp/preview.log
+            /tmp/update-status.sh "PREVIEW_DEPLOY_FAILED"
+            exit 1
+          fi
+          echo "PREVIEW_URL=$PREVIEW_URL" >> "$GITHUB_ENV"
+          /tmp/update-status.sh "PREVIEW_DEPLOYED $PREVIEW_URL"
+          sleep 6
+
+          vercel curl "$PREVIEW_URL/catalog-erlangga.js" --scope "$TEAM_SLUG" > /tmp/catalog.js
+          for slug in bahasa-indonesia-erlangga ipas-erlangga matematika-erlangga pendidikan-pancasila-erlangga seni-budaya-erlangga; do
+            base="$PREVIEW_URL/apps/fase-b/E-Perangkat_${slug}_Fase-B"
+            vercel curl "$base/index.html" --scope "$TEAM_SLUG" > "/tmp/${slug}-index.html"
+            vercel curl "$base/data.js" --scope "$TEAM_SLUG" > "/tmp/${slug}-data.js"
+            grep -q "Versi Erlangga Kelas 3" "/tmp/${slug}-index.html"
+            grep -q '"gradeLabels":\["III"\]' "/tmp/${slug}-data.js"
+            grep -q '"branch":"Erlangga"' "/tmp/${slug}-data.js"
+            grep -q "\"slug\":\"${slug}\"" /tmp/catalog.js
+          done
+          /tmp/update-status.sh "PREVIEW_ERLANGGA_CLASS3_VERIFIED_OK $PREVIEW_URL"
+
+      - name: Deploy Production
+        shell: bash
+        run: |
+          set -e
+          /tmp/update-status.sh "DEPLOYING_PRODUCTION"
+          PROD_URL=$(vercel deploy --prod --yes --scope "$TEAM_SLUG" --cwd "$STAGE_DIR" 2>&1 | tee /tmp/prod.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
+          if [ -z "$PROD_URL" ]; then
+            cat /tmp/prod.log
+            /tmp/update-status.sh "PRODUCTION_DEPLOY_FAILED"
+            exit 1
+          fi
+          echo "PROD_URL=$PROD_URL" >> "$GITHUB_ENV"
+          /tmp/update-status.sh "PRODUCTION_DEPLOYED $PROD_URL"
+          sleep 10
+
+      - name: Verify Production and rollback on failure
+        shell: bash
+        run: |
+          set +e
+          verify_prod() {
+            curl -fsS "$PROD_DOMAIN/catalog-erlangga.js" > /tmp/prod-catalog.js || return 1
+            for slug in bahasa-indonesia-erlangga ipas-erlangga matematika-erlangga pendidikan-pancasila-erlangga seni-budaya-erlangga; do
+              base="$PROD_DOMAIN/apps/fase-b/E-Perangkat_${slug}_Fase-B"
+              curl -fsS "$base/index.html" > "/tmp/prod-${slug}-index.html" || return 1
+              curl -fsS "$base/data.js" > "/tmp/prod-${slug}-data.js" || return 1
+              grep -q "Versi Erlangga Kelas 3" "/tmp/prod-${slug}-index.html" || return 1
+              grep -q '"gradeLabels":\["III"\]' "/tmp/prod-${slug}-data.js" || return 1
+              grep -q "\"slug\":\"${slug}\"" /tmp/prod-catalog.js || return 1
+            done
+
+            curl -fsS "$PROD_DOMAIN/logo-fix.js" > /tmp/prod-logo.js || return 1
+            grep -q "'logo-kemenag.png': 'data:image/png;base64" /tmp/prod-logo.js || return 1
+            curl -fsS "$PROD_DOMAIN/copy-order.js" > /tmp/prod-copy.js || return 1
+            grep -q "Salin ke Mapel" /tmp/prod-copy.js || return 1
+            curl -fsS "$PROD_DOMAIN/api/database?action=ping" > /tmp/prod-ping.json || return 1
+            grep -q '"ok"[[:space:]]*:[[:space:]]*true' /tmp/prod-ping.json || return 1
+            curl -fsS "$PROD_DOMAIN/apps/fase-d/E-Perangkat_bahasa-arab_Fase-D/assets/kbc-data.js" > /tmp/prod-kbc.js || return 1
+            grep -q "Kurikulum Berbasis Cinta" /tmp/prod-kbc.js || return 1
+            return 0
+          }
+
+          if verify_prod; then
+            /tmp/update-status.sh "PRODUCTION_ERLANGGA_CLASS3_VERIFIED_OK $PROD_URL"
+            exit 0
+          fi
+
+          /tmp/update-status.sh "PRODUCTION_VERIFY_FAILED_RESTORING_PREVIOUS"
+          vercel alias set "$PREVIOUS_PROD_URL" "$PROD_ALIAS_1" --scope "$TEAM_SLUG"
+          vercel alias set "$PREVIOUS_PROD_URL" "$PROD_ALIAS_2" --scope "$TEAM_SLUG"
+          sleep 6
+          curl -fsS "$PROD_DOMAIN/index.html" > /tmp/restored-index.html
+          grep -q "E-Perangkat Online A–F" /tmp/restored-index.html
+          /tmp/update-status.sh "RESTORED_PREVIOUS_PRODUCTION $PREVIOUS_PROD_URL"
+          exit 1
