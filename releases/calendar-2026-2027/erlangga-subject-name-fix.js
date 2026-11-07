@@ -1,6 +1,9 @@
 (()=>{"use strict";
 const path=location.pathname;
 const variants=[
+  {needle:"E-Perangkat_pendidikan-agama-islam-erlangga_Fase-A",canonical:"Pendidikan Agama Islam dan Budi Pekerti",brand:"PAI BP Erlangga · Fase A",heroFrom:"Perangkat PAIBP",heroTo:"Perangkat Pendidikan Agama Islam dan Budi Pekerti"},
+  {needle:"E-Perangkat_pendidikan-agama-islam-erlangga_Fase-B",canonical:"Pendidikan Agama Islam dan Budi Pekerti",brand:"PAI BP Erlangga · Fase B",heroFrom:"Perangkat PAIBP",heroTo:"Perangkat Pendidikan Agama Islam dan Budi Pekerti"},
+  {needle:"E-Perangkat_pendidikan-agama-islam-erlangga_Fase-C",canonical:"Pendidikan Agama Islam dan Budi Pekerti",brand:"PAI BP Erlangga · Fase C",heroFrom:"Perangkat PAIBP",heroTo:"Perangkat Pendidikan Agama Islam dan Budi Pekerti"},
   {needle:"E-Perangkat_bahasa-indonesia-erlangga_Fase-B",canonical:"Bahasa Indonesia",brand:"Bahasa Indonesia Erlangga · Kelas III",heroFrom:"Perangkat B. Indonesia",heroTo:"Perangkat Bahasa Indonesia"},
   {needle:"E-Perangkat_ipas-erlangga_Fase-B",canonical:"Ilmu Pengetahuan Alam dan Sosial (IPAS)",brand:"IPAS Erlangga · Kelas III",heroFrom:"Perangkat IPAS",heroTo:"Perangkat Ilmu Pengetahuan Alam dan Sosial (IPAS)"},
   {needle:"E-Perangkat_matematika-erlangga_Fase-B",canonical:"Matematika",brand:"Matematika Erlangga · Kelas III",heroFrom:"Perangkat Matematika",heroTo:"Perangkat Matematika"},
