@@ -908,5 +908,55 @@
     ],
     "appPath": "/apps/fase-c/E-Perangkat_pendidikan-agama-islam-erlangga_Fase-C",
     "storageKey": "eperangkat.pendidikan-agama-islam-erlangga.fasec.v1.orders"
+  },
+  {
+    "id": "fase-b-bahasa-indonesia-erlangga-kelas-3",
+    "subject": "Bahasa Indonesia Versi Erlangga",
+    "phase": "B",
+    "classes": [
+      "III"
+    ],
+    "appPath": "/apps/fase-b/E-Perangkat_bahasa-indonesia-erlangga_Fase-B",
+    "storageKey": "eperangkat.bahasa-indonesia-erlangga.faseb.v1.orders"
+  },
+  {
+    "id": "fase-b-ipas-erlangga-kelas-3",
+    "subject": "Ilmu Pengetahuan Alam dan Sosial (IPAS) Versi Erlangga",
+    "phase": "B",
+    "classes": [
+      "III"
+    ],
+    "appPath": "/apps/fase-b/E-Perangkat_ipas-erlangga_Fase-B",
+    "storageKey": "eperangkat.ipas-erlangga.faseb.v1.orders"
+  },
+  {
+    "id": "fase-b-matematika-erlangga-kelas-3",
+    "subject": "Matematika Versi Erlangga",
+    "phase": "B",
+    "classes": [
+      "III"
+    ],
+    "appPath": "/apps/fase-b/E-Perangkat_matematika-erlangga_Fase-B",
+    "storageKey": "eperangkat.matematika-erlangga.faseb.v1.orders"
+  },
+  {
+    "id": "fase-b-pendidikan-pancasila-erlangga-kelas-3",
+    "subject": "Pendidikan Pancasila Versi Erlangga",
+    "phase": "B",
+    "classes": [
+      "III"
+    ],
+    "appPath": "/apps/fase-b/E-Perangkat_pendidikan-pancasila-erlangga_Fase-B",
+    "storageKey": "eperangkat.pendidikan-pancasila-erlangga.faseb.v1.orders"
+  },
+  {
+    "id": "fase-b-seni-budaya-erlangga-kelas-3",
+    "subject": "Seni Budaya Versi Erlangga",
+    "phase": "B",
+    "classes": [
+      "III"
+    ],
+    "appPath": "/apps/fase-b/E-Perangkat_seni-budaya-erlangga_Fase-B",
+    "storageKey": "eperangkat.seni-budaya-erlangga.faseb.v1.orders"
   }
 ]
