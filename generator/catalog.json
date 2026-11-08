@@ -121,6 +121,16 @@
     "storageKey": "eperangkat.bahasa-inggris.faseb.v1.orders"
   },
   {
+    "id": "fase-b-bahasa-inggris-erlangga-kelas-3",
+    "subject": "Bahasa Inggris Versi Erlangga",
+    "phase": "B",
+    "classes": [
+      "III"
+    ],
+    "appPath": "/apps/fase-b/E-Perangkat_bahasa-inggris-erlangga_Fase-B",
+    "storageKey": "eperangkat.bahasa-inggris-erlangga.faseb.v1.orders"
+  },
+  {
     "id": "fase-c-bahasa-inggris",
     "subject": "Bahasa Inggris",
     "phase": "C",
