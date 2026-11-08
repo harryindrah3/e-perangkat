@@ -38,9 +38,9 @@ function refreshButtons(){
 async function connect() {
   $('connection').textContent='Memeriksa koneksi…';$('connect').disabled=true;
   try {
-    const result=await request('hello',{},1800);connected=result.version.split('.').map(Number).reduce((v,n)=>v*1000+n,0)>=1000004;
+    const result=await request('hello',{},1800);connected=result.version.split('.').map(Number).reduce((v,n)=>v*1000+n,0)>=1000005;
     $('update').hidden=connected;
-    $('connection').textContent='Terhubung · v'+result.version;$('connectionHint').textContent=connected?'Siap membaca pesanan dari Chrome ini.':'Ekstensi v1.0.4 diperlukan; ikuti petunjuk di bawah.';
+    $('connection').textContent='Terhubung · v'+result.version;$('connectionHint').textContent=connected?'Siap membaca pesanan dari Chrome ini.':'Ekstensi v1.0.5 diperlukan; ikuti petunjuk di bawah.';
     $('connection').parentElement.classList.toggle('connected',connected);$('setup').hidden=true;notice('');
   } catch {
     connected=false;$('update').hidden=true;$('connection').textContent='Belum terpasang';$('connectionHint').textContent='Pasang ekstensi pendamping untuk mengunduh PDF.';
