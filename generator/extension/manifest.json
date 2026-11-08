@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Genarator E-Perangkat",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Unduh PDF E-Perangkat melalui mesin cetak Chrome dengan data, font, dan halaman cetak Production terbaru.",
   "permissions": [
     "tabs",
