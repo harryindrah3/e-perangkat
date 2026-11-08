@@ -1,0 +1,249 @@
+name: Release Erlangga English Class III to Production
+
+on:
+  push:
+    branches:
+      - fix/erlangga-english3-20261108
+    paths:
+      - releases/calendar-2026-2027/catalog-erlangga.js
+      - releases/calendar-2026-2027/erlangga-subject-name-fix.js
+      - releases/calendar-2026-2027/apps/fase-b/E-Perangkat_bahasa-inggris-erlangga_Fase-B/**
+      - .github/workflows/release-erlangga-english3-production.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: e-perangkat-production-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      RELEASE_DIR: releases/calendar-2026-2027
+      STAGE_DIR: /tmp/e-perangkat-erlangga-english3
+      STATUS_BRANCH: erlangga-english3-production-status-20261108
+      TEAM_ID: team_i5YnQIDbBKi8FgTPI0YD6uOu
+      PROJECT_ID: prj_KwCEjkE1OFX3CgBeBEenQcgX3P45
+      TEAM_SLUG: harryindrah3-6239s-projects
+      BASE_SHA: 7656c30d6d9ce73e669ef42ee0037b29cf250483
+      PREVIOUS_PROD_URL: https://e-perangkat-online-a-36mst4qzv-harryindrah3-6239s-projects.vercel.app
+      PROD_DOMAIN: https://e-perangkat-online-a-f.vercel.app
+      PROD_ALIAS_1: e-perangkat-online-a-f.vercel.app
+      PROD_ALIAS_2: e-perangkat-online-a-f-harryindrah3-6239s-projects.vercel.app
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/erlangga-english3-20261108
+          fetch-depth: 0
+
+      - name: Prepare status channel
+        shell: bash
+        run: |
+          set -e
+          git config user.name "Erlangga English Class III Production"
+          git config user.email "production@e-perangkat.local"
+          git fetch origin "$STATUS_BRANCH:$STATUS_BRANCH"
+          git worktree add /tmp/erlangga-english3-status "$STATUS_BRANCH"
+          cat > /tmp/update-status.sh <<'EOS'
+          #!/usr/bin/env bash
+          set -e
+          msg="$1"
+          cd /tmp/erlangga-english3-status
+          git fetch origin "$STATUS_BRANCH"
+          git reset --hard "origin/$STATUS_BRANCH"
+          printf "%s\n" "$msg" > ERLANGGA_ENGLISH3_PRODUCTION_STATUS.txt
+          git add ERLANGGA_ENGLISH3_PRODUCTION_STATUS.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(status): update Erlangga English Class III production status"
+            git push origin HEAD:"$STATUS_BRANCH" || true
+          fi
+          EOS
+          chmod +x /tmp/update-status.sh
+          /tmp/update-status.sh "VALIDATING_ERLANGGA_ENGLISH3"
+
+      - name: Guard English Class III and no regressions
+        shell: bash
+        run: |
+          set -e
+          changed=$(git diff --name-only "$BASE_SHA"..HEAD -- "$RELEASE_DIR" || true)
+          printf '%s\n' "$changed"
+          while IFS= read -r file; do
+            [ -z "$file" ] && continue
+            case "$file" in
+              "$RELEASE_DIR/catalog-erlangga.js"|"$RELEASE_DIR/erlangga-subject-name-fix.js") ;;
+              "$RELEASE_DIR/apps/fase-b/E-Perangkat_bahasa-inggris-erlangga_Fase-B/"*) ;;
+              *) echo "Unexpected Production release change: $file"; exit 1 ;;
+            esac
+          done <<< "$changed"
+
+          node <<'NODE'
+          const fs=require('fs');
+          const root='releases/calendar-2026-2027';
+          const dir=root+'/apps/fase-b/E-Perangkat_bahasa-inggris-erlangga_Fase-B';
+          for(const file of ['data.js','index.html','print.html']) if(!fs.existsSync(dir+'/'+file)) throw new Error('Missing '+file);
+
+          const d=JSON.parse(fs.readFileSync(dir+'/data.js','utf8').replace(/^window\.EPERANGKAT_DATA=/,'').replace(/;\s*$/,''));
+          const titles=[
+            'It’s Nice to See You',
+            'I Like Playing Video Games',
+            'What Time Is It?',
+            'May I Have Juice, Please?',
+            'She’s a Soldier',
+            'What’s Everyone Doing Now?',
+            'I Want Apples and Bananas, Please',
+            'Here Comes the Bus'
+          ];
+          if(d.meta.title!=='E-Perangkat Bahasa Inggris Versi Erlangga Kelas 3 — CP 2026') throw new Error('Title mismatch');
+          if(d.meta.subject!=='Bahasa Inggris (Versi Erlangga)') throw new Error('Subject mismatch');
+          if(d.meta.abbreviation!=='Bahasa Inggris Erlangga') throw new Error('Abbreviation mismatch');
+          if(JSON.stringify(d.meta.gradeLabels)!=='["III"]') throw new Error('gradeLabels mismatch');
+          if(d.modules.length!==8 || d.meta.moduleCount!==8) throw new Error('Module count mismatch');
+          if(JSON.stringify(d.modules.map(x=>x.title))!==JSON.stringify(titles)) throw new Error('Unit titles mismatch');
+          if(d.modules.some(x=>x.grade!=='III'||x.branch!=='Erlangga')) throw new Error('Grade/branch mismatch');
+          if((d.chapterPlan?.III||[]).length!==8) throw new Error('chapterPlan mismatch');
+          if(d.specialSchedule?.oddSemesterJPByGrade?.III!==18) throw new Error('Odd JP mismatch');
+          if(!d.modules[3].assessment.some(x=>String(x).startsWith('Review 1:'))) throw new Error('Review 1 missing');
+          if(!d.modules[7].assessment.some(x=>String(x).startsWith('Review 2:'))) throw new Error('Review 2 missing');
+
+          const idx=fs.readFileSync(dir+'/index.html','utf8');
+          const prt=fs.readFileSync(dir+'/print.html','utf8');
+          for(const s of [idx,prt]){
+            if(!s.includes('E-Perangkat_bahasa-inggris_Fase-B')) throw new Error('Regular English source missing');
+            if(!s.includes('eperangkat.bahasa-inggris-erlangga.faseb.v1')) throw new Error('Storage isolation missing');
+            if(!s.includes('/erlangga-subject-name-fix.js?v=20261108-1')) throw new Error('Subject-name fix missing');
+          }
+
+          const catalog=fs.readFileSync(root+'/catalog-erlangga.js','utf8');
+          if(!catalog.includes('"slug":"bahasa-inggris-erlangga"')) throw new Error('Catalog entry missing');
+          if(!catalog.includes('"subject":"Bahasa Inggris Versi Erlangga"')) throw new Error('Catalog subject mismatch');
+
+          const namefix=fs.readFileSync(root+'/erlangga-subject-name-fix.js','utf8');
+          if(!namefix.includes('E-Perangkat_bahasa-inggris-erlangga_Fase-B')||!namefix.includes('canonical:"Bahasa Inggris"')) throw new Error('Canonical English name fix missing');
+
+          const index=fs.readFileSync(root+'/index.html','utf8');
+          if(!index.includes("const LOGO_FIX = location.origin + '/logo-fix.js?v=20261018-2';")) throw new Error('Logo fix regression');
+          if(!index.includes("const COPY_ORDER = location.origin + '/copy-order.js?v=20261016-1';")) throw new Error('Copy order regression');
+          const db=fs.readFileSync(root+'/api/database.js','utf8');
+          if(!db.includes('GOOGLE_APPS_SCRIPT_URL')||!db.includes('GOOGLE_APPS_SCRIPT_ACCESS_KEY')) throw new Error('Database regression');
+          const logo=fs.readFileSync(root+'/logo-fix.js','utf8');
+          for(const t of ["'logo-buol.png': 'data:image/png;base64","'tut-wuri-handayani.png': 'data:image/png;base64","'logo-kemenag.png': 'data:image/png;base64"]) if(!logo.includes(t)) throw new Error('Logo token missing '+t);
+          const copy=fs.readFileSync(root+'/copy-order.js','utf8');
+          if(!copy.includes('Salin ke Mapel')) throw new Error('Copy-order regression');
+          console.log('ERLANGGA_ENGLISH3_NO_REGRESSION_GUARD_PASS');
+          NODE
+          /tmp/update-status.sh "ERLANGGA_ENGLISH3_NO_REGRESSION_GUARD_PASS"
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Verify Vercel token
+        shell: bash
+        run: |
+          set -e
+          test -n "$VERCEL_TOKEN"
+          vercel whoami
+          /tmp/update-status.sh "AUTHENTICATED_WITH_TOKEN"
+
+      - name: Stage exact release
+        shell: bash
+        run: |
+          set -e
+          rm -rf "$STAGE_DIR"
+          cp -a "$RELEASE_DIR" "$STAGE_DIR"
+          mkdir -p "$STAGE_DIR/.vercel"
+          printf '{"orgId":"%s","projectId":"%s"}\n' "$TEAM_ID" "$PROJECT_ID" > "$STAGE_DIR/.vercel/project.json"
+          /tmp/update-status.sh "STAGED_ERLANGGA_ENGLISH3"
+
+      - name: Deploy and verify Preview
+        shell: bash
+        run: |
+          set -e
+          PREVIEW_URL=$(vercel deploy --yes --scope "$TEAM_SLUG" --cwd "$STAGE_DIR" 2>&1 | tee /tmp/preview.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
+          if [ -z "$PREVIEW_URL" ]; then
+            cat /tmp/preview.log
+            /tmp/update-status.sh "PREVIEW_DEPLOY_FAILED"
+            exit 1
+          fi
+          echo "PREVIEW_URL=$PREVIEW_URL" >> "$GITHUB_ENV"
+          /tmp/update-status.sh "PREVIEW_DEPLOYED $PREVIEW_URL"
+          sleep 6
+
+          BASE="$PREVIEW_URL/apps/fase-b/E-Perangkat_bahasa-inggris-erlangga_Fase-B"
+          vercel curl "$BASE/index.html" --scope "$TEAM_SLUG" > /tmp/index.html
+          vercel curl "$BASE/data.js" --scope "$TEAM_SLUG" > /tmp/data.js
+          vercel curl "$PREVIEW_URL/catalog-erlangga.js" --scope "$TEAM_SLUG" > /tmp/catalog.js
+          vercel curl "$PREVIEW_URL/erlangga-subject-name-fix.js" --scope "$TEAM_SLUG" > /tmp/namefix.js
+
+          grep -q 'Bahasa Inggris Versi Erlangga Kelas 3' /tmp/index.html
+          grep -q '"moduleCount":8' /tmp/data.js
+          grep -q 'It’s Nice to See You' /tmp/data.js
+          grep -q 'Here Comes the Bus' /tmp/data.js
+          grep -q 'Review 1:' /tmp/data.js
+          grep -q 'Review 2:' /tmp/data.js
+          grep -q '"slug":"bahasa-inggris-erlangga"' /tmp/catalog.js
+          grep -q 'canonical:"Bahasa Inggris"' /tmp/namefix.js
+          /tmp/update-status.sh "PREVIEW_ERLANGGA_ENGLISH3_VERIFIED_OK $PREVIEW_URL"
+
+      - name: Deploy Production
+        shell: bash
+        run: |
+          set -e
+          /tmp/update-status.sh "DEPLOYING_PRODUCTION"
+          PROD_URL=$(vercel deploy --prod --yes --scope "$TEAM_SLUG" --cwd "$STAGE_DIR" 2>&1 | tee /tmp/prod.log | grep -Eo 'https://[^ ]+\.vercel\.app' | tail -1)
+          if [ -z "$PROD_URL" ]; then
+            cat /tmp/prod.log
+            /tmp/update-status.sh "PRODUCTION_DEPLOY_FAILED"
+            exit 1
+          fi
+          echo "PROD_URL=$PROD_URL" >> "$GITHUB_ENV"
+          /tmp/update-status.sh "PRODUCTION_DEPLOYED $PROD_URL"
+          sleep 10
+
+      - name: Verify Production and rollback on failure
+        shell: bash
+        run: |
+          set +e
+          verify_prod() {
+            BASE="$PROD_DOMAIN/apps/fase-b/E-Perangkat_bahasa-inggris-erlangga_Fase-B"
+            curl -fsS "$BASE/index.html" > /tmp/prod-index.html || return 1
+            curl -fsS "$BASE/data.js" > /tmp/prod-data.js || return 1
+            curl -fsS "$PROD_DOMAIN/catalog-erlangga.js" > /tmp/prod-catalog.js || return 1
+            curl -fsS "$PROD_DOMAIN/erlangga-subject-name-fix.js" > /tmp/prod-namefix.js || return 1
+
+            grep -q 'Bahasa Inggris Versi Erlangga Kelas 3' /tmp/prod-index.html || return 1
+            grep -q '"moduleCount":8' /tmp/prod-data.js || return 1
+            grep -q 'It’s Nice to See You' /tmp/prod-data.js || return 1
+            grep -q 'Here Comes the Bus' /tmp/prod-data.js || return 1
+            grep -q 'Review 1:' /tmp/prod-data.js || return 1
+            grep -q 'Review 2:' /tmp/prod-data.js || return 1
+            grep -q '"slug":"bahasa-inggris-erlangga"' /tmp/prod-catalog.js || return 1
+            grep -q 'canonical:"Bahasa Inggris"' /tmp/prod-namefix.js || return 1
+
+            curl -fsS "$PROD_DOMAIN/api/database?action=ping" > /tmp/prod-ping.json || return 1
+            grep -q '"ok"[[:space:]]*:[[:space:]]*true' /tmp/prod-ping.json || return 1
+            curl -fsS "$PROD_DOMAIN/logo-fix.js" > /tmp/prod-logo.js || return 1
+            grep -q "'logo-kemenag.png': 'data:image/png;base64" /tmp/prod-logo.js || return 1
+            curl -fsS "$PROD_DOMAIN/copy-order.js" > /tmp/prod-copy.js || return 1
+            grep -q 'Salin ke Mapel' /tmp/prod-copy.js || return 1
+            return 0
+          }
+
+          if verify_prod; then
+            /tmp/update-status.sh "PRODUCTION_ERLANGGA_ENGLISH3_VERIFIED_OK $PROD_URL"
+            exit 0
+          fi
+
+          /tmp/update-status.sh "PRODUCTION_VERIFY_FAILED_RESTORING_PREVIOUS"
+          vercel alias set "$PREVIOUS_PROD_URL" "$PROD_ALIAS_1" --scope "$TEAM_SLUG"
+          vercel alias set "$PREVIOUS_PROD_URL" "$PROD_ALIAS_2" --scope "$TEAM_SLUG"
+          sleep 6
+          curl -fsS "$PROD_DOMAIN/index.html" > /tmp/restored-index.html
+          grep -q "E-Perangkat Online A–F" /tmp/restored-index.html
+          /tmp/update-status.sh "RESTORED_PREVIOUS_PRODUCTION $PREVIOUS_PROD_URL"
+          exit 1
