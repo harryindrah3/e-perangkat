@@ -1,5 +1,5 @@
 'use strict';
-const VERSION='1.0.4';
+const VERSION='1.0.5';
 const DEFAULT_PORTAL='https://e-perangkat-online-a-f.vercel.app';
 let activeJob={cancelled:false,printTabId:null,debuggee:null,generatorTabId:null};
 
@@ -144,7 +144,10 @@ async function generate(id,payload){
       scale:1,marginTop:0,marginBottom:0,marginLeft:0,marginRight:0
     });
     if(!pdf?.data)throw Error('Chrome tidak mengembalikan data PDF.');
-    const filename=sanitize(ready.title||('E-Perangkat '+(app.subject||'')+' Kelas '+payload.grade+' Semester '+payload.semester))+'.pdf';
+    const semester=String(payload.semester||'1').trim();
+    let downloadTitle=ready.title||('E-Perangkat '+(app.subject||'')+' Kelas '+payload.grade);
+    if(!/\bSemester\s*[12]\b/i.test(downloadTitle))downloadTitle+=' - Semester '+semester;
+    const filename=sanitize(downloadTitle)+'.pdf';
     sendProgress(id,'Mengirim PDF ke folder Unduhan…');
     const downloadId=await chrome.downloads.download({url:'data:application/pdf;base64,'+pdf.data,filename,saveAs:false,conflictAction:'uniquify'});
     await waitDownload(downloadId);
