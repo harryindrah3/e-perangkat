@@ -1,0 +1,35 @@
+SUMBER DAN KOREKSI - BAHASA ARAB FASE D
+
+DASAR CP PREVIEW
+Rujukan yang digunakan pada pemetaan preview:
+https://www.mtssmusliminbjp.sch.id/2026/01/cp-bahasa-arab-fase-d-9941-2025.html
+
+Catatan verifikasi:
+- Rujukan tersebut menyebut SK Dirjen Pendis Nomor 9941 Tahun 2025.
+- Dokumen primer resmi Kemenag/JDIH/Sikurma belum diverifikasi secara independen dalam tahap Preview ini.
+- Sebelum masuk Production, dasar regulasi harus diverifikasi dari sumber primer.
+
+BUKU KELAS VII
+https://arabiyyah.id/wp-content/uploads/2022/11/Bahasa-Arab-MTs-Kelas-7.pdf
+Penulis: Faruq Baharudin
+Kemenag RI, 2020
+ISBN 978-623-6687-40-6
+
+BUKU KELAS VIII
+https://arabiyyah.id/wp-content/uploads/2022/11/Bahasa-Arab-MTs-Kelas-8.pdf
+Penulis: Masrukhin
+Kemenag RI, 2020
+ISBN 978-623-6687-41-3
+
+BUKU KELAS IX
+https://arabiyyah.id/wp-content/uploads/2022/11/Bahasa-Arab-MTs-Kelas-9.pdf
+Penulis: Yushi M. Mahmudah
+Kemenag RI, 2020
+ISBN 978-623-6687-42-0
+
+KEBIJAKAN PEMETAAN
+- Struktur 6 bab per kelas dipertahankan dari buku yang dipetakan.
+- Materi, mufradat, fungsi komunikasi, struktur/tarakib, tujuan, aktivitas, dan asesmen mengikuti pemetaan Bahasa Arab pada data.js.
+- KI/KD buku 2020 tidak diperlakukan sebagai regulasi aktif.
+- Alokasi 18 JP/bab masih provisional khusus Preview.
+- Fitur aplikasi mengikuti arsitektur E-Perangkat Production umum; konten tetap Bahasa Arab.

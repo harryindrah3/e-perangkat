@@ -1,0 +1,12 @@
+PERBAIKAN E-PERANGKAT BAHASA ARAB FASE D
+Versi audit parity: 2 Oktober 2026
+
+1. Arsitektur fitur mengacu pada E-Perangkat Production: Kalender Pendidikan, Jadwal Mengajar, CP, ATP, Prota, Promes, Jurnal, Daftar Hadir, KKTP, Modul Ajar, Bahan Ajar, LKPD, Asesmen, Analisis Nilai, Pesanan & Riwayat, Paket Cetak, dan Sumber & Koreksi.
+2. Namespace penyimpanan resmi aplikasi Preview adalah eperangkat.bahasa-arab.fased.v1.
+3. Data preview lama yang sempat tersimpan pada namespace bahasa-inggris dimigrasikan aman ke namespace Bahasa Arab tanpa menghapus data lama.
+4. Kalender Pendidikan multi-tahun, KKTP dari Pesanan & Riwayat, sinkronisasi Analisis Nilai, aktivitas guru/peserta didik rinci, Promes, tanda tangan, dan pipeline cetak mengikuti runtime Production umum.
+5. Identitas cetak, jadwal, analisis, daftar isi, backup, dan storage tidak lagi memakai label atau namespace Bahasa Inggris.
+6. Materi, konten, tujuan, kegiatan per pertemuan, asesmen, dan sumber tetap menggunakan pemetaan Bahasa Arab Fase D kelas VII–IX.
+7. Alokasi 18 JP per bab masih provisional untuk Preview dan harus divalidasi sebelum Production.
+
+Singkatan tampilan: B. Arab

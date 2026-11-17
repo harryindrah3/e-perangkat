@@ -1,0 +1,8 @@
+(function(){'use strict';
+const ORIGINAL_CALENDAR=location.origin+'/calendar-year-full.js?v=20260915-5';
+const m=location.pathname.match(/\/apps\/fase-([a-f])\/E-Perangkat_(.+?)_Fase-([A-F])/i);if(!m)return;const subject=decodeURIComponent(m[2]||'').toLowerCase(),phase=String(m[3]||m[1]||'').toLowerCase(),KEY=`eperangkat.${subject}.fase${phase}.v1.orders`;
+const clamp=v=>{if(v===''||v==null)return null;const n=Number(v);return Number.isFinite(n)?Math.max(0,Math.min(100,Math.round(n))):null};
+function read(){try{const s=JSON.parse(localStorage.getItem(KEY)||'{"activeId":"","orders":[]}');s.orders=Array.isArray(s.orders)?s.orders:[];return s}catch(_){return{activeId:'',orders:[]}}}
+function cur(s=read()){const n=document.getElementById('ordNumber')?.value?.trim();return(n&&s.orders.find(o=>String(o.number||'').trim()===n))||s.orders.find(o=>o.id===s.activeId)||s.orders[0]||null}
+function val(o){const d=clamp(o?.kktp);if(d!==null)return d;const a=o?.analysis?.settings||{},g=clamp(a.thresholds?.[o?.grade]);return g!==null?g:(clamp(a.threshold)??75)}
+function sync(o){if(!o)return;o.kktp=val(o);o.analysis=o.analysis&&typeof o.analysis==='object'?o.analysis:{};o.analysis.settings=o.analysis.settings&&typeof o.analysis.settings==='object'?o.analysis.settings:{};o.analysis.settings.threshold=o.kktp;o.analysis.settings.thresholds=o.analysis.settings.thresholds&&typeof o.analysis.settings.thresholds==='object'?o.analysis.settings.thresholds:{};if(o.grade)o.analysis.settings.thresholds[o¶»§q«^
