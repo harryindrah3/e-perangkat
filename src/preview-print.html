@@ -73,13 +73,13 @@ function injectStyle(doc){
  .calendar-print-page .print-cal-title strong{font-size:10.5pt!important;line-height:1.04!important;padding:.6mm!important}
 
  .calendar-print-page .print-calendar{display:none!important}
- .ep-calendar-main{display:grid!important;grid-template-columns:${left}% ${right}%!important;gap:2mm!important;flex:1 1 auto!important;min-height:0!important;overflow:hidden!important}
- .ep-month-grid{display:grid!important;grid-template-columns:1fr 1fr!important;grid-template-rows:repeat(3,minmax(0,1fr))!important;gap:1mm!important;min-height:0!important}
- .ep-month-card{border:.65pt solid #26343d;border-radius:1.1mm;background:#fff;display:flex;flex-direction:column;min-height:0;overflow:hidden}
- .ep-month-body{display:flex!important;flex-direction:column!important;flex:1 1 auto!important;min-height:0!important;overflow:hidden!important}
- .ep-month-body .pcm{padding:0!important;overflow:visible!important;display:flex!important;flex-direction:column!important;min-height:0!important;height:100%!important}
+ .ep-calendar-main{display:grid!important;grid-template-columns:${left}% ${right}%!important;gap:2mm!important;flex:0 0 auto!important;min-height:0!important;overflow:visible!important;align-items:stretch!important}
+ .ep-month-grid{display:grid!important;grid-template-columns:1fr 1fr!important;grid-template-rows:repeat(3,auto)!important;row-gap:.7mm!important;column-gap:1mm!important;min-height:0!important;align-content:start!important}
+ .ep-month-card{border:.65pt solid #26343d;border-radius:1.1mm;background:#fff;display:flex;flex-direction:column;min-height:0;overflow:hidden;align-self:start!important}
+ .ep-month-body{display:flex!important;flex-direction:column!important;flex:0 0 auto!important;min-height:0!important;overflow:hidden!important}
+ .ep-month-body .pcm{padding:0!important;overflow:visible!important;display:flex!important;flex-direction:column!important;min-height:0!important;height:auto!important}
  .ep-month-body .pcm>b{display:block!important;background:#eef3f6;border-bottom:.45pt solid #89959c;font-size:10pt!important;line-height:1!important;padding:.45mm .25mm!important;text-align:center!important;flex:0 0 auto!important}
- .ep-month-body .print-mini-cal{width:100%!important;height:auto!important;table-layout:fixed!important;border-collapse:collapse!important;margin:0!important;flex:1 1 auto!important}
+ .ep-month-body .print-mini-cal{width:100%!important;height:auto!important;table-layout:fixed!important;border-collapse:collapse!important;margin:0!important;flex:0 0 auto!important}
  .ep-month-body .print-mini-cal thead tr,
  .ep-month-body .print-mini-cal tbody tr{height:auto!important;min-height:0!important;max-height:none!important}
  .ep-month-body .print-mini-cal th,
@@ -93,7 +93,7 @@ function injectStyle(doc){
  .ep-month-meta span:last-child{border-right:0}
  .ep-month-meta b{display:block;font-size:10pt!important;color:#111;line-height:1!important}
 
- .ep-calendar-side{border:.65pt solid #26343d;border-radius:1.1mm;background:#fff;display:flex!important;flex-direction:column!important;min-height:0!important;overflow:hidden!important}
+ .ep-calendar-side{border:.65pt solid #26343d;border-radius:1.1mm;background:#fff;display:flex!important;flex-direction:column!important;min-height:0!important;overflow:hidden!important;align-self:stretch!important}
  .ep-calendar-side-title{background:#123b2f;color:#fff;padding:.8mm 1.1mm;font:700 10pt Arial,sans-serif;flex:0 0 auto!important}
  .ep-calendar-events{padding:.5mm .8mm;overflow:hidden!important;flex:1 1 auto!important;min-height:0!important}
  .ep-event-group{margin:0 0 .45mm;padding:0 0 .35mm;border-bottom:.35pt solid #d7dde0}
@@ -107,9 +107,9 @@ function injectStyle(doc){
  .ep-calendar-total .title{grid-column:1/-1;text-align:center;font-size:9pt!important}
  .ep-calendar-total span b{font-size:10pt!important}
 
- .calendar-print-page .print-cal-legend{margin-top:.45mm!important;gap:1.4mm!important;font-size:7pt!important;line-height:1.02!important;flex:0 0 auto!important}
+ .calendar-print-page .print-cal-legend{margin-top:.35mm!important;gap:1.4mm!important;font-size:7pt!important;line-height:1.02!important;flex:0 0 auto!important}
  .calendar-print-page .print-cal-legend span{font-size:7pt!important}
- .calendar-print-page .print-cal-bottom{margin-top:.45mm!important;grid-template-columns:1fr 66mm!important;gap:3.5mm!important;min-height:19mm!important;align-items:start!important;flex:0 0 auto!important}
+ .calendar-print-page .print-cal-bottom{margin-top:.35mm!important;grid-template-columns:1fr 66mm!important;gap:3.5mm!important;min-height:18mm!important;align-items:start!important;flex:0 0 auto!important}
  .calendar-print-page .print-cal-bottom p{font-size:7.2pt!important;line-height:1.08!important;margin:0!important}
  .calendar-print-page .calendar-signature{font-size:9pt!important;line-height:1.02!important}
  .calendar-print-page .calendar-sign-space{height:8mm!important;flex:0 0 8mm!important}
