@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Preview Cetak E-Perangkat · A4/F4</title>
+<style>
+html,body{margin:0;height:100%;background:#dfe6eb;font-family:Arial,sans-serif}
+.toolbar{position:sticky;top:0;z-index:10;display:flex;gap:8px;align-items:center;padding:10px 12px;background:#102f4e;color:#fff;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+.toolbar strong{margin-right:auto;font-size:13px}
+.toolbar button{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.1);color:#fff;border-radius:8px;padding:7px 10px;font-weight:700;cursor:pointer}
+.toolbar button.active{background:#18b5b5;border-color:#18b5b5}
+.toolbar .hint{font-size:11px;opacity:.88}
+#frame{display:block;width:100%;height:calc(100vh - 54px);border:0;background:#dfe6eb}
+</style>
+</head>
+<body>
+<div class="toolbar">
+  <strong>Preview Cetak E-Perangkat · Bahasa Indonesia Erlangga Kelas 3</strong>
+  <span class="hint">isi utama ≥10 pt · footnote boleh kecil</span>
+  <button id="f4" class="active">F4 · 210×330</button>
+  <button id="a4">A4 · 210×297</button>
+  <button id="print">Cetak</button>
+</div>
+<iframe id="frame" src="/apps/fase-b/E-Perangkat_bahasa-indonesia-erlangga_Fase-B/print.html?semester=1"></iframe>
+<script>
+(()=>{
+'use strict';
+const frame=document.getElementById('frame');
+let paper='f4';
+const MIN_PX=10*96/72;
+
+function q(sel,root=document){return root.querySelector(sel)}
+function qa(sel,root=document){return [...root.querySelectorAll(sel)]}
+
+function injectStyle(doc){
+ let s=doc.getElementById('ep-preview-layout-style');
+ if(s) s.remove();
+ s=doc.createElement('style'); s.id='ep-preview-layout-style';
+ const pageH=paper==='f4'?330:297;
+ const landW=paper==='f4'?330:297;
+ const left=paper==='f4'?66:64;
+ const right=100-left;
+ s.textContent=`
+ @page portrait{size:210mm ${pageH}mm;margin:0}
+ @page landscape{size:${landW}mm 210mm;margin:0}
+ .page.portrait{page:portrait!important;width:210mm!important;min-height:${pageH}mm!important;height:auto!important;overflow:visible!important}
+ .page.landscape{page:landscape!important;width:${landW}mm!important;min-height:210mm!important;height:auto!important;overflow:visible!important}
+ .page.portrait>.page-inner{min-height:${pageH}mm!important;height:auto!important}
+ .page.landscape>.page-inner{min-height:210mm!important;height:auto!important}
+ .tbl:not(.print-calendar):not(.print-mini-cal){table-layout:auto!important}
+ .tbl:not(.print-calendar):not(.print-mini-cal) th,
+ .tbl:not(.print-calendar):not(.print-mini-cal) td{
+   word-break:normal!important;overflow-wrap:normal!important;hyphens:none!important;
+   white-space:normal!important;line-height:1.22!important
+ }
+ .text,.bullets,.note,.principle,.prompt,.objective-box,.info-band{
+   line-height:1.35!important;word-break:normal!important;overflow-wrap:normal!important;hyphens:none!important
+ }
+ .page-foot,.page-number{font-size:7.5pt!important;line-height:1.15!important}
+
+ .calendar-print-page{height:210mm!important;min-height:210mm!important;max-height:210mm!important;overflow:hidden!important}
+ .calendar-print-page .page-inner{
+   height:210mm!important;min-height:210mm!important;max-height:210mm!important;
+   padding:3mm 4.5mm 3mm!important;display:flex!important;flex-direction:column!important;overflow:hidden!important
+ }
+ .calendar-print-page .print-letterhead{margin-bottom:.5mm!important;flex:0 0 auto!important}
+ .calendar-print-page .print-letterhead b{font-size:9pt!important;line-height:1.04!important}
+ .calendar-print-page .print-letterhead strong{font-size:12pt!important;line-height:1.04!important}
+ .calendar-print-page .print-letterhead span{font-size:7.5pt!important;line-height:1.04!important}
+ .calendar-print-page .print-cal-title{margin-bottom:.4mm!important;flex:0 0 auto!important}
+ .calendar-print-page .print-cal-title b,
+ .calendar-print-page .print-cal-title strong{font-size:10.5pt!important;line-height:1.04!important;padding:.6mm!important}
+
+ .calendar-print-page .print-calendar{display:none!important}
+ .ep-calendar-main{display:grid!important;grid-template-columns:${left}% ${right}%!important;gap:2mm!important;flex:1 1 auto!important;min-height:0!important;overflow:hidden!important}
+ .ep-month-grid{display:grid!important;grid-template-columns:1fr 1fr!important;grid-template-rows:repeat(3,minmax(0,1fr))!important;gap:1mm!important;min-height:0!important}
+ .ep-month-card{border:.65pt solid #26343d;border-radius:1.1mm;background:#fff;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+ .ep-month-body{display:flex!important;flex-direction:column!important;flex:1 1 auto!important;min-height:0!important;overflow:hidden!important}
+ .ep-month-body .pcm{padding:0!important;overflow:visible!important;display:flex!important;flex-direction:column!important;min-height:0!important;height:100%!important}
+ .ep-month-body .pcm>b{display:block!important;background:#eef3f6;border-bottom:.45pt solid #89959c;font-size:10pt!important;line-height:1!important;padding:.45mm .25mm!important;text-align:center!important;flex:0 0 auto!important}
+ .ep-month-body .print-mini-cal{width:100%!important;height:auto!important;table-layout:fixed!important;border-collapse:collapse!important;margin:0!important;flex:1 1 auto!important}
+ .ep-month-body .print-mini-cal thead tr,
+ .ep-month-body .print-mini-cal tbody tr{height:auto!important;min-height:0!important;max-height:none!important}
+ .ep-month-body .print-mini-cal th,
+ .ep-month-body .print-mini-cal td{
+   font-size:10pt!important;line-height:1!important;padding:.07mm .1mm!important;
+   height:auto!important;min-height:0!important;max-height:none!important;
+   vertical-align:middle!important;text-align:center!important;overflow:visible!important
+ }
+ .ep-month-meta{display:grid!important;grid-template-columns:repeat(4,1fr)!important;border-top:.45pt solid #9ca7ad;background:#fafbfc;flex:0 0 auto!important}
+ .ep-month-meta span{text-align:center;padding:.2mm .05mm;font-size:6.6pt!important;line-height:1!important;border-right:.35pt solid #c7ced2;color:#4e5c64}
+ .ep-month-meta span:last-child{border-right:0}
+ .ep-month-meta b{display:block;font-size:10pt!important;color:#111;line-height:1!important}
+
+ .ep-calendar-side{border:.65pt solid #26343d;border-radius:1.1mm;background:#fff;display:flex!important;flex-direction:column!important;min-height:0!important;overflow:hidden!important}
+ .ep-calendar-side-title{background:#123b2f;color:#fff;padding:.8mm 1.1mm;font:700 10pt Arial,sans-serif;flex:0 0 auto!important}
+ .ep-calendar-events{padding:.5mm .8mm;overflow:hidden!important;flex:1 1 auto!important;min-height:0!important}
+ .ep-event-group{margin:0 0 .45mm;padding:0 0 .35mm;border-bottom:.35pt solid #d7dde0}
+ .ep-event-group:last-child{border-bottom:0;margin-bottom:0}
+ .ep-event-month{font:700 8pt Arial,sans-serif;color:#123b2f;margin-bottom:.12mm;text-transform:uppercase;letter-spacing:.02em}
+ .ep-event-group .p-event{display:grid!important;grid-template-columns:15mm minmax(0,1fr)!important;margin:.05mm 0!important;font-size:10pt!important;line-height:1.02!important;min-width:0!important}
+ .ep-event-group .p-event b,
+ .ep-event-group .p-event span{padding:.08mm .18mm!important;min-width:0!important;white-space:normal!important;word-break:normal!important;overflow-wrap:normal!important;hyphens:none!important}
+ .ep-event-fallback{font-size:10pt!important;line-height:1.08!important}
+ .ep-calendar-total{border-top:.55pt solid #26343d;background:#ffd165;padding:.45mm .8mm;display:grid!important;grid-template-columns:1fr 1fr!important;gap:.25mm .8mm;font:700 8pt Arial,sans-serif;flex:0 0 auto!important}
+ .ep-calendar-total .title{grid-column:1/-1;text-align:center;font-size:9pt!important}
+ .ep-calendar-total span b{font-size:10pt!important}
+
+ .calendar-print-page .print-cal-legend{margin-top:.45mm!important;gap:1.4mm!important;font-size:7pt!important;line-height:1.02!important;flex:0 0 auto!important}
+ .calendar-print-page .print-cal-legend span{font-size:7pt!important}
+ .calendar-print-page .print-cal-bottom{margin-top:.45mm!important;grid-template-columns:1fr 66mm!important;gap:3.5mm!important;min-height:19mm!important;align-items:start!important;flex:0 0 auto!important}
+ .calendar-print-page .print-cal-bottom p{font-size:7.2pt!important;line-height:1.08!important;margin:0!important}
+ .calendar-print-page .calendar-signature{font-size:9pt!important;line-height:1.02!important}
+ .calendar-print-page .calendar-sign-space{height:8mm!important;flex:0 0 8mm!important}
+ .calendar-print-page .calendar-signature b{font-size:9pt!important;min-width:43mm!important;padding:0 1mm .25mm!important}
+ .calendar-print-page .calendar-id{font-size:7.8pt!important;margin-top:.3mm!important}
+ @media print{.calendar-print-page,.calendar-print-page .page-inner{height:210mm!important;min-height:210mm!important;max-height:210mm!important}}
+ `;
+ doc.head.appendChild(s);
+}
+
+function enforceGeneralMin(doc){
+ qa('.page,.page *',doc).forEach(el=>{
+   if(!el.textContent || !el.textContent.trim()) return;
+   if(el.closest('.calendar-print-page,.page-foot,.page-number')) return;
+   if(['SCRIPT','STYLE','SVG','PATH','IMG','CANVAS'].includes(el.tagName)) return;
+   const cs=doc.defaultView.getComputedStyle(el);
+   const px=parseFloat(cs.fontSize);
+   if(Number.isFinite(px) && px<MIN_PX-.15) el.style.setProperty('font-size','10pt','important');
+ });
+}
+
+function improveWords(doc){
+ qa('.tbl:not(.print-calendar):not(.print-mini-cal) th,.tbl:not(.print-calendar):not(.print-mini-cal) td',doc).forEach(el=>{
+   el.style.setProperty('word-break','normal','important');
+   el.style.setProperty('overflow-wrap','normal','important');
+   el.style.setProperty('hyphens','none','important');
+   el.style.setProperty('white-space','normal','important');
+ });
+}
+
+function monthNameFrom(cell,index){
+ const b=cell.querySelector('.pcm>b');
+ if(b && b.textContent.trim()) return b.textContent.trim();
+ const t=cell.textContent.trim().split(/\n+/)[0];
+ return t || ('Bulan '+(index+1));
+}
+
+function buildCalendar(doc){
+ const page=doc.querySelector('.calendar-print-page');
+ if(!page) return false;
+ if(page.dataset.epPreviewCalendar==='1') return true;
+ const table=page.querySelector('.print-calendar');
+ if(!table || !table.tBodies || !table.tBodies[0]) return false;
+ const rows=[...table.tBodies[0].rows].filter(r=>!r.classList.contains('print-cal-total'));
+ if(rows.length<6) return false;
+
+ const labels=['MES','MEB','HES','HEB'];
+ const main=doc.createElement('div'); main.className='ep-calendar-main';
+ const grid=doc.createElement('div'); grid.className='ep-month-grid';
+ const side=doc.createElement('div'); side.className='ep-calendar-side';
+ const sideTitle=doc.createElement('div'); sideTitle.className='ep-calendar-side-title'; sideTitle.textContent='KETERANGAN KEGIATAN';
+ const events=doc.createElement('div'); events.className='ep-calendar-events';
+
+ rows.slice(0,6).forEach((row,index)=>{
+   const cells=[...row.cells];
+   if(cells.length<2) return;
+
+   const card=doc.createElement('div'); card.className='ep-month-card';
+   const monthBody=doc.createElement('div'); monthBody.className='ep-month-body';
+   monthBody.innerHTML=cells[0].innerHTML; // IMPORTANT: copy ALL children, including dates table
+
+   const stats=cells.slice(1,5).map(c=>(c.textContent||'').trim());
+   const meta=doc.createElement('div'); meta.className='ep-month-meta';
+   meta.innerHTML=labels.map((lab,i)=>'<span><b>'+(stats[i]||'')+'</b>'+lab+'</span>').join('');
+   card.append(monthBody,meta);
+   grid.appendChild(card);
+
+   const group=doc.createElement('div'); group.className='ep-event-group';
+   const mn=doc.createElement('div'); mn.className='ep-event-month'; mn.textContent=monthNameFrom(cells[0],index);
+   group.appendChild(mn);
+
+   const eventCell=cells[cells.length-1];
+   const pEvents=[...eventCell.querySelectorAll('.p-event')];
+   if(pEvents.length){
+     pEvents.forEach(ev=>group.appendChild(ev.cloneNode(true)));
+   }else{
+     const raw=(eventCell.textContent||'').trim();
+     if(raw){
+       const fb=doc.createElement('div'); fb.className='ep-event-fallback'; fb.textContent=raw; group.appendChild(fb);
+     }
+   }
+   events.appendChild(group);
+ });
+
+ const total=doc.createElement('div'); total.className='ep-calendar-total';
+ const tr=table.tBodies[0].querySelector('.print-cal-total');
+ if(tr){
+   const vals=[...tr.cells].map(c=>(c.textContent||'').trim()).filter(Boolean);
+   const title=vals.shift()||'JUMLAH SEMESTER I';
+   total.innerHTML='<div class="title">'+title+'</div>'+vals.slice(0,4).map((v,i)=>'<span>'+labels[i]+': <b>'+v+'</b></span>').join('');
+ }else total.innerHTML='<div class="title">JUMLAH SEMESTER I</div>';
+
+ side.append(sideTitle,events,total);
+ main.append(grid,side);
+ table.insertAdjacentElement('afterend',main);
+ page.dataset.epPreviewCalendar='1';
+ return true;
+}
+
+function apply(){
+ const doc=frame.contentDocument;
+ if(!doc || !doc.head) return false;
+ injectStyle(doc);
+ improveWords(doc);
+ enforceGeneralMin(doc);
+ buildCalendar(doc);
+ return true;
+}
+
+function waitApply(){
+ let tries=0;
+ const timer=setInterval(()=>{
+   tries++;
+   try{
+     const doc=frame.contentDocument;
+     if(doc && doc.querySelector('.page')){
+       apply();
+       if(doc.querySelector('.calendar-print-page[data-ep-preview-calendar="1"]')){clearInterval(timer);}
+     }
+   }catch(_){}
+   if(tries>150) clearInterval(timer);
+ },200);
+}
+
+function setPaper(next){
+ paper=next;
+ document.getElementById('f4').classList.toggle('active',paper==='f4');
+ document.getElementById('a4').classList.toggle('active',paper==='a4');
+ try{apply()}catch(_){}
+}
+document.getElementById('f4').onclick=()=>setPaper('f4');
+document.getElementById('a4').onclick=()=>setPaper('a4');
+document.getElementById('print').onclick=()=>frame.contentWindow?.print();
+frame.addEventListener('load',waitApply);
+waitApply();
+})();
+</script>
+</body>
+</html>
